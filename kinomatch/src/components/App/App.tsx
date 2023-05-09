@@ -1,12 +1,11 @@
 import './App.scss';
+import Footer from './Footer/Footer';
+import LegalModal from './Footer/LegalModal/LegalModal';
 
 function App() {
 
   return (
-    <>
-    <h1>coucou les amis</h1>
-    <h2>coucou les amis</h2>
-    </>
+    < LegalModal />
   )
 }
 
