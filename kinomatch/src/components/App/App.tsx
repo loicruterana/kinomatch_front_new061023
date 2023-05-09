@@ -5,7 +5,7 @@ import LegalModal from './Footer/LegalModal/LegalModal';
 function App() {
 
   return (
-    < LegalModal />
+    < Footer />
   )
 }
 
