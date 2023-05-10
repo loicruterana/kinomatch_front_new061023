@@ -1,8 +1,36 @@
 @use '../../../styles/vars';
-.hidden {
-    display: none;
-}
+
 .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: vars.$theme1-primary;
+  width: 100vw;
+  padding-top: 5px;
+
+  &__content {
+    font-size: 1.1rem;
+    color: vars.$theme1-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem;
+
+    &-legal {
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .footer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -12,55 +40,25 @@
     padding-top: 5px;
 
     &__content {
-        font-size: 1.1rem;
-        color: vars.$theme1-secondary;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 1rem;
-
-        &-legal {
-            background: none;
-            color: inherit;
-            border: none;
-            padding: 0;
-            font: inherit;
-            cursor: pointer;
-            outline: inherit;
-        }
+      font-size: 1.1rem;
+      color: vars.$theme1-secondary;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem;
     }
-}
-
-@media screen and (max-width: 900px) {
-    .footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: vars.$theme1-primary;
-        width: 100vw;
-        padding-top: 5px;
-
-        &__content {
-            font-size: 1.1rem;
-            color: vars.$theme1-secondary;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 1rem;
-        }
-    }
+  }
 }
 
 @media screen and (max-width: 500px) {
-    .footer {
-        &__content {
-            font-size: 0.9rem;
-            color: vars.$theme1-secondary;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 0.6rem;
-        }
+  .footer {
+    &__content {
+      font-size: 0.9rem;
+      color: vars.$theme1-secondary;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0.6rem;
     }
+  }
 }

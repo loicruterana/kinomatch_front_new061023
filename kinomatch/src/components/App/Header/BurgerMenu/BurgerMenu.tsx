@@ -20,14 +20,14 @@ function BurgerMenu({ showBurgerMenu, setShowBurgerMenu }) {
         <div className='BurgerMenu__container__items'>
         { connected && 
         <>
-// Nom de l'utilisateur      
+{/* Nom de l'utilisateur */}   
           <div>Bonjour Machin chose</div>
-// Les boutons lorsque l'utilisateur est connecté      
+{/* Les boutons lorsque l'utilisateur est connecté */}         
           <button className='BurgerMenu__container__button'>Se déconnecter </button>
           <button className='BurgerMenu__container__button'>Thème couleur</button>
         </>
         }
-// Les boutons lorsque l'utilisateur n'est pas connecté      
+{/* Les boutons lorsque l'utilisateur n'est pas connecté */}         
         { !connected && 
         <>
           <button className='BurgerMenu__container__button'>Se connecter </button>
