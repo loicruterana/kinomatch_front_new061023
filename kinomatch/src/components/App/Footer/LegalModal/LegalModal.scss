@@ -1,5 +1,6 @@
 @use '../../../../styles/vars';
 
+
 .container {
     display: flex;
     height: 100vh;
@@ -22,7 +23,7 @@
     text-align: center;
 
 
-    &-title {
+    &__title {
         font-size: 2rem;
         font-weight: bold;
         color: vars.$theme1-primary;
@@ -33,7 +34,7 @@
         width: 80%;
     }
 
-    &-content {
+    &__content {
         font-size: 1.2rem;
         color: vars.$theme1-secondary;
         max-width: 80%;
@@ -41,7 +42,7 @@
         text-align: justify;
     }
 
-    &-button {
+    &__button {
         width: 20rem;
         font-size: 2rem;
         color: vars.$theme1-primary;
@@ -75,7 +76,7 @@
         border: none;
         text-align: center;
     
-        &-title {
+        &__title {
             font-size: 2rem;
             font-weight: bold;
             color: vars.$theme1-primary;
@@ -86,7 +87,7 @@
             width: 80%;
         }
     
-        &-content {
+        &__content {
             font-size: 1.2rem;
             color: vars.$theme1-secondary;
             max-width: 80%;
@@ -94,7 +95,7 @@
             text-align: justify;
         }
     
-        &-button {
+        &__button {
             width: 20rem;
             font-size: 2rem;
             color: vars.$theme1-primary;
@@ -129,7 +130,7 @@
         border: none;
         text-align: center;
     
-        &-title {
+        &__title {
             font-size: 1.7rem;
             font-weight: bold;
             color: vars.$theme1-primary;
@@ -140,7 +141,7 @@
             width: 80%;
         }
     
-        &-content {
+        &__content {
             font-size: 1.1rem;
             color: vars.$theme1-secondary;
             max-width: 80%;
@@ -148,7 +149,7 @@
             text-align: justify;
         }
     
-        &-button {
+        &__button {
             width: 9rem;
             font-size: 1.7rem;
             color: vars.$theme1-primary;

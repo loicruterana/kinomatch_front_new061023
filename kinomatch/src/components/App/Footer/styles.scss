@@ -9,7 +9,7 @@
     width: 100vw;
     padding-top: 5px;
 
-    &-content {
+    &__content {
         font-size: 1.1rem;
         color: vars.$theme1-secondary;
         display: flex;
@@ -17,7 +17,7 @@
         justify-content: space-between;
         margin: 1rem;
 
-        &--legal {
+        &-legal {
             background: none;
             color: inherit;
             border: none;
@@ -39,7 +39,7 @@
         width: 100vw;
         padding-top: 5px;
 
-        &-content {
+        &__content {
             font-size: 1.1rem;
             color: vars.$theme1-secondary;
             display: flex;
@@ -52,7 +52,7 @@
 
 @media screen and (max-width: 500px) {
     .footer {
-        &-content {
+        &__content {
             font-size: 0.9rem;
             color: vars.$theme1-secondary;
             display: flex;
