@@ -3,7 +3,7 @@ import './LegalModal.scss';
 
 interface LegalModalProps {
   showModal: boolean;
-  setShowModal: boolean;
+  setShowModal: (showModal: boolean) => void;
 }
 
 function LegalModal(props: LegalModalProps) {
