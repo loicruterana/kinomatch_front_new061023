@@ -1,14 +1,16 @@
 import './LegalModal.scss';
 
-
+// Création de l'interface pour Typescript
 interface LegalModalProps {
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
 }
 
+// Fonction permettant de cacher la modale LeagalModal
 function LegalModal(props: LegalModalProps) {
   const { showModal, setShowModal } = props;
-  
+
+  // Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement
   const handleModal = () => {
     setShowModal(!showModal);
   }
