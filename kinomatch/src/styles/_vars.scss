@@ -4,4 +4,9 @@ $theme1-secondary: #FFF3B0;
 $theme2-primary: #780000;
 $theme2-primary: #FDF0D5; 
 
-
+$menu-icon-line-height: 8px;
+$menu-icon-line-space: 14px;
+$menu-icon-line-offsetY: $menu-icon-line-height + $menu-icon-line-space;
+$menu-icon-height: (3*$menu-icon-line-height) + (2*$menu-icon-line-space);
+$cubic-bezier-in: cubic-bezier(0.30,1,0.70,1);
+$cubic-bezier-out: cubic-bezier(1,0.70,1,0.30);
