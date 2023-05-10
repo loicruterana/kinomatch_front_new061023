@@ -1,11 +1,15 @@
-import './App.scss';
+import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import LegalModal from './Footer/LegalModal/LegalModal';
+
+import './App.scss';
 
 function App() {
 
   return (
-    < Footer />
+    <>
+      <Header />
+      <Footer />          
+    </>
   )
 }
 
