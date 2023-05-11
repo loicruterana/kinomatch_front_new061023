@@ -1,14 +1,6 @@
 @use 'reset';
 @use 'vars';
 
-@font-face {
-  font-family: 'Creato Display';
-  src: url('fonts/Creato_Display/CreatoDisplay-Regular.otf')
-    format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
-  font-family: 'Creato Display';
+  font-family: 'Creato Display', sans-serif;
 }
