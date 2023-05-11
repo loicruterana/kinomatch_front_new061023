@@ -3,31 +3,38 @@ import './style.scss';
 function MoviePage() {
   return (
     <div className='moviePage'>
+      {/* Page du film  */}
       <article className='movieFound'>
+        {/* Page infos essentielles du film: titre, image, boutons, plateformes, note */}
         <section className='movieFound__essentiel'>
-          <cite className='movieFound__essentiel-title'>Titre du film</cite>
-          <button className='movieFound__essentiel-btn'>
-          <img className='movieFound__essentiel-img'src='#./images/ilusiones.webp' alt='addToLikeBtn' />
-          </button>
-          <button className='movieFound__essentiel-btn'>
-          <img src='#' alt='addToFavoriteBtn' />
-          </button>
-          <button className='movieFound__essentiel-btn'>
-          <img src='#' alt='addToView' />
-          </button>
-          <img className='movieFound__essentiel-image' src='#' alt='Image du film' />
-          <p className='movieFound__essentiel-note'>Note</p>
-          <div className='movieFound__essentiel-disponibility'>
-            <a className='movieFound__essentiel-disponibility-plateform' href='#'>Netflix</a>
-            <a className='movieFound__essentiel-disponibility-plateform' href='#'>Prime Vidéo</a>
-            <a className='movieFound__essentiel-disponibility-plateform' href='#'>Disney</a>
+          {/* Div contenant le titre et les icons */}
+          <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
+            <cite className='movieFound__essentiel-title'>Les Gardiens De La Galaxie 3</cite>
+            <button type='submit' className='movieFound__essentiel-btn--addToLike'></button>
+            <button type='submit' className='movieFound__essentiel-btn--addToFavorites'></button>
+            <button type='submit' className='movieFound__essentiel-btn--addToViewed'></button>
+          </div>
+          <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' />
+          <div className='movieFound__essentiel-body'>
+            <div className='movieFound__essentiel-body--note'>
+              <p className='movieFound__essentiel-body--note---noteNumber'>83%</p>
+              <a className='movieFound__essentiel-body--note---opinion' href='#'>174 votes</a>
+            </div>
+            <div className='movieFound__essentiel-disponibility'>
+              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Netflix</a>
+              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Prime Vidéo</a>
+              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Disney</a>
+            </div>
           </div>
           <textarea className='movieFound__essentiel-area' rows={5} cols={33} minLength={10} maxLength={4000} required placeholder='Laissez un commentaire'></textarea>
         </section>
+        {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
           <div className='movieDetails__filters'>
+            <button className='movieDetails__filters-otherDetailsBtn'>Autres Résultats</button>
             <p className='movieDetails__filters-filterElem'>Polar</p>
             <p className='movieDetails__filters-filterElem'>Espagnol</p>
+            <p className='movieDetails__filters-filterElem'>Action</p>
             <p className='movieDetails__filters-filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>

@@ -67,12 +67,13 @@
     .legalModal {
         position: fixed;
         z-index: 1;
-        width: 80vw;
-        height: 90vh;
+        // width: 80vw;
+        // height: 90vh;
         overflow: auto;
         background-color: vars.$theme1-primary;
         border-radius: 1.5rem;
         margin: 20%;
+        padding: 20% 5% 0 5%;
         border: none;
         text-align: center;
     
@@ -108,7 +109,8 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+// MOBILE VERSION =================
+@media screen and (max-width: 900px) {
     .container {
         display: flex;
         height: 100vh;

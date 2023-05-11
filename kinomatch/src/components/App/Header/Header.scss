@@ -53,9 +53,10 @@
     color: red;
   }
   .Header {
-    position: sticky;
+    position: fixed;
     display: flex;
     height: 70px;
+    width: 100vw;
     justify-content: space-between;
     padding: 2% 2%;
     font-size: 32px;

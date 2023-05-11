@@ -11,22 +11,85 @@
 
     .movieFound {
         height: 100vh;
-        padding: 2rem;
+        // padding-top: 20%;
+        padding: 20% 2rem 2rem 2rem;
+        overflow-y: auto;
 
         &__essentiel {
             display: flex;
             flex-wrap: wrap;
 
-            &-title {
-                font-size: 1.6rem;
-                margin-right: 4rem;
+            &-head {
+                display: flex;
+                width: 100%;
+                margin-bottom: 0.5rem;
             }
 
-            &-btn {
+            &-title {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin-right: auto;
+            }
+
+            &-btn--addToLike {
                 font-size: 0;
-                margin: 0.3rem;
+                margin: 0.15rem;
                 width: 20px;
                 height: 20px;
+            }
+
+            &-btn--addToFavorites {
+                font-size: 0;
+                margin: 0.15rem;
+                width: 20px;
+                height: 20px;
+            }
+            
+            &-btn--addToViewed {
+                font-size: 0;
+                margin: 0.15rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            &-image {
+                width: 100%;
+                border: vars.$theme1-secondary solid 7px;
+                border-radius: 6px;
+                margin: auto;
+            }
+
+            &-body {
+                display: flex;
+                align-items: center;
+                width: 100vw;
+                margin: 0.5rem 0;
+
+                &--note {
+                    font-size: 1.7rem;
+                    font-weight: bold;
+                    margin: 1rem 1rem;
+
+                    &---opinion {
+                        font-size: 0.7rem;
+                        margin-top: 0.3rem;
+                    }
+                }
+            }
+
+            &-disponibility {
+                display: flex;
+                width: 100%;
+
+                &-plateform {
+                    width: 100%;
+                    font-weight: bold;
+                    color: vars.$theme1-primary;
+                    background-color: vars.$theme1-secondary;
+                    margin: 0.2rem;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                }
             }
 
             &-area {
@@ -37,19 +100,36 @@
 
     .movieDetails__filters {
         display: flex;
-        position: absolute;
-        justify-content: center;
-        bottom: 3rem;
+        position: fixed;
+        filter: drop-shadow(0 -2mm 3mm rgba(13, 0, 17, 0.349));
+        bottom: 0;
         left: 0;
         right: 0;
+        flex-wrap: wrap;
+        justify-content: center;
         background: vars.$theme1-primary;
         width: 100vw;
         padding-top: 5px;
 
-        &-filterElem {
-            margin: 1rem;
+        &-otherDetailsBtn {
+            font-weight: bold;
+            width: 70vw;
+            height: 2.5rem;
+            margin: 0.8rem 5rem;
             padding: 0.2rem 1rem;
-            border-radius: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            color: vars.$theme1-primary;
+            background-color: vars.$theme1-secondary;
+        }
+
+        &-filterElem {
+            font-weight: bold;
+            margin: 0.8rem 0.5rem;
+            padding: 0.5rem 0.5rem;
+            border: none;
+            border-radius: 6px;
             font-size: 1.2rem;
             color: vars.$theme1-primary;
             background-color: vars.$theme1-secondary;
@@ -58,5 +138,9 @@
                 display: none;
             }
         }
+    }
+
+    .footer {
+        display: none;
     }
 }
