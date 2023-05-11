@@ -1,0 +1,62 @@
+@use './../../../styles/vars';
+
+// MOBILE VERSION =================
+
+@media screen and (max-width: 900px) {
+    .moviePage {
+        color: vars.$theme1-secondary;
+        width: 100%;
+        background-color: vars.$theme1-primary;
+    }
+
+    .movieFound {
+        height: 100vh;
+        padding: 2rem;
+
+        &__essentiel {
+            display: flex;
+            flex-wrap: wrap;
+
+            &-title {
+                font-size: 1.6rem;
+                margin-right: 4rem;
+            }
+
+            &-btn {
+                font-size: 0;
+                margin: 0.3rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            &-area {
+                display: none;
+            }
+        }
+    }
+
+    .movieDetails__filters {
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        bottom: 3rem;
+        left: 0;
+        right: 0;
+        background: vars.$theme1-primary;
+        width: 100vw;
+        padding-top: 5px;
+
+        &-filterElem {
+            margin: 1rem;
+            padding: 0.2rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+            color: vars.$theme1-primary;
+            background-color: vars.$theme1-secondary;
+
+            &--modifier {
+                display: none;
+            }
+        }
+    }
+}

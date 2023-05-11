@@ -59,6 +59,8 @@
     color: red;
   }
   .Header {
+    width: 100%;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     padding: 2% 2%;
@@ -70,13 +72,13 @@
     }
     &-logo {
       display: flex;
-      max-width: 400px;
+      max-width: 100px;
       height: 800;
       max-height: 5%;
       z-index: 3;
       &__image {
-        max-height: 5%;
-        scale: 4;
+        max-height: 4%;
+        scale: 1;
         padding-left: 13%;
       }
     }
