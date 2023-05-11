@@ -2,6 +2,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import MoviePage from './MoviePage/MoviePage';
 
+
 import './App.scss';
 
 function App() {

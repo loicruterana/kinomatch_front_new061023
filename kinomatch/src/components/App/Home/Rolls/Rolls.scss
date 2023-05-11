@@ -1,0 +1,23 @@
+.Home-container__rolls__roll_container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: black;
+    padding: 20px;
+    margin: 5px;
+  }
+}

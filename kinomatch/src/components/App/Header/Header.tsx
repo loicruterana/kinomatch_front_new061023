@@ -7,18 +7,18 @@ import './Header.scss';
 
 
 function Header() {
-  const [showBurgerMenu, setShowBurgerMenu] = useState(false);
+  const [showBurgerMenu, setShowBurgerMenu] = useState<boolean>(false);
   //! à modifier lors de l'arrivée des données dynamiques
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState<boolean>(false);
 
-  function handleClick (){
+  function handleClick (): void {
     setShowBurgerMenu(!showBurgerMenu);
   }
   return (
     <div className='Header'>
 {/* Logo du Header  */}
       <a className='Header-logo' href="#">
-        <img className='Header-logo__image' src='./images/kino_match_logo.png'></img>
+        <img className='Header-logo__image' src='./images/kino_match_logo.png' alt="logo"/>
       </a>
 {/* Bouton qui au clic amènera une recommandation de film aléatoire*/}
       <button className='Header-button'>
