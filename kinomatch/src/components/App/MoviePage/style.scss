@@ -11,18 +11,19 @@
 
     .movieFound {
         height: 100vh;
-        // padding-top: 20%;
+        margin-bottom: 125px;
         padding: 20% 2rem 2rem 2rem;
         overflow-y: auto;
 
         &__essentiel {
             display: flex;
+            overflow: auto;
             flex-wrap: wrap;
 
             &-head {
                 display: flex;
                 width: 100%;
-                margin-bottom: 0.5rem;
+                margin-bottom: 1rem;
             }
 
             &-title {
@@ -44,7 +45,7 @@
                 width: 20px;
                 height: 20px;
             }
-            
+
             &-btn--addToViewed {
                 font-size: 0;
                 margin: 0.15rem;
@@ -56,19 +57,19 @@
                 width: 100%;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
-                margin: auto;
             }
 
             &-body {
                 display: flex;
+                align-items: flex-start;
                 align-items: center;
                 width: 100vw;
-                margin: 0.5rem 0;
+                margin: 1.2rem 0 2.5rem 0;
 
                 &--note {
                     font-size: 1.7rem;
                     font-weight: bold;
-                    margin: 1rem 1rem;
+                    margin: 0.7rem 1rem;
 
                     &---opinion {
                         font-size: 0.7rem;
@@ -79,21 +80,19 @@
 
             &-disponibility {
                 display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
                 width: 100%;
 
                 &-plateform {
-                    width: 100%;
+                    font-size: 0.9rem;
                     font-weight: bold;
                     color: vars.$theme1-primary;
                     background-color: vars.$theme1-secondary;
-                    margin: 0.2rem;
+                    margin: 0.3rem;
                     padding: 0.5rem;
                     border-radius: 6px;
                 }
-            }
-
-            &-area {
-                display: none;
             }
         }
     }
@@ -101,7 +100,7 @@
     .movieDetails__filters {
         display: flex;
         position: fixed;
-        filter: drop-shadow(0 -2mm 3mm rgba(13, 0, 17, 0.349));
+        filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
         bottom: 0;
         left: 0;
         right: 0;
@@ -109,6 +108,7 @@
         justify-content: center;
         background: vars.$theme1-primary;
         width: 100vw;
+        height: 16%;
         padding-top: 5px;
 
         &-otherDetailsBtn {
@@ -137,6 +137,47 @@
             &--modifier {
                 display: none;
             }
+        }
+    }
+
+    .movieDetails__description {
+        font-weight: bold;
+
+        &-resumeTitle {
+            font-size: 1.2rem;
+            padding-bottom: 1rem;
+        }
+
+        &-resume {
+            margin-bottom: 1rem;
+        }
+
+        &-duration {
+            margin: 1rem 0;
+        }
+
+        &-date {
+            margin-bottom: 1rem;
+        }
+
+        &-details {
+            border: none;
+            background: none;
+            background-color: vars.$theme1-secondary;
+            color: vars.$theme1-primary;
+            width: 100%;
+            height: 1.7rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        &-area {
+            border-radius: 6px;
+            background-color: vars.$theme1-secondary;
+            color: vars.$theme1-primary;
+            width: 100%;
         }
     }
 

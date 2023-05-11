@@ -1,10 +1,12 @@
 @use './../../../styles/vars';
+
 // DESKTOP VERSION =================
 @media screen and (min-width: 900px) {
   body {
     font-size: 32px;
     color: black;
   }
+
   .Header {
     position: fixed;
     width: 100%;
@@ -15,18 +17,22 @@
     font-size: 32px;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
+
     &-logo {
       max-width: 400px;
       z-index: 1;
+
       &:hover {
         cursor: pointer;
       }
+
       &__image {
         height: 70px;
         // padding-left: 5%;
         scale: 1;
       }
     }
+
     &-button {
       height: 50px;
       border-radius: 15px;
@@ -37,21 +43,25 @@
       border: none;
       font-size: 20px;
       padding: 0 1%;
+
       i {
         padding-right: 5px;
       }
     }
   }
+
   .menu-icon {
     display: none;
   }
 }
+
 // MOBILE VERSION =================
 @media screen and (max-width: 900px) {
   body {
     font-size: 32px;
     color: red;
   }
+
   .Header {
     position: fixed;
     display: flex;
@@ -63,15 +73,26 @@
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     z-index: 1;
+
     &-button {
       display: none;
     }
+
     &-logo {
       &__image {
-        width: 300px;
+        //! AJOUT ALEX =================
+        width: 250px;
+        margin-top: 0.5rem;
       }
     }
+
+    //! AJOUT ALEX =================
+
+    .menu-icon {
+      scale: 0.7;
+    }
   }
+
   // ANIMATION =================
   .menu-icon {
     width: 80px;
@@ -80,6 +101,7 @@
     z-index: 50;
     position: absolute;
     right: 10px;
+
     .line-1,
     .line-2,
     .line-3 {
@@ -90,42 +112,53 @@
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
       transition: background-color 0.2s ease-in-out;
     }
+
     .line-1 {
       animation: animate-line-1-rev 0.7s ease-in-out;
     }
+
     .line-2 {
       margin: vars.$menu-icon-line-space 0;
       animation: animate-line-2-rev 0.7s ease-in-out;
     }
+
     .line-3 {
       animation: animate-line-3-rev 0.7s ease-in-out;
     }
+
     &:hover {
+
       .line-1,
       .line-2,
       .line-3 {
         background-color: vars.$theme1-secondary;
       }
     }
+
     &.active {
       z-index: 1000;
+
       .line-1,
       .line-2,
       .line-3 {
         background-color: vars.$theme1-secondary;
       }
+
       .line-1 {
         animation: animate-line-1 0.7s vars.$cubic-bezier-in forwards;
       }
+
       .line-2 {
         animation: animate-line-2 0.7s vars.$cubic-bezier-in forwards;
       }
+
       .line-3 {
         animation: animate-line-3 0.7s vars.$cubic-bezier-in forwards;
       }
     }
   }
 }
+
 // .no-animation {
 // -webkit-animation: none !important;
 //         animation: none !important;
@@ -135,62 +168,77 @@
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate3d(0, vars.$menu-icon-line-offsetY, 0) rotate(0);
   }
+
   100% {
     transform: translate3d(0, vars.$menu-icon-line-offsetY, 0) rotate(45deg);
   }
 }
+
 @keyframes animate-line-2 {
   0% {
     transform: scale(1);
     opacity: 1;
   }
+
   100% {
     transform: scale(0);
     opacity: 0;
   }
 }
+
 @keyframes animate-line-3 {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate3d(0, -(vars.$menu-icon-line-offsetY), 0) rotate(0);
   }
+
   100% {
     transform: translate3d(0, -(vars.$menu-icon-line-offsetY), 0) rotate(135deg);
   }
 }
+
 @keyframes animate-line-1-rev {
   0% {
     transform: translate3d(0, vars.$menu-icon-line-offsetY, 0) rotate(45deg);
   }
+
   50% {
     transform: translate3d(0, vars.$menu-icon-line-offsetY, 0) rotate(0);
   }
+
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }
+
 @keyframes animate-line-2-rev {
   0% {
     transform: scale(0);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
   }
 }
+
 @keyframes animate-line-3-rev {
   0% {
     transform: translate3d(0, -(vars.$menu-icon-line-offsetY), 0) rotate(135deg);
   }
+
   50% {
     transform: translate3d(0, -(vars.$menu-icon-line-offsetY), 0) rotate(0);
   }
+
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }

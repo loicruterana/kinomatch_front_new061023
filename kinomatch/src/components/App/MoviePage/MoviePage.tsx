@@ -23,31 +23,34 @@ function MoviePage() {
             <div className='movieFound__essentiel-disponibility'>
               <a className='movieFound__essentiel-disponibility-plateform' href='#'>Netflix</a>
               <a className='movieFound__essentiel-disponibility-plateform' href='#'>Prime Vidéo</a>
-              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Disney</a>
+              <a className='movieFound__essentiel-disponibility-plateform' href='#'>canalVOD</a>
+              <a className='movieFound__essentiel-disponibility-plateform' href='#'>OrangeVOD</a>
             </div>
           </div>
-          <textarea className='movieFound__essentiel-area' rows={5} cols={33} minLength={10} maxLength={4000} required placeholder='Laissez un commentaire'></textarea>
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
-          <div className='movieDetails__filters'>
-            <button className='movieDetails__filters-otherDetailsBtn'>Autres Résultats</button>
-            <p className='movieDetails__filters-filterElem'>Polar</p>
-            <p className='movieDetails__filters-filterElem'>Espagnol</p>
-            <p className='movieDetails__filters-filterElem'>Action</p>
-            <p className='movieDetails__filters-filterElem--modifier'>Modifier</p>
-          </div>
           <div className='movieDetails__description'>
-            <h3>Synopsis</h3>
-            <p>Un homme qui attend depuis ...</p>
-            <p>De Paul Arévalo</p>
-            <p>Avec Antonio de la Torre, Luis Callejo ...</p>
-            <p>1h32 min</p>
-            <p>26 avril 2017</p>
-            <button>+ de détails</button>
+            <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
+            <p className='movieDetails__description-resume'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa in deleniti nesciunt impedit obcaecati vitae repellat, perferendis aliquam vel architecto.</p>
+            <p className='movieDetails__description-director'>De Paul Arévalo</p>
+            <p className='movieDetails__description-actors'>Avec Antonio de la Torre, Luis Callejo ...</p>
+            <p className='movieDetails__description-duration'>1h32 min</p>
+            <p className='movieDetails__description-date'>26 avril 2017</p>
+            <button className='movieDetails__description-details'>+ de détails</button>
+            <form action="className='movieDetails__description-form" method="post">
+              <input type="text" name="formComment" id="formComment" />
+            </form>
             <div className='movieDetails__comments'>
               <h3>65 | webcritic87</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
+            </div>
+            <div className='movieDetails__filters'>
+              <button className='movieDetails__filters-otherDetailsBtn'>Autres Résultats</button>
+              <p className='movieDetails__filters-filterElem'>Polar</p>
+              <p className='movieDetails__filters-filterElem'>Espagnol</p>
+              <p className='movieDetails__filters-filterElem'>Action</p>
+              <p className='movieDetails__filters-filterElem--modifier'>Modifier</p>
             </div>
           </div>
         </section>
