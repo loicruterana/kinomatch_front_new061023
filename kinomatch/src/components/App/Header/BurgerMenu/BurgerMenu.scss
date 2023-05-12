@@ -1,16 +1,14 @@
 @use './../../../../styles/vars';
 
-
 @media screen and (min-width: 900px) {
-  .BurgerMenu{
-    display:none;
-  }  
+  .BurgerMenu {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 900px) {
-
-.BurgerMenu{
-  &__container{
+  .BurgerMenu {
+    &__container {
       transition: cubic-bezier(0.075, 0.82, 0.165, 1);
       display: flex;
       justify-content: center;
@@ -22,33 +20,33 @@
       width: 100%;
       height: 100%;
       background-color: vars.$theme1-primary;
-      color: vars.$theme1-secondary;  
-    &__items{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      display:flex;
-      width:100%;
-      height: 100%;
-      flex-direction: column;
-      button{
-        color:vars.$theme1-primary;
-        background-color:vars.$theme1-secondary;
-        border-radius: 15px;
-        border: vars.$theme1-secondary;
-        font-size: 32px;
-        margin-bottom: 7px;
-        z-index: 4;
-        &:hover{
-          cursor: pointer;
+      color: vars.$theme1-secondary;
+      &__items {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        button {
+          color: vars.$theme1-primary;
+          background-color: vars.$theme1-secondary;
+          border-radius: 15px;
+          border: vars.$theme1-secondary;
+          font-size: 32px;
+          margin-bottom: 7px;
+          z-index: 4;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
-    }
-    &-cross{
-      position:absolute;
-      right: 5%;
-      top: 4%;
+      &-cross {
+        position: absolute;
+        right: 5%;
+        top: 4%;
+      }
     }
   }
-}
 }

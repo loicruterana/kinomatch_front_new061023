@@ -13,6 +13,7 @@
     height: 100px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     font-size: 32px;
     background-color: vars.$theme1-primary;
@@ -20,8 +21,6 @@
 
     &-logo {
       max-width: 400px;
-      z-index: 1;
-
       &:hover {
         cursor: pointer;
       }
@@ -63,11 +62,12 @@
   }
 
   .Header {
+    width: 100vw;
+    height: 70px;
     position: fixed;
     display: flex;
-    height: 70px;
-    width: 100vw;
     justify-content: space-between;
+    align-items: center;
     padding: 2% 2%;
     font-size: 32px;
     background-color: vars.$theme1-primary;
@@ -86,7 +86,7 @@
     }
 
     .menu-icon {
-      scale: 0.6;
+      scale: 0.7;
     }
   }
 

@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import BurgerMenu from './BurgerMenu/BurgerMenu';
+
 
 import './Header.scss';
 
@@ -17,9 +19,13 @@ function Header() {
   return (
     <div className='Header'>
 {/* Logo du Header  */}
-      <a className='Header-logo' href="#">
+        <Link
+        key='home'
+        to='/'
+        className='Header-logo'
+        >
         <img className='Header-logo__image' src='./images/kino_match_logo.png' alt="logo"/>
-      </a>
+        </Link>
 {/* Bouton qui au clic amènera une recommandation de film aléatoire*/}
       <button className='Header-button'>
         <i className="fa-solid fa-dice"></i>

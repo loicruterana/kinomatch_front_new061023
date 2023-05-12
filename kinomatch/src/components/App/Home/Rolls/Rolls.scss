@@ -1,4 +1,7 @@
+@use './../../../../styles/vars';
+
 .Home-container__rolls__roll_container {
+  z-index: 5;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -7,6 +10,8 @@
   max-height: 100%;
   overflow: hidden;
   overflow-y: auto;
+  background-color: black;
+  scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -15,8 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    background-color: black;
+    color: vars.$theme1-primary;
+    background-color: vars.$theme1-secondary;
+    width: 200px;
     padding: 20px;
     margin: 5px;
   }
