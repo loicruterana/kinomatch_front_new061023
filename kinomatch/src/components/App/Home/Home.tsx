@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Home.scss';
 
 import RollGender from './Rolls/RollGender';
@@ -8,6 +8,37 @@ import RollYear from './Rolls/RollYear';
 
 
 export const Home = () => {
+
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+  });
+
+  function showDesktopVersion (){
+    setShowRollGender(true)
+    setShowRollNationality(true)
+    setShowRollYear(true)
+  }
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth
+      });
+
+      if (windowSize.width > 900){
+      showDesktopVersion();
+
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize 
+    // et actualiser le state windowSize
+    return () => window.removeEventListener('resize', handleResize);
+    // un removeEventListener pour éviter les fuites de mémoire
+  }, [windowSize]);
+
+
 
   const [showRollGender, setShowRollGender] = useState(false);
   const [showRollNationality, setShowRollNationality] = useState(false);

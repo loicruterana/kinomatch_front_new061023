@@ -25,10 +25,10 @@ export const CreateProfile = () => {
         <input className='CreateProfile-container-form-input' type="text" id="username" name="username" required placeholder='votre@email.com' />
         <label htmlFor="password">Votre mot de passe</label>
         <input className='CreateProfile-container-form-input' type="password" id="password" name="password" required placeholder='v0tr3MdP1c1'/>
-        <HCaptcha
+        {/* <HCaptcha
         sitekey="7089290a-26a0-4d4d-8124-cfbe1a2c3b8a"
         onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
-        />        
+        />         */}
       <button type='submit'>CRÉER COMPTE</button>
       </form>
 

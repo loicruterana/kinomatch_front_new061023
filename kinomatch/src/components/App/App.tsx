@@ -23,7 +23,11 @@ function App() {
         <Route
           path="/create-profile"
           element={<CreateProfile/>}
-        />         
+        />      
+        {/* <Route
+          path="/movie-page"
+          element={<MoviePage/>}
+        />      */}
       </Routes>
 
       <Footer />          
