@@ -21,10 +21,10 @@ function MoviePage() {
               <a className='movieFound__essentiel-body--note---opinion' href='#'>174 votes</a>
             </div>
             <div className='movieFound__essentiel-disponibility'>
-              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Netflix</a>
-              <a className='movieFound__essentiel-disponibility-plateform' href='#'>Prime Vidéo</a>
-              <a className='movieFound__essentiel-disponibility-plateform' href='#'>canalVOD</a>
-              <a className='movieFound__essentiel-disponibility-plateform' href='#'>OrangeVOD</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Netflix</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Prime Vidéo</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='#'>canalVOD</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='#'>OrangeVOD</a>
             </div>
           </div>
         </section>
@@ -38,8 +38,8 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>1h32 min</p>
             <p className='movieDetails__description-date'>26 avril 2017</p>
             <button className='movieDetails__description-details'>+ de détails</button>
-            <form action="className='movieDetails__description-form" method="post">
-              <input type="text" name="formComment" id="formComment" />
+            <form action=''className='movieDetails__description-form' method='post'>
+              <input type='text' name='formComment' id='formComment' />
             </form>
             <div className='movieDetails__comments'>
               <h3>65 | webcritic87</h3>
