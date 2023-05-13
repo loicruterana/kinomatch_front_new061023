@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import axios from 'axios';
+
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
+import CommentPost from './CommentPost';
 
 import './style.scss';
 
@@ -32,10 +35,11 @@ function MoviePage() {
       }
 
       {/* Modale Details*/}
-        {
-          showDetailsModal &&
-          < DetailsModal showDetailsModal={showDetailsModal} setShowDetailsModal={setShowDetailsModal}/>
-        }
+      {
+        showDetailsModal &&
+        < DetailsModal showDetailsModal={showDetailsModal} setShowDetailsModal={setShowDetailsModal} />
+      }
+
       {/* Page du film  */}
       <article className='movieFound'>
         {/* Page infos essentielles du film: titre, image, boutons, plateformes, note */}
@@ -72,13 +76,9 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
             <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
-            <form className='movieDetails__description-comments' action="#" method="post">
-              <div className='movieDetails__description-comments--content'>
-                <textarea className='movieDetails__description-comments--textArea' name="comments" id="comments" placeholder='Laissez votre commentaire ici'>
-                </textarea>
-              </div>
-              <input className='movieDetails__description-comments--input' type="submit" value="Envoyer" />
-            </form>
+
+            <CommentPost />
+
             <div className='movieDetails__comments' id='movieDetails__comments'>
               <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
