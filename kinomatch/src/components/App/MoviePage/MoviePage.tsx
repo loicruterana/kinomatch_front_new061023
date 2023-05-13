@@ -17,13 +17,13 @@ function MoviePage() {
           <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' />
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <p className='movieFound__essentiel-body--note---noteNumber'>83%</p>
+              <p className='movieFound__essentiel-body--note---noteNumber'>86%</p>
               <a className='movieFound__essentiel-body--note---opinion' href='#'>174 votes</a>
             </div>
             <div className='movieFound__essentiel-disponibility'>
               <a className='movieFound__essentiel-disponibility--plateform' href='#'>Netflix</a>
               <a className='movieFound__essentiel-disponibility--plateform' href='#'>Prime Vidéo</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='#'>canalVOD</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Disney+</a>
               <a className='movieFound__essentiel-disponibility--plateform' href='#'>OrangeVOD</a>
             </div>
           </div>
@@ -38,17 +38,25 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>1h32 min</p>
             <p className='movieDetails__description-date'>26 avril 2017</p>
             <button className='movieDetails__description-details'>+ de détails</button>
-            <form action=''className='movieDetails__description-form' method='post'>
-              <input type='text' name='formComment' id='formComment' />
+            <form className='movieDetails__description-comments' action="#" method="post">
+              <div className='movieDetails__description-comments--content'>
+                <textarea className='movieDetails__description-comments--textArea' name="comments" id="comments" placeholder='Laissez votre commentaire ici'>
+                </textarea>
+              </div>
+              <input className='movieDetails__description-comments--input' type="submit" value="Envoyer" />
             </form>
             <div className='movieDetails__comments'>
-              <h3>65 | webcritic87</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
+              <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
+              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
+              <h3 className='movieDetails__comments-pseudo'>62 | toto_du_75</h3>
+              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
+              <h3 className='movieDetails__comments-pseudo'>58 | tata_du_30</h3>
+              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
             </div>
             <div className='movieDetails__filters'>
-              <button className='movieDetails__filters-otherDetailsBtn'>Autres Résultats</button>
-              <p className='movieDetails__filters-filterElem'>Polar</p>
-              <p className='movieDetails__filters-filterElem'>Espagnol</p>
+              <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>
+              <p className='movieDetails__filters-filterElem'>Science fiction</p>
+              <p className='movieDetails__filters-filterElem'>Humour</p>
               <p className='movieDetails__filters-filterElem'>Action</p>
               <p className='movieDetails__filters-filterElem--modifier'>Modifier</p>
             </div>
