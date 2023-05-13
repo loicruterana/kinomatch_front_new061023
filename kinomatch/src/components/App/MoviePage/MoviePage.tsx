@@ -1,24 +1,41 @@
 import { useState } from 'react';
 import ImageModal from './ImageModal/ImageModal';
+import DetailsModal from './DetailsModal/DetailsModal';
 
 import './style.scss';
 
 function MoviePage() {
 
+  // MODALE IMAGE ================================================
   const [showImageModal, setShowImageModal] = useState(false);
-  console.log(showImageModal);
 
   const handleImageModal = () => {
     setShowImageModal(!showImageModal);
-  }
+  };
+
+  // MODALE DETAILS ================================================
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+
+  const handleDetailsModal = () => {
+    setShowDetailsModal(!showDetailsModal);
+  };
+
 
   return (
     <div className='moviePage'>
       {/* MODALS*/}
+
+      {/* Modale Image*/}
       {
         showImageModal &&
         < ImageModal showImageModal={showImageModal} setShowImageModal={setShowImageModal} />
       }
+
+      {/* Modale Details*/}
+        {
+          showDetailsModal &&
+          < DetailsModal showDetailsModal={showDetailsModal} setShowDetailsModal={setShowDetailsModal}/>
+        }
       {/* Page du film  */}
       <article className='movieFound'>
         {/* Page infos essentielles du film: titre, image, boutons, plateformes, note */}
@@ -49,12 +66,12 @@ function MoviePage() {
         <section className='movieDetails'>
           <div className='movieDetails__description'>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
-            <p className='movieDetails__description-resume'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa in deleniti nesciunt impedit obcaecati vitae repellat, perferendis aliquam vel architecto.</p>
-            <p className='movieDetails__description-director'>De Paul Arévalo</p>
-            <p className='movieDetails__description-actors'>Avec Antonio de la Torre, Luis Callejo ...</p>
-            <p className='movieDetails__description-duration'>1h32 min</p>
-            <p className='movieDetails__description-date'>26 avril 2017</p>
-            <button className='movieDetails__description-details'>+ de détails</button>
+            <p className='movieDetails__description-resume'>Notre bande de marginaux favorite a quelque peu changé. Peter Quill, qui pleure toujours la perte de Gamora, doit rassembler son équipe pour défendre l’univers et protéger l’un des siens. En cas d’échec, cette mission pourrait bien marquer la fin des Gardiens tels que nous les connaissons.</p>
+            <p className='movieDetails__description-director'>De James Gunn</p>
+            <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p>
+            <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
+            <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
+            <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <form className='movieDetails__description-comments' action="#" method="post">
               <div className='movieDetails__description-comments--content'>
                 <textarea className='movieDetails__description-comments--textArea' name="comments" id="comments" placeholder='Laissez votre commentaire ici'>

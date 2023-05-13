@@ -6,7 +6,7 @@ interface ImageModalProps {
     setShowImageModal: (showImageModal: boolean) => void;
 }
 
-{/* Fonction permettant de cacher la modale LeagalModal */ }
+{/* Fonction permettant de cacher la modale ImageModal */ }
 function ImageModal(props: ImageModalProps) {
     const { showImageModal, setShowImageModal } = props;
 

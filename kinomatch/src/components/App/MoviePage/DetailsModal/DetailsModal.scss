@@ -1,0 +1,73 @@
+@use '../../../../styles/vars';
+
+@media screen and (max-width: 900px) {
+
+    // CONTENEUR GLOBAL
+    .detailsModal__container {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        align-items: center;
+        width: 100%;
+        padding: 2rem;
+        padding-bottom: 60px;
+        background-size: cover;
+        background-color: vars.$theme1-primary;
+        z-index: 2;
+
+        // CONTIENT TOUS LES TYLES SAUF LE BOUTTON RETOUR
+        &-details {
+            width: 100%;
+            padding-bottom: 2rem;
+
+            // Titres
+            & h3 {
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding-bottom: 0.3rem;
+            }
+
+            // Paragraphes
+            & p {
+                padding-bottom: 1.5rem;
+                line-height: 1.2rem;
+            }
+
+            // Tableau d'acteurs
+            & ul {
+                padding-bottom: 1.5rem;
+            }
+
+            // Acteur
+            & li {
+                padding: 0.2rem 0;
+            }
+        }
+
+        // Conteneur du bouton de retour
+        &-button {
+            display: flex;
+            width: 100vw;
+            height: 70px;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+            background-color: vars.$theme1-primary;
+
+            // Bouton de retour
+            &--btn {
+                font-size: 1.2rem;
+                width: 90%;
+                height: 1.7rem;
+                border: none;
+                background: none;
+                background-color: #fff3b0;
+                color: vars.$theme1-primary;
+                border-radius: 6px;
+                font-weight: bold;
+            }
+        }
+    }
+}
