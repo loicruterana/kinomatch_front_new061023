@@ -3,6 +3,7 @@
 //* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
+
     .moviePage {
         color: vars.$theme1-secondary;
         width: 100%;
@@ -254,6 +255,7 @@
 
         // Pseudo de l'utilisateur
         &-pseudo {
+            font-size: 1.1rem;
             margin-bottom: 1rem;
         }
 
@@ -263,7 +265,15 @@
         }
     }
 
+    // Scroll ancre ralentit
+    #movieDetails__comments {
+        scroll-behavior:smooth;
+    }
+
+    // FOOTER
     .footer {
         display: none;
+        // position:sticky ;
+        // padding-bottom: 130px;
     }
 }

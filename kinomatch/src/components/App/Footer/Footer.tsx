@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer className='footer'>
       <div className='footer__content'>
-      {/* Lorsque "showModal" est falsy, alors les éléments du footer s'affichent sinon, ils ne s'éxécutent pas */}
+      {/* Lorsque "showModal" est falsy, alors les éléments du footer s'affichent, sinon ils ne s'éxécutent pas */}
         {
           !showModal &&
           <>

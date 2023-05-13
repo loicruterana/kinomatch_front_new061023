@@ -9,6 +9,7 @@
   width: 100%;
   padding-top: 5px;
 
+  // Zone du footer
   &__content {
     font-size: 1.1rem;
     color: vars.$theme1-secondary;
@@ -17,6 +18,7 @@
     justify-content: space-between;
     margin: 1rem;
 
+    // Mentiosn légales
     &-legal {
       background: none;
       color: inherit;

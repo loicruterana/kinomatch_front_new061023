@@ -1,8 +1,24 @@
+import { useState } from 'react';
+import ImageModal from './ImageModal/ImageModal';
+
 import './style.scss';
 
 function MoviePage() {
+
+  const [showImageModal, setShowImageModal] = useState(false);
+  console.log(showImageModal);
+
+  const handleImageModal = () => {
+    setShowImageModal(!showImageModal);
+  }
+
   return (
     <div className='moviePage'>
+      {/* MODALS*/}
+      {
+        showImageModal &&
+        < ImageModal showImageModal={showImageModal} setShowImageModal={setShowImageModal} />
+      }
       {/* Page du film  */}
       <article className='movieFound'>
         {/* Page infos essentielles du film: titre, image, boutons, plateformes, note */}
@@ -14,17 +30,18 @@ function MoviePage() {
             <button type='submit' className='movieFound__essentiel-btn--addToFavorites'></button>
             <button type='submit' className='movieFound__essentiel-btn--addToViewed'></button>
           </div>
-          <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' />
+          <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
+
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
               <p className='movieFound__essentiel-body--note---noteNumber'>86%</p>
-              <a className='movieFound__essentiel-body--note---opinion' href='#'>174 votes</a>
+              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>174 votes</a>
             </div>
             <div className='movieFound__essentiel-disponibility'>
-              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Netflix</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Prime Vidéo</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='#'>Disney+</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='#'>OrangeVOD</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a>
+              <a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a>
             </div>
           </div>
         </section>
@@ -45,7 +62,7 @@ function MoviePage() {
               </div>
               <input className='movieDetails__description-comments--input' type="submit" value="Envoyer" />
             </form>
-            <div className='movieDetails__comments'>
+            <div className='movieDetails__comments' id='movieDetails__comments'>
               <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
               <h3 className='movieDetails__comments-pseudo'>62 | toto_du_75</h3>
