@@ -28,7 +28,7 @@ export const RollNationality = () => {
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Birmain</div>
     </div>
     <div className="Home-container__roll-modale-mobile-version_roll-container">
-      <div className="Home-container__roll-modale-mobile-version_roll-container__item-category">GENRE</div>
+    <div className="Home-container__roll-modale-mobile-version_roll-container__item-category">NATIONALITÉ</div>
 
       <div className="Home-container__roll-modale-mobile-version_roll-container__item">Afghan</div>
       <div className="Home-container__roll-modale-mobile-version_roll-container__item">Albanais</div>

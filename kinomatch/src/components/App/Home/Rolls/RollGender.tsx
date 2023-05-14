@@ -29,6 +29,8 @@ export const RollGender = ({showRollGender}) => {
 
     
     <div className={`Home-container__roll-modale-mobile-version_roll-container`}>
+      <div className="Home-container__roll-modale-mobile-version_roll-container__item-category">GENRE</div>
+
       <div className="Home-container__roll-modale-mobile-version_roll-container__item">Western</div>
       <div className="Home-container__roll-modale-mobile-version_roll-container__item">Action </div>
       <div className="Home-container__roll-modale-mobile-version_roll-container__item">Romance</div>
