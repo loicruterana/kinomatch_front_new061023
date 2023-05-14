@@ -1,18 +1,217 @@
 @use './../../../styles/vars';
 
+//* STYLES COMMUNS AUX VERSIONS =================
+
+.moviePage {
+    color: vars.$theme1-secondary;
+    width: 100%;
+    background-color: vars.$theme1-primary;
+}
+
+
+//* DESKTOP VERSION =================
+
+@media screen and (min-width: 900px) {
+    .movieFound {
+        display: flex;
+        width: 75%;
+        height: 100vh;
+        padding: 100px 3rem 3.4rem 3rem;
+
+        // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
+        &__essentiel {
+            width: 35%;
+            margin-right: 3rem;
+
+            // Titre et icones
+            &-head {
+                display: flex;
+                align-items: flex-end;
+                width: 100%;
+                margin-bottom: 0.7rem;
+            }
+
+            // Titre
+            &-title {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin-right: auto;
+            }
+
+            // Bouton "ajouter aux likes"
+            &-btn--addToLike {
+                font-size: 0;
+                margin: 0.15rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            // Bouton "ajouter aux favoris"
+            &-btn--addToFavorites {
+                font-size: 0;
+                margin: 0.15rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            // Bouton "à voir"
+            &-btn--addToViewed {
+                font-size: 0;
+                margin: 0.15rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            &-image {
+                max-width: -webkit-fill-available;
+                border: vars.$theme1-secondary solid 7px;
+                border-radius: 6px;
+            }
+
+            // Note et plateformes
+            &-body {
+                display: flex;
+                align-items: flex-start;
+                align-items: center;
+                width: 100%;
+                margin: 1.2rem 0 2.5rem 0;
+
+                // Note
+                &--note {
+                    font-size: 1.9rem;
+                    font-weight: bold;
+                    margin: 0.7rem 1rem;
+
+                    // Avis
+                    &---opinion {
+                        font-size: 0.9rem;
+                        margin-top: 0.3rem;
+                    }
+                }
+            }
+
+            // Plateformes
+            &-disponibility {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                width: 100%;
+
+                // Plateforme individuelle
+                &--plateform {
+                    font-size: 0.9rem;
+                    font-weight: bold;
+                    color: vars.$theme1-primary;
+                    background-color: vars.$theme1-secondary;
+                    margin: 0.3rem;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+
+    // ZONE FIXED EN BAS DE PAGE CONTENANT LE BOUTON "AUTRES RESULTATS" ET LES FILTRES CONCERNANT LE FILM AFFICHÉ
+    
+    .movieDetails {
+        overflow: auto;
+    }
+    .movieDetails__filters {
+        display: flex;
+
+        // Bouton pour afficher les autres résultats de films
+        &-otherResultsBtn {
+            display: none;
+        }
+
+        // filtres sélectionnés pour le film affiché
+        &-filterElem {
+            font-size: 1rem;
+            width: fit-content;
+            height: fit-content;
+            font-weight: bold;
+            margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+            padding: 0.2rem 0.3rem;
+            border: none;
+            border-radius: 6px;
+            color: vars.$theme1-primary;
+            background-color: vars.$theme1-secondary;
+
+            &--modifier {
+                display: none;
+            }
+        }
+    }
+
+    // SYNOPSIS, DURÉE, DATE DE SORTIE, BOUTON "PLUS DE DÉTAILS"
+    .movieDetails__description {
+        font-weight: bold;
+        margin-top: 3.5rem;
+
+        // Titre du synopsis
+        &-resumeTitle {
+            font-size: 1.4rem;
+            padding-bottom: 1rem;
+        }
+
+        // Résumé du synopsis
+        &-resume {
+            margin-bottom: 1rem;
+        }
+
+        // Durée
+        &-duration {
+            margin: 1rem 0;
+        }
+
+        // Date de sortie
+        &-date {
+            margin-bottom: 1rem;
+        }
+
+        // Bouton pour afficher plus de détails
+        &-details {
+            border: none;
+            background: none;
+            background-color: vars.$theme1-secondary;
+            color: vars.$theme1-primary;
+            width: 20%;
+            height: fit-content;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
+    .movieDetails__comments {
+        border-top: vars.$theme1-secondary solid 2px;
+        // Pseudo de l'utilisateur
+        &-pseudo {
+            font-size: 1.1rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        // Commentaire de l'utilisateur
+        &-comment {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    // Scroll ancre ralentit
+    #movieDetails__comments {
+        scroll-behavior: smooth;
+    }
+}
+
 //* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
 
-    .moviePage {
-        color: vars.$theme1-secondary;
-        width: 100%;
-        background-color: vars.$theme1-primary;
-    }
-
     .movieFound {
         height: 100vh;
-        padding: 20% 2rem 35% 2rem;
+        padding: 5rem 2rem 10rem 2rem;
         overflow-y: auto;
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
@@ -83,7 +282,7 @@
 
                     // Avis
                     &---opinion {
-                        font-size: 0.7rem;
+                        font-size: 0.8rem;
                         margin-top: 0.3rem;
                     }
                 }
@@ -143,7 +342,7 @@
         // filtres sélectionnés pour le film affiché
         &-filterElem {
             font-size: 1rem;
-            height: 20px;
+            height: fit-content;
             font-weight: bold;
             margin: 0.5rem 0.5rem 0.8rem 0.5rem;
             padding: 0.2rem 0.3rem;
@@ -196,58 +395,6 @@
             font-weight: bold;
             margin-bottom: 1.5rem;
         }
-
-        // PARTIE FORMULAIRE POUR COMMENTAIRE
-        &-comments {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-
-            // Formulaire
-            &--content {
-                width: 100%;
-                overflow-x: scroll;
-            }
-
-            // Zone de texte du formulaire
-            &--textArea {
-                width: 100%;
-                height: 60px;
-                text-align: center;
-                background-color: vars.$theme1-primary;
-                color: vars.$theme1-secondary;
-                border: vars.$theme1-secondary solid 2px;
-                border-radius: 10px;
-                padding: 0.5rem;
-                margin-bottom: 0.5rem;
-
-                // Retire le focus sur la zone de texte
-                &:focus {
-                    outline: none !important;
-                }
-            }
-
-            // Bouton de soumission du formulaire
-            &--button {
-                border: none;
-                background: none;
-                background-color: vars.$theme1-secondary;
-                color: vars.$theme1-primary;
-                width: 30%;
-                height: 1.4rem;
-                border-radius: 6px;
-                font-size: 1rem;
-                font-weight: bold;
-                margin-bottom: 2rem;
-            }
-
-            // Mise en forme du placeholder
-            ::placeholder {
-                color: vars.$theme1-secondary;
-                font-size: 0.8rem;
-                font-weight: bold;
-            }
-        }
     }
 
     // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
@@ -267,7 +414,7 @@
 
     // Scroll ancre ralentit
     #movieDetails__comments {
-        scroll-behavior:smooth;
+        scroll-behavior: smooth;
     }
 
     // FOOTER

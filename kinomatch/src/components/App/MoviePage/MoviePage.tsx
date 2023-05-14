@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
-import CommentPost from './CommentPost';
+import CommentPost from './CommentPost/CommentPost';
 
 import './style.scss';
 
 function MoviePage() {
+
+  // useState pour les changements de containers lors du changement de taille écran
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 900) {
+        <CommentPost />
+      }
+    }
+  })
+
 
   // MODALE IMAGE ================================================
   const [showImageModal, setShowImageModal] = useState(false);
@@ -75,9 +87,7 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
             <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
-
             <CommentPost />
-
             <div className='movieDetails__comments' id='movieDetails__comments'>
               <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
