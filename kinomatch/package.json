@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.8.1",
+    "axios": "^1.4.0",
     "npm": "^9.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

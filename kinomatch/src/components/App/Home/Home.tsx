@@ -12,57 +12,6 @@ export const Home = () => {
   const [showRollGender, setShowRollGender] = useState(false);
   const [showRollNationality, setShowRollNationality] = useState(false);
   const [showRollYear, setShowRollYear] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-
-
-
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-  });
-
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize((prevState) => ({
-        ...prevState,
-        width: window.innerWidth
-    }));
-
-      if (windowSize.width > 900){
-      showDesktopVersion();
-      }
-      if (windowSize.width < 900){
-      showMobileVersion();
-      }
-    }
-    
-    window.addEventListener('resize', handleResize);
-    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize 
-    // et actualiser le state windowSize
-    return () => window.removeEventListener('resize', handleResize);
-    // un removeEventListener pour éviter les fuites de mémoire
-  }, [windowSize]);
-
-  function showDesktopVersion (){
-    setShowRollGender(true)
-    setShowRollNationality(true)
-    setShowRollYear(true)
-    setShowButtons(false)
-    console.log('ça passe en version desktop')
-  }
-
-function showMobileVersion (){
-  setShowButtons(true)
-  setShowRollGender(false)
-  setShowRollNationality(false)
-  setShowRollYear(false)
-  console.log(showButtons);
-  (console.log('ça passe en version mobile'))
-
-}
-
-
-
 
   function handleClickOut (){
     setShowRollGender(false)
@@ -90,43 +39,38 @@ function showMobileVersion (){
       
       {/* //////// */}
 
-      <div className={`Home-container__roll-modale ${showRollGender && 'isActive'}`}>
-        <div className='Home-container__roll-modale-backdropfilter' onClick={handleClickOut}>
+      <div className={"Home-container__roll-modale-desktop-version"}>
+
+
+        <RollGender/>
+        <RollNationality/>
+        <RollYear/>
+
+      </div>
+
+      <div className={`Home-container__roll-modale-mobile-version ${showRollGender && 'isActive'}`}>
+        <div className="Home-container__roll-modale-mobile-version-backdropfilter" onClick={handleClickOut}>
         </div>
-          { showRollGender &&
             <RollGender/>
-          }
       </div>
 
-      <div className={`Home-container__roll-modale ${showRollNationality && 'isActive'}`}>
-        <div className='Home-container__roll-modale-backdropfilter' onClick={handleClickOut}>
+      <div className={`Home-container__roll-modale-mobile-version ${showRollNationality && 'isActive'}`}>
+        <div className="Home-container__roll-modale-mobile-version-backdropfilter" onClick={handleClickOut}>
         </div>
-          { showRollNationality &&
             <RollNationality/>
-          }
+
       </div>
 
-      <div className={`Home-container__roll-modale ${showRollYear && 'isActive'}`}>
-        <div className='Home-container__roll-modale-backdropfilter' onClick={handleClickOut}>
+      <div className={`Home-container__roll-modale-mobile-version ${showRollYear && 'isActive'}`}>
+        <div className="Home-container__roll-modale-mobile-version-backdropfilter" onClick={handleClickOut}>
         </div>
-          { showRollYear &&
-            <RollYear/>
-          }
+        <RollYear/> 
+
       </div>
-        
- 
-
-          {/* { showRollYear &&
-            <RollYear/>
-          } */}
-
-
-
-      
 
         {/* //////// */}
 
-      <div className={`Home-container__buttons ${showButtons && 'isActive'}`}>
+      <div className="Home-container__buttons">
 
         <div className='Home-container__buttons__button'
         onClick={handleClickGender}
@@ -147,22 +91,6 @@ function showMobileVersion (){
         </div>
 
       </div>
-
-
-
-
-
-      {/* <div className={`Home-container-backdropfilter ${showRollNationality && 'active'}`}
-      onClick={handleClickOut}
-      ></div> */}
-
-
-{/* 
-      <div className={`Home-container-backdropfilter ${showRollYear && 'active'}`}
-      onClick={handleClickOut}
-      ></div> */}
-
-
 
     </div>
   )

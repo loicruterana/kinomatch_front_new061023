@@ -9,6 +9,7 @@
   }
 
   .Header {
+    z-index: 2;
     position: fixed;
     width: 100%;
     height: 100px;
@@ -69,11 +70,13 @@
     font-size: 32px;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
-    z-index: 1;
+    z-index: 1000;
     &-button {
       display: none;
     }
     &-logo {
+      z-index: 1000;
+
       &__image {
         width: 250px;
         margin-top: 0.5rem;
