@@ -6,6 +6,7 @@ export const RollYear = () => {
   return (
     <>
     <div className="Home-container__roll-modale-desktop-version__roll-container">
+      <div className="Home-container__roll-modale-desktop-version__roll-container__item-category">ANNÉE</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">1910</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">1920</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">1930</div>

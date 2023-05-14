@@ -8,6 +8,7 @@
   background: vars.$theme1-primary;
   width: 100%;
   padding-top: 5px;
+  z-index: 2;
 
   &__content {
     font-size: 1.1rem;

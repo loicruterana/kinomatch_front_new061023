@@ -6,7 +6,7 @@ export const RollNationality = () => {
   return (
     <>
     <div className="Home-container__roll-modale-desktop-version__roll-container">
-      <div className="Home-container__roll-modale-desktop-version__roll-container__item-category">GENRE</div>
+      <div className="Home-container__roll-modale-desktop-version__roll-container__item-category">NATIONALITÉ</div>
 
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Afghan</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Albanais</div>
