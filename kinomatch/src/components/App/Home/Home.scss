@@ -1,5 +1,4 @@
 @use './../../../styles/vars';
-
 .Home {
   &-container {
     height: 100vh;
@@ -7,16 +6,54 @@
     background-color: vars.$theme1-primary;
     display: flex;
     justify-content: space-evenly;
-    // &__rolls {
-    //   display: flex;
-    //   justify-content: space-evenly;
-    // }
-    &__button {
-      width: 25vw;
-      height: 100vh;
-      background-color: black;
-      color: red;
+    &__roll-modale {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      &-backdropfilter {
+        display: none;
+      }
+      &__roll-container {
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+        background-color: black;
+        scroll-behavior: smooth;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        &__item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: vars.$theme1-primary;
+          background-color: vars.$theme1-secondary;
+          width: 200px;
+          padding: 20px;
+          margin: 5px;
+          cursor: pointer;
+          &-category {
+            background-color: red;
+          }
+        }
+      }
     }
+    &__buttons {
+      display: none;
+    }
+
+    // &__rolls {
+    //   height: 100vh;
+    //   width: 100vw;
+    //   display: flex;
+    //   justify-content: space-around;
+    // }
   }
 }
 
@@ -25,23 +62,88 @@
 @media screen and (max-width: 900px) {
   .Home {
     &-container {
-      // padding: 10%;
+      height: 100vh;
+      width: 100vw;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: absolute;
-      top: 0;
-      &-backdropfilter {
+      // position: absolute;
+      // top: 0;
+      &__roll-modale {
         display: none;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        &.active {
+        &.isActive {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+        &-backdropfilter {
+          position: absolute;
+          width: 100%;
+          height: 100%;
           display: block;
           backdrop-filter: brightness(60%);
         }
+        &__roll-container {
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          max-height: 100%;
+          overflow: hidden;
+          overflow-y: auto;
+          background-color: black;
+          scroll-behavior: smooth;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+          &__item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: vars.$theme1-primary;
+            background-color: vars.$theme1-secondary;
+            width: 200px;
+            padding: 20px;
+            margin: 5px;
+            cursor: pointer;
+          }
+        }
+        // &__roll {
+        //   display: none;
+        //   &.active {
+        //     display: flex;
+        //     height: 100%;
+        //     width: 0;
+        //     z-index: 99;
+        //     position: absolute;
+        //     padding-top: 20%;
+        //     background-color: red;
+        //   }
+        // }
       }
+      // &-backdropfilter {
+      //   display: none;
+      //   position: absolute;
+      //   width: 100%;
+      //   height: 100%;
+      //   &.active {
+      //     display: block;
+      //     backdrop-filter: brightness(60%);
+      //   }
+      // }
       &__buttons {
+        display: none;
+        &.isActive {
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+        }
         &__button {
           width: 60vw;
           height: 8vh;
