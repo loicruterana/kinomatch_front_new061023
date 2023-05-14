@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';

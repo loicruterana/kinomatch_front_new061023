@@ -201,7 +201,7 @@
         &-comments {
             display: flex;
             flex-wrap: wrap;
-            justify-content: start;
+            justify-content: space-around;
 
             // Formulaire
             &--content {
@@ -228,7 +228,7 @@
             }
 
             // Bouton de soumission du formulaire
-            &--input {
+            &--button {
                 border: none;
                 background: none;
                 background-color: vars.$theme1-secondary;
