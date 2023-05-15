@@ -79,6 +79,13 @@ function MoviePage() {
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
+          <div className='movieDetails__filters-desktop'>
+            <button className='movieDetails__filters-desktop--otherResultsBtn'>Autres Résultats</button>
+            <p className='movieDetails__filters-desktop--filterElem'>Science fiction</p>
+            <p className='movieDetails__filters-desktop--filterElem'>Humour</p>
+            <p className='movieDetails__filters-desktop--filterElem'>Action</p>
+            <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
+          </div>
           <div className='movieDetails__description'>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
             <p className='movieDetails__description-resume'>Notre bande de marginaux favorite a quelque peu changé. Peter Quill, qui pleure toujours la perte de Gamora, doit rassembler son équipe pour défendre l’univers et protéger l’un des siens. En cas d’échec, cette mission pourrait bien marquer la fin des Gardiens tels que nous les connaissons.</p>

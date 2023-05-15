@@ -9,12 +9,13 @@
     .movieDetails__description-comments {
         display: flex;
         flex-wrap: wrap;
+        width: 70%;
         justify-content: space-around;
 
         // Formulaire
         &--content {
             width: 100%;
-            overflow-x: scroll;
+            // overflow-x: scroll;
         }
 
         // Zone de texte du formulaire
@@ -70,7 +71,7 @@
         // Formulaire
         &--content {
             width: 100%;
-            overflow-x: scroll;
+            // overflow-x: scroll;
         }
 
         // Zone de texte du formulaire
