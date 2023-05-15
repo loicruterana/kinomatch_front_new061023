@@ -63,23 +63,17 @@ function MoviePage() {
             <button type='submit' className='movieFound__essentiel-btn--addToViewed'></button>
           </div>
           <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
-
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
               <p className='movieFound__essentiel-body--note---noteNumber'>86%</p>
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>174 votes</a>
             </div>
-            <div className='movieFound__essentiel-disponibility'>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a>
-              <a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a>
-            </div>
+            <ul className='movieFound__essentiel-disponibility'>
+              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
+              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a></li>
+              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a></li>
+              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a></li>
+            </ul>
           </div>
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
@@ -99,7 +93,6 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
             <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
-            <CommentPost />
             <div className='movieDetails__comments' id='movieDetails__comments'>
               <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
@@ -107,6 +100,7 @@ function MoviePage() {
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
               <h3 className='movieDetails__comments-pseudo'>58 | tata_du_30</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
+            <CommentPost />
             </div>
             <div className='movieDetails__filters'>
               <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>

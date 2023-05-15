@@ -27,13 +27,15 @@ function CommentPost() {
     };
 
     return (
-        <form className='movieDetails__description-comments' onSubmit={handleSubmit}>
-            <div className='movieDetails__description-comments--content'>
-                <textarea className='movieDetails__description-comments--textArea' onChange={handleChange} name="comments" id="comments" placeholder='Laissez votre commentaire ici'>
-                </textarea>
-            </div>
-            <button className='movieDetails__description-comments--button' type="submit">Envoyer</button>
-        </form>
+        <div className='movieDetails__description-comments'>
+            <form className='movieDetails__description-comments-form' onSubmit={handleSubmit}>
+                <div className='movieDetails__description-comments-form--content'>
+                    <textarea className='movieDetails__description-comments-form--textArea' onChange={handleChange} name="comments" id="comments" placeholder='Laissez votre commentaire ici'>
+                    </textarea>
+                </div>
+                <button className='movieDetails__description-comments-form--button' type="submit">Envoyer</button>
+            </form>
+        </div>
     );
 }
 
