@@ -16,7 +16,7 @@
         display: flex;
         width: 75%;
         height: 100vh;
-        padding: 100px 3rem 3.4rem 3rem;
+        padding: 110px 3rem 3.4rem 3rem;
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {
@@ -28,12 +28,12 @@
                 display: flex;
                 align-items: flex-end;
                 width: 100%;
-                margin-bottom: 0.7rem;
+                margin-bottom: 1rem;
             }
 
             // Titre
             &-title {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 font-weight: bold;
                 margin-right: auto;
             }
@@ -99,7 +99,7 @@
 
                 // Plateforme individuelle
                 &--plateform {
-                    font-size: 0.9rem;
+                    font-size: 1.1rem;
                     font-weight: bold;
                     color: vars.$theme1-primary;
                     background-color: vars.$theme1-secondary;
@@ -115,6 +115,10 @@
 
     .movieDetails {
         overflow: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     // ZONE DES FILTRES EN VERSION DESKTOP ==================
@@ -149,14 +153,13 @@
 
     // =======================================================
 
-    // ZONE FIXED EN BAS DE PAGE CONTENANT LE BOUTON "AUTRES RESULTATS" ET LES FILTRES CONCERNANT LE FILM AFFICHÉ
-
     // ZONE DES FILTRES EN VERSION MOBILE ==================
 
     .movieDetails__filters {
         // display: flex;
         display: none;
     }
+
     //======================================================
 
     // SYNOPSIS, DURÉE, DATE DE SORTIE, BOUTON "PLUS DE DÉTAILS"
@@ -166,23 +169,39 @@
 
         // Titre du synopsis
         &-resumeTitle {
-            font-size: 1.4rem;
+            font-size: 1.7rem;
             padding-bottom: 1rem;
         }
 
         // Résumé du synopsis
         &-resume {
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        &-director {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        &-actors {
+            font-size: 1.2rem;
+            font-weight: 400;
         }
 
         // Durée
         &-duration {
+            font-size: 1.2rem;
             margin: 1rem 0;
+            font-weight: 400;
         }
 
         // Date de sortie
         &-date {
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            font-weight: 400;
         }
 
         // Bouton pour afficher plus de détails
@@ -194,7 +213,7 @@
             width: 20%;
             height: fit-content;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
         }
@@ -202,16 +221,18 @@
 
     // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
     .movieDetails__comments {
-        border-top: vars.$theme1-secondary solid 2px;
+        border-top: vars.$theme1-secondary solid 1px;
 
         // Pseudo de l'utilisateur
         &-pseudo {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin: 2rem 0 1rem 0;
         }
 
         // Commentaire de l'utilisateur
         &-comment {
+            font-size: 1.2rem;
+            font-weight: 400;
             margin-bottom: 1.5rem;
         }
     }
@@ -230,6 +251,10 @@
         height: 100vh;
         padding: 5rem 2rem 10rem 2rem;
         overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {

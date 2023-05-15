@@ -20,7 +20,7 @@ function CommentPost() {
         const userMessage = { postMessage };
         console.log(postMessage);
 
-        axios.post("http://NotreBack/api/users/messages", userMessage).then((response) => {
+        axios.post("http:/NotreBack/api/users/messages", userMessage).then((response) => {
             console.log(response.status, response.data);
             console.log(userMessage);
         })
