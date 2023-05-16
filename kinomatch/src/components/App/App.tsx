@@ -1,6 +1,7 @@
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Home from './Home/Home';
+import Signin from './Signin/Signin';
 import CreateProfile from './CreateProfile/CreateProfile';
 
 import { Routes, Route } from 'react-router-dom';		
@@ -24,6 +25,10 @@ function App() {
           path="/create-profile"
           element={<CreateProfile/>}
         />      
+        <Route
+          path="/signin"
+          element={<Signin/>}
+        />    
         {/* <Route
           path="/movie-page"
           element={<MoviePage/>}

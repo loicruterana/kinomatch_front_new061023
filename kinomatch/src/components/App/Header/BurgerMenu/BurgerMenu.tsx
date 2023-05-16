@@ -32,8 +32,8 @@ function BurgerMenu({ showBurgerMenu, setShowBurgerMenu }: Props) {
           {!connected && (
             <>
               <Link
-              to=''
-              key='' //! à compléter
+              to='signin'
+              key='signin'
               >
                 <button 
                 className='BurgerMenu__container__button'
@@ -43,9 +43,9 @@ function BurgerMenu({ showBurgerMenu, setShowBurgerMenu }: Props) {
               </Link>  
               <Link
               to='create-profile'
+              key='create-profile'
               >
                 <button 
-                key='create-profile'
                 className='BurgerMenu__container__button'
                 onClick={handleClick}
                 >Créer un compte 
