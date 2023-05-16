@@ -1,0 +1,59 @@
+@use '../../../../styles/vars';
+
+//* DESKTOP VERSION =================
+
+@media screen and (min-width: 900px) {
+
+    .movieFound__essentiel {
+
+        // Bouton "ajouter aux likes"
+        &-btn--addToLike {
+            all: unset;
+            scale: 1.6;
+            margin: 0.6rem;
+        }
+
+        // Bouton "ajouter aux favoris"
+        &-btn--addToFavorites {
+            all: unset;
+            scale: 1.6;
+            margin: 0.6rem;
+        }
+
+        // Bouton "à voir"
+        &-btn--addToViewed {
+            all: unset;
+            scale: 1.6;
+            margin: 0.6rem;
+        }
+    }
+}
+
+//* MOBILE VERSION =================
+
+@media screen and (max-width: 900px) {
+
+    .movieFound__essentiel {
+
+        // Bouton "ajouter aux likes"
+        &-btn--addToLike {
+            all: unset;
+            scale: 1.4;
+            margin: 0.6rem;
+        }
+
+        // Bouton "ajouter aux favoris"
+        &-btn--addToFavorites {
+            all: unset;
+            scale: 1.4;
+            margin: 0.6rem;
+        }
+
+        // Bouton "à voir"
+        &-btn--addToViewed {
+            all: unset;
+            scale: 1.4;
+            margin: 0.6rem;
+        }
+    }
+}

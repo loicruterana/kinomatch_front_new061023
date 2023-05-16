@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
 import CommentPost from './CommentPost/CommentPost';
+import AddButton from './/AddButtons/AddButtons';
 
 import './style.scss';
 
@@ -58,9 +59,10 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
             <cite className='movieFound__essentiel-title'>Les Gardiens De La Galaxie 3</cite>
-            <button type='submit' className='movieFound__essentiel-btn--addToLike'></button>
-            <button type='submit' className='movieFound__essentiel-btn--addToFavorites'></button>
-            <button type='submit' className='movieFound__essentiel-btn--addToViewed'></button>
+            {/* <button type='submit' className='movieFound__essentiel-btn--addToLike'><i className="fa-solid fa-heart" style={{color: '#d42121'}}></i></button>
+            <button type='submit' className='movieFound__essentiel-btn--addToFavorites'><i className="fa-sharp fa-solid fa-bookmark" style={{color: '#eae54d'}}></i></button>
+            <button type='submit' className='movieFound__essentiel-btn--addToViewed'><i className="fa-sharp fa-solid fa-check" style={{color: '#eae54d'}}></i></button> */}
+            <AddButton />
           </div>
           <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
           <div className='movieFound__essentiel-body'>
@@ -100,7 +102,7 @@ function MoviePage() {
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
               <h3 className='movieDetails__comments-pseudo'>58 | tata_du_30</h3>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-            <CommentPost />
+              <CommentPost />
             </div>
             <div className='movieDetails__filters'>
               <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>

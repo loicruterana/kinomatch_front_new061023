@@ -38,30 +38,6 @@
                 margin-right: auto;
             }
 
-            // Bouton "ajouter aux likes"
-            &-btn--addToLike {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
-            }
-
-            // Bouton "ajouter aux favoris"
-            &-btn--addToFavorites {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
-            }
-
-            // Bouton "à voir"
-            &-btn--addToViewed {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
-            }
-
             &-image {
                 max-width: -webkit-fill-available;
                 border: vars.$theme1-secondary solid 7px;
@@ -275,30 +251,6 @@
                 font-size: 1.4rem;
                 font-weight: bold;
                 margin-right: auto;
-            }
-
-            // Bouton "ajouter aux likes"
-            &-btn--addToLike {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
-            }
-
-            // Bouton "ajouter aux favoris"
-            &-btn--addToFavorites {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
-            }
-
-            // Bouton "à voir"
-            &-btn--addToViewed {
-                font-size: 0;
-                margin: 0.15rem;
-                width: 20px;
-                height: 20px;
             }
 
             // Affiche
