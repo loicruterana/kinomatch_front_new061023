@@ -11,6 +11,10 @@
             all: unset;
             scale: 1.6;
             margin: 0.6rem;
+
+            :hover {
+                scale: 1.3;
+            }
         }
 
         // Bouton "ajouter aux favoris"
@@ -18,13 +22,21 @@
             all: unset;
             scale: 1.6;
             margin: 0.6rem;
+
+            :hover {
+                scale: 1.3;
+            }
         }
 
         // Bouton "à voir"
         &-btn--addToViewed {
             all: unset;
-            scale: 1.6;
+            scale: 1.8;
             margin: 0.6rem;
+
+            :hover {
+                scale: 1.3;
+            }
         }
     }
 }
@@ -52,7 +64,7 @@
         // Bouton "à voir"
         &-btn--addToViewed {
             all: unset;
-            scale: 1.4;
+            scale: 1.6;
             margin: 0.6rem;
         }
     }

@@ -74,10 +74,12 @@ function MoviePage() {
             <cite className='movieFound__essentiel-title'>Les Gardiens De La Galaxie 3</cite>
             <AddButton />
           </div>
-          <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
+          <div className='movieFound__essentiel-imageFrame'>
+            <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
+          </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <p className='movieFound__essentiel-body--note---noteNumber'>86%</p>
+              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>86%</a>
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>174 votes</a>
             </div>
             <ul className='movieFound__essentiel-disponibility'>
@@ -106,7 +108,7 @@ function MoviePage() {
             <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <div className='movieDetails__description-writeComment'>
-            <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
+              <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
             </div>
             <div className='movieDetails__comments' id='movieDetails__comments'>
               <h4 className='movieDetails__comments-pseudo'>65 | webcritic87</h4>
