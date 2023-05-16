@@ -3,23 +3,64 @@
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
+
     // CONTENEUR GLOBAL
     .detailsModal__container {
         display: flex;
-        flex-direction: column;
         position: absolute;
         align-items: center;
         width: 100%;
-        padding: 2rem;
-        padding-bottom: 60px;
+        height: 100%;
+
         background-size: cover;
         background-color: vars.$theme1-primary;
         z-index: 2;
 
+        &-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &--movie{
+                max-width: -webkit-fill-available;
+                border: vars.$theme1-secondary solid 7px;
+                border-radius: 6px;
+                margin: 2rem;
+            }
+
+            &--link {
+                font-size: 1.2rem;
+                width: 8rem;
+                height: 2rem;
+                margin-bottom: 2rem;
+                padding-top: 0.35rem;
+                text-align: center;
+                border: none;
+                background: none;
+                background-color: #fff3b0;
+                color: #335c67;
+                border-radius: 6px;
+                font-weight: bold;
+            }
+        }
+
         // CONTIENT TOUS LES STYLES SAUF LE BOUTTON RETOUR
         &-details {
+            align-items: center;
+            justify-content: space-around;
+            display: flex;
             width: 100%;
             padding-bottom: 2rem;
+
+            &--principal {
+                width: 40%;
+                margin: 2rem;
+            }
+    
+            &--secondary {
+                width: 40%;
+                margin: 2rem;
+            }
 
             // Titres
             & h3 {
@@ -48,7 +89,6 @@
         // Conteneur du bouton de retour
         &-button {
             display: flex;
-            overflow: auto;
             width: 100vw;
             height: 70px;
             justify-content: center;
@@ -63,6 +103,7 @@
                 font-size: 1.2rem;
                 width: 20%;
                 height: 1.7rem;
+                padding: 0.3rem;
                 border: none;
                 background: none;
                 background-color: #fff3b0;
@@ -90,6 +131,30 @@
         background-size: cover;
         background-color: vars.$theme1-primary;
         z-index: 2;
+
+        &-image {
+            display: flex;
+            flex-direction: column;
+
+            &--movie{
+                display: none;
+            }
+
+            &--link {
+                font-size: 1.2rem;
+                width: 60vw;
+                height: 2rem;
+                margin-bottom: 2rem;
+                padding-top: 0.35rem;
+                text-align: center;
+                border: none;
+                background: none;
+                background-color: #fff3b0;
+                color: #335c67;
+                border-radius: 6px;
+                font-weight: bold;
+            }
+        }
 
         // CONTIENT TOUS LES STYLES SAUF LE BOUTTON RETOUR
         &-details {

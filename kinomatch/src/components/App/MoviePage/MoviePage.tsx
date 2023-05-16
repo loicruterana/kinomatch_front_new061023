@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
@@ -7,19 +8,18 @@ import AddButton from './/AddButtons/AddButtons';
 
 import './style.scss';
 
+
+
 function MoviePage() {
 
-  // useState pour les changements de containers lors du changement de taille écran
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 900) {
-        <CommentPost />
-      }
-    }
-  })
 
+  async function fetchMovieDetails() {
+    const response = await axios.get('http://localhost:4000/film');
+    console.log(response.data);
+  }
+
+  fetchMovieDetails();
 
   // MODALE IMAGE ================================================
   const [showImageModal, setShowImageModal] = useState(false);
@@ -35,6 +35,19 @@ function MoviePage() {
     setShowDetailsModal(!showDetailsModal);
   };
 
+  // REQUETE API MOVIE DETAILS ======================================
+  // const [movie, setMovie] = useState(null);
+
+  // useEffect(() => {
+
+  //   axios.get('http://localhost:4000/film')
+  //     .then(({ data }) => setMovie(data))
+  //     .catch((error) => console.error(error))
+  //   console.log(movie);
+  // }, []);
+
+
+  // =================================================================
 
   return (
     <div className='moviePage'>
@@ -59,9 +72,6 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
             <cite className='movieFound__essentiel-title'>Les Gardiens De La Galaxie 3</cite>
-            {/* <button type='submit' className='movieFound__essentiel-btn--addToLike'><i className="fa-solid fa-heart" style={{color: '#d42121'}}></i></button>
-            <button type='submit' className='movieFound__essentiel-btn--addToFavorites'><i className="fa-sharp fa-solid fa-bookmark" style={{color: '#eae54d'}}></i></button>
-            <button type='submit' className='movieFound__essentiel-btn--addToViewed'><i className="fa-sharp fa-solid fa-check" style={{color: '#eae54d'}}></i></button> */}
             <AddButton />
           </div>
           <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
@@ -95,12 +105,15 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
             <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
+            <div className='movieDetails__description-writeComment'>
+            <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
+            </div>
             <div className='movieDetails__comments' id='movieDetails__comments'>
-              <h3 className='movieDetails__comments-pseudo'>65 | webcritic87</h3>
+              <h4 className='movieDetails__comments-pseudo'>65 | webcritic87</h4>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-              <h3 className='movieDetails__comments-pseudo'>62 | toto_du_75</h3>
+              <h4 className='movieDetails__comments-pseudo'>62 | toto_du_75</h4>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-              <h3 className='movieDetails__comments-pseudo'>58 | tata_du_30</h3>
+              <h4 className='movieDetails__comments-pseudo'>58 | tata_du_30</h4>
               <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
               <CommentPost />
             </div>

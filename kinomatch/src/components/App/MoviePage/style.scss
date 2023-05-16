@@ -186,12 +186,32 @@
             background: none;
             background-color: vars.$theme1-secondary;
             color: vars.$theme1-primary;
-            width: 20%;
+            width: fit-content;
             height: fit-content;
+            padding: 0.15rem;
             border-radius: 6px;
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+        }
+
+        &-writeComment {
+            display: flex;
+            margin-bottom: 1.5rem;
+
+        }
+
+        &-commentShortCut {
+            border: none;
+            background: none;
+            background-color: #fff3b0;
+            color: #335c67;
+            width: fit-content;
+            padding: 0.3rem;
+            height: fit-content;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
     }
 
@@ -394,6 +414,27 @@
             font-size: 1rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+        }
+
+        &-writeComment {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+
+        }
+
+        &-commentShortCut {
+            text-align: center;
+            border: none;
+            background: none;
+            background-color: #fff3b0;
+            color: #335c67;
+            width: 100%;
+            height: fit-content;
+            padding: 0.3rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
     }
 

@@ -1,3 +1,5 @@
+import { Route, Routes } from 'react-router-dom';
+
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import MoviePage from './MoviePage/MoviePage';
@@ -13,8 +15,15 @@ function App() {
   return (
     <>
       <Header />
-      <MoviePage />
-      <Footer />          
+
+      <Routes>
+        <Route
+          path="/film"
+          element={<MoviePage />}
+        />
+      </Routes>
+
+      <Footer />
     </>
   )
 }
