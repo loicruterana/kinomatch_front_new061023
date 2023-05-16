@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { LoadingContext } from '../../../contexts/LoadingContext';
 
 
 // import HCaptcha from '@hcaptcha/react-hcaptcha';
@@ -8,13 +10,14 @@ import { Navigate } from "react-router-dom";
 import './Signin.scss';
 
 export const Signin = () => {
+
+  const { load } = useContext(LoadingContext);
+
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
-
-  const [isConnected, setIsConnected] = useState(false);
 
   const [goToHomePage, setGoToHomePage] = React.useState(false);
 
@@ -36,18 +39,19 @@ export const Signin = () => {
   // };
 
   const handleSubmit = (event) => {
+    load()
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
-      passwordConfirm: postProfil.passwordConfirm,
-
     };
     try{
-      axios.post('http://localhost:4000/signin', userData).then((response) => {
+      axios.post('http://localhost:4000/login', userData).then((response) => {
       console.log(response.status, response.data.token);
     });
   }catch{
-    console.log('error')
+    console.log('Response data:', response.data.error);
+    console.log('Response status:', error.response.status);
+    console.log('Response headers:', error.response.headers);    
     return
   }
   event.preventDefault();
@@ -89,7 +93,13 @@ export const Signin = () => {
         sitekey="7089290a-26a0-4d4d-8124-cfbe1a2c3b8a"
         onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
         />         */}
+
+<Link key='create-profile' to='/create-profile'>
+          <aside className='new-account'>Vous n'avez pas encore de compte ?</aside>
+        </Link>
+
         <button type='submit'>CONNEXION</button>
+
       </form>
     </div>
   );

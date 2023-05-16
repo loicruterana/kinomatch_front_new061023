@@ -16,11 +16,15 @@
     // height: 100%;
     scale: 0.4;
     &__name {
-      // position: absolute;
-    }
+      position: relative;
 
-    &__roll {
-      animation: rotation 2s infinite linear;
+      &__roll {
+        position: absolute;
+        left: -10px; /* Ajustez cette valeur selon vos besoins */
+        // top: %;
+        transform: translateY(-50%);
+        animation: rotation 2s infinite linear;
+      }
     }
   }
 }
@@ -34,5 +38,13 @@
   }
 }
 
-.rotation-animation {
+@media screen and (max-width: 900px) {
+  .Loading-container {
+    &__image {
+      // position: relative;
+      // width: 100%;
+      // height: 100%;
+      scale: 0.15;
+    }
+  }
 }

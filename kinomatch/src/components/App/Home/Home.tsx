@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Home.scss';
+import axios from 'axios';
+
 
 import RollGender from './Rolls/RollGender';
 import RollNationality from './Rolls/RollNationality';
@@ -7,7 +9,25 @@ import RollYear from './Rolls/RollYear';
 
 
 
+
 export const Home = () => {
+
+  const [movie,setMovie]= useState(null)
+
+useEffect(() => {
+axios.get('http://localhost:4000/film')
+  .then(( {data}) => setMovie(data))
+  .catch((error) => console.error(error))
+}, []);
+
+console.log(movie)
+
+// async function fetchMovieDetails() {
+//     const response = await axios.get('http://localhost:4000/film');
+//     console.log(response.data);
+//   }
+
+//   fetchMovieDetails()
 
   const [showRollGender, setShowRollGender] = useState(false);
   const [showRollNationality, setShowRollNationality] = useState(false);
@@ -89,7 +109,6 @@ export const Home = () => {
         >
         Année
         </div>
-
       </div>
 
     </div>

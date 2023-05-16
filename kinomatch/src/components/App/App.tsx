@@ -4,6 +4,7 @@ import Home from './Home/Home';
 import Signin from './Signin/Signin';
 import CreateProfile from './CreateProfile/CreateProfile';
 import { AuthProvider } from '../../contexts/AuthContext';
+import { LoadingProvider } from '../../contexts/LoadingContext';
 
 
 
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <AuthProvider>
-
+      <LoadingProvider>
         <Header />
         <Routes>
           <Route
@@ -39,7 +40,8 @@ function App() {
           />      */}
         </Routes>
 
-        <Footer />          
+        <Footer />   
+        </LoadingProvider>       
     </AuthProvider>
   )
 }

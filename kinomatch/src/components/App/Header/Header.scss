@@ -20,6 +20,7 @@
     font-size: 32px;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
+    border-bottom: 2px vars.$theme1-secondary solid;
     &-random-button {
       height: 25px;
       width: 200px;
@@ -70,6 +71,20 @@
         }
       }
     }
+    &-profile {
+      display: flex;
+      align-items: center;
+      &-username {
+        font-size: 20px;
+      }
+      img {
+        border-radius: 50px;
+        border: 3px solid vars.$theme1-secondary;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+      }
+    }
   }
 
   .menu-icon {
@@ -96,7 +111,15 @@
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     z-index: 1000;
-    &-button {
+    &-profile {
+      display: none;
+    }
+    &-buttons {
+      &-button {
+        display: none;
+      }
+    }
+    &-random-button {
       display: none;
     }
     &-logo {

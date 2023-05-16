@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import Loading from '../Loading/Loading';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
+import { LoadingContext } from '../../../contexts/LoadingContext';
+
 
 import './CreateProfile.scss';
 
@@ -14,7 +16,7 @@ const CreateProfile = () => {
   });
 
   const { isLoggedIn, login } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const { load, isLoading } = useContext(LoadingContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
 
   const handleChange = (event) => {
@@ -27,8 +29,7 @@ const CreateProfile = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // setIsLoading(true);
-
+    load();
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
@@ -37,7 +38,9 @@ const CreateProfile = () => {
 
     try {
       const response = await axios.post('http://localhost:4000/signup', userData);
-      console.log(response.status, response.data.token);
+      console.log(response.status, 
+        // response.data.token
+        );
       login();
       setTimeout(() => {
       setGoToHomePage(true);
@@ -47,6 +50,7 @@ const CreateProfile = () => {
     }
 
     console.log(isLoggedIn)
+    unload()
 
   };
 
@@ -89,6 +93,10 @@ const CreateProfile = () => {
           required
           placeholder='v0tr3MdP1c1'
         />
+
+        <Link key='signin' to='/signin'>
+          <aside className='new-account'>Vous avez déjà un compte ?</aside>
+        </Link>
 
         <button type='submit'>CRÉER COMPTE</button>
       </form>

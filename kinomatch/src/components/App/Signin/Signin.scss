@@ -1,5 +1,10 @@
 @use './../../../styles/vars';
 
+.new-account {
+  font-size: 14px;
+  // color: color.change(vars.$theme1-secondary, $saturation: -30%);
+}
+
 .Signin {
   &-container {
     background-color: vars.$theme1-primary;
