@@ -20,6 +20,25 @@
     font-size: 32px;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
+    &-random-button {
+      height: 25px;
+      width: 200px;
+      border-radius: 15px;
+      border: vars.$theme1-secondary;
+      color: vars.$theme1-primary;
+      font-family: 'Creato Display';
+      border: none;
+      font-size: 20px;
+      padding: 0 1%;
+      margin: 5px 0;
+      background: repeating-linear-gradient(
+        45deg,
+        vars.$theme1-secondary,
+        vars.$theme1-primary 10px,
+        vars.$theme1-secondary 10px,
+        red 20px
+      );
+    }
     &-logo {
       max-width: 400px;
       &:hover {
@@ -31,18 +50,24 @@
         scale: 1;
       }
     }
-    &-button {
-      height: 50px;
-      border-radius: 15px;
-      background-color: vars.$theme1-secondary;
-      border: vars.$theme1-secondary;
-      color: vars.$theme1-primary;
-      font-family: 'Creato Display';
-      border: none;
-      font-size: 20px;
-      padding: 0 1%;
-      i {
-        padding-right: 5px;
+    &-buttons {
+      display: flex;
+      flex-direction: column;
+      &-button {
+        height: 25px;
+        width: 200px;
+        border-radius: 15px;
+        background-color: vars.$theme1-secondary;
+        border: vars.$theme1-secondary;
+        color: vars.$theme1-primary;
+        font-family: 'Creato Display';
+        border: none;
+        font-size: 20px;
+        padding: 0 1%;
+        margin: 5px 0;
+        i {
+          padding-right: 5px;
+        }
       }
     }
   }

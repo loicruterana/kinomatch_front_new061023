@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import { Navigate } from "react-router-dom";
-
-
-// import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { Navigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 import './CreateProfile.scss';
 
-export const CreateProfile = () => {
+const CreateProfile = () => {
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
 
-  const [isConnected, setIsConnected] = useState(false);
-
-  const [goToHomePage, setGoToHomePage] = React.useState(false);
-
-  if (goToHomePage) {
-    return <Navigate to="/" />;
-  }
+  const { isLoggedIn, login } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [goToHomePage, setGoToHomePage] = useState(false);
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -30,39 +25,38 @@ export const CreateProfile = () => {
     });
   };
 
-  // const handleVerificationSuccess = (token, ekey) => {
-  //   // Faire quelque chose avec le token
-  //   console.log(token);
-  // };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // setIsLoading(true);
 
-  const handleSubmit = (event) => {
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
       passwordConfirm: postProfil.passwordConfirm,
-
     };
-    try{
-      axios.post('http://localhost:4000/signup', userData).then((response) => {
+
+    try {
+      const response = await axios.post('http://localhost:4000/signup', userData);
       console.log(response.status, response.data.token);
-    });
-  }catch{
-    console.log('error')
-    return
-  }
-  event.preventDefault();
-  setIsConnected(true);
-  setGoToHomePage(true);
+      login();
+      setTimeout(() => {
+      setGoToHomePage(true);
+      }, 1000);
+    } catch (error) {
+      console.log('Error:', error);
+    }
+
+    console.log(isLoggedIn)
+
   };
+
+  if (goToHomePage) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className='CreateProfile-container'>
-      <form
-        className='CreateProfile-container-form'
-        onSubmit={handleSubmit}
-        // action="http://localhost:4000/signup" //à modifier
-        // method="POST"
-      >
+      <form className='CreateProfile-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
@@ -73,6 +67,7 @@ export const CreateProfile = () => {
           required
           placeholder='votre@email.com'
         />
+
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
@@ -84,7 +79,7 @@ export const CreateProfile = () => {
           placeholder='v0tr3MdP1c1'
         />
 
-        <label htmlFor='passwordConfirm'>Votre mot de passe</label>
+        <label htmlFor='passwordConfirm'>Confirmez votre mot de passe</label>
         <input
           onChange={handleChange}
           className='CreateProfile-container-form-input'
@@ -95,16 +90,12 @@ export const CreateProfile = () => {
           placeholder='v0tr3MdP1c1'
         />
 
-        
-        {/* <HCaptcha
-        sitekey="7089290a-26a0-4d4d-8124-cfbe1a2c3b8a"
-        onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
-        />         */}
         <button type='submit'>CRÉER COMPTE</button>
       </form>
+
+      {isLoading && <Loading />}
     </div>
   );
 };
 
 export default CreateProfile;
-
