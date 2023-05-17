@@ -223,7 +223,6 @@
                 transform: scale(1.1);
                 // transition: all 0.2s ease;
             }
-            
         }
 
         // Container du bouton scroll vers la zone pour commenter 
@@ -232,10 +231,9 @@
             margin-bottom: 1.5rem;
 
             :hover {
-                transform: scale(1.1);
+                transform: scale(1.05);
                 // transition: all 0.2s ease;
             }
-
         }
 
         // Bouton qui emmène à la zone pour commenter

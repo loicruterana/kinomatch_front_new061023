@@ -22,7 +22,7 @@
             align-items: center;
 
             &--movie{
-                max-width: -webkit-fill-available;
+                height: 30vw;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
                 margin: 2rem;

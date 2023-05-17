@@ -12,15 +12,6 @@ import './style.scss';
 
 function MoviePage() {
 
-
-
-  async function fetchMovieDetails() {
-    const response = await axios.get('http://localhost:4000/film');
-    console.log(response.data);
-  }
-
-  fetchMovieDetails();
-
   // MODALE IMAGE ================================================
   const [showImageModal, setShowImageModal] = useState(false);
 
@@ -35,19 +26,20 @@ function MoviePage() {
     setShowDetailsModal(!showDetailsModal);
   };
 
-  // REQUETE API MOVIE DETAILS ======================================
-  // const [movie, setMovie] = useState(null);
+  // ==============================================================
 
-  // useEffect(() => {
+  const [movie, setMovie] = useState(null);
 
-  //   axios.get('http://localhost:4000/film')
-  //     .then(({ data }) => setMovie(data))
-  //     .catch((error) => console.error(error))
-  //   console.log(movie);
-  // }, []);
+  useEffect(() => {
+    const searchParams = new URLSearchParams();
+    searchParams.append('movieID', '447365');
 
+    axios.get(`https://deploy-back-kinomatch.herokuapp.com/film?${searchParams.toString()}`)
+    .then(({data}) => setMovie(data))
+    .catch((error) => console.error(error))
+    console.log(movie);
+  }, []);
 
-  // =================================================================
 
   return (
     <div className='moviePage'>
@@ -56,13 +48,20 @@ function MoviePage() {
       {/* Modale Image*/}
       {
         showImageModal &&
-        < ImageModal showImageModal={showImageModal} setShowImageModal={setShowImageModal} />
+        < ImageModal 
+        showImageModal={showImageModal} 
+        setShowImageModal={setShowImageModal} 
+        />
       }
 
       {/* Modale Details*/}
       {
         showDetailsModal &&
-        < DetailsModal showDetailsModal={showDetailsModal} setShowDetailsModal={setShowDetailsModal} />
+        < DetailsModal 
+        showDetailsModal={showDetailsModal} 
+        setShowDetailsModal={setShowDetailsModal} 
+        movie={movie}
+        />
       }
 
       {/* Page du film  */}
@@ -71,7 +70,7 @@ function MoviePage() {
         <section className='movieFound__essentiel'>
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
-            <cite className='movieFound__essentiel-title'>Les Gardiens De La Galaxie 3</cite>
+            <cite className='movieFound__essentiel-title'>{movie?.title}</cite>
             <AddButton />
           </div>
           <div className='movieFound__essentiel-imageFrame'>
@@ -101,7 +100,7 @@ function MoviePage() {
           </div>
           <div className='movieDetails__description'>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
-            <p className='movieDetails__description-resume'>Notre bande de marginaux favorite a quelque peu changé. Peter Quill, qui pleure toujours la perte de Gamora, doit rassembler son équipe pour défendre l’univers et protéger l’un des siens. En cas d’échec, cette mission pourrait bien marquer la fin des Gardiens tels que nous les connaissons.</p>
+            <p className='movieDetails__description-resume'>{movie?.overview}</p>
             <p className='movieDetails__description-director'>De James Gunn</p>
             <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p>
             <p className='movieDetails__description-duration'>Durée: 2h30 min</p>

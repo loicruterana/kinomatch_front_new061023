@@ -4,22 +4,24 @@ import './DetailsModal.scss';
 interface DetailsModalProps {
     showDetailsModal: boolean;
     setShowDetailsModal: (showDetailsModal: boolean) => void;
+    movie: unknown;
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
 function DetailsModal(props: DetailsModalProps) {
-    const { showDetailsModal, setShowDetailsModal } = props;
+    const { showDetailsModal, setShowDetailsModal, movie } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
 
     const handleDetailsModel = () => {
         setShowDetailsModal(!showDetailsModal);
     }
+    
     return (
         <div className='detailsModal__container'>
             <div className='detailsModal__container-image'>
-                <img className='detailsModal__container-image--movie' src="./images/les_gardiens.jpg" alt="Affiche du film" />
-                <a className='detailsModal__container-image--link' href="https://www.marvel.com/movies/guardians-of-the-galaxy-volume-3" target='_blank'>Page du film</a>
+                <img className='detailsModal__container-image--movie' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt="Affiche du film" />
+                <a className='detailsModal__container-image--link' href={movie?.homepage} target='_blank'>Page du film</a>
             </div>
             <div className='detailsModal__container-details'>
                 <div className='detailsModal__container-details--principal'>
@@ -34,7 +36,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-production'>Pays de production</h3>
                     <p className='detailsModal__container-productionCountry'>Etats-unis</p>
                     <h3 className='detailsModal__container-budget'>Budget</h3>
-                    <p className='detailsModal__container-budgetAmount'>250000000$</p>
+                    <p className='detailsModal__container-budgetAmount'>{movie?.budget}$</p>
                 </div>
                 <div className='detailsModal__container-details--secondary'>
                     <h3 className='detailsModal__container-distribution'>Distribution</h3>
