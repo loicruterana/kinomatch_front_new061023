@@ -20,7 +20,11 @@
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {
-            width: 35%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: space-between;
+            width: 50%;
             margin-right: 1rem;
 
             // Titre et icones
@@ -29,7 +33,6 @@
                 align-items: flex-end;
                 width: 100%;
                 margin-bottom: 1.3rem;
-
             }
 
             // Titre
@@ -48,10 +51,9 @@
             }
 
             &-image {
-                max-width: -webkit-fill-available;
+                width: 16vw;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
-
             }
 
             // Note et plateformes
@@ -250,29 +252,6 @@
             font-weight: bold;
         }
     }
-
-    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
-    .movieDetails__comments {
-        border-top: vars.$theme1-secondary solid 1px;
-
-        // Pseudo de l'utilisateur
-        &-pseudo {
-            font-size: 1.2rem;
-            margin: 2rem 0 1rem 0;
-        }
-
-        // Commentaire de l'utilisateur
-        &-comment {
-            font-size: 1.2rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-        }
-    }
-
-    // Scroll ancre ralentit
-    #movieDetails__comments {
-        scroll-behavior: smooth;
-    }
 }
 
 //* MOBILE VERSION =================
@@ -326,7 +305,10 @@
 
                 // Note
                 &--note {
-                    font-size: 1.7rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 1.9rem;
                     font-weight: bold;
                     margin: 0.7rem 1rem;
 
@@ -474,32 +456,5 @@
             font-size: 1.1rem;
             font-weight: bold;
         }
-    }
-
-    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
-    .movieDetails__comments {
-
-        // Pseudo de l'utilisateur
-        &-pseudo {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        // Commentaire de l'utilisateur
-        &-comment {
-            margin-bottom: 1.5rem;
-        }
-    }
-
-    // Scroll ancre ralentit
-    #movieDetails__comments {
-        scroll-behavior: smooth;
-    }
-
-    // FOOTER
-    .footer {
-        display: none;
-        // position:sticky ;
-        // padding-bottom: 130px;
     }
 }

@@ -64,7 +64,31 @@
             }
         }
     }
+
+    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
+    .movieDetails__comments {
+        border-top: vars.$theme1-secondary solid 1px;
+
+        // Pseudo de l'utilisateur
+        &-pseudo {
+            font-size: 1.2rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        // Commentaire de l'utilisateur
+        &-comment {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    // Scroll ancre ralentit
+    #movieDetails__comments {
+        scroll-behavior: smooth;
+    }
 }
+
 
 //* MOBILE VERSION =================
 
@@ -121,5 +145,32 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
+    }
+
+    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
+    .movieDetails__comments {
+
+        // Pseudo de l'utilisateur
+        &-pseudo {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        // Commentaire de l'utilisateur
+        &-comment {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    // Scroll ancre ralentit
+    #movieDetails__comments {
+        scroll-behavior: smooth;
+    }
+
+    // FOOTER
+    .footer {
+        display: none;
+        // position:sticky ;
+        // padding-bottom: 130px;
     }
 }

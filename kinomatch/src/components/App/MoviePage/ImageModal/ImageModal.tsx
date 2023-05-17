@@ -4,11 +4,12 @@ import './ImageModal.scss';
 interface ImageModalProps {
     showImageModal: boolean;
     setShowImageModal: (showImageModal: boolean) => void;
+    movie: unknown;
 }
 
 {/* Fonction permettant de cacher la modale ImageModal */ }
 function ImageModal(props: ImageModalProps) {
-    const { showImageModal, setShowImageModal } = props;
+    const { showImageModal, setShowImageModal, movie } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
     const handleImageModal = () => {
@@ -17,7 +18,7 @@ function ImageModal(props: ImageModalProps) {
 
     return (
         <div className='imageModal__container'>
-          <img className='imageModal__container-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal}/>
+          <img className='imageModal__container-image' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt='Image du film' onClick={handleImageModal}/>
         </div>
 
     )

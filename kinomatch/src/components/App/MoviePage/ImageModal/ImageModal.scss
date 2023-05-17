@@ -17,7 +17,8 @@
     z-index: 2;
 
     &-image {
-      scale: 1;
+      height: 100vh;
+      width: auto;
     }
   }
 }

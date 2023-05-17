@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './DetailsModal.scss';
 
 {/* Création de l'interface pour Typescript */ }
@@ -16,12 +17,17 @@ function DetailsModal(props: DetailsModalProps) {
     const handleDetailsModel = () => {
         setShowDetailsModal(!showDetailsModal);
     }
-    
+
     return (
         <div className='detailsModal__container'>
             <div className='detailsModal__container-image'>
-                <img className='detailsModal__container-image--movie' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt="Affiche du film" />
-                <a className='detailsModal__container-image--link' href={movie?.homepage} target='_blank'>Page du film</a>
+                <h3 className='detailsModal__container-originalTitle'>Titre original</h3>
+                <p className='detailsModal__container-originalTitleName'>{movie?.original_title}</p>
+                <div className='detailsModal__container-image--container'>
+                    <img className='detailsModal__container-image--container--movie' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt="Affiche du film" />
+                    {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie?.homepage} target='_blank'>Page du film</a>) : null}
+                </div>
+                {/* <a className='detailsModal__container-image--link' href={movie?.homepage} target='_blank'>Page du film</a> */}
             </div>
             <div className='detailsModal__container-details'>
                 <div className='detailsModal__container-details--principal'>
@@ -37,6 +43,8 @@ function DetailsModal(props: DetailsModalProps) {
                     <p className='detailsModal__container-productionCountry'>Etats-unis</p>
                     <h3 className='detailsModal__container-budget'>Budget</h3>
                     <p className='detailsModal__container-budgetAmount'>{movie?.budget}$</p>
+                    <h3 className='detailsModal__container-revenue'>Recettes</h3>
+                    <p className='detailsModal__container-revenueAmount'>{movie?.revenue}$</p>
                 </div>
                 <div className='detailsModal__container-details--secondary'>
                     <h3 className='detailsModal__container-distribution'>Distribution</h3>

@@ -12,21 +12,21 @@ import './style.scss';
 
 function MoviePage() {
 
-  // MODALE IMAGE ================================================
+  //==================== MODALE IMAGE ==============================
   const [showImageModal, setShowImageModal] = useState(false);
 
   const handleImageModal = () => {
     setShowImageModal(!showImageModal);
   };
 
-  // MODALE DETAILS ================================================
+  //  ====================MODALE DETAILS============================
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   const handleDetailsModal = () => {
     setShowDetailsModal(!showDetailsModal);
   };
 
-  // ==============================================================
+  // ================ REQUETE DETAILS MOVIES ========================
 
   const [movie, setMovie] = useState(null);
 
@@ -35,11 +35,21 @@ function MoviePage() {
     searchParams.append('movieID', '447365');
 
     axios.get(`https://deploy-back-kinomatch.herokuapp.com/film?${searchParams.toString()}`)
-    .then(({data}) => setMovie(data))
-    .catch((error) => console.error(error))
+      .then(({ data }) => setMovie(data))
+      .catch((error) => console.error(error))
     console.log(movie);
+    Array.isArray(movie);
   }, []);
 
+  // ===================== DUREE DU FILM EN HEURES ===================
+
+  function convertMinutesInHours(minutes: number) {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}min`;
+  }
+
+  // =================================================================
 
   return (
     <div className='moviePage'>
@@ -48,19 +58,20 @@ function MoviePage() {
       {/* Modale Image*/}
       {
         showImageModal &&
-        < ImageModal 
-        showImageModal={showImageModal} 
-        setShowImageModal={setShowImageModal} 
+        < ImageModal
+          showImageModal={showImageModal}
+          setShowImageModal={setShowImageModal}
+          movie={movie}
         />
       }
 
       {/* Modale Details*/}
       {
         showDetailsModal &&
-        < DetailsModal 
-        showDetailsModal={showDetailsModal} 
-        setShowDetailsModal={setShowDetailsModal} 
-        movie={movie}
+        < DetailsModal
+          showDetailsModal={showDetailsModal}
+          setShowDetailsModal={setShowDetailsModal}
+          movie={movie}
         />
       }
 
@@ -74,12 +85,12 @@ function MoviePage() {
             <AddButton />
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src='./images/les_gardiens.jpg' alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt='Image du film' onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>86%</a>
-              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>174 votes</a>
+              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(movie?.vote_average * 10).toFixed(1)}%</a>
+              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie?.vote_count} votes</a>
             </div>
             <ul className='movieFound__essentiel-disponibility'>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
@@ -93,9 +104,11 @@ function MoviePage() {
         <section className='movieDetails'>
           <div className='movieDetails__filters-desktop'>
             <button className='movieDetails__filters-desktop--otherResultsBtn'>Autres Résultats</button>
-            <p className='movieDetails__filters-desktop--filterElem'>Science fiction</p>
-            <p className='movieDetails__filters-desktop--filterElem'>Humour</p>
-            <p className='movieDetails__filters-desktop--filterElem'>Action</p>
+            {/* {
+              movie.genres.map((element) => (
+                <p className='movieDetails__filters-desktop--filterElem'>{element.name}</p>
+              ))
+            } */}
             <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>
@@ -103,21 +116,13 @@ function MoviePage() {
             <p className='movieDetails__description-resume'>{movie?.overview}</p>
             <p className='movieDetails__description-director'>De James Gunn</p>
             <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p>
-            <p className='movieDetails__description-duration'>Durée: 2h30 min</p>
-            <p className='movieDetails__description-date'>Sortie: 03 mai 2023</p>
+            <p className='movieDetails__description-duration'>{convertMinutesInHours(movie?.runtime)}</p>
+            <p className='movieDetails__description-date'>{movie?.release_date}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
             </div>
-            <div className='movieDetails__comments' id='movieDetails__comments'>
-              <h4 className='movieDetails__comments-pseudo'>65 | webcritic87</h4>
-              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-              <h4 className='movieDetails__comments-pseudo'>62 | toto_du_75</h4>
-              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-              <h4 className='movieDetails__comments-pseudo'>58 | tata_du_30</h4>
-              <p className='movieDetails__comments-comment'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque vel exercitationem quasi unde reprehenderit maxime, dolores aut est sapiente provident molestiae, nesciunt architecto quod veritatis repellat inventore officiis optio! Corrupti?</p>
-              <CommentPost />
-            </div>
+            <CommentPost />
             <div className='movieDetails__filters'>
               <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>
               <p className='movieDetails__filters-filterElem'>Science fiction</p>
