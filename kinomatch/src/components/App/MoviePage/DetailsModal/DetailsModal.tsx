@@ -8,11 +8,12 @@ interface DetailsModalProps {
     movie: unknown;
     credits: unknown;
     providers: unknown;
+    directingCrewMembers: unknown
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
 function DetailsModal(props: DetailsModalProps) {
-    const { showDetailsModal, setShowDetailsModal, movie, credits, providers } = props;
+    const { showDetailsModal, setShowDetailsModal, movie, credits, providers, directingCrewMembers } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
 
@@ -33,7 +34,12 @@ function DetailsModal(props: DetailsModalProps) {
             <div className='detailsModal__container-details'>
                 <div className='detailsModal__container-details--principal'>
                     <h3 className='detailsModal__container-director'>Réalisateur</h3>
-                    <p className='detailsModal__container-directorName'>James Gunn</p>
+                    {
+                        directingCrewMembers.map((director) => (
+                    <p key={director.id} className='detailsModal__container-directorName'>{director.name}</p>
+                            
+                        ))
+                    }
                     <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
                     <p className='detailsModal__container-screenwriterName'>James Gunn</p>
                     <h3 className='detailsModal__container-producers'>Sociétés de production</h3>
@@ -42,7 +48,7 @@ function DetailsModal(props: DetailsModalProps) {
                         {
                             movie &&
                             movie.production_companies.map((production_company) => (
-                                <li key={production_company.id} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
+                                <li key={Math.random()} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
                             ))
                         }
                     </ul>
@@ -54,7 +60,7 @@ function DetailsModal(props: DetailsModalProps) {
                         {
                             movie &&
                             movie.production_countries.map((production_country) => (
-                                <li key={production_country.id} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
+                                <li key={production_country.iso_3166_1} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
                             ))
                         }
                     </ul>
@@ -68,9 +74,8 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-distribution'>Distribution</h3>
                     <ul className='detailsModal__container-actorsList'>
                         {
-                            credits &&
                             credits.cast.map((actor) => (
-                        <li className='detailsModal__container-actor'>{actor.name}</li>
+                                <li className='detailsModal__container-actor'>{actor.name}</li>
                             ))
                         }
                         <li className='detailsModal__container-actor'>Chris Pratt: Peter Quill / Star Lord</li>

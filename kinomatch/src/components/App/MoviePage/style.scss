@@ -122,7 +122,12 @@
         &::-webkit-scrollbar {
             display: none;
         }
+
+        &__description-actors{
+            margin-top: 1rem;
+        }
     }
+    
 
     // ZONE DES FILTRES EN VERSION DESKTOP ==================
 

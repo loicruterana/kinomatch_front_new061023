@@ -11,6 +11,7 @@ import './style.scss';
 
 function MoviePage() {
 
+
   //==================== MODALE IMAGE ==============================
   const [showImageModal, setShowImageModal] = useState(false);
 
@@ -30,10 +31,11 @@ function MoviePage() {
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '346');
+    searchParams.append('movieID', '483368');
 
     Promise.all([
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -41,26 +43,49 @@ function MoviePage() {
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
     ])
       .then(([movieData, creditsData, providersData]) => {
+        if(movieData.data, creditsData.data, providersData.data !== null) {
         setMovie(movieData.data);
         setCredits(creditsData.data);
         setProviders(providersData.data);
+        }
         console.log(movie);
         console.log(credits);
         console.log(providers);
-
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return (
+      <div>chargement</div> //! IMPORTER LA PAGE LOADING
+    )
+  }
 
   // ===================== DUREE DU FILM EN HEURES ===================
 
   function convertMinutesInHours(minutes: number) {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
-    return `${hours}h ${remainingMinutes}min`;
+    if (remainingMinutes === 0) {
+      return `${hours}h`;
+    } else {
+      return `${hours}h ${remainingMinutes}min`;
+    }
   }
 
-  // =================================================================
+  // ======================= CONVERSION DATE ===================
+
+  // const date = movie?.release_date;
+  // const parts = date.split("-");
+  // const newDate = parts[2] + "/" + parts[1] + "/" + parts[0]; // "26/04/1954"
+
+
+  // ======================= RECUPERATION DIRECTOR ===================
+
+  const directingCrewMembers = credits.crew.filter(person => person.known_for_department === "Directing");
+  const mappedDirectingCrewMembers = directingCrewMembers.slice(0,3);
+
 
   return (
 
@@ -86,6 +111,7 @@ function MoviePage() {
           movie={movie}
           credits={credits}
           providers={providers}
+          directingCrewMembers={directingCrewMembers}
         />
       }
 
@@ -95,16 +121,16 @@ function MoviePage() {
         <section className='movieFound__essentiel'>
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
-            <cite className='movieFound__essentiel-title'>{movie?.title}</cite>
+            <cite className='movieFound__essentiel-title'>{movie.title}</cite>
             <AddButton />
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt='Image du film' onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(movie?.vote_average * 10).toFixed(1)}%</a>
-              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie?.vote_count} votes</a>
+              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(movie.vote_average * 10).toFixed(1)}%</a>
+              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
             </div>
             <ul className='movieFound__essentiel-disponibility'>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
@@ -121,7 +147,6 @@ function MoviePage() {
 
             {/* Affichage des filtres concernant le film affiché */}
             {
-              movie &&
               movie.genres.map((element) => (
                 <p key={element.id} className='movieDetails__filters-desktop--filterElem'>{element.name}</p>
               ))
@@ -130,13 +155,23 @@ function MoviePage() {
             <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>
-            <h3 className='movieDetails__description-tagline'>"{movie?.tagline}"</h3>
+            {
+              movie.tagline ? <h3 className='movieDetails__description-tagline'>"{movie.tagline}"</h3> : null
+
+            }
+            
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
             <p className='movieDetails__description-resume'>{movie?.overview}</p>
-            <p className='movieDetails__description-director'>De James Gunn</p>
+
+            {/* Affichage des réalisateurs concernant le film affiché */}
+            {
+              mappedDirectingCrewMembers.map((director) => (
+                <p key={director.id} className='movieDetails__description-director'>De {director.name}</p>
+              ))
+            }
             <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p>
-            <p className='movieDetails__description-duration'>{convertMinutesInHours(movie?.runtime)}</p>
-            <p className='movieDetails__description-date'>{movie?.release_date}</p>
+            <p className='movieDetails__description-duration'>{convertMinutesInHours(movie.runtime)}</p>
+            <p className='movieDetails__description-date'>{movie.release_date}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
