@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './Rolls.scss';
+// import './Rolls.scss';
 
 export const RollYear = () => {
   return (

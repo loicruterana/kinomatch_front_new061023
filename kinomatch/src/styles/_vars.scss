@@ -11,3 +11,5 @@ $menu-icon-height: (3 * $menu-icon-line-height) + (2 * $menu-icon-line-space);
 $cubic-bezier-in: cubic-bezier(0.3, 1, 0.7, 1);
 $cubic-bezier-out: cubic-bezier(1, 0.7, 1, 0.3);
 $input-text-size: 17px;
+
+$darken-theme1-secondary: adjust-color($theme1-secondary, $lightness: -40%);

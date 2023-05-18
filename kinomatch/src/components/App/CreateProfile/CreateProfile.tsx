@@ -37,7 +37,7 @@ const CreateProfile = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:4000/signup', userData);
+      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
       console.log(response.status, 
         // response.data.token
         );
@@ -98,7 +98,7 @@ const CreateProfile = () => {
           <aside className='new-account'>Vous avez déjà un compte ?</aside>
         </Link>
 
-        <button type='submit'>CRÉER COMPTE</button>
+        <button type='submit'>Créer compte</button>
       </form>
 
       {isLoading && <Loading />}

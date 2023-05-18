@@ -30,7 +30,7 @@ function Header() {
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
             <Link key='signin' to='/signin'>
-              SE CONNECTER
+              Se connecter
             </Link>
           </button>
         </div>

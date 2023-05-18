@@ -1,13 +1,23 @@
 import React from 'react'
 
-import './Rolls.scss';
+// import './Rolls.scss';
 
-export const RollNationality = () => {
+export const RollProvider = ({preselectedProviders}) => {
   return (
     <>
     <div className="Home-container__roll-modale-desktop-version__roll-container">
-      <div className="Home-container__roll-modale-desktop-version__roll-container__item-category">NATIONALITÉ</div>
-
+      <div className="Home-container__roll-modale-desktop-version__roll-container__item-category">PLATEFORMES</div>
+      {preselectedProviders.map((preselectedProvider) => (
+        <div className="Home-container__roll-modale-desktop-version__roll-container__item">{preselectedProvider}</div>
+      ))
+}
+    </div>
+{/* 
+      {preselectedProviders.map((preselectedProvider) => (
+        <div className="Home-container__roll-modale-desktop-version__roll-container__item">{preselectedProvider}</div>
+      ))
+}
+    </div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Afghan</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Albanais</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Algérien</div>
@@ -25,8 +35,11 @@ export const RollNationality = () => {
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Belge</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Benin</div>
       <div className="Home-container__roll-modale-desktop-version__roll-container__item">Biélorusse</div>
-      <div className="Home-container__roll-modale-desktop-version__roll-container__item">Birmain</div>
-    </div>
+      <div className="Home-container__roll-modale-desktop-version__roll-container__item">Birmain</div> */}
+
+
+
+
     <div className="Home-container__roll-modale-mobile-version_roll-container">
     <div className="Home-container__roll-modale-mobile-version_roll-container__item-category">NATIONALITÉ</div>
 
@@ -55,4 +68,4 @@ export const RollNationality = () => {
   )
 }
 
-export default RollNationality;
+export default RollProvider;

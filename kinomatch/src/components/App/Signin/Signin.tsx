@@ -45,7 +45,7 @@ export const Signin = () => {
       password: postProfil.password,
     };
     try{
-      axios.post('http://localhost:4000/login', userData).then((response) => {
+      axios.post('https://deploy-back-kinomatch.herokuapp.com/signup/login', userData).then((response) => {
       console.log(response.status, response.data.token);
     });
   }catch{
@@ -94,11 +94,11 @@ export const Signin = () => {
         onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
         />         */}
 
-<Link key='create-profile' to='/create-profile'>
+      <Link key='create-profile' to='/create-profile'>
           <aside className='new-account'>Vous n'avez pas encore de compte ?</aside>
         </Link>
 
-        <button type='submit'>CONNEXION</button>
+        <button type='submit'>Connexion</button>
 
       </form>
     </div>

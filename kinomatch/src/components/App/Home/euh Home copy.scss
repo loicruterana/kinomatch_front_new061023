@@ -32,7 +32,7 @@
       }
       &__filters-container {
         width: 100%;
-        height: 30px;
+        height: 50px;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -128,23 +128,28 @@
 @media screen and (max-width: 900px) {
   .Home {
     &-container {
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       &__roll-modale-desktop-version {
         display: none;
       }
       &__roll-modale-desktop-version__roll-container {
         display: none;
       }
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // position: absolute;
+      // top: 0;
       &__roll-modale-mobile-version {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
+        display: none;
+        &.isActive {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
         &-backdropfilter {
           z-index: 1000;
           position: absolute;
@@ -153,7 +158,7 @@
           display: block;
           backdrop-filter: brightness(60%);
         }
-        &__roll-container {
+        &_roll-container {
           z-index: 1001;
           display: flex;
           flex-direction: column;

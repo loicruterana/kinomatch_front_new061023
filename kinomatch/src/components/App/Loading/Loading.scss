@@ -10,18 +10,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.5s;
   &__image {
-    // position: relative;
-    // width: 100%;
-    // height: 100%;
     scale: 0.4;
     &__name {
       position: relative;
-
       &__roll {
         position: absolute;
-        left: -10px; /* Ajustez cette valeur selon vos besoins */
-        // top: %;
+        left: -10px;
         transform: translateY(-50%);
         animation: rotation 2s infinite linear;
       }
