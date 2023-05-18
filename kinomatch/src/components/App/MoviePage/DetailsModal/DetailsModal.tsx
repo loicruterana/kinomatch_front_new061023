@@ -6,11 +6,13 @@ interface DetailsModalProps {
     showDetailsModal: boolean;
     setShowDetailsModal: (showDetailsModal: boolean) => void;
     movie: unknown;
+    credits: unknown;
+    providers: unknown;
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
 function DetailsModal(props: DetailsModalProps) {
-    const { showDetailsModal, setShowDetailsModal, movie } = props;
+    const { showDetailsModal, setShowDetailsModal, movie, credits, providers } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
 
@@ -65,6 +67,12 @@ function DetailsModal(props: DetailsModalProps) {
                 <div className='detailsModal__container-details--secondary'>
                     <h3 className='detailsModal__container-distribution'>Distribution</h3>
                     <ul className='detailsModal__container-actorsList'>
+                        {
+                            credits &&
+                            credits.cast.map((actor) => (
+                        <li className='detailsModal__container-actor'>{actor.name}</li>
+                            ))
+                        }
                         <li className='detailsModal__container-actor'>Chris Pratt: Peter Quill / Star Lord</li>
                         <li className='detailsModal__container-actor'>Zoe Saldana: Gamora</li>
                         <li className='detailsModal__container-actor'>Will Poulter: Adam Warlock</li>

@@ -9,7 +9,6 @@ import AddButton from './/AddButtons/AddButtons';
 import './style.scss';
 
 
-
 function MoviePage() {
 
   //==================== MODALE IMAGE ==============================
@@ -29,16 +28,28 @@ function MoviePage() {
   // ================ REQUETE DETAILS MOVIES ========================
 
   const [movie, setMovie] = useState(null);
+  const [credits, setCredits] = useState(null);
+  const [providers, setProviders] = useState(null);
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '447365');
+    searchParams.append('movieID', '346');
 
-    axios.get(`https://deploy-back-kinomatch.herokuapp.com/film?${searchParams.toString()}`)
-      .then(({ data }) => setMovie(data))
-      .catch((error) => console.error(error))
-    console.log(movie);
-    Array.isArray(movie);
+    Promise.all([
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
+    ])
+      .then(([movieData, creditsData, providersData]) => {
+        setMovie(movieData.data);
+        setCredits(creditsData.data);
+        setProviders(providersData.data);
+        console.log(movie);
+        console.log(credits);
+        console.log(providers);
+
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   // ===================== DUREE DU FILM EN HEURES ===================
@@ -73,6 +84,8 @@ function MoviePage() {
           showDetailsModal={showDetailsModal}
           setShowDetailsModal={setShowDetailsModal}
           movie={movie}
+          credits={credits}
+          providers={providers}
         />
       }
 
