@@ -85,24 +85,28 @@
             & h3 {
                 font-size: 1.2rem;
                 font-weight: bold;
-                padding-bottom: 0.3rem;
+                padding-bottom: 0.8rem;
+                padding-top: 1.5rem;
+            }
+
+            & ul {
+                font-size: 1.2rem;
+                font-weight: bold;
+                // padding-bottom: 0.6rem;
+                // padding-top: 1.5rem;
+            }
+
+            & li {
+                list-style-type: none;
+                font-weight:initial;
+                line-height: 1.2rem;
             }
 
             // Paragraphes
             & p {
-                padding-bottom: 1.5rem;
                 line-height: 1.2rem;
             }
 
-            // Tableau d'acteurs
-            & ul {
-                padding-bottom: 1.5rem;
-            }
-
-            // Acteur
-            & li {
-                padding: 0.2rem 0;
-            }
         }
 
         // Conteneur du bouton de retour
@@ -161,6 +165,7 @@
             &--container {
                 display: flex;
                 margin-bottom: 1rem;
+
                 &--movie {
                     display: none;
                 }

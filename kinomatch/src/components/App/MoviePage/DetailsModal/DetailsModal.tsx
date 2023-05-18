@@ -27,7 +27,6 @@ function DetailsModal(props: DetailsModalProps) {
                     <img className='detailsModal__container-image--container--movie' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt="Affiche du film" />
                     {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie?.homepage} target='_blank'>Page du film</a>) : null}
                 </div>
-                {/* <a className='detailsModal__container-image--link' href={movie?.homepage} target='_blank'>Page du film</a> */}
             </div>
             <div className='detailsModal__container-details'>
                 <div className='detailsModal__container-details--principal'>
@@ -36,11 +35,28 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
                     <p className='detailsModal__container-screenwriterName'>James Gunn</p>
                     <h3 className='detailsModal__container-producers'>Sociétés de production</h3>
-                    <p className='detailsModal__container-producersName'>Marvel Studios / Marvel Entertainment / Troll Court Entertainment</p>
+                    <ul className='detailsModal__container-producers-list'>
+                        {/* Affichage de la liste des sociétés de production */}
+                        {
+                            movie &&
+                            movie.production_companies.map((production_company) => (
+                                <li key={production_company.id} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
+                            ))
+                        }
+                    </ul>
                     <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
                     <p className='detailsModal__container-distributionCompanyName'>Walt Disney Studios Motion Pictures</p>
-                    <h3 className='detailsModal__container-production'>Pays de production</h3>
-                    <p className='detailsModal__container-productionCountry'>Etats-unis</p>
+                    <h3 className='detailsModal__container-productionCountry'>Pays de production</h3>
+                    <ul className='detailsModal__container-productionCountry-list'>
+                        {/* Affichage de la liste des pays de production */}
+                        {
+                            movie &&
+                            movie.production_countries.map((production_country) => (
+                                <li key={production_country.id} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
+                            ))
+                        }
+                    </ul>
+                    {/* <p className='detailsModal__container-productionCountry'>Etats-unis</p> */}
                     <h3 className='detailsModal__container-budget'>Budget</h3>
                     <p className='detailsModal__container-budgetAmount'>{movie?.budget}$</p>
                     <h3 className='detailsModal__container-revenue'>Recettes</h3>

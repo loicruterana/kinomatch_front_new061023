@@ -170,6 +170,12 @@
         font-weight: bold;
         margin-top: 1rem;
 
+        &-tagline {
+            font-size: 0.9rem;
+            font-style: italic;
+            padding-bottom: 1rem;
+            }
+
         // Titre du synopsis
         &-resumeTitle {
             font-size: 1.7rem;
@@ -398,6 +404,12 @@
     // SYNOPSIS, DURÉE, DATE DE SORTIE, BOUTON "PLUS DE DÉTAILS"
     .movieDetails__description {
         font-weight: bold;
+
+        &-tagline {
+            font-size: 0.9rem;
+            font-style: italic;
+            padding-bottom: 1rem;
+            }
 
         // Titre du synopsis
         &-resumeTitle {

@@ -52,6 +52,7 @@ function MoviePage() {
   // =================================================================
 
   return (
+
     <div className='moviePage'>
       {/* MODALS*/}
 
@@ -104,14 +105,19 @@ function MoviePage() {
         <section className='movieDetails'>
           <div className='movieDetails__filters-desktop'>
             <button className='movieDetails__filters-desktop--otherResultsBtn'>Autres Résultats</button>
-            {/* {
+
+            {/* Affichage des filtres concernant le film affiché */}
+            {
+              movie &&
               movie.genres.map((element) => (
-                <p className='movieDetails__filters-desktop--filterElem'>{element.name}</p>
+                <p key={element.id} className='movieDetails__filters-desktop--filterElem'>{element.name}</p>
               ))
-            } */}
+            }
+
             <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>
+            <h3 className='movieDetails__description-tagline'>"{movie?.tagline}"</h3>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
             <p className='movieDetails__description-resume'>{movie?.overview}</p>
             <p className='movieDetails__description-director'>De James Gunn</p>
