@@ -1,0 +1,56 @@
+@use '../../../../styles/vars';
+ 
+ //* DESKTOP VERSION =================
+
+ @media screen and (min-width: 900px) {
+
+     // Plateformes
+     .movieFound__essentiel-disponibility {
+         display: flex;
+         justify-content: space-around;
+         max-width: fit-content;
+         flex-wrap: wrap;
+
+         :hover {
+             transform: scale(1.1);
+             // transition: all 0.2s ease;
+         }
+
+         // Plateforme individuelle
+         & li {
+             font-size: 1.1rem;
+             font-weight: bold;
+             color: vars.$theme1-primary;
+             background-color: vars.$theme1-secondary;
+             margin: 0.3rem;
+             padding: 0.5rem;
+             border-radius: 6px;
+
+         }
+     }
+ }
+
+ //* MOBILE VERSION =================
+
+ @media screen and (max-width: 900px) {
+
+     // Plateformes
+     .movieFound__essentiel-disponibility {
+         display: flex;
+         justify-content: space-around;
+         flex-wrap: wrap;
+         width: 100%;
+
+         // Plateforme individuelle
+         & li {
+             font-size: 0.9rem;
+             font-weight: bold;
+             color: vars.$theme1-primary;
+             background-color: vars.$theme1-secondary;
+             margin: 0.3rem;
+             padding: 0.5rem;
+             border-radius: 6px;
+         }
+     }
+
+ }

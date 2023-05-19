@@ -4,7 +4,8 @@ import axios from 'axios';
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
 import CommentPost from './CommentPost/CommentPost';
-import AddButton from './/AddButtons/AddButtons';
+import AddButton from './AddButtons/AddButtons';
+import Providers from './Providers/Providers';
 
 import './style.scss';
 
@@ -35,18 +36,22 @@ function MoviePage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '483368');
+    searchParams.append('movieID', '283995');
 
     Promise.all([
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
+      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
+      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
+      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
+
+      axios.get(`http://localhost:4000/detail?${searchParams.toString()}`),
+      axios.get(`http://localhost:4000/credits?${searchParams.toString()}`),
+      axios.get(`http://localhost:4000/provider?${searchParams.toString()}`)
     ])
       .then(([movieData, creditsData, providersData]) => {
-        if(movieData.data, creditsData.data, providersData.data !== null) {
-        setMovie(movieData.data);
-        setCredits(creditsData.data);
-        setProviders(providersData.data);
+        if (movieData.data, creditsData.data, providersData.data !== null) {
+          setMovie(movieData.data);
+          setCredits(creditsData.data);
+          setProviders(providersData.data);
         }
         console.log(movie);
         console.log(credits);
@@ -76,16 +81,25 @@ function MoviePage() {
 
   // ======================= CONVERSION DATE ===================
 
-  // const date = movie?.release_date;
-  // const parts = date.split("-");
-  // const newDate = parts[2] + "/" + parts[1] + "/" + parts[0]; // "26/04/1954"
-
+  function formatDate(dateString: string | number | Date) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+  }
 
   // ======================= RECUPERATION DIRECTOR ===================
 
-  const directingCrewMembers = credits.crew.filter(person => person.known_for_department === "Directing");
-  const mappedDirectingCrewMembers = directingCrewMembers.slice(0,3);
+  const directingCrewMembers = credits.crew.filter((person: { known_for_department: string; }) => person.known_for_department === "Directing");
+  const mappedDirectingCrewMembers = directingCrewMembers.slice(0, 3);
 
+  // ======================= RECUPERATION ACTEURS ===================
+
+  const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
+  const mappedActorCastMembers = actorCastMembers.slice(0, 3);
+
+  // ================================================================
 
   return (
 
@@ -129,16 +143,18 @@ function MoviePage() {
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(movie.vote_average * 10).toFixed(1)}%</a>
+              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
-            </div>
+            </div> 
+          </div>
+          <Providers providers={providers} />
+            {/*             
             <ul className='movieFound__essentiel-disponibility'>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a></li>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a></li>
               <li><a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a></li>
-            </ul>
-          </div>
+            </ul> */}
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
@@ -155,23 +171,35 @@ function MoviePage() {
             <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>
-            {
-              movie.tagline ? <h3 className='movieDetails__description-tagline'>"{movie.tagline}"</h3> : null
-
-            }
-            
+            <blockquote className='movieDetails__description-blockquote'>
+              {
+                movie.tagline ? <cite className='movieDetails__description-blockquote--tagline'>"{movie.tagline}"</cite> : null
+              }
+            </blockquote>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
             <p className='movieDetails__description-resume'>{movie?.overview}</p>
 
             {/* Affichage des réalisateurs concernant le film affiché */}
-            {
-              mappedDirectingCrewMembers.map((director) => (
-                <p key={director.id} className='movieDetails__description-director'>De {director.name}</p>
-              ))
-            }
-            <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p>
+            <ul className='movieDetails__description-directorsList'>
+              {
+                mappedDirectingCrewMembers.map((director, index) => (
+                  <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {director.name}
+                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length - 1 && '...'}</li>
+                ))
+              }
+            </ul>
+            {/* Affichage des acteurs concernant le film affiché */}
+            <ul className='movieDetails__description-actorsList'>
+              {
+                mappedActorCastMembers.map((actor, index) => (
+                  <li className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {actor.name}
+                    {index !== mappedActorCastMembers.length - 1 && ','}{index === mappedActorCastMembers.length - 1 && '...'}</li>
+                ))
+              }
+            </ul>
+            {/* <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p> */}
             <p className='movieDetails__description-duration'>{convertMinutesInHours(movie.runtime)}</p>
-            <p className='movieDetails__description-date'>{movie.release_date}</p>
+            <p className='movieDetails__description-date'>{formatDate(movie.release_date)}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>

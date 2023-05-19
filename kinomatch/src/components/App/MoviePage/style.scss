@@ -58,19 +58,21 @@
 
             // Note et plateformes
             &-body {
-                display: flex;
-                align-items: center;
-                width: 100%;
-                margin: 1.3rem 0 2.5rem 0;
+                margin: 0.6rem;
 
 
                 // Note
                 &--note {
                     display: flex;
-                    flex-direction: column;
-                    font-size: 1.9rem;
+                    // flex-direction: column;
+                    align-items: center;
+                    font-size: 1.6rem;
                     font-weight: bold;
                     margin: 0.7rem 1rem;
+
+                    &---noteNumber {
+                        margin-right: 0.5rem;
+                    }
 
                     :hover {
                         transform: scale(1.1);
@@ -83,31 +85,6 @@
                         font-size: 0.9rem;
                         margin-top: 0.3rem;
                     }
-                }
-            }
-
-            // Plateformes
-            &-disponibility {
-                display: flex;
-                justify-content: space-around;
-                max-width: fit-content;
-                flex-wrap: wrap;
-
-                :hover {
-                    transform: scale(1.1);
-                    // transition: all 0.2s ease;
-                }
-
-                // Plateforme individuelle
-                & li {
-                    font-size: 1.1rem;
-                    font-weight: bold;
-                    color: vars.$theme1-primary;
-                    background-color: vars.$theme1-secondary;
-                    margin: 0.3rem;
-                    padding: 0.5rem;
-                    border-radius: 6px;
-
                 }
             }
         }
@@ -123,11 +100,11 @@
             display: none;
         }
 
-        &__description-actors{
+        &__description-actors {
             margin-top: 1rem;
         }
     }
-    
+
 
     // ZONE DES FILTRES EN VERSION DESKTOP ==================
 
@@ -162,6 +139,7 @@
     // =======================================================
 
     // ZONE DES FILTRES EN VERSION MOBILE ==================
+    //! A RETRAVAILLER
 
     .movieDetails__filters {
         // display: flex;
@@ -175,11 +153,15 @@
         font-weight: bold;
         margin-top: 1rem;
 
-        &-tagline {
-            font-size: 0.9rem;
-            font-style: italic;
-            padding-bottom: 1rem;
+        &-blockquote {
+            margin-bottom: 0.8rem;
+
+            &--tagline {
+                font-size: 0.9rem;
+                font-style: italic;
+                padding-bottom: 1rem;
             }
+        }
 
         // Titre du synopsis
         &-resumeTitle {
@@ -194,14 +176,22 @@
             font-weight: 400;
         }
 
-        &-director {
-            font-size: 1.2rem;
-            font-weight: 400;
+        &-directorsList {
+            margin-bottom: 1rem;
+
+            &--director {
+                display: inline-block;
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
         }
 
-        &-actors {
-            font-size: 1.2rem;
-            font-weight: 400;
+        &-actorsList {
+            &--actors {
+                display: inline-block;
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
         }
 
         // Durée
@@ -331,24 +321,24 @@
                 }
             }
 
-            // Plateformes
-            &-disponibility {
-                display: flex;
-                justify-content: space-around;
-                flex-wrap: wrap;
-                width: 100%;
+            // // Plateformes
+            // &-disponibility {
+            //     display: flex;
+            //     justify-content: space-around;
+            //     flex-wrap: wrap;
+            //     width: 100%;
 
-                // Plateforme individuelle
-                & li {
-                    font-size: 0.9rem;
-                    font-weight: bold;
-                    color: vars.$theme1-primary;
-                    background-color: vars.$theme1-secondary;
-                    margin: 0.3rem;
-                    padding: 0.5rem;
-                    border-radius: 6px;
-                }
-            }
+            //     // Plateforme individuelle
+            //     & li {
+            //         font-size: 0.9rem;
+            //         font-weight: bold;
+            //         color: vars.$theme1-primary;
+            //         background-color: vars.$theme1-secondary;
+            //         margin: 0.3rem;
+            //         padding: 0.5rem;
+            //         border-radius: 6px;
+            //     }
+            // }
         }
     }
 
@@ -414,7 +404,7 @@
             font-size: 0.9rem;
             font-style: italic;
             padding-bottom: 1rem;
-            }
+        }
 
         // Titre du synopsis
         &-resumeTitle {
