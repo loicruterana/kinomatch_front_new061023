@@ -25,6 +25,7 @@ export const Home = () => {
   const [ showRollProvider, setShowRollProvider ] = useState(false);
   const [ showRollDecade, setShowRollDecade ] = useState(false);
   const [ mobileVersion, setMobileVersion ] = useState(false);
+  const [ dataToTransfer, setDataToTransfer ] = useState(null);
 
 
 // ================ IMPORT PROPS CONTEXTS ================
@@ -34,67 +35,90 @@ export const Home = () => {
   const { load, unload, isLoading } = useContext(LoadingContext);
 
 
+
 // ================ USE EFFECT API ================
 useEffect(() => {
   load()
-  axios.get('http://localhost:4000/genres')
+  axios.get('https://deploy-back-kinomatch.herokuapp.com/genres')
     .then(({ data }) => setPreselectedGenres(data.genres))
     .catch((error) => console.error(error));
 
-  axios.get('http://localhost:4000/providers')
+  axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
     .then(({ data }) => {
-      const filteredProviders = data.results.filter(
+      const filteredProviders = data.results
+      .map((element) => element)
+      .filter(
         (element) =>
           element.display_priorities.hasOwnProperty('FR') &&
           element.display_priorities['FR'] < 20 &&
           !preselectedProviders.includes(element.provider_name)
       );
+    
 
-      const uniqueProviders = filteredProviders.map((element) => ({
-        provider_name: element.provider_name,
-        provider_id: element.provider_id,
-      }));
-      unload()
-      if (!isLoading) {
-        setPreselectedProviders(uniqueProviders);
-      }
+      // const uniqueProviders = filteredProviders.map((element) => ({
+      //   provider_name: element.provider_name,
+      //   provider_id: element.provider_id,
+      // }));
 
-      console.log(uniqueProviders);
-      console.log(preselectedProviders);
+      
+      // unload()
+      // if (!isLoading) {
+        setPreselectedProviders(filteredProviders);
+      // }
+
+      console.log(Array.isArray(filteredProviders));
+      console.log(filteredProviders);
+      console.log(preselectedProviders)
     })
     .catch((error) => console.error(error));
 }, []);
 
-
-  // const addData = () => {
-  //   setPreselectedGenres((state) => [
-  //     ...state,
-  //     { name: , id: Math.random() }
-  //   ]);
-  // };
+//=================================
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
     // load();
     console.log("on passe par ici")
   
-    const queryData = {
-      genres: selectedGenreFilters,
-      providers: selectedProviderFilters,
-      decades: selectedDecadeFilters,
-    };
-  
-    const queryString = Object.entries(queryData)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
-  
-    const url = `http://localhost:4000/films?${queryString}`;
+    // const queryData = {
+    //   genres: selectedGenreFilters,
+    //   providers: selectedProviderFilters,
+    //   decades: selectedDecadeFilters,
+    // };
+  //   const queryString = 
+  // {
+  //   genre: 14,
+  // }
+  const searchParams = new URLSearchParams();
+  // searchParams.append('genreID', '8');
+  // searchParams.append('genre', '14');
+
+  // searchParams.append('provider', '344');
+
+  console.log(selectedGenreFilters)
+  console.log(selectedDecadeFilters)
+
+
+  selectedGenreFilters.forEach((filter) => {
+    searchParams.append('genreID', filter.id);
+  });
+
+  selectedDecadeFilters.map((filter) => {
+    searchParams.append('decade', filter);
+  });
+
+
+       const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
+   
+    console.log(url)
   
     try {
       axios
         .get(url)
         .then((response) => {
-          console.log(response.status, response.data.token);
+          console.log(response.status, response.data.token, response.data);
+          setDataToTransfer(response.data)
+          console.log(dataToTransfer)
         })
         .catch((error) => {
           console.log('Response data:', error.response.data.error);
@@ -126,17 +150,16 @@ useEffect(() => {
 
       if (windowSize.width > 900){
         setMobileVersion(false)
-        setShowButtons(true)
-        setShowRollGenre(false)
-        setShowRollNationality(false)
-        setShowRollDecade(false)
+        setShowRollGenre(true)
+        setShowRollProvider(true)
+        setShowRollDecade(true)
         
       }
       if (windowSize.width < 900){
         setMobileVersion(true)
-        setShowRollNationality(true)
-        setShowRollDecade(true)
-        // setShowButtons(false)
+        setShowRollGenre(false)
+        setShowRollProvider(false)
+        setShowRollDecade(false)
       }
     }
     
@@ -169,23 +192,6 @@ useEffect(() => {
   function handleRemove(event){
     removeGenreFilter(event.target.textContent)
   }
-
-  // function showDesktopVersion (){
-  //   setShowRollGenre(true)
-  //   setShowRollNationality(true)
-  //   setShowRollDecade(true)
-  //   setShowButtons(false)
-  //   console.log('ça passe en version desktop')
-  // }
-
-  // function showMobileVersion (){
-  //   setShowButtons(true)
-  //   setShowRollGenre(false)
-  //   setShowRollNationality(false)
-  //   setShowRollDecade(false)
-  //   console.log(showButtons);
-  //   (console.log('ça passe en version mobile'))
-  // }
   
 
 // ================ JSX ================

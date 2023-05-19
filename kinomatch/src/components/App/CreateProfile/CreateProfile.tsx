@@ -17,7 +17,7 @@ const CreateProfile = () => {
   });
 
   const { isLoggedIn, login } = useContext(AuthContext);
-  const { addEmail, email } = useContext(EmailContext)
+  const { addEmail, email } = useContext(EmailContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
 
 
@@ -38,12 +38,12 @@ const CreateProfile = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:4000/signup', userData);
+      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
       console.log(response.status, 
         // response.data.token
         );
       login();
-      setEmail(postProfil.email)
+      addEmail(postProfil.email)
       setTimeout(() => {
       setGoToHomePage(true);
       }, 1500);
