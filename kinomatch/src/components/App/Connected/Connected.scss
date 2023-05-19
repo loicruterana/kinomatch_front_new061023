@@ -1,0 +1,15 @@
+@use './../../../styles/vars';
+
+.Connected-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  opacity: 0.9;
+  z-index: 99999;
+  background-color: vars.$theme1-primary;
+  color: vars.$theme1-secondary;
+  font-size: 45px;
+}

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import { LoadingContext } from '../../../contexts/LoadingContext';
+import Connected from '../Connected/Connected';
+import { EmailContext } from '../../../contexts/EmailContext';
 
 
 import './CreateProfile.scss';
@@ -16,8 +17,9 @@ const CreateProfile = () => {
   });
 
   const { isLoggedIn, login } = useContext(AuthContext);
-  const { load, isLoading } = useContext(LoadingContext);
+  const { addEmail, email } = useContext(EmailContext)
   const [goToHomePage, setGoToHomePage] = useState(false);
+
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -29,7 +31,6 @@ const CreateProfile = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    load();
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
@@ -37,20 +38,20 @@ const CreateProfile = () => {
     };
 
     try {
-      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
+      const response = await axios.post('http://localhost:4000/signup', userData);
       console.log(response.status, 
         // response.data.token
         );
       login();
+      setEmail(postProfil.email)
       setTimeout(() => {
       setGoToHomePage(true);
-      }, 1000);
+      }, 1500);
     } catch (error) {
       console.log('Error:', error);
     }
 
     console.log(isLoggedIn)
-    unload()
 
   };
 
@@ -100,8 +101,8 @@ const CreateProfile = () => {
 
         <button type='submit'>Créer compte</button>
       </form>
-
-      {isLoading && <Loading />}
+      
+      {email && <Connected email={email}/>}
     </div>
   );
 };

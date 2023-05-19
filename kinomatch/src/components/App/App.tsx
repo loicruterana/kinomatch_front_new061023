@@ -8,6 +8,7 @@ import { LoadingProvider } from '../../contexts/LoadingContext';
 import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersProvider } from '../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFiltersContext';
+import { EmailProvider } from '../../contexts/EmailContext';
 
 
 
@@ -21,6 +22,8 @@ import './App.scss';
 function App() {
 
   return (
+    <EmailProvider>
+
     <SelectedDecadeFiltersProvider>
 
     <SelectedProviderFiltersProvider>
@@ -55,6 +58,7 @@ function App() {
     </SelectedGenreFiltersProvider>
     </SelectedProviderFiltersProvider>
     </SelectedDecadeFiltersProvider>
+    </EmailProvider>
 
   )
 }

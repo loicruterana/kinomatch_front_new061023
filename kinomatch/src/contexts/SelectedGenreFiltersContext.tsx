@@ -7,16 +7,23 @@ export const SelectedGenreFiltersContext = createContext();
 export const SelectedGenreFiltersProvider = ({ children }) => {
   const [selectedGenreFilters, setSelectedGenreFilters] = useState([]);
 
-  const addGenreFilter = (filter) => {
-    if (selectedGenreFilters.includes(filter)) {
-      removeGenreFilter(filter)
+  const addGenreFilter = (name, genreId) => {
+    if (selectedGenreFilters.some((f) => f.name === name)) {
+      removeGenreFilter(name);
       return;
     }
-    setSelectedGenreFilters((state) => [...state, filter]);
-  };
+    setSelectedGenreFilters((state) => [
+      ...state,
+      {
+        name: name,
+        id: genreId,
+      }
+    ]);
+  };  
+  
 
-  const removeGenreFilter = (filter) => {
-    setSelectedGenreFilters((state) => state.filter((f) => f !== filter));
+  const removeGenreFilter = (name) => {
+    setSelectedGenreFilters((state) => state.filter((f) => f.name !== name));
   };
 
   return (

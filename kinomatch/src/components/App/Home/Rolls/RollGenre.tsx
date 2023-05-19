@@ -23,17 +23,14 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
   // const [isClicked, setIsClicked] = useState(false)
 
 // ================ HANDLERS ================
-  function handleGenreClick(event) {
-    const filter = event.target.textContent;
-    addGenreFilter(filter);
-    // if (clickedItems.includes(filter)) {
-    //   setClickedItems(clickedItems.filter(item => item !== filter));
-    // } else {
-    //   setClickedItems([...clickedItems, filter]);
-    // }
-    // faire en sorte de changer le style
-    // setIsClicked(true)
-  }
+function handleGenreClick(event) {
+  const name = event.target.textContent;
+  const genreId = event.target.dataset.id;
+  console.log(name, genreId)
+  addGenreFilter(name, genreId) 
+  console.log(selectedGenreFilters)
+}
+
 
   function handleProviderClick(event) {
     const filter = event.target.textContent;
@@ -71,17 +68,15 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
   return (
     <>
 
-{/* // ================ JSX : VERSION DESKTOP ================ */}
       <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}`}>
-        {/* <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'dekstop-version'}_roll-container__item-category`}> */}
 
-{/* // ================ JSX : ROLL GENRE DESKTOP ================ */}
+{/* // ================ JSX : ROLL GENRE ================ */}
 {((showRollGenre && mobileVersion) || !mobileVersion) && 
   <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
     <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>GENRE</div>
     {
       preselectedGenres.map((preselectedGenre) => (
-        <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick}>
+        <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick} data-id={preselectedGenre.id}>
           {preselectedGenre.name}
         </div>
       ))
@@ -89,7 +84,7 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
   </div>
 }                
 
-{/* // ================ JSX : ROLL PROVIDERS DESKTOP ================ */}
+{/* // ================ JSX : ROLL PROVIDERS ================ */}
 {( (showRollProvider && mobileVersion) || !mobileVersion) && 
 
 <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
@@ -98,6 +93,7 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
     preselectedProviders.map((preselectedProvider) => (
       <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedProvider.id} 
       onClick={handleProviderClick}
+      data-id={preselectedProvider.id}
       >
         {preselectedProvider}
       </div>
@@ -106,7 +102,7 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
 </div>
 } 
 
-{/* // ================ JSX : ROLL DECENNIES DESKTOP ================ */}
+{/* // ================ JSX : ROLL DECENNIES ================ */}
 {( (showRollDecade && mobileVersion) || !mobileVersion) && 
 
 <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>

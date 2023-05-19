@@ -2,7 +2,9 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { LoadingContext } from '../../../contexts/LoadingContext';
+import { EmailContext } from '../../../contexts/EmailContext';
+import { AuthContext } from '../../../contexts/AuthContext';
+import Connected from '../Connected/Connected';
 
 
 // import HCaptcha from '@hcaptcha/react-hcaptcha';
@@ -11,13 +13,14 @@ import './Signin.scss';
 
 export const Signin = () => {
 
-  const { load } = useContext(LoadingContext);
-
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
+
+  const { addEmail, email } = useContext(EmailContext);
+  const { isLoggedIn, login } = useContext(AuthContext);
 
   const [goToHomePage, setGoToHomePage] = React.useState(false);
 
@@ -33,30 +36,27 @@ export const Signin = () => {
     });
   };
 
-  // const handleVerificationSuccess = (token, ekey) => {
-  //   // Faire quelque chose avec le token
-  //   console.log(token);
-  // };
-
   const handleSubmit = (event) => {
-    load()
+    event.preventDefault();
+    login();
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
     };
     try{
-      axios.post('https://deploy-back-kinomatch.herokuapp.com/signup/login', userData).then((response) => {
+      axios.post('http://localhost:4000/login', userData).then((response) => {
       console.log(response.status, response.data.token);
-    });
+      addEmail(postProfil.email)
+      setTimeout(() => {
+        setGoToHomePage(true);
+        }, 1500);
+    })
   }catch{
     console.log('Response data:', response.data.error);
     console.log('Response status:', error.response.status);
     console.log('Response headers:', error.response.headers);    
     return
   }
-  event.preventDefault();
-  setIsConnected(true);
-  setGoToHomePage(true);
   };
 
   return (
@@ -101,6 +101,8 @@ export const Signin = () => {
         <button type='submit'>Connexion</button>
 
       </form>
+      {email && <Connected email={email}/>}
+
     </div>
   );
 };

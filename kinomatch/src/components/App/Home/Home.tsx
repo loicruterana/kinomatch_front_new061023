@@ -12,6 +12,7 @@ import RollGenre from './Rolls/RollGenre';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
+import { LoadingContext } from '../../../contexts/LoadingContext';
 
 
 // ================ COMPOSANT ================
@@ -30,53 +31,82 @@ export const Home = () => {
   const { selectedGenreFilters, addGenreFilter, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+  const { load, unload, isLoading } = useContext(LoadingContext);
 
 
 // ================ USE EFFECT API ================
-  useEffect(() => {
-    axios.get(`https://deploy-back-kinomatch.herokuapp.com/genres`)
-      .then(({ data }) => setPreselectedGenres(data.genres))
-      .catch((error) => console.error(error));
+useEffect(() => {
+  load()
+  axios.get('http://localhost:4000/genres')
+    .then(({ data }) => setPreselectedGenres(data.genres))
+    .catch((error) => console.error(error));
 
-      axios
-      .get(`https://deploy-back-kinomatch.herokuapp.com/providers`)
-      .then(({ data }) => {
-        const filteredProviders = data.results.filter(
-          (element) =>
-            element.display_priorities.hasOwnProperty('FR') &&
-            element.display_priorities['FR'] < 20 &&
-            !preselectedProviders.includes(element.provider_name)
-        );
-// on passe par un Set pour avoir des éléments uniques
-        const uniqueProviders = Array.from(
-          new Set([...preselectedProviders, ...filteredProviders.map((element) => element.provider_name)])
-        );
-    
+  axios.get('http://localhost:4000/providers')
+    .then(({ data }) => {
+      const filteredProviders = data.results.filter(
+        (element) =>
+          element.display_priorities.hasOwnProperty('FR') &&
+          element.display_priorities['FR'] < 20 &&
+          !preselectedProviders.includes(element.provider_name)
+      );
+
+      const uniqueProviders = filteredProviders.map((element) => ({
+        provider_name: element.provider_name,
+        provider_id: element.provider_id,
+      }));
+      unload()
+      if (!isLoading) {
         setPreselectedProviders(uniqueProviders);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+      }
+
+      console.log(uniqueProviders);
+      console.log(preselectedProviders);
+    })
+    .catch((error) => console.error(error));
+}, []);
 
 
-  const handleSubmit = (event) => {
-    load()
+  // const addData = () => {
+  //   setPreselectedGenres((state) => [
+  //     ...state,
+  //     { name: , id: Math.random() }
+  //   ]);
+  // };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // load();
+    console.log("on passe par ici")
+  
     const queryData = {
       genres: selectedGenreFilters,
       providers: selectedProviderFilters,
       decades: selectedDecadeFilters,
     };
-    try{
-      axios.post('https://deploy-back-kinomatch.herokuapp.com/films', queryData).then((response) => {
-      console.log(response.status, response.data.token);
-    });
-  }catch{
-    console.log('Response data:', response.data.error);
-    console.log('Response status:', error.response.status);
-    console.log('Response headers:', error.response.headers);    
-    return
-  }
-  event.preventDefault();
+  
+    const queryString = Object.entries(queryData)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join('&');
+  
+    const url = `http://localhost:4000/films?${queryString}`;
+  
+    try {
+      axios
+        .get(url)
+        .then((response) => {
+          console.log(response.status, response.data.token);
+        })
+        .catch((error) => {
+          console.log('Response data:', error.response.data.error);
+          console.log('Response status:', error.response.status);
+          console.log('Response headers:', error.response.headers);
+        });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
+  
 
 
   //========
@@ -168,9 +198,9 @@ export const Home = () => {
         <div className="Home-container__filters-selector__filters-container">
 {/* // affichage des filtres sélectionnés */}
           { selectedGenreFilters.map((filter) => (
-            <div className="Home-container__filters-selector__filters-container__filter"
+            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
             onClick={handleRemove}>
-            {filter}
+            {filter.name}
             </div>
           ))
           }
@@ -179,7 +209,7 @@ export const Home = () => {
         <div className="Home-container__filters-selector__filters-container">
 {/* // affichage des filtres sélectionnés */}
           { selectedProviderFilters.map((filter) => (
-            <div className="Home-container__filters-selector__filters-container__filter"
+            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
             onClick={handleRemove}>
             {filter}
             </div>
@@ -190,7 +220,7 @@ export const Home = () => {
         <div className="Home-container__filters-selector__filters-container">
 {/* // affichage des filtres sélectionnés */}
           { selectedDecadeFilters.map((filter) => (
-            <div className="Home-container__filters-selector__filters-container__filter"
+            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
             onClick={handleRemove}>
             {filter}
             </div>
@@ -198,10 +228,10 @@ export const Home = () => {
           }
         </div>
 {/* // bouton validé */}
-<form onSubmit={handleSubmit}>
+<form onSubmit={handleFormSubmit}>
+  <button type="submit">Valider mon choix</button>
+</form>
 
-        <button type='submit'>Valider mon choix</button>
-        </form>
       </div>
 
 {/* // ================ JSX : VERSION MOBILE ================ */}
@@ -250,7 +280,6 @@ export const Home = () => {
         <RollGenre preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} mobileVersion={mobileVersion} showRollGenre={showRollGenre}/>
       </div>
       } */}
-
     </div>
   )
 

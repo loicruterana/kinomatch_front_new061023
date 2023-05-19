@@ -7,16 +7,22 @@ export const SelectedProviderFiltersContext = createContext();
 export const SelectedProviderFiltersProvider = ({ children }) => {
   const [selectedProviderFilters, setSelectedProviderFilters] = useState([]);
 
-  const addProviderFilter = (filter) => {
-    if (selectedProviderFilters.includes(filter)) {
-      removeProviderFilter(filter)
+  const addProviderFilter = (name, genreId) => {
+    if (selectedGenreFilters.some((f) => f.name === name)) {
+      removeGenreFilter(name);
       return;
     }
-    setSelectedProviderFilters((state) => [...state, filter]);
-  };
+    setSelectedProviderFilters((state) => [
+      ...state,
+      {
+        genre_name: name,
+        genre_id: genreId,
+      }
+    ]);
+  };  
 
-  const removeProviderFilter = (filter) => {
-    setSelectedProviderFilters((state) => state.filter((f) => f !== filter));
+  const removeProviderFilter = (name) => {
+    setSelectedProviderFilters((state) => state.filter((f) => f.name !== name));
   };
 
   return (
