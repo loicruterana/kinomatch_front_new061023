@@ -16,16 +16,22 @@
         display: flex;
         width: 75%;
         height: 100vh;
-        padding: 110px 3rem 3.4rem 3rem;
+        padding: 115px 3rem 3.4rem 3rem;
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {
+            overflow-y: auto;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-content: space-between;
-            width: 50%;
+            align-content: flex-start;
+            max-width: 30%;
+            height: 100%;
             margin-right: 1rem;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             // Titre et icones
             &-head {
@@ -58,6 +64,7 @@
 
             // Note et plateformes
             &-body {
+                display: flex;
                 margin: 0.6rem;
 
 
@@ -94,6 +101,7 @@
 
     .movieDetails {
         overflow: auto;
+        width: 80%;
         padding-left: 2rem;
 
         &::-webkit-scrollbar {

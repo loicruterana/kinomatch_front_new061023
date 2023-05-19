@@ -12,17 +12,17 @@ function CommentPost() {
 
     const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         setPostMessage(event.target.value);
-        console.log(event.target.value);
+        // console.log(event.target.value);
     };
 
     const handleSubmit = (event: { prevent: { default: any; }; }) => {
         event.prevent.default();
         const userMessage = { postMessage };
-        console.log(postMessage);
+        // console.log(postMessage);
 
         axios.post("http:/NotreBack/api/users/messages", userMessage).then((response) => {
-            console.log(response.status, response.data);
-            console.log(userMessage);
+            // console.log(response.status, response.data);
+            // console.log(userMessage);
         })
     };
 

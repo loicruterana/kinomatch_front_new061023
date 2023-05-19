@@ -36,22 +36,23 @@ function MoviePage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '283995');
+    searchParams.append('movieID', '447365');
 
     Promise.all([
-      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
-      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
-      // axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
 
-      axios.get(`http://localhost:4000/detail?${searchParams.toString()}`),
-      axios.get(`http://localhost:4000/credits?${searchParams.toString()}`),
-      axios.get(`http://localhost:4000/provider?${searchParams.toString()}`)
+      // axios.get(`http://localhost:4000/detail?${searchParams.toString()}`),
+      // axios.get(`http://localhost:4000/credits?${searchParams.toString()}`),
+      // axios.get(`http://localhost:4000/provider?${searchParams.toString()}`)
     ])
       .then(([movieData, creditsData, providersData]) => {
         if (movieData.data, creditsData.data, providersData.data !== null) {
           setMovie(movieData.data);
           setCredits(creditsData.data);
           setProviders(providersData.data);
+          // setProviders((providersData.data).results.FR);
         }
         console.log(movie);
         console.log(credits);
@@ -130,7 +131,7 @@ function MoviePage() {
       }
 
       {/* Page du film  */}
-      <article className='movieFound'>
+      <section className='movieFound'>
         {/* Page infos essentielles du film: titre, image, boutons, plateformes, note */}
         <section className='movieFound__essentiel'>
           {/* Div contenant le titre et les icons */}
@@ -145,16 +146,9 @@ function MoviePage() {
             <div className='movieFound__essentiel-body--note'>
               <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
-            </div> 
+            </div>
           </div>
           <Providers providers={providers} />
-            {/*             
-            <ul className='movieFound__essentiel-disponibility'>
-              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
-              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a></li>
-              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a></li>
-              <li><a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a></li>
-            </ul> */}
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
@@ -192,7 +186,7 @@ function MoviePage() {
             <ul className='movieDetails__description-actorsList'>
               {
                 mappedActorCastMembers.map((actor, index) => (
-                  <li className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {actor.name}
+                  <li key={actor.credit_id} className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {actor.name}
                     {index !== mappedActorCastMembers.length - 1 && ','}{index === mappedActorCastMembers.length - 1 && '...'}</li>
                 ))
               }
@@ -214,7 +208,7 @@ function MoviePage() {
             </div>
           </div>
         </section>
-      </article >
+      </section >
     </div>
   )
 }

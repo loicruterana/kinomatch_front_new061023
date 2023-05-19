@@ -25,10 +25,10 @@ function DetailsModal(props: DetailsModalProps) {
         <div className='detailsModal__container'>
             <div className='detailsModal__container-image'>
                 <h3 className='detailsModal__container-originalTitle'>Titre original</h3>
-                <p className='detailsModal__container-originalTitleName'>{movie?.original_title}</p>
+                <p className='detailsModal__container-originalTitleName'>{movie.original_title}</p>
                 <div className='detailsModal__container-image--container'>
-                    <img className='detailsModal__container-image--container--movie' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt="Affiche du film" />
-                    {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie?.homepage} target='_blank'>Page du film</a>) : null}
+                    <img className='detailsModal__container-image--container--movie' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="Affiche du film" />
+                    {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
                 </div>
             </div>
             <div className='detailsModal__container-details'>
@@ -66,24 +66,18 @@ function DetailsModal(props: DetailsModalProps) {
                     </ul>
                     {/* <p className='detailsModal__container-productionCountry'>Etats-unis</p> */}
                     <h3 className='detailsModal__container-budget'>Budget</h3>
-                    <p className='detailsModal__container-budgetAmount'>{movie?.budget}$</p>
+                    <p className='detailsModal__container-budgetAmount'>{movie.budget}$</p>
                     <h3 className='detailsModal__container-revenue'>Recettes</h3>
-                    <p className='detailsModal__container-revenueAmount'>{movie?.revenue}$</p>
+                    <p className='detailsModal__container-revenueAmount'>{movie.revenue}$</p>
                 </div>
                 <div className='detailsModal__container-details--secondary'>
                     <h3 className='detailsModal__container-distribution'>Distribution</h3>
                     <ul className='detailsModal__container-actorsList'>
                         {
                             credits.cast.map((actor) => (
-                                <li className='detailsModal__container-actor'>{actor.name}</li>
+                                <li key={actor.id} className='detailsModal__container-actor'>{actor.name}</li>
                             ))
                         }
-                        <li className='detailsModal__container-actor'>Chris Pratt: Peter Quill / Star Lord</li>
-                        <li className='detailsModal__container-actor'>Zoe Saldana: Gamora</li>
-                        <li className='detailsModal__container-actor'>Will Poulter: Adam Warlock</li>
-                        <li className='detailsModal__container-actor'>Pom Klementieff: Mantis</li>
-                        <li className='detailsModal__container-actor'>Chris Pratt: Peter Quill / Star Lord</li>
-                        <li className='detailsModal__container-actor'>Karen Gillan: Nebula</li>
                     </ul>
                     <h3 className='detailsModal__container-composer'>Musique</h3>
                     <p className='detailsModal__container-composerName'>John Murphy</p>

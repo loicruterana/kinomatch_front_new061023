@@ -1,37 +1,65 @@
 import "./Providers.scss";
 
-function Providers(providers: any) {
+
+function Providers(providers: { providers: { results: { FR: { flatrate: any[]; rent: any[]; buy: any[]; free: any[]; }; }; }; }) {
+
+
     return (
-        // <ul className='movieFound__essentiel-disponibility'>
-        //     <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
-        //     <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a></li>
-        //     <li><a className='movieFound__essentiel-disponibility--plateform' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a></li>
-        //     <li><a className='movieFound__essentiel-disponibility--plateform' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a></li>
-        // </ul>
+
 
         <section className='movieFound__essentiel-disponibility'>
             <div className='movieFound__essentiel-flatrate'>
                 <ul className='movieFound__essentiel-flatrateList'>
-                    <li><a className='movieFound__essentiel-flatrateList--flaterate' href='https://www.netflix.com/fr/' target='_blank'>Netflix</a></li>
-                    <li><a className='movieFound__essentiel-flatrateList--flaterate' href='https://www.primevideo.com/' target='_blank'>Prime Vidéo</a></li>
-                    <li><a className='movieFound__essentiel-flatrateList--flaterate' href='https://www.disneyplus.com/fr-fr' target='_blank'>Disney+</a></li>
-                    <li><a className='movieFound__essentiel-flatrateList--flaterate' href='https://video-a-la-demande.orange.fr/' target='_blank'>OrangeVOD</a></li>
+                    {
+                        providers.providers.results.FR &&
+                        providers.providers.results.FR.flatrate &&
+                        providers.providers.results.FR.flatrate.map((flatrate) => (
+                            <li key={flatrate.provider_id}>
+                                <a className='movieFound__essentiel-flatrateList--flaterate' href='#' target='_blank'>{flatrate.provider_name}</a>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
             <div className='movieFound__essentiel-rent'>
                 <ul className='movieFound__essentiel-rentList'>
-                    <li><a className='movieFound__essentiel-rentList--rent' href='https://www.netflix.com/fr/' target='_blank'>rent 1</a></li>
-                    <li><a className='movieFound__essentiel-rentList--rent' href='https://www.primevideo.com/' target='_blank'>rent 2</a></li>
-                    <li><a className='movieFound__essentiel-rentList--rent' href='https://www.disneyplus.com/fr-fr' target='_blank'>rent 3</a></li>
-                    <li><a className='movieFound__essentiel-rentList--rent' href='https://video-a-la-demande.orange.fr/' target='_blank'>rent 4</a></li>
+                    {
+                        providers.providers.results.FR &&
+                        providers.providers.results.FR.rent &&
+                        providers.providers.results.FR.rent.map((rent) => (
+                            <li key={rent.provider_id}>
+                                <a className='movieFound__essentiel-rentList--rent' href='#' target='_blank'>{rent.provider_name}</a>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
             <div className='movieFound__essentiel-buy'>
                 <ul className='movieFound__essentiel-buyList'>
-                    <li><a className='movieFound__essentiel-buyList--buy' href='https://www.netflix.com/fr/' target='_blank'>buy 1</a></li>
-                    <li><a className='movieFound__essentiel-buyList--buy' href='https://www.primevideo.com/' target='_blank'>buy 2</a></li>
-                    <li><a className='movieFound__essentiel-buyList--buy' href='https://www.disneyplus.com/fr-fr' target='_blank'>buy 3</a></li>
-                    <li><a className='movieFound__essentiel-buyList--buy' href='https://video-a-la-demande.orange.fr/' target='_blank'>buy 4</a></li>
+                    {
+                        providers.providers.results.FR &&
+                        providers.providers.results.FR.buy &&
+                        providers.providers.results.FR.buy.map((buy) => (
+                            <li key={buy.provider_id}>
+                                <a className='movieFound__essentiel-buyList--buy' href='#' target='_blank'>{buy.provider_name}</a>
+                            </li>
+                        ))
+                    }
+
+                </ul>
+            </div>
+            <div className='movieFound__essentiel-free'>
+                <ul className='movieFound__essentiel-freeList'>
+                    {
+                        providers.providers.results.FR &&
+                        providers.providers.results.FR.free &&
+                        providers.providers.results.FR.free.map((free) => (
+                            <li key={free.provider_id}>
+                                <a className='movieFound__essentiel-freeList--free' href='#' target='_blank'>{free.provider_name}</a>
+                            </li>
+                        ))
+                    }
+
                 </ul>
             </div>
 
