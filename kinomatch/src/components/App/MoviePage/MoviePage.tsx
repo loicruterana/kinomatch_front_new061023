@@ -36,7 +36,7 @@ function MoviePage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '447365');
+    searchParams.append('movieID', '339984');
 
     Promise.all([
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -125,7 +125,6 @@ function MoviePage() {
           setShowDetailsModal={setShowDetailsModal}
           movie={movie}
           credits={credits}
-          providers={providers}
           directingCrewMembers={directingCrewMembers}
         />
       }

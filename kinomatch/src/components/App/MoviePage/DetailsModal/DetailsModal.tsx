@@ -5,15 +5,14 @@ import './DetailsModal.scss';
 interface DetailsModalProps {
     showDetailsModal: boolean;
     setShowDetailsModal: (showDetailsModal: boolean) => void;
-    movie: unknown;
-    credits: unknown;
-    providers: unknown;
-    directingCrewMembers: unknown
+    movie: any;
+    credits: any;
+    directingCrewMembers: any
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
 function DetailsModal(props: DetailsModalProps) {
-    const { showDetailsModal, setShowDetailsModal, movie, credits, providers, directingCrewMembers } = props;
+    const { showDetailsModal, setShowDetailsModal, movie, credits, directingCrewMembers } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
 

@@ -1,12 +1,29 @@
 @use '../../../../styles/vars';
 
+
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
 
+    // Element commun au titre de chaque catégorie de disponibilité
+    .common-title--desktop {
+        font-size: 1rem;
+        font-weight: bold;
+        height: fit-content;
+        text-align: center;
+        text-transform: uppercase;
+        color: vars.$theme1-primary;
+        background-color: vars.$theme1-secondary;
+        margin: 0.3rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+    }
+
     // Plateformes
     .movieFound__essentiel {
 
+        // Container regroupant les plateformes
         &-disponibility {
             display: flex;
             justify-content: space-around;
@@ -17,6 +34,7 @@
                 font-size: 1rem;
                 font-weight: bold;
                 height: fit-content;
+                text-align: center;
                 color: vars.$theme1-primary;
                 background-color: vars.$theme1-secondary;
                 margin: 0.3rem;
@@ -30,16 +48,17 @@
             }
         }
 
-        &-flatrate {
-            
-        }
-
-        &-rent {
-            
-        }
-
-        &-buy {
-            
+        // Boucle sur chaque élément + implémentation du .common-title
+        @each $option in flatrate,
+        rent,
+        buy,
+        free,
+        ads {
+            &-#{$option} {
+                &--title {
+                    @extend .common-title--desktop;
+                }
+            }
         }
     }
 }
@@ -48,22 +67,59 @@
 
 @media screen and (max-width: 900px) {
 
-    // Plateformes
-    .movieFound__essentiel-disponibility {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        width: 100%;
+    // Element commun au titre de chaque catégorie de disponibilité
+    .common-title--mobile {
+        font-size: 1rem;
+        font-weight: bold;
+        height: fit-content;
+        text-align: center;
+        text-transform: uppercase;
+        color: vars.$theme1-primary;
+        background-color: vars.$theme1-secondary;
+        margin: 0.3rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+    }
 
-        // Plateforme individuelle
-        & li {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: vars.$theme1-primary;
-            background-color: vars.$theme1-secondary;
-            margin: 0.3rem;
-            padding: 0.5rem;
-            border-radius: 6px;
+    // Plateformes
+    .movieFound__essentiel {
+
+        // Container regroupant les plateformes
+        &-disponibility {
+            display: flex;
+            justify-content: space-around;
+            min-width: fit-content;
+
+            // Plateforme individuelle
+            & li {
+                font-size: 1rem;
+                font-weight: bold;
+                height: fit-content;
+                text-align: center;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-secondary;
+                margin: 0.3rem;
+                padding: 0.5rem;
+                border-radius: 6px;
+
+                :hover {
+                    transform: scale(1.1);
+                    // transition: all 0.2s ease;
+                }
+            }
+        }
+
+        // Boucle sur chaque élément + implémentation du .common-title
+        @each $option in flatrate,
+        rent,
+        buy,
+        free,
+        ads {
+            &-#{$option} {
+                &--title {
+                    @extend .common-title--mobile;
+                }
+            }
         }
     }
 
