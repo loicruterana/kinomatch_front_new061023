@@ -1,24 +1,36 @@
-import { useState } from 'react';
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useState } from 'react';
 import './DetailsModal.scss';
 
 {/* Création de l'interface pour Typescript */ }
 interface DetailsModalProps {
     showDetailsModal: boolean;
     setShowDetailsModal: (showDetailsModal: boolean) => void;
-    movie: any;
-    credits: any;
-    directingCrewMembers: any
+    movie: any | null;
+    credits: any | null;
+    directingCrewMembers: any;
+    formatDate: any;
+    convertMinutesInHours:(showDetailsModal: any) => void;
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
 function DetailsModal(props: DetailsModalProps) {
-    const { showDetailsModal, setShowDetailsModal, movie, credits, directingCrewMembers } = props;
+    const { showDetailsModal, setShowDetailsModal, movie, credits, directingCrewMembers, formatDate, convertMinutesInHours } = props;
 
     {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
 
     const handleDetailsModel = () => {
         setShowDetailsModal(!showDetailsModal);
     }
+
+    {/* Fonctions permettant de trouver des personnes suivant leur job */ }
+
+    const writingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Writer" || person.job === 'Screenplay');
+    const musicCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Music" || person.job === 'Original Music Composer');
+    const costumeCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Costume Design");
+    const photographyCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director of Photography");
+    const artCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Art Direction");
+    const designerCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Production Design");
+
 
     return (
         <div className='detailsModal__container'>
@@ -32,64 +44,119 @@ function DetailsModal(props: DetailsModalProps) {
             </div>
             <div className='detailsModal__container-details'>
                 <div className='detailsModal__container-details--principal'>
-                    <h3 className='detailsModal__container-director'>Réalisateur</h3>
-                    {
-                        directingCrewMembers.map((director) => (
-                    <p key={director.id} className='detailsModal__container-directorName'>{director.name}</p>
-                            
-                        ))
-                    }
+                    <h3 className='detailsModal__container-director'>{directingCrewMembers.length > 1 ? 'Réalisateurs' : 'Réalisateur'}</h3>
+                    <ul className='detailsModal__container-directorList'>
+                        {
+                            directingCrewMembers.map((director: { id: Key | null; name: string }) => (
+                                <li key={director.id} className='detailsModal__container-directorName'>{director.name}</li>
+
+                            ))
+                        }
+                    </ul>
                     <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
-                    <p className='detailsModal__container-screenwriterName'>James Gunn</p>
+                    <ul className='detailsModal__container-screenwriterList'>
+                        {
+                            writingCrewMembers.map((writer: { key: Key | number | undefined; id: number | null; name: string }) => (
+                                <li key={writer.id} className='detailsModal__container-screenwriterName'>{writer.name}</li>
+
+                            ))
+                        }
+                    </ul>
+                    {/* <p className='detailsModal__container-screenwriterName'>James Gunn</p> */}
                     <h3 className='detailsModal__container-producers'>Sociétés de production</h3>
                     <ul className='detailsModal__container-producers-list'>
                         {/* Affichage de la liste des sociétés de production */}
                         {
-                            movie &&
-                            movie.production_companies.map((production_company) => (
+                            movie.production_companies.map((production_company: { key: Key | number | undefined; name: string }) => (
                                 <li key={Math.random()} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
                             ))
                         }
                     </ul>
                     <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
-                    <p className='detailsModal__container-distributionCompanyName'>Walt Disney Studios Motion Pictures</p>
+                    <p className='detailsModal__container-distributionCompanyName'>###Walt Disney Studios Motion Pictures###</p>
                     <h3 className='detailsModal__container-productionCountry'>Pays de production</h3>
                     <ul className='detailsModal__container-productionCountry-list'>
                         {/* Affichage de la liste des pays de production */}
                         {
-                            movie &&
-                            movie.production_countries.map((production_country) => (
+                            movie.production_countries.map((production_country: { iso_3166_1: Key | null | undefined; name: string }) => (
                                 <li key={production_country.iso_3166_1} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
                             ))
                         }
                     </ul>
-                    {/* <p className='detailsModal__container-productionCountry'>Etats-unis</p> */}
                     <h3 className='detailsModal__container-budget'>Budget</h3>
-                    <p className='detailsModal__container-budgetAmount'>{movie.budget}$</p>
+                    <p className='detailsModal__container-budgetAmount'>{movie.budget.toLocaleString('us-US')} $</p>
+
                     <h3 className='detailsModal__container-revenue'>Recettes</h3>
-                    <p className='detailsModal__container-revenueAmount'>{movie.revenue}$</p>
+                    <p className='detailsModal__container-revenueAmount'>{movie.revenue.toLocaleString('us-US')} $</p>
+
+                    <h3 className='detailsModal__container-duration'>Durée</h3>
+                    <p className='detailsModal__container-durationTime'>{convertMinutesInHours(movie.runtime)}</p>
+
+                    <h3 className='detailsModal__container-date'>Date de sortie</h3>
+                    <p className='detailsModal__container-dateName'>{formatDate(movie.release_date)}</p>
                 </div>
                 <div className='detailsModal__container-details--secondary'>
-                    <h3 className='detailsModal__container-distribution'>Distribution</h3>
-                    <ul className='detailsModal__container-actorsList'>
+
+                    <h3 className='detailsModal__container-composer'>Musique</h3>
+                    <ul className='detailsModal__container-composerList'>
                         {
-                            credits.cast.map((actor) => (
-                                <li key={actor.id} className='detailsModal__container-actor'>{actor.name}</li>
+                            musicCrewMembers.map((composer: { key: Key | null | undefined; id: number; name: string }) => (
+                                <li key={composer.id} className='detailsModal__container-composerName'>{composer.name}</li>
                             ))
                         }
                     </ul>
-                    <h3 className='detailsModal__container-composer'>Musique</h3>
-                    <p className='detailsModal__container-composerName'>John Murphy</p>
                     <h3 className='detailsModal__container-artisticDirection'>Direction artistique</h3>
-                    <p className='detailsModal__container-artists'>Samantha Avila, Zachary Fannin, Lorin Flemming, Alex Gaines, Brittany Hites, Alan Hook et David Scott</p>
+                    <ul className='detailsModal__container-artistsList'>
+                        {
+                            artCrewMembers.map((artist: { id: Key | null | undefined; name: string }) => (
+                                <li key={artist.id} className='detailsModal__container-artists'>{artist.name}</li>
+                            ))
+                        }
+                    </ul>
+                    <h3 className='detailsModal__container-productionDesigner'>Décors</h3>
+                    <ul className='detailsModal__container-productionDesignerList'>
+                        {
+                            designerCrewMembers.map((designer: { id: Key | null | undefined; name: string }) => (
+                                <li key={designer.id} className='detailsModal__container-designers'>{designer.name}</li>
+                            ))
+                        }
+                    </ul>
                     <h3 className='detailsModal__container-costuming'>Costumes</h3>
-                    <p className='detailsModal__container-costumingArtists'>Judianna Makovsky</p>
+                    <ul className='detailsModal__container-costumingList'>
+                        {
+                            costumeCrewMembers.map((costumeDesigner: { id: Key | null | undefined; name: string }) => (
+                                <li key={costumeCrewMembers.id} className='detailsModal__container-costumeDesigner'>{costumeDesigner.name}</li>
+                            ))
+                        }
+                    </ul>
                     <h3 className='detailsModal__container-photography'>Photographie</h3>
-                    <p className='detailsModal__container-costumingArtists'>Henry Braham</p>
-                    <h3 className='detailsModal__container-date'>Date de sortie</h3>
-                    <p className='detailsModal__container-dateName'>3 mai 2023</p>
+                    <ul className='detailsModal__container-photographyList'>
+                        {
+                            photographyCrewMembers.map((photographer: { id: Key | null | undefined; name: string }) => (
+                                <li key={photographer.id} className='detailsModal__container-photographer'>{photographer.name}</li>
+                            ))
+                        }
+                    </ul>
+
                     <h3 className='detailsModal__container-genreTitle'>Genres</h3>
                     <p className='detailsModal__container-genre'>Science-fiction, Action, Aventure, Super-héros</p>
+
+                </div>
+            </div>
+            <div className='detailsModal__container-distributionList'>
+                <div className='detailsModal__container-distribution'>
+                    <h3 className='detailsModal__container-distribution-title'>Distribution</h3>
+                    <ul className='detailsModal__container-actorsList'>
+                        {
+                            credits.cast.map((actor: { key: Key | null | undefined; id: number; name: string; profile_path: string; character: string }) => (
+                                <li key={actor.id} className='detailsModal__container-actor'>
+                                    <h4 className='detailsModal__container-actor--title'>{actor.name}</h4>
+                                    <img className='detailsModal__container-actor--image' src={`https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face//${actor.profile_path}`} alt={`Photo de ${actor.name}`} />
+                                    <p className='detailsModal__container-actor--role'>{actor.character}</p>
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </div>
             </div>
             <div className='detailsModal__container-button'>

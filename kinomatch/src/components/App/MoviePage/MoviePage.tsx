@@ -13,21 +13,23 @@ import './style.scss';
 function MoviePage() {
 
 
-  //==================== MODALE IMAGE ==============================
+  {/* MODALE IMAGE */ }
+
   const [showImageModal, setShowImageModal] = useState(false);
 
   const handleImageModal = () => {
     setShowImageModal(!showImageModal);
   };
 
-  //  ====================MODALE DETAILS============================
+  {/* MODALE DETAILS */ }
+
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   const handleDetailsModal = () => {
     setShowDetailsModal(!showDetailsModal);
   };
 
-  // ================ REQUETE DETAILS MOVIES ========================
+  {/* REQUETES ROUTES */ }
 
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
@@ -68,7 +70,7 @@ function MoviePage() {
     )
   }
 
-  // ===================== DUREE DU FILM EN HEURES ===================
+  {/* DURÉE DU FIL EN HEURES*/ }
 
   function convertMinutesInHours(minutes: number) {
     const hours = Math.floor(minutes / 60);
@@ -80,7 +82,7 @@ function MoviePage() {
     }
   }
 
-  // ======================= CONVERSION DATE ===================
+  {/* CONVERSION DATE */ }
 
   function formatDate(dateString: string | number | Date) {
     const date = new Date(dateString);
@@ -90,17 +92,16 @@ function MoviePage() {
     return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
   }
 
-  // ======================= RECUPERATION DIRECTOR ===================
+  {/* RECUPERATION RÉALISATEURS */ }
 
-  const directingCrewMembers = credits.crew.filter((person: { known_for_department: string; }) => person.known_for_department === "Directing");
+  const directingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director");
   const mappedDirectingCrewMembers = directingCrewMembers.slice(0, 3);
 
-  // ======================= RECUPERATION ACTEURS ===================
+  {/* RÉCUPÉRATION ACTEURS */ }
 
   const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
   const mappedActorCastMembers = actorCastMembers.slice(0, 3);
 
-  // ================================================================
 
   return (
 
@@ -126,6 +127,8 @@ function MoviePage() {
           movie={movie}
           credits={credits}
           directingCrewMembers={directingCrewMembers}
+          formatDate={formatDate}
+          convertMinutesInHours={convertMinutesInHours}
         />
       }
 
