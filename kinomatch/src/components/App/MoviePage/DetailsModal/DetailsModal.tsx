@@ -9,7 +9,7 @@ interface DetailsModalProps {
     credits: any | null;
     directingCrewMembers: any;
     formatDate: any;
-    convertMinutesInHours:(showDetailsModal: any) => void;
+    convertMinutesInHours: (showDetailsModal: any) => void;
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }
@@ -139,8 +139,13 @@ function DetailsModal(props: DetailsModalProps) {
                     </ul>
 
                     <h3 className='detailsModal__container-genreTitle'>Genres</h3>
-                    <p className='detailsModal__container-genre'>Science-fiction, Action, Aventure, Super-héros</p>
-
+                    <ul className='detailsModal__container-genreList'>
+                    {
+                        movie.genres.map((genre) => (
+                            <li key={genre.id} className='detailsModal__container-genre'>{genre.name}</li>
+                        ))
+                    }
+                    </ul>
                 </div>
             </div>
             <div className='detailsModal__container-distributionList'>

@@ -22,6 +22,23 @@
 
     // Plateformes
     .movieFound__essentiel {
+        width: 100%;
+
+        // Container affichage plateformes
+        .movieFound__essentiel-detailPlateforms {
+            width: 100%;
+
+            &--details {
+                background-color: #fff3b0;
+                color: #335c67;
+                width: fit-content;
+                padding: 0.6rem 1rem;
+                border-radius: 6px;
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin: 0.3rem auto 1rem auto;
+            }
+        }
 
         // Container regroupant les plateformes
         &-disponibility {
@@ -83,6 +100,23 @@
 
     // Plateformes
     .movieFound__essentiel {
+
+        // Container affichage plateformes
+        .movieFound__essentiel-detailPlateforms {
+            width: 100%;
+
+            &--details {
+                background-color: #fff3b0;
+                color: #335c67;
+                width: fit-content;
+                padding: 0.6rem 0.5rem;
+                height: fit-content;
+                border-radius: 6px;
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin: 0.2rem auto 1.3rem auto;
+            }
+        }
 
         // Container regroupant les plateformes
         &-disponibility {

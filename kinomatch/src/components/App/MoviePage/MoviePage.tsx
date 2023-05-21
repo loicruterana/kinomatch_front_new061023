@@ -38,7 +38,7 @@ function MoviePage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '339984');
+    searchParams.append('movieID', '384018');
 
     Promise.all([
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -159,8 +159,8 @@ function MoviePage() {
 
             {/* Affichage des filtres concernant le film affiché */}
             {
-              movie.genres.map((element) => (
-                <p key={element.id} className='movieDetails__filters-desktop--filterElem'>{element.name}</p>
+              movie.genres.map((genre) => (
+                <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
               ))
             }
 
@@ -180,7 +180,7 @@ function MoviePage() {
               {
                 mappedDirectingCrewMembers.map((director, index) => (
                   <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {director.name}
-                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length - 1 && '...'}</li>
+                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length - 1 ? '' : '...'}</li>
                 ))
               }
             </ul>
