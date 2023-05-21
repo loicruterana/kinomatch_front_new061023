@@ -7,7 +7,7 @@ export const SelectedProviderFiltersContext = createContext();
 export const SelectedProviderFiltersProvider = ({ children }) => {
   const [selectedProviderFilters, setSelectedProviderFilters] = useState([]);
 
-  const addProviderFilter = (name, genreId) => {
+  const addProviderFilter = (name, providerId) => {
     if (selectedGenreFilters.some((f) => f.name === name)) {
       removeGenreFilter(name);
       return;
@@ -15,8 +15,8 @@ export const SelectedProviderFiltersProvider = ({ children }) => {
     setSelectedProviderFilters((state) => [
       ...state,
       {
-        genre_name: name,
-        genre_id: genreId,
+        provider_name: name,
+        provider_id: providerId,
       }
     ]);
   };  

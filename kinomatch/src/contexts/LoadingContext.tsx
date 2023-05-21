@@ -6,6 +6,8 @@ export const LoadingContext = createContext();
 // Fournisseur de contexte
 export const LoadingProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
 
   const load = () => {
     setIsLoading(true);
@@ -15,9 +17,13 @@ export const LoadingProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  const addError = (error) => {
+    setError(error);
+  };
+
 
   return (
-    <LoadingContext.Provider value={{ isLoading, load, unload }}>
+    <LoadingContext.Provider value={{ isLoading, load, unload, error, addError }}>
       {children}
     </LoadingContext.Provider>
   );

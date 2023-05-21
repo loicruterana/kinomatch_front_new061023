@@ -9,9 +9,9 @@ import Connected from '../Connected/Connected';
 
 // import HCaptcha from '@hcaptcha/react-hcaptcha';
 
-import './Signin.scss';
+import './Login.scss';
 
-export const Signin = () => {
+export const Login = () => {
 
   const [postProfil, setPostProfil] = useState({
     email: '',
@@ -22,7 +22,8 @@ export const Signin = () => {
   const { addEmail, email } = useContext(EmailContext);
   const { isLoggedIn, login } = useContext(AuthContext);
 
-  const [goToHomePage, setGoToHomePage] = React.useState(false);
+  const [goToHomePage, setGoToHomePage] = useState(false);
+  const [error, setError] = useState('');
 
   if (goToHomePage) {
     return <Navigate to="/" />;
@@ -38,31 +39,49 @@ export const Signin = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login();
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
     };
-    try{
-      axios.post('https://deploy-back-kinomatch.herokuapp.com/login', userData).then((response) => {
-      console.log(response.status, response.data.token);
-      addEmail(postProfil.email)
-      setTimeout(() => {
-        setGoToHomePage(true);
+
+    axios.post('https://deploy-back-kinomatch.herokuapp.com/login', userData)
+      .then((response) => {
+        console.log(response.status, response.data.token);
+
+        // Check if there is an error returned by the back
+        if(response.data !== undefined) {
+          console.log(response.data);
+          // error
+          return;
+        }
+
+        if(response.status === 500) {
+          console.log(response.data);
+          // error
+          return;
+        }
+
+        // OK
+
+        addEmail(postProfil.email)
+        login();
+        setTimeout(() => {
+          setGoToHomePage(true);
         }, 1500);
-    })
-  }catch{
-    console.log('Response data:', response.data.error);
-    console.log('Response status:', error.response.status);
-    console.log('Response headers:', error.response.headers);    
-    return
-  }
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log('Response data:', error.response.data.error);
+        console.log('Response status:', error.response.status);
+        console.log('Response headers:', error.response.headers);    
+      });
+
   };
 
   return (
-    <div className='Signin-container'>
+    <div className='Login-container'>
       <form
-        className='CreateProfile-container-form'
+        className='Login-container-form'
         onSubmit={handleSubmit}
         // action="http://localhost:4000/signup" //à modifier
         // method="POST"
@@ -70,7 +89,7 @@ export const Signin = () => {
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
-          className='Signin-container-form-input'
+          className='Login-container-form-input'
           type='email'
           id='email'
           name='email'
@@ -80,7 +99,7 @@ export const Signin = () => {
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
-          className='CreateProfile-container-form-input'
+          className='Login-container-form-input'
           type='password'
           id='password'
           name='password'
@@ -94,18 +113,18 @@ export const Signin = () => {
         onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
         />         */}
 
-      <Link key='create-profile' to='/create-profile'>
+      <Link key='signup' to='/signup'>
           <aside className='new-account'>Vous n'avez pas encore de compte ?</aside>
         </Link>
 
         <button type='submit'>Connexion</button>
 
       </form>
-      {email && <Connected email={email}/>}
+      {isLoggedIn && <Connected email={email}/>}
 
     </div>
   );
 };
 
-export default Signin;
+export default Login;
 

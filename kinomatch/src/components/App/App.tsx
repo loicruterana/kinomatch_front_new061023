@@ -1,8 +1,8 @@
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Home from './Home/Home';
-import Signin from './Signin/Signin';
-import CreateProfile from './CreateProfile/CreateProfile';
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
 import { AuthProvider } from '../../contexts/AuthContext';
 import { LoadingProvider } from '../../contexts/LoadingContext';
 import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFiltersContext';
@@ -38,12 +38,12 @@ function App() {
             element={<Home />}
             />
             <Route
-              path="/create-profile"
-              element={<CreateProfile/>}
+              path="/signup"
+              element={<Signup/>}
             />      
             <Route
-              path="/signin"
-              element={<Signin/>}
+              path="/login"
+              element={<Login/>}
             />    
             {/* <Route
               path="/movie-page"

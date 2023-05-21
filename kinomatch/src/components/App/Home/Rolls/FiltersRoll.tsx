@@ -11,8 +11,7 @@ import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecad
 
 
 // ================ COMPOSANT ================
-export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade }) => {
-
+export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade, isLoading }) => {
   
 // ================ IMPORT PROPS CONTEXTS ================
   const { addGenreFilter , selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
@@ -33,8 +32,14 @@ function handleGenreClick(event) {
 
 
   function handleProviderClick(event) {
-    const filter = event.target.textContent;
-    addProviderFilter(filter);
+    console.log('i')
+    const name = event.target.textContent;
+    const providerId = event.target.dataset.id; 
+    console.log(name, providerId)
+   
+    addProviderFilter(name, providerId);
+    console.log(name, providerId)
+
     // if (clickedItems.includes(filter)) {
     //   setClickedItems(clickedItems.filter(item => item !== filter));
     // } else {
@@ -71,11 +76,12 @@ function handleGenreClick(event) {
       <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}`}>
 
 {/* // ================ JSX : ROLL GENRE ================ */}
+
 {((showRollGenre && mobileVersion) || !mobileVersion) && 
   <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
     <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>GENRE</div>
     {
-      preselectedGenres.map((preselectedGenre) => (
+      isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
         <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick} data-id={preselectedGenre.id}>
           {preselectedGenre.name}
         </div>
@@ -90,12 +96,12 @@ function handleGenreClick(event) {
 <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
   <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>PLATEFORME</div>
   {
-    preselectedProviders.map((preselectedProvider) => (
-      <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedProvider.id} 
+    isLoading ? "Chargement en cours" : preselectedProviders.map((preselectedProvider) => (
+      <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`}
       onClick={handleProviderClick}
-      data-id={preselectedProvider.id}
+      data-id={preselectedProvider.provider_id}
       >
-        {preselectedProvider}
+        {preselectedProvider.provider_name}
       </div>
     ))
   } 

@@ -1,12 +1,16 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { EmailContext } from '../../../contexts/EmailContext';
+
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import './Header.scss';
 
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
+  const { email } = useContext(EmailContext);
+
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
@@ -29,7 +33,7 @@ function Header() {
       {!isLoggedIn && (
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
-            <Link key='signin' to='/signin'>
+            <Link key='login' to='/login'>
               Se connecter
             </Link>
           </button>
@@ -39,7 +43,7 @@ function Header() {
       {isLoggedIn && (
         <div className='Header-profile'>
           <img src="images/1681073113956.jpg"></img>
-          <div className='Header-profile-username'>Isabelle Klein</div>
+          <div className='Header-profile-username'>{email}</div>
         </div>
      )}
 

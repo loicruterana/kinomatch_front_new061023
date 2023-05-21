@@ -1,6 +1,11 @@
 @use './../../../styles/vars';
 
-.CreateProfile {
+.new-account {
+  font-size: 14px;
+  color: vars.$darken-theme1-secondary;
+}
+
+.Login {
   &-container {
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;

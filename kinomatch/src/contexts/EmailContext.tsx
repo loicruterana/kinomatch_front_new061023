@@ -7,16 +7,16 @@ export const EmailContext = createContext();
 export const EmailProvider = ({ children }) => {
   const [email, setEmail] = useState('');
 
-  const addEmail = (inputemail) => {
-    setEmail(inputemail);
+  const addEmail = (inputEmail) => {
+    setEmail(inputEmail);
   };
 
-  const removeEmail = (inputemail) => {
+  const removeEmail = (inputEmail) => {
     setEmail('');
   };
 
   return (
-    <EmailContext.Provider value={{ addEmail, email }}>
+    <EmailContext.Provider value={{ addEmail, email, removeEmail }}>
       {children}
     </EmailContext.Provider>
   );

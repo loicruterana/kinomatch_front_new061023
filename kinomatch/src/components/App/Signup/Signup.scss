@@ -1,11 +1,6 @@
 @use './../../../styles/vars';
 
-.new-account {
-  font-size: 14px;
-  color: vars.$darken-theme1-secondary;
-}
-
-.Signin {
+.Signup {
   &-container {
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;

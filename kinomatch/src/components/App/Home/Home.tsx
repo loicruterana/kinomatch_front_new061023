@@ -6,7 +6,9 @@ import axios from 'axios';
 import './Home.scss';
 
 // ================ IMPORT COMPOSANTS ================
-import RollGenre from './Rolls/RollGenre';
+import FiltersRoll from './Rolls/FiltersRoll';
+import Loading from '../Loading/Loading';
+
 
 // ================ IMPORT CONTEXTS ================
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
@@ -20,12 +22,13 @@ export const Home = () => {
 
 // ================ USESTATE ================
   const [ preselectedGenres, setPreselectedGenres ] = useState([])
-  const [ preselectedProviders, setPreselectedProviders ] = useState([])
+  const [ preselectedProviders, setPreselectedProviders ] = useState();
   const [ showRollGenre, setShowRollGenre ] = useState(false);
   const [ showRollProvider, setShowRollProvider ] = useState(false);
   const [ showRollDecade, setShowRollDecade ] = useState(false);
   const [ mobileVersion, setMobileVersion ] = useState(false);
   const [ dataToTransfer, setDataToTransfer ] = useState(null);
+
 
 
 // ================ IMPORT PROPS CONTEXTS ================
@@ -34,44 +37,51 @@ export const Home = () => {
   const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
   const { load, unload, isLoading } = useContext(LoadingContext);
 
+  const coucou = preselectedProviders === undefined; // false
 
+console.log(selectedGenreFilters)
 
 // ================ USE EFFECT API ================
 useEffect(() => {
-  load()
+  load();
+
   axios.get('https://deploy-back-kinomatch.herokuapp.com/genres')
     .then(({ data }) => setPreselectedGenres(data.genres))
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(() => unload());
 
   axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
     .then(({ data }) => {
       const filteredProviders = data.results
-      .map((element) => element)
-      .filter(
-        (element) =>
-          element.display_priorities.hasOwnProperty('FR') &&
-          element.display_priorities['FR'] < 20 &&
-          !preselectedProviders.includes(element.provider_name)
-      );
-    
+        .reduce((validProviders, currentProvider) => {
+          if(
+            currentProvider.display_priorities.hasOwnProperty('FR') &&
+            currentProvider.display_priorities['FR'] < 20 &&
+            !validProviders.includes(currentProvider)
+            // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
+          ) {
+            validProviders.push(currentProvider);
+          }
 
-      // const uniqueProviders = filteredProviders.map((element) => ({
-      //   provider_name: element.provider_name,
-      //   provider_id: element.provider_id,
-      // }));
+          return validProviders;
+        }, []);
+  
+      setPreselectedProviders(Array.isArray(filteredProviders) ? filteredProviders : [filteredProviders]); // array
 
-      
-      // unload()
-      // if (!isLoading) {
-        setPreselectedProviders(filteredProviders);
-      // }
-
-      console.log(Array.isArray(filteredProviders));
+      // console.log(Array.isArray(filteredProviders));
       console.log(filteredProviders);
-      console.log(preselectedProviders)
+      console.log(preselectedProviders);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => unload());
+
 }, []);
+
+
+console.log(preselectedProviders); 
+
 
 //=================================
 
@@ -190,7 +200,9 @@ useEffect(() => {
   }
 
   function handleRemove(event){
-    removeGenreFilter(event.target.textContent)
+    removeGenreFilter(event.target.dataset.id)
+    removeProviderFilter(event.target.dataset.id)
+    removeDecadeFilter(event.target.dataset.id)
   }
   
 
@@ -199,43 +211,60 @@ useEffect(() => {
     <div className='Home-container'>
 
 {/* // ================ JSX : FILTERS SELECTOR ================ */}
-      <div className='Home-container__filters-selector'>
+      <div className='Home__filters-selector'>
+      <div className="Home__filters-selector__containers">
 
-        <div className="Home-container__filters-selector__filters-container">
+        <div className="Home__filters-selector__containers__filters-container">
 {/* // affichage des filtres sélectionnés */}
           { selectedGenreFilters.map((filter) => (
-            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
-            onClick={handleRemove}>
+            <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
+            >
             {filter.name}
+            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.name}>
+            <i className="fa-solid fa-xmark" data-id={filter.name}></i>            </div>
+
             </div>
           ))
           }
         </div>
 
-        <div className="Home-container__filters-selector__filters-container">
+        <div className="Home__filters-selector__containers__filters-container">
 {/* // affichage des filtres sélectionnés */}
-          { selectedProviderFilters.map((filter) => (
-            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
-            onClick={handleRemove}>
-            {filter}
-            </div>
-          ))
+          {
+            selectedProviderFilters.map((filter) => (
+              <div key={filter.provider_id} className="Home-container__filters-selector__containers__filters-container__filter"
+              >
+              {filter.provider_name}
+              <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.provider_name}>
+              <i className="fa-solid fa-xmark" data-id={filter.provider_name}></i>            
+              </div>
+
+              </div>
+            ))
           }
         </div>
 
-        <div className="Home-container__filters-selector__filters-container">
+
+        <div className="Home__filters-selector__containers__filters-container">
 {/* // affichage des filtres sélectionnés */}
           { selectedDecadeFilters.map((filter) => (
-            <div key={filter.id} className="Home-container__filters-selector__filters-container__filter"
-            onClick={handleRemove}>
+            <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
+            >
             {filter}
+            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.name}>
+            <i className="fa-solid fa-xmark" data-id={filter.name} onClick={handleRemove}></i>            
+            </div>
             </div>
           ))
           }
+        </div>
+
         </div>
 {/* // bouton validé */}
 <form onSubmit={handleFormSubmit}>
-  <button type="submit">Valider mon choix</button>
+  <button type="submit">{!mobileVersion ? 'Valider mon choix' : 'Valider '}
+
+  </button>
 </form>
 
       </div>
@@ -247,7 +276,7 @@ useEffect(() => {
   <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}`}>
           <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}-backdropfilter`} onClick={handleClickOut}>
           </div>
-              <RollGenre preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/>
+              <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/>
         </div>
       }
       
@@ -275,17 +304,8 @@ useEffect(() => {
       </div>
             }
 
+    {isLoading && <Loading/>}
 
-
-{/* // ================ JSX : VERSION DESKTOP ================ */}
-
-{/* // rolls en version desktop */}
-{/* { !mobileVersion && 
-
-      <div className='test'>
-        <RollGenre preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} mobileVersion={mobileVersion} showRollGenre={showRollGenre}/>
-      </div>
-      } */}
     </div>
   )
 

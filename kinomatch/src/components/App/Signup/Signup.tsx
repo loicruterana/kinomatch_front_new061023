@@ -7,9 +7,9 @@ import Connected from '../Connected/Connected';
 import { EmailContext } from '../../../contexts/EmailContext';
 
 
-import './CreateProfile.scss';
+import './Signup.scss';
 
-const CreateProfile = () => {
+const Signup = () => {
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
@@ -60,12 +60,12 @@ const CreateProfile = () => {
   }
 
   return (
-    <div className='CreateProfile-container'>
-      <form className='CreateProfile-container-form' onSubmit={handleSubmit}>
+    <div className='Signup-container'>
+      <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
-          className='CreateProfile-container-form-input'
+          className='Signup-container-form-input'
           type='email'
           id='email'
           name='email'
@@ -76,7 +76,7 @@ const CreateProfile = () => {
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
-          className='CreateProfile-container-form-input'
+          className='Signup-container-form-input'
           type='password'
           id='password'
           name='password'
@@ -87,7 +87,7 @@ const CreateProfile = () => {
         <label htmlFor='passwordConfirm'>Confirmez votre mot de passe</label>
         <input
           onChange={handleChange}
-          className='CreateProfile-container-form-input'
+          className='Signup-container-form-input'
           type='password'
           id='passwordConfirm'
           name='passwordConfirm'
@@ -95,7 +95,7 @@ const CreateProfile = () => {
           placeholder='v0tr3MdP1c1'
         />
 
-        <Link key='signin' to='/signin'>
+        <Link key='login' to='/login'>
           <aside className='new-account'>Vous avez déjà un compte ?</aside>
         </Link>
 
@@ -107,4 +107,4 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+export default Signup;
