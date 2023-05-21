@@ -113,6 +113,10 @@ console.log(preselectedProviders);
     searchParams.append('genreID', filter.id);
   });
 
+  selectedProviderFilters.map((filter) => {
+    searchParams.append('provider', filter.provider_id);
+  });
+
   selectedDecadeFilters.map((filter) => {
     searchParams.append('decade', filter);
   });
@@ -199,12 +203,17 @@ console.log(preselectedProviders);
     setShowRollDecade(!showRollDecade)
   }
 
-  function handleRemove(event){
+  function handleRemoveGenre(event){
     removeGenreFilter(event.target.dataset.id)
+  }
+  function handleRemoveProvider(event){
     removeProviderFilter(event.target.dataset.id)
+  }
+
+  function handleRemoveDecade(event){
     removeDecadeFilter(event.target.dataset.id)
   }
-  
+
 
 // ================ JSX ================
   return (
@@ -220,8 +229,8 @@ console.log(preselectedProviders);
             <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
             >
             {filter.name}
-            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.name}>
-            <i className="fa-solid fa-xmark" data-id={filter.name}></i>            </div>
+            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemoveGenre} data-id={filter.name}>
+            <i className="fa-solid fa-xmark" data-id={filter.name} onClick={handleRemoveGenre}></i>            </div>
 
             </div>
           ))
@@ -232,11 +241,11 @@ console.log(preselectedProviders);
 {/* // affichage des filtres sélectionnés */}
           {
             selectedProviderFilters.map((filter) => (
-              <div key={filter.provider_id} className="Home-container__filters-selector__containers__filters-container__filter"
+              <div key={filter.provider_id} className="Home__filters-selector__containers__filters-container__filter"
               >
               {filter.provider_name}
-              <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.provider_name}>
-              <i className="fa-solid fa-xmark" data-id={filter.provider_name}></i>            
+              <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemoveProvider} data-id={filter.provider_name}>
+              <i className="fa-solid fa-xmark" data-id={filter.provider_name} onClick={handleRemoveProvider}></i>            
               </div>
 
               </div>
@@ -251,8 +260,8 @@ console.log(preselectedProviders);
             <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
             >
             {filter}
-            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemove} data-id={filter.name}>
-            <i className="fa-solid fa-xmark" data-id={filter.name} onClick={handleRemove}></i>            
+            <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemoveDecade} data-id={filter}>
+            <i className="fa-solid fa-xmark" data-id={filter} onClick={handleRemoveDecade}></i>            
             </div>
             </div>
           ))

@@ -8,8 +8,8 @@ export const SelectedProviderFiltersProvider = ({ children }) => {
   const [selectedProviderFilters, setSelectedProviderFilters] = useState([]);
 
   const addProviderFilter = (name, providerId) => {
-    if (selectedGenreFilters.some((f) => f.name === name)) {
-      removeGenreFilter(name);
+    if (selectedProviderFilters.some((f) => f.provider_name === name)) {
+      removeProviderFilter(name);
       return;
     }
     setSelectedProviderFilters((state) => [
@@ -22,7 +22,7 @@ export const SelectedProviderFiltersProvider = ({ children }) => {
   };  
 
   const removeProviderFilter = (name) => {
-    setSelectedProviderFilters((state) => state.filter((f) => f.name !== name));
+    setSelectedProviderFilters((state) => state.filter((f) => f.provider_name !== name));
   };
 
   return (

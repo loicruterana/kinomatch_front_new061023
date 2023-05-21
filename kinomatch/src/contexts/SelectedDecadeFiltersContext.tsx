@@ -15,7 +15,7 @@ export const SelectedDecadeFiltersProvider = ({ children }) => {
     setSelectedDecadeFilters([filter]);
   };
 
-  const removeDecadeFilter = (filter) => {
+  const removeDecadeFilter = () => {
     setSelectedDecadeFilters([]);
   };
 
