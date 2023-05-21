@@ -6,6 +6,8 @@ import DetailsModal from './DetailsModal/DetailsModal';
 import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
+import OtherResults from './OtherResults/OtherResults';
+
 
 import './style.scss';
 
@@ -155,7 +157,6 @@ function MoviePage() {
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
           <div className='movieDetails__filters-desktop'>
-            <button className='movieDetails__filters-desktop--otherResultsBtn'>Autres Résultats</button>
 
             {/* Affichage des filtres concernant le film affiché */}
             {
@@ -210,6 +211,7 @@ function MoviePage() {
             </div>
           </div>
         </section>
+      <OtherResults />
       </section >
     </div>
   )

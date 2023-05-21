@@ -28,6 +28,12 @@
         .movieFound__essentiel-detailPlateforms {
             width: 100%;
 
+            :hover {
+                transform: scale(1.05);
+                cursor: pointer;
+                // transition: all 0.2s ease;
+            }
+
             &--details {
                 background-color: #fff3b0;
                 color: #335c67;
@@ -45,6 +51,7 @@
             display: flex;
             justify-content: space-around;
             min-width: fit-content;
+            padding-bottom: 2rem;
 
             // Plateforme individuelle
             & li {

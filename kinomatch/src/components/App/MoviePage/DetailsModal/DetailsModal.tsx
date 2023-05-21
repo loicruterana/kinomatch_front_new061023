@@ -47,7 +47,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-director'>{directingCrewMembers.length > 1 ? 'Réalisateurs' : 'Réalisateur'}</h3>
                     <ul className='detailsModal__container-directorList'>
                         {
-                            directingCrewMembers.map((director: { id: Key | null; name: string }) => (
+                            directingCrewMembers.map((director: { id: Key | null | undefined; name: string }) => (
                                 <li key={director.id} className='detailsModal__container-directorName'>{director.name}</li>
 
                             ))
@@ -56,7 +56,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
                     <ul className='detailsModal__container-screenwriterList'>
                         {
-                            writingCrewMembers.map((writer: { key: Key | number | undefined; id: number | null; name: string }) => (
+                            writingCrewMembers.map((writer: { id: Key | null | undefined; name: string }) => (
                                 <li key={writer.id} className='detailsModal__container-screenwriterName'>{writer.name}</li>
 
                             ))
@@ -100,7 +100,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-composer'>Musique</h3>
                     <ul className='detailsModal__container-composerList'>
                         {
-                            musicCrewMembers.map((composer: { key: Key | null | undefined; id: number; name: string }) => (
+                            musicCrewMembers.map((composer: { id: Key | null | undefined; name: string }) => (
                                 <li key={composer.id} className='detailsModal__container-composerName'>{composer.name}</li>
                             ))
                         }
@@ -141,7 +141,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-genreTitle'>Genres</h3>
                     <ul className='detailsModal__container-genreList'>
                     {
-                        movie.genres.map((genre) => (
+                        movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
                             <li key={genre.id} className='detailsModal__container-genre'>{genre.name}</li>
                         ))
                     }
@@ -153,7 +153,7 @@ function DetailsModal(props: DetailsModalProps) {
                     <h3 className='detailsModal__container-distribution-title'>Distribution</h3>
                     <ul className='detailsModal__container-actorsList'>
                         {
-                            credits.cast.map((actor: { key: Key | null | undefined; id: number; name: string; profile_path: string; character: string }) => (
+                            credits.cast.map((actor: { id: Key | null | undefined; name: string; profile_path: string; character: string }) => (
                                 <li key={actor.id} className='detailsModal__container-actor'>
                                     <h4 className='detailsModal__container-actor--title'>{actor.name}</h4>
                                     <img className='detailsModal__container-actor--image' src={`https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face//${actor.profile_path}`} alt={`Photo de ${actor.name}`} />

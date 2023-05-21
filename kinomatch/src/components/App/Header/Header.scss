@@ -18,9 +18,12 @@
     font-size: 32px;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
+    border-bottom: vars.$theme1-secondary solid 2px;
+
 
     &-logo {
       max-width: 400px;
+
       &:hover {
         cursor: pointer;
       }
