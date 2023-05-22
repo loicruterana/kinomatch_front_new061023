@@ -14,8 +14,7 @@ import './style.scss';
 import Loading from '../Loading/Loading';
 
 
-function MoviePage(data: any) {
-
+function MoviePage() {
 
   {/* MODALE IMAGE */ }
 
@@ -39,14 +38,16 @@ function MoviePage(data: any) {
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // const { fetchedData, setFetchedData, addData } = useContext(FetchedDataContext);
+  const { fetchedData, addData } = useContext(FetchedDataContext);
 
+  console.log(fetchedData);
 
   // console.log(fetchedData);
   
   useEffect(() => {
 
-    const arrayMovie = data.map((movie) => (
+    
+    const arrayMovie = fetchedData.results.map((movie) => (
       movie.id
     ))
     const randomIndex = Math.floor(Math.random() * arrayMovie.length);
@@ -72,13 +73,13 @@ function MoviePage(data: any) {
           setProviders(providersData.data);
           // setProviders((providersData.data).results.FR);
         }
-        console.log(movie);
-        console.log(credits);
-        console.log(providers);
+        // console.log(movie);
+        // console.log(credits);
+        // console.log(providers);
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [fetchedData]);
 
   if (isLoading) {
     return (
