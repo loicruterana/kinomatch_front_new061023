@@ -46,14 +46,14 @@ function MoviePage(data: any) {
   
   useEffect(() => {
 
-    // const arrayMovie = data.map((movie) => (
-    //   movie.id
-    // ))
-    // const randomIndex = Math.floor(Math.random() * arrayMovie.length);
-    // const randomMovieId = arrayMovie[randomIndex];
+    const arrayMovie = data.map((movie) => (
+      movie.id
+    ))
+    const randomIndex = Math.floor(Math.random() * arrayMovie.length);
+    const randomMovieId = arrayMovie[randomIndex];
 
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '19995');
+    searchParams.append('movieID', randomMovieId);
 
 
     Promise.all([
