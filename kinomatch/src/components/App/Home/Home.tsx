@@ -15,6 +15,7 @@ import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFilt
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
+import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 
 
 // ================ COMPOSANT ================
@@ -36,6 +37,8 @@ export const Home = () => {
   const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
   const { load, unload, isLoading } = useContext(LoadingContext);
+  const { fetchedData, setFetchedData, addData } = useContext(FetchedDataContext);
+
 
   const coucou = preselectedProviders === undefined; // false
 
@@ -131,8 +134,9 @@ console.log(preselectedProviders);
         .get(url)
         .then((response) => {
           console.log(response.status, response.data.token, response.data);
-          setDataToTransfer(response.data)
-          console.log(dataToTransfer)
+          console.log(response.data)
+          addData(response.data)
+          console.log(fetchedData)
         })
         .catch((error) => {
           console.log('Response data:', error.response.data.error);
@@ -141,6 +145,8 @@ console.log(preselectedProviders);
         });
     } catch (error) {
       console.error('Error:', error);
+    } finally{
+      console.log(fetchedData)
     }
   };
   
@@ -213,6 +219,8 @@ console.log(preselectedProviders);
   function handleRemoveDecade(event){
     removeDecadeFilter(event.target.dataset.id)
   }
+
+  console.log(fetchedData)
 
 
 // ================ JSX ================
