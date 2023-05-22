@@ -1,0 +1,46 @@
+@use './../../../styles/vars';
+
+.Loading-container {
+  z-index: 99999;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: vars.$theme1-primary;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  &__image {
+    scale: 0.4;
+    &__name {
+      position: relative;
+      &__roll {
+        position: absolute;
+        left: -10px;
+        transform: translateY(-50%);
+        animation: rotation 2s infinite linear;
+      }
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .Loading-container {
+    &__image {
+      // position: relative;
+      // width: 100%;
+      // height: 100%;
+      scale: 0.15;
+    }
+  }
+}
