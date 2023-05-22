@@ -1,6 +1,8 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
@@ -18,8 +20,10 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 
 
+
 // ================ COMPOSANT ================
 export const Home = () => {
+  const navigate = useNavigate();
 
 // ================ USESTATE ================
   const [ preselectedGenres, setPreselectedGenres ] = useState([])
@@ -29,6 +33,8 @@ export const Home = () => {
   const [ showRollDecade, setShowRollDecade ] = useState(false);
   const [ mobileVersion, setMobileVersion ] = useState(false);
   // const [ dataToTransfer, setDataToTransfer ] = useState(null);
+  // goToMoviePage
+  const [ goToMoviePage, setGoToMoviePage ] = useState(false);
 
 
 
@@ -83,7 +89,7 @@ useEffect(() => {
 }, []);
 
 
-console.log(preselectedProviders); 
+// console.log(preselectedProviders); 
 
 
 //=================================
@@ -91,63 +97,66 @@ console.log(preselectedProviders);
   const handleFormSubmit = (event) => {
     event.preventDefault();
     // load();
-    console.log("on passe par ici")
+    // console.log("on passe par ici")
   
     // const queryData = {
     //   genres: selectedGenreFilters,
     //   providers: selectedProviderFilters,
     //   decades: selectedDecadeFilters,
     // };
-  //   const queryString = 
-  // {
-  //   genre: 14,
-  // }
-  const searchParams = new URLSearchParams();
-  // searchParams.append('genreID', '8');
-  // searchParams.append('genre', '14');
+    //   const queryString = 
+    // {
+    //   genre: 14,
+    // }
+    const searchParams = new URLSearchParams();
+    // searchParams.append('genreID', '8');
+    // searchParams.append('genre', '14');
 
-  // searchParams.append('provider', '344');
+    // searchParams.append('provider', '344');
 
-  console.log(selectedGenreFilters)
-  console.log(selectedDecadeFilters)
-
-
-  selectedGenreFilters.forEach((filter) => {
-    searchParams.append('genreID', filter.id);
-  });
-
-  selectedProviderFilters.map((filter) => {
-    searchParams.append('providerID', filter.provider_id);
-  });
-
-  selectedDecadeFilters.map((filter) => {
-    searchParams.append('decade', filter);
-  });
+    console.log(selectedGenreFilters)
+    console.log(selectedDecadeFilters)
 
 
-       const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
+    selectedGenreFilters.forEach((filter) => {
+      searchParams.append('genreID', filter.id);
+    });
+
+    selectedProviderFilters.map((filter) => {
+      searchParams.append('providerID', filter.provider_id);
+    });
+
+    selectedDecadeFilters.map((filter) => {
+      searchParams.append('decade', filter);
+    });
+
+
+    const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
    
     console.log(url)
+
+    navigate(`/film?${searchParams.toString()}`);
   
-    try {
-      axios
-        .get(url)
-        .then((response) => {
-          console.log(response.status, response.data.token, response.data);
-          console.log(response.data)
-          addData(response.data)
-          console.log(fetchedData)
-        })
-        .catch((error) => {
-          console.log('Response data:', error.response.data.error);
-          console.log('Response status:', error.response.status);
-          console.log('Response headers:', error.response.headers);
-        });
-    } catch (error) {
-      console.error('Error:', error);
-    } finally{
-      console.log(fetchedData)
-    }
+    // try {
+    //   axios
+    //     .get(url)
+    //     .then((response) => {
+    //       console.log(response.status, response.data.token, response.data);
+    //       console.log(response.data)
+    //       addData(response.data)
+    //       console.log(fetchedData)
+    //       setGoToMoviePage(true)
+    //     })
+    //     .catch((error) => {
+    //       console.log('Response data:', error.response.data.error);
+    //       console.log('Response status:', error.response.status);
+    //       console.log('Response headers:', error.response.headers);
+    //     });
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // } finally{
+    //   console.log(fetchedData)
+    // }
   };
   
   
@@ -220,6 +229,11 @@ console.log(preselectedProviders);
   }
 
   console.log(fetchedData)
+
+
+  if (goToMoviePage) {
+    return <Navigate to="/film"/>;
+  }
 
 
 // ================ JSX ================

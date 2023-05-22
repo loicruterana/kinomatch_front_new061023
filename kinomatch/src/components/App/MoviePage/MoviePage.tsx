@@ -1,5 +1,6 @@
 import { Key, useContext, useEffect, useState } from 'react';
 import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
+import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -15,6 +16,28 @@ import Loading from '../Loading/Loading';
 
 
 function MoviePage() {
+  const [searchParams] = useSearchParams();
+  const { fetchedData, addData } = useContext(FetchedDataContext);
+
+  useEffect(() => {
+    const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`;
+    try {
+      axios
+        .get(url)
+        .then((response) => {
+          addData(response.data);
+        })
+        .catch((error) => {
+          console.log('Response data:', error.response.data.error);
+          console.log('Response status:', error.response.status);
+          console.log('Response headers:', error.response.headers);
+        });
+    } catch (error) {
+      console.error('Error:', error);
+    } finally{
+      console.log(fetchedData)
+    }
+  }, []);
 
   {/* MODALE IMAGE */ }
 
@@ -38,16 +61,15 @@ function MoviePage() {
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { fetchedData, addData } = useContext(FetchedDataContext);
 
-  console.log(fetchedData);
+
 
   // console.log(fetchedData);
   
   useEffect(() => {
-
+    console.log(window.location.search);
     
-    const arrayMovie = fetchedData.results.map((movie) => (
+    const arrayMovie = fetchedData.map((movie) => (
       movie.id
     ))
     const randomIndex = Math.floor(Math.random() * arrayMovie.length);
@@ -118,7 +140,6 @@ function MoviePage() {
 
   const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
   const mappedActorCastMembers = actorCastMembers.slice(0, 3);
-
 
   return (
 

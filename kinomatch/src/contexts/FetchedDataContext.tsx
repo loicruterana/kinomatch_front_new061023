@@ -8,7 +8,8 @@ export const FetchedDataProvider = ({ children }) => {
   const [fetchedData, setFetchedData] = useState([]);
 
   const addData = (data) => {
-    setFetchedData(data)
+    console.log({data});
+    setFetchedData(data.results || []);
   }
 
   return (
