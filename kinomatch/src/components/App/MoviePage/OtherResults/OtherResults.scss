@@ -3,32 +3,31 @@
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
-    .otherResults-container {
-        overflow: auto;
-            align-items: flex-start;
-            justify-content: center;
-            display: flex;
-            width: 18%;
-            height: 100%;
-            background-image: url('../../../../../public/images/pelloche.png');
-            background-size: cover;
-            background-position: center;
+  .otherResults-container {
+    overflow: auto;
+    align-items: flex-start;
+    justify-content: center;
+    display: flex;
+    width: 18%;
+    height: 100%;
+    background-image: url('../../../../../public/images/pelloche.png');
+    background-size: cover;
+    background-position: center;
 
-        &--scrollList {
-            background-color: vars.$theme1-secondary;
-            width: 78%;
-            height: 100%;
+    &--scrollList {
+      background-color: vars.$theme1-secondary;
+      width: 78%;
+      height: 100%;
 
-            &---title{
-                font-size: 1.5rem;
-                color: vars.$theme1-primary;
-                font-weight: bold;
-                padding-top: 2rem;
-                text-align: center;
-            }
-            &---movies{
-                
-            }
-        }
+      &---title {
+        font-size: 1.5rem;
+        color: vars.$theme1-primary;
+        font-weight: bold;
+        padding-top: 2rem;
+        text-align: center;
+      }
+      &---movies {
+      }
     }
+  }
 }

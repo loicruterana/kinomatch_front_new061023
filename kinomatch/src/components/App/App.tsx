@@ -44,7 +44,7 @@ function App() {
                       element={<Home />}
                     />
                     <Route
-                      path="/film"
+                      path="/films"
                       element={<MoviePage />}
                     />
                     <Route

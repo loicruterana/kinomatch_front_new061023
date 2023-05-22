@@ -135,7 +135,7 @@ useEffect(() => {
    
     console.log(url)
 
-    navigate(`/film?${searchParams.toString()}`);
+    navigate(`/films?${searchParams.toString()}`);
   
     // try {
     //   axios
@@ -232,7 +232,7 @@ useEffect(() => {
 
 
   if (goToMoviePage) {
-    return <Navigate to="/film"/>;
+    return <Navigate to="/films"/>;
   }
 
 

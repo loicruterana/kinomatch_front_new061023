@@ -61,62 +61,40 @@ function MoviePage() {
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [movieID, setMovieID] = useState('19995');
 
- let randomID = ''
 
   // console.log(fetchedData);
 
   useEffect(() => {
-    console.log(window.location.search);
-
-    axios.get(`https://deploy-back-kinomatch.herokuapp.com/${window.location.search}`)
-      .then((response) => {(response.data)
-       randomID = response.data.results[Math.floor(Math.random() * response.data.results.length)].id
-
+    axios
+      .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
+      .then(({ data }) => {
+        const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
+        setMovieID(randomID);
+  
+        const searchParams = new URLSearchParams();
+        searchParams.append('movieID', randomID);
+  
+        const requests = [
+          axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
+          axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
+          axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
+        ];
+  
+        return Promise.all(requests);
       })
-console.log(randomID);
-
-    // const newUrl = `https://deploy-back-kinomatch.herokuapp.com/${window.location.search}`
-
-
-
-    // window.location.search
-
-    // JSON
-    // 1 sur 20 -> tirer id
-    // const arrayMovie = fetchedData.results.map((movie) => (
-    //   movie.id
-    // ))
-    // const randomIndex = Math.floor(Math.random() * arrayMovie.length);
-    // const randomMovieId = arrayMovie[randomIndex];
-
-    const searchParams = new URLSearchParams();
-    searchParams.append('movieID', randomID );
-
-
-    Promise.all([
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
-      axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
-
-      // axios.get(`http://localhost:4000/detail?${searchParams.toString()}`),
-      // axios.get(`http://localhost:4000/credits?${searchParams.toString()}`),
-      // axios.get(`http://localhost:4000/provider?${searchParams.toString()}`)
-    ])
       .then(([movieData, creditsData, providersData]) => {
-        if (movieData.data, creditsData.data, providersData.data !== null) {
+        if (movieData.data && creditsData.data && providersData.data) {
           setMovie(movieData.data);
           setCredits(creditsData.data);
           setProviders(providersData.data);
-          // setProviders((providersData.data).results.FR);
         }
-        // console.log(movie);
-        // console.log(credits);
-        // console.log(providers);
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
-  }, [fetchedData]);
+  }, []);
+  
 
   if (isLoading) {
     return (
@@ -147,6 +125,7 @@ console.log(randomID);
   }
 
   {/* RECUPERATION RÉALISATEURS */ }
+  console.log(credits)
 
   const directingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director");
   const mappedDirectingCrewMembers = directingCrewMembers.slice(0, 3);
