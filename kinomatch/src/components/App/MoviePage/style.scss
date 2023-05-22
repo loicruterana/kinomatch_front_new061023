@@ -37,7 +37,7 @@
             &-head {
                 display: flex;
                 align-items: flex-end;
-                width: 100%;
+                width: 82%;
                 margin-bottom: 1.3rem;
             }
 
@@ -129,7 +129,7 @@
 
         // filtres sélectionnés pour le film affiché
         &--filterElem {
-            font-size: 1rem;
+            font-size: 1.3rem;
             width: fit-content;
             height: fit-content;
             font-weight: bold;

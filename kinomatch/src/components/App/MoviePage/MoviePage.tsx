@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -41,6 +41,10 @@ function MoviePage() {
   useEffect(() => {
     const searchParams = new URLSearchParams();
     searchParams.append('movieID', '384018');
+
+    const filter =[
+      {}
+    ]
 
     Promise.all([
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -160,7 +164,7 @@ function MoviePage() {
 
             {/* Affichage des filtres concernant le film affiché */}
             {
-              movie.genres.map((genre) => (
+              movie.genres.map((genre: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => (
                 <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
               ))
             }
@@ -174,7 +178,7 @@ function MoviePage() {
               }
             </blockquote>
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
-            <p className='movieDetails__description-resume'>{movie?.overview}</p>
+            <p className='movieDetails__description-resume'>{movie.overview}</p>
 
             {/* Affichage des réalisateurs concernant le film affiché */}
             <ul className='movieDetails__description-directorsList'>

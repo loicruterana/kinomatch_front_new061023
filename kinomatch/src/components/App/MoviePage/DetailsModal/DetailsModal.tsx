@@ -1,4 +1,4 @@
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useState } from 'react';
+import { Key, ReactNode } from 'react';
 import './DetailsModal.scss';
 
 {/* Création de l'interface pour Typescript */ }
@@ -9,7 +9,7 @@ interface DetailsModalProps {
     credits: any | null;
     directingCrewMembers: any;
     formatDate: any;
-    convertMinutesInHours: (showDetailsModal: any) => void;
+    convertMinutesInHours: (showDetailsModal: any) => ReactNode;
 }
 
 {/* Fonction permettant de cacher la modale DetailsModal */ }

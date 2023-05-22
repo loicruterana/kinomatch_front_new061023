@@ -9,6 +9,7 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
     //===========================================================
 
     return (
+        
         <details className='movieFound__essentiel-detailPlateforms'>
             <summary className='movieFound__essentiel-detailPlateforms--details'>Film disponible sur :</summary>
             <section className='movieFound__essentiel-disponibility'>
