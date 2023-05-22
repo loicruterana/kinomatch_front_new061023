@@ -34,7 +34,7 @@ function MoviePage() {
         });
     } catch (error) {
       console.error('Error:', error);
-    } finally{
+    } finally {
       console.log(fetchedData)
     }
   }, []);
@@ -62,21 +62,36 @@ function MoviePage() {
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-
+ let randomID = ''
 
   // console.log(fetchedData);
-  
+
   useEffect(() => {
     console.log(window.location.search);
-    
-    const arrayMovie = fetchedData.map((movie) => (
-      movie.id
-    ))
-    const randomIndex = Math.floor(Math.random() * arrayMovie.length);
-    const randomMovieId = arrayMovie[randomIndex];
+
+    axios.get(`https://deploy-back-kinomatch.herokuapp.com/${window.location.search}`)
+      .then((response) => {(response.data)
+       randomID = response.data.results[Math.floor(Math.random() * response.data.results.length)].id
+
+      })
+console.log(randomID);
+
+    // const newUrl = `https://deploy-back-kinomatch.herokuapp.com/${window.location.search}`
+
+
+
+    // window.location.search
+
+    // JSON
+    // 1 sur 20 -> tirer id
+    // const arrayMovie = fetchedData.results.map((movie) => (
+    //   movie.id
+    // ))
+    // const randomIndex = Math.floor(Math.random() * arrayMovie.length);
+    // const randomMovieId = arrayMovie[randomIndex];
 
     const searchParams = new URLSearchParams();
-    searchParams.append('movieID', randomMovieId);
+    searchParams.append('movieID', randomID );
 
 
     Promise.all([
