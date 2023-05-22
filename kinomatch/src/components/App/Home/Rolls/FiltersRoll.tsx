@@ -25,9 +25,9 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
 function handleGenreClick(event) {
   const name = event.target.textContent;
   const genreId = event.target.dataset.id;
-  console.log(name, genreId)
+  // console.log(name, genreId)
   addGenreFilter(name, genreId) 
-  console.log(selectedGenreFilters)
+  // console.log(selectedGenreFilters)
 }
 
 
@@ -35,10 +35,10 @@ function handleGenreClick(event) {
     console.log('i')
     const name = event.target.textContent;
     const providerId = event.target.dataset.id; 
-    console.log(name, providerId)
+    // console.log(name, providerId)
    
     addProviderFilter(name, providerId);
-    console.log(name, providerId)
+    // console.log(name, providerId)
 
     // if (clickedItems.includes(filter)) {
     //   setClickedItems(clickedItems.filter(item => item !== filter));

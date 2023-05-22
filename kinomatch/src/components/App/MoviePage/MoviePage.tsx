@@ -1,4 +1,5 @@
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from 'react';
+import { Key, useContext, useEffect, useState } from 'react';
+import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -10,9 +11,10 @@ import OtherResults from './OtherResults/OtherResults';
 
 
 import './style.scss';
+import Loading from '../Loading/Loading';
 
 
-function MoviePage() {
+function MoviePage(data: any) {
 
 
   {/* MODALE IMAGE */ }
@@ -37,14 +39,22 @@ function MoviePage() {
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // const { fetchedData, setFetchedData, addData } = useContext(FetchedDataContext);
 
+
+  // console.log(fetchedData);
+  
   useEffect(() => {
-    const searchParams = new URLSearchParams();
-    searchParams.append('movieID', '384018');
 
-    const filter =[
-      {}
-    ]
+    // const arrayMovie = data.map((movie) => (
+    //   movie.id
+    // ))
+    // const randomIndex = Math.floor(Math.random() * arrayMovie.length);
+    // const randomMovieId = arrayMovie[randomIndex];
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('movieID', '19995');
+
 
     Promise.all([
       axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -72,7 +82,7 @@ function MoviePage() {
 
   if (isLoading) {
     return (
-      <div>chargement</div> //! IMPORTER LA PAGE LOADING
+      <Loading />
     )
   }
 
@@ -164,7 +174,7 @@ function MoviePage() {
 
             {/* Affichage des filtres concernant le film affiché */}
             {
-              movie.genres.map((genre: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => (
+              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
                 <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
               ))
             }
@@ -215,7 +225,7 @@ function MoviePage() {
             </div>
           </div>
         </section>
-      <OtherResults />
+        <OtherResults />
       </section >
     </div>
   )
