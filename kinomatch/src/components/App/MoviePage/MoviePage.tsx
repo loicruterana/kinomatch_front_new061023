@@ -10,7 +10,6 @@ import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 
-
 import './style.scss';
 import Loading from '../Loading/Loading';
 
@@ -55,6 +54,14 @@ function MoviePage() {
     setShowDetailsModal(!showDetailsModal);
   };
 
+  {/* MODALE AUTRES RÉSULTATS */}
+
+  const [showOtherResults, setShowOtherResults] = useState(false);
+
+  const handleOtherResults = () => {
+    setShowOtherResults(!showOtherResults);
+  };
+
   {/* REQUETES ROUTES */ }
 
   const [movie, setMovie] = useState(null);
@@ -63,6 +70,7 @@ function MoviePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [movieID, setMovieID] = useState([]);
   const [randomID, setRandomID] = useState('');
+
 
 
   // console.log(fetchedData);
@@ -78,7 +86,8 @@ function MoviePage() {
         const searchParams = new URLSearchParams();
         searchParams.append('movieID', randomID);
         setRandomID(randomID);
-  
+        console.log(data.results);
+        
         const requests = [
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
@@ -237,7 +246,9 @@ function MoviePage() {
             </div>
             <CommentPost />
             <div className='movieDetails__filters'>
-              <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>
+              <button 
+              className='movieDetails__filters-otherResultsBtn'
+              onClick={handleOtherResults}>Autres Résultats</button>
               {/* Affichage des filtres concernant le film affiché */}
             {
               movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (

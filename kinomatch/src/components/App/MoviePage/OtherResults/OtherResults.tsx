@@ -6,7 +6,6 @@ function OtherResults(movieID, randomID) {
   console.log(movieID.randomID);
   console.log(randomID);
 
-
   const [selectedId, setSelectedId] = useState('');
 
   const handleClick = (event) => {
