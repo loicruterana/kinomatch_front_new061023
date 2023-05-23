@@ -62,6 +62,7 @@ function MoviePage() {
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [movieID, setMovieID] = useState([]);
+  const [randomID, setRandomID] = useState('');
 
 
   // console.log(fetchedData);
@@ -71,10 +72,12 @@ function MoviePage() {
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
-        setMovieID(data.results);
+        const filteredResults = data.results.filter((result: { id: any; }) => result.id !== randomID);
+        setMovieID(filteredResults);
   
         const searchParams = new URLSearchParams();
         searchParams.append('movieID', randomID);
+        setRandomID(randomID);
   
         const requests = [
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
@@ -94,6 +97,7 @@ function MoviePage() {
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
   }, []);
+  console.log(randomID);
   
 
   if (isLoading) {
@@ -244,7 +248,7 @@ function MoviePage() {
             </div>
           </div>
         </section>
-        <OtherResults movieID={movieID}/>
+        <OtherResults movieID={movieID} randomID={randomID} />
       </section >
     </div>
   )

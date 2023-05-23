@@ -1,23 +1,42 @@
+import { Key, useState } from 'react';
 import './OtherResults.scss';
-// Récupérer le contexte
 
-function OtherResults(movieID) {
-    // Récupérer la data du context
-    console.log(movieID);
+function OtherResults(movieID, randomID) {
+  console.log(movieID);
+  console.log(movieID.randomID);
+  console.log(randomID);
 
-    return (
-        <aside className='otherResults-container'>
-            <div className='otherResults-container--scrollList'>
-                <h3 className='otherResults-container--scrollList---title'>Autres résultats</h3>
-                {/* Mapper sur les données stockées */}
-                    {movieID.movieID.map((movieElem: { poster_path: any; }) => (
 
-                        <a  href='#'><img className='otherResults-container--scrollList---images' src={`https://image.tmdb.org/t/p/${movieElem.poster_path}`} srcSet={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path} 1x`} alt="" /></a>
+  const [selectedId, setSelectedId] = useState('');
 
-                    ))}
-            </div>
-        </aside>
-    )
+  const handleClick = (event) => {
+    event.preventDefault();
+    const id = event.currentTarget.getAttribute('data-id');
+    setSelectedId(id);
+
+  }
+  console.log(selectedId);
+
+  return (
+    <aside className='otherResults-container'>
+      <div className='otherResults-container--scrollList'>
+        <h3 className='otherResults-container--scrollList---title'>Autres résultats</h3>
+        {movieID.movieID.map((movieElem: { title: any; poster_path: any; id: Key }) => (
+
+          <a
+            key={movieElem.id}
+            data-id={movieElem.id}
+            onClick={handleClick}>
+            <img
+              className='otherResults-container--scrollList---images'
+              src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
+              alt={`Affiche du film ${movieElem.title}`}
+            />
+          </a>
+        ))}
+      </div>
+    </aside>
+  )
 }
 
 export default OtherResults;
