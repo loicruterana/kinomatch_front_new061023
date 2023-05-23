@@ -79,7 +79,10 @@
                 display: block;
                 margin-bottom: 0.2rem;
                 margin: 0 auto;
-                border-radius: 6px;
+                border-radius: 10px;
+                width: 100%;
+                height: auto;
+                max-width: 80%;
             }
 
             &--title {

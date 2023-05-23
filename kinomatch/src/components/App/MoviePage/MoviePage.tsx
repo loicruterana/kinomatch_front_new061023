@@ -61,7 +61,7 @@ function MoviePage() {
   const [credits, setCredits] = useState(null);
   const [providers, setProviders] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [movieID, setMovieID] = useState('19995');
+  const [movieID, setMovieID] = useState([]);
 
 
   // console.log(fetchedData);
@@ -71,7 +71,7 @@ function MoviePage() {
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
-        setMovieID(randomID);
+        setMovieID(data.results);
   
         const searchParams = new URLSearchParams();
         searchParams.append('movieID', randomID);
@@ -234,14 +234,17 @@ function MoviePage() {
             <CommentPost />
             <div className='movieDetails__filters'>
               <button className='movieDetails__filters-otherResultsBtn'>Autres Résultats</button>
-              <p className='movieDetails__filters-filterElem'>Science fiction</p>
-              <p className='movieDetails__filters-filterElem'>Humour</p>
-              <p className='movieDetails__filters-filterElem'>Action</p>
-              <p className='movieDetails__filters-filterElem--modifier'>Modifier</p>
+              {/* Affichage des filtres concernant le film affiché */}
+            {
+              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
+                <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>{genre.name}</p>
+              ))
+            }
+              {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
             </div>
           </div>
         </section>
-        <OtherResults />
+        <OtherResults movieID={movieID}/>
       </section >
     </div>
   )

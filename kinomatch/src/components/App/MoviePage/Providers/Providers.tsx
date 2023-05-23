@@ -4,12 +4,12 @@ import "./Providers.scss";
 function Providers(providers: { providers: { results: { FR: { flatrate: any[]; rent: any[]; buy: any[]; free: any[]; ads: any[]; link: string }; }; }; }) {
 
     // ==================== Lien Just Watch =====================
-    const justWatchLink = providers.providers.results.FR.link;
-    console.log(justWatchLink);
+    const justWatchLink = providers.providers.results.FR && providers.providers.results.FR.link;
+    // console.log(justWatchLink);
     //===========================================================
 
     return (
-        
+
         <details className='movieFound__essentiel-detailPlateforms'>
             <summary className='movieFound__essentiel-detailPlateforms--details'>Film disponible sur :</summary>
             <section className='movieFound__essentiel-disponibility'>
