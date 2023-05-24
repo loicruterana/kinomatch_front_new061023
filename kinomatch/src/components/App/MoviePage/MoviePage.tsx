@@ -1,5 +1,4 @@
 import { Key, useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -24,7 +23,7 @@ function MoviePage() {
     setShowImageModal(!showImageModal);
   };
 
-  {/* MODALE DETAILS */ }
+  {/* ================= MODALE DETAILS ============================ */ }
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
@@ -40,16 +39,31 @@ function MoviePage() {
     setShowOtherResults(!showOtherResults);
   };
 
-  {/* REQUETES ROUTES */ }
+  {/* ================ USESTATES ================================= */ }
 
+  {/* UseState route Detail */ }
   const [movie, setMovie] = useState(null);
+
+  {/* UseState route credits */ }
   const [credits, setCredits] = useState(null);
+
+  {/* UseState route providers */ }
   const [providers, setProviders] = useState(null);
+
+  {/* UseState chargement de page */ }
   const [isLoading, setIsLoading] = useState(true);
+
+  {/* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */ }
   const [movieID, setMovieID] = useState([]);
+
+  {/* UseState qui récupère un id de film aléatoire en parcourant le résultat de requête axios */ }
   const [randomID, setRandomID] = useState('');
+
   const [selectedId, setSelectedId] = useState('');
 
+  {/* ================ USECONTEXT ================================= */ }
+
+  {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
 
@@ -64,8 +78,13 @@ function MoviePage() {
         setMovieID(filteredResults);
 
         const searchParams = new URLSearchParams();
-        searchParams.append('movieID', randomID);
-        setRandomID(randomID);
+        if (currentMovieId) {
+          searchParams.append('movieID', currentMovieId);
+        } else {
+          searchParams.append('movieID', randomID);
+          setRandomID(randomID);
+        }
+
         console.log(data.results);
 
         const requests = [
