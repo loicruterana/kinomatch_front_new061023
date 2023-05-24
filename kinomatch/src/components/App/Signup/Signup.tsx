@@ -16,7 +16,7 @@ const Signup = () => {
     passwordConfirm: '',
   });
 
-  const { isLoggedIn, login } = useContext(AuthContext);
+  const { isLoggedIn, login , addUserData } = useContext(AuthContext);
   const { addEmail, email } = useContext(EmailContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
 
@@ -43,7 +43,7 @@ const Signup = () => {
         // response.data.token
         );
       login();
-      addEmail(postProfil.email)
+      addUserData(response.data.user.email, response.data.user.id)
       setTimeout(() => {
       setGoToHomePage(true);
       }, 1500);

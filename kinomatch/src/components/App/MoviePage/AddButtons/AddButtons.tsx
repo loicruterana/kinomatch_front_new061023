@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../../../contexts/AuthContext';
+
 import './AddButton.scss';
 
-function AddButton() {
+function AddButton(movieId) {
 
-    //* ========================== USESTATE ===============================
+    {/* ========================== USESTATE =============================== */ }
+    const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked } = useContext(AuthContext);
 
     // Coeur
     const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -14,17 +17,24 @@ function AddButton() {
     // Check
     const [checkIsClicked, setCheckIsClicked] = useState(false);
 
+    const [likedMovieId, setLikedMovieId] = useState('');
 
-    //* ============================ HANDLERS =============================
+
+
+    {/* ============================ HANDLERS ============================= */ }
 
     // Coeur
     const handleHeartClick = () => {
         setHeartIsClicked(!heartIsClicked);
+
+        // addBookmarked(movieId)
     };
+    console.log(movieId);
 
     // Favoris
-    const handleBookMartClick = () => {
+    const handleBookMarkClick = () => {
         setBookmarkIsClicked(!bookmartIsClicked);
+        addBookmarked(movieId)
     };
 
     // Check
@@ -32,7 +42,7 @@ function AddButton() {
         setCheckIsClicked(!checkIsClicked);
     };
 
-    //* ===================================================================
+    {/* =================================================================== */ }
 
     return (
         <>
@@ -45,7 +55,7 @@ function AddButton() {
             <button
                 className='movieFound__essentiel-btn--addToFavorites'
                 type='submit'
-                onClick={handleBookMartClick}>
+                onClick={handleBookMarkClick}>
                 <i className={`fa-sharp fa-${bookmartIsClicked ? 'solid' : 'regular'} fa-bookmark ${bookmartIsClicked ? 'bookMarkClicked' : ''}`}
                     style={{ color: bookmartIsClicked ? '#fff3b0' : '' }}></i></button>
             <button

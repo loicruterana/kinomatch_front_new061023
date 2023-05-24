@@ -108,7 +108,7 @@ function MoviePage() {
       });
   }, [currentMovieId]);
 
-  console.log(randomID);
+  console.log(movie);
 
 
   if (isLoading) {
@@ -150,6 +150,7 @@ function MoviePage() {
   const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
   const mappedActorCastMembers = actorCastMembers.slice(0, 3);
 
+
   return (
 
     <div className='moviePage'>
@@ -186,7 +187,7 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
             <cite className='movieFound__essentiel-title'>{movie.title}</cite>
-            <AddButton />
+            <AddButton movie={movie.id} />
           </div>
           <div className='movieFound__essentiel-imageFrame'>
             <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt='Image du film' onClick={handleImageModal} />

@@ -20,7 +20,7 @@ export const Login = () => {
   });
 
   const { addEmail, email } = useContext(EmailContext);
-  const { isLoggedIn, login } = useContext(AuthContext);
+  const { isLoggedIn, login , addUserData } = useContext(AuthContext);
 
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [error, setError] = useState('');
@@ -62,9 +62,11 @@ export const Login = () => {
         }
 
         // OK
-
-        addEmail(postProfil.email)
+        
+        addUserData(response.data.user.email, response.data.user.id)
+        // addEmail(postProfil.email)
         login();
+
         setTimeout(() => {
           setGoToHomePage(true);
         }, 1500);
