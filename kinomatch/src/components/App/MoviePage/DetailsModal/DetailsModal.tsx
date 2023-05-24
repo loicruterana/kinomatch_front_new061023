@@ -72,8 +72,8 @@ function DetailsModal(props: DetailsModalProps) {
               ))
             }
           </ul>
-          <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
-          <p className='detailsModal__container-distributionCompanyName'>###Walt Disney Studios Motion Pictures###</p>
+          {/* <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
+          <p className='detailsModal__container-distributionCompanyName'>###Walt Disney Studios Motion Pictures###</p> */}
           <h3 className='detailsModal__container-productionCountry'>Pays de production</h3>
           <ul className='detailsModal__container-productionCountry-list'>
             {/* Affichage de la liste des pays de production */}
