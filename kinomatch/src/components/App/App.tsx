@@ -15,6 +15,7 @@ import { SelectedProviderFiltersProvider } from '../../contexts/SelectedProvider
 import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFiltersContext';
 import { EmailProvider } from '../../contexts/EmailContext';
 import { FetchedDataProvider } from '../../contexts/FetchedDataContext';
+import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 
 
 
@@ -26,6 +27,7 @@ import './App.scss';
 function App() {
 
   return (
+    <CurrentMovieIdProvider>
 
     <FetchedDataProvider>
       <EmailProvider>
@@ -70,6 +72,8 @@ function App() {
         </SelectedDecadeFiltersProvider>
       </EmailProvider>
     </FetchedDataProvider>
+    </CurrentMovieIdProvider>
+
 
   )
 }

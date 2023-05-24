@@ -1,20 +1,24 @@
-import { Key, useState } from 'react';
+import { Key, useState, useContext } from 'react';
 import './OtherResults.scss';
+import { CurrentMovieIdContext } from '../../../../contexts/CurrentMovieIdContext';
 
-function OtherResults(movieID, randomID) {
+function OtherResults(movieID, randomID, selectedId, setSelectedId) {
+
+  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
+
   console.log(movieID);
   console.log(movieID.randomID);
   console.log(randomID);
 
-  const [selectedId, setSelectedId] = useState('');
 
   const handleClick = (event) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
-    setSelectedId(id);
+    console.log(`Ligne 13 ${id}`)
+    addMovieData(id);
 
   }
-  console.log(selectedId);
+  console.log(`Ligne 21 ${currentMovieId}`);
 
   return (
     <aside className='otherResults-container'>

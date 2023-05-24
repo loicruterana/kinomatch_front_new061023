@@ -1,5 +1,4 @@
 import { Key, useContext, useEffect, useState } from 'react';
-import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,36 +8,15 @@ import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
+import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
+
 
 import './style.scss';
 import Loading from '../Loading/Loading';
 
 
 function MoviePage() {
-  const [searchParams] = useSearchParams();
-  const { fetchedData, addData } = useContext(FetchedDataContext);
 
-  useEffect(() => {
-    const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`;
-    try {
-      axios
-        .get(url)
-        .then((response) => {
-          addData(response.data);
-        })
-        .catch((error) => {
-          console.log('Response data:', error.response.data.error);
-          console.log('Response status:', error.response.status);
-          console.log('Response headers:', error.response.headers);
-        });
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      console.log(fetchedData)
-    }
-  }, []);
-
-  {/* MODALE IMAGE */ }
 
   const [showImageModal, setShowImageModal] = useState(false);
 
@@ -54,7 +32,7 @@ function MoviePage() {
     setShowDetailsModal(!showDetailsModal);
   };
 
-  {/* MODALE AUTRES RÉSULTATS */}
+  {/* MODALE AUTRES RÉSULTATS */ }
 
   const [showOtherResults, setShowOtherResults] = useState(false);
 
@@ -70,10 +48,12 @@ function MoviePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [movieID, setMovieID] = useState([]);
   const [randomID, setRandomID] = useState('');
+  const [selectedId, setSelectedId] = useState('');
+
+  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
 
-
-  // console.log(fetchedData);
+  console.log(selectedId);
 
   useEffect(() => {
     axios
@@ -82,18 +62,18 @@ function MoviePage() {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
         const filteredResults = data.results.filter((result: { id: any; }) => result.id !== randomID);
         setMovieID(filteredResults);
-  
+
         const searchParams = new URLSearchParams();
         searchParams.append('movieID', randomID);
         setRandomID(randomID);
         console.log(data.results);
-        
+
         const requests = [
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
         ];
-  
+
         return Promise.all(requests);
       })
       .then(([movieData, creditsData, providersData]) => {
@@ -104,10 +84,13 @@ function MoviePage() {
         }
       })
       .catch((error) => console.error(error))
-      .finally(() => setIsLoading(false));
-  }, []);
+      .finally(() => {
+        setIsLoading(false)
+      });
+  }, [currentMovieId]);
+
   console.log(randomID);
-  
+
 
   if (isLoading) {
     return (
@@ -246,20 +229,20 @@ function MoviePage() {
             </div>
             <CommentPost />
             <div className='movieDetails__filters'>
-              <button 
-              className='movieDetails__filters-otherResultsBtn'
-              onClick={handleOtherResults}>Autres Résultats</button>
+              <button
+                className='movieDetails__filters-otherResultsBtn'
+                onClick={handleOtherResults}>Autres Résultats</button>
               {/* Affichage des filtres concernant le film affiché */}
-            {
-              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>{genre.name}</p>
-              ))
-            }
+              {
+                movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
+                  <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>{genre.name}</p>
+                ))
+              }
               {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
             </div>
           </div>
         </section>
-        <OtherResults movieID={movieID} randomID={randomID} />
+        <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId={setSelectedId} />
       </section >
     </div>
   )
