@@ -8,7 +8,7 @@ import './Header.scss';
 
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
   const { email } = useContext(EmailContext);
 
 
@@ -23,10 +23,10 @@ function Header() {
         <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
       </Link>
       {/* Bouton qui au clic amènera une recommandation de film aléatoire */}
-      <button className='Header-random-button'>
+      {/* <button className='Header-random-button'>
         <i className='fa-solid fa-dice'></i>
         ALEATOIRE
-      </button>
+      </button> */}
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
       {/* Au clic sera affichée une modale BurgerMenu */}
 
@@ -43,7 +43,9 @@ function Header() {
       {isLoggedIn && (
         <div className='Header-profile'>
           <img src="images/1681073113956.jpg"></img>
-          <div className='Header-profile-username'>{email}</div>
+          <Link to="/profile">
+            <div className='Header-profile-username'>{userData.email}</div>
+          </Link>
         </div>
      )}
 
