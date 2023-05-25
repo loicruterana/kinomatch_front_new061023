@@ -25,12 +25,13 @@ function AddButton(movieId) {
   {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
   useEffect(() => {
     const getUserBookmarked = () => {
-      axios.get('https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=4')
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=${userData.id}`)
         .then(function (response) {
           const responseData = response.data;
           const filmIds = responseData.map(item => item.film_id);
           console.log(filmIds);
-
+          console.log(userData.id);
+          
           console.log(movieId.movie.toString());
 
           if (filmIds.includes(movieId.movie.toString())) {
@@ -39,14 +40,14 @@ function AddButton(movieId) {
             setHeartIsClicked(false);
           }
           console.log(heartIsClicked);
-          
+
         })
     };
 
     {/* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */ }
     {
       isLoggedIn &&
-      getUserBookmarked()
+        getUserBookmarked()
     }
   }, [currentMovieId, heartIsClicked, isLoggedIn, movieId]);
 
@@ -55,17 +56,25 @@ function AddButton(movieId) {
 
   // Coeur
   const handleHeartClick = () => {
+
+    {/* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */ }
     setHeartIsClicked(!heartIsClicked);
+
+    {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */ }
     heartIsClicked === false ? addBookmarked(movieId) : deleteBookmarked(movieId);
   };
 
   // Favoris
   const handleBookMarkClick = () => {
+
+    {/* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */ }
     setBookmarkIsClicked(!bookmartIsClicked);
   };
 
   // Check
   const handleCheckClick = () => {
+
+    {/* Met à jour l'état de "sCheckIsClicked" en inversant sa valeur actuelle. */ }
     setCheckIsClicked(!checkIsClicked);
   };
 
