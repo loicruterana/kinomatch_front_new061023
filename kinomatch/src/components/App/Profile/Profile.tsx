@@ -27,7 +27,7 @@ export const Profile = () => {
 
   // import { AuthContext } from '../../../contexts/AuthContext';
 
-  const { userData } = useContext(AuthContext);
+  const { userData, logout } = useContext(AuthContext);
 
   // ================ HANDLERS ================
 
@@ -69,13 +69,17 @@ export const Profile = () => {
     searchParams.append('userID', userData.id);
     // console.log(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`);
     axios
-     .get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`, {
-      headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:5173' // Remplacez par votre origine autorisée
-      }
-    })
+     .get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`
+    //  , 
+    //  {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Access-Control-Allow-Credentials': true,
+    //     'Accept': 'application/json'
+    //   }
+    // }
+    )
       .then(({ data }) => {
-        console.log(data);
         console.log(data);
         setToWatchList(data);
  
@@ -86,67 +90,9 @@ export const Profile = () => {
       });
     console.log(toWatchList);
 
-
-    // useEffect(() => {
-    //   // ...
-  
-    //   const searchMovieId = new URLSearchParams();
-    //   searchMovieId.append('movieID', toWatchList[0].film_id);
-      
-    //   axios
-    //     .get(
-    //       `https://deploy-back-kinomatch.herokuapp.com/detail?${searchMovieId.toString()}`
-    //     )
-    //     .then(({ data }) => {
-    //       console.log(data);
-    //       // Faites quelque chose avec les données retournées
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       // Effectuez ici les actions à réaliser en cas d'erreur
-    //     });
-        
-    // }, [toWatchList]);
-
-
-//=====ici
-
-    // const searchMovieId = new URLSearchParams();
-    // console.log(`index 0 du tableau ${toWatchList[0]}`)
-    // searchMovieId.append('movieID', toWatchList[0].film_id);
-    // axios
-    //   .get(
-    //     `https://deploy-back-kinomatch.herokuapp.com/detail?${searchMovieId.toString()}`
-    //   )
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-
-
-    // axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${toWatchList[0].film_id}`)
-    // .then(({ data }) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => {
-    //   console.error(error);
-    // });
   }, []);
   console.log(toWatchList);
 
-
-
-    // const searchParams = new URLSearchParams();
-    // searchParams.append('movieID', toWatchList[0].film_id);
-    // axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`)
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
 
     useEffect(() => {
       const fetchMovieTitles = async () => {
@@ -172,6 +118,48 @@ export const Profile = () => {
     console.log(toWatchList);
     console.log(toWatchListWithName)
 
+    function handleDeleteProfile() {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.append('userID', userData.id);
+        // searchParams.append('email', userData.email);
+
+        console.log(userData.id)
+        axios
+          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`)
+          .then((response) => {
+            console.log(response.data.message);
+            logout();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function handleLogout() {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.append('userID', userData.id);
+        console.log(userData.id)
+        axios
+          .get(`https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`)
+          .then((response) => {
+            console.log(response.data.message);
+            logout();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    
+
 
   return (
     <div className='Profile-container'>
@@ -179,7 +167,9 @@ export const Profile = () => {
         <div className='Profile-container__personnal__infos'>
           <h2 className='Profile-container__personnal__title'>Profil</h2>
           <div className='Profile-container__personnal__pictureemailpassword'>
-            <div className='Profile-container__personnal__circle'></div>
+            <div className='Profile-container__personnal__circle'>
+              <img src='images/SamplePic.png' alt="Image de profil par defaut"></img>
+            </div>
             <div className='Profile-container__personnal__pictureemailpassword__emailpassword'>
               <div className='Profile-container__personnal__pictureemailpassword__emailpassword__item'>
                 Adresse email :<div>{userData.email}</div>
@@ -189,6 +179,19 @@ export const Profile = () => {
               </div>
             </div>
           </div>
+          <div className='Profile-container-buttons'>
+          <button 
+          className='Profile-container-buttons-button'
+          onClick={handleLogout}>
+              Se déconnecter
+          </button>
+          <form></form>
+          <button className='Profile-container-buttons-button'
+                    onClick={handleDeleteProfile}
+>
+              Supprimer profil
+          </button>
+        </div>
         </div>
         </div>
         {/* <div className="Profile-container__favoritefilters">
@@ -219,6 +222,9 @@ export const Profile = () => {
             {/* <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/> */}
           </div>
         )}
+
+
+        
 
         {/* BOUTONS */}
 

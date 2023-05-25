@@ -16,9 +16,10 @@ const Signup = () => {
     passwordConfirm: '',
   });
 
-  const { isLoggedIn, login , addUserData } = useContext(AuthContext);
+  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
   const { addEmail, email } = useContext(EmailContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
+  const [message, setMessage] = useState('');
 
 
   const handleChange = (event) => {
@@ -43,13 +44,32 @@ const Signup = () => {
         // response.data.token
         );
       login();
+      setMessage(response.data.message)
       addUserData(response.data.user.email, response.data.user.id)
+
+
       setTimeout(() => {
       setGoToHomePage(true);
       }, 1500);
     } catch (error) {
-      console.log('Error:', error);
-    }
+     console.log(error)
+        // console.log('Response data:', error.response.data.error);
+        // console.log('Response status:', error.response.status);
+        // console.log('Response headers:', error.response.headers);   
+        if(error.response.status === 400) {
+          //Email et mot de passe obligatoires
+          //Email ou mot de passe invalide
+          console.log(error.response.data.error);
+          setMessage(error.response.data.error)
+          return;
+        }
+
+        if(error.response.status === 500) {
+          //Erreur lors de la connexion de l\'utilisateur
+          console.log(error.response.data.error);
+          setMessage(error.response.data.error)
+          return;
+        }     }
 
     console.log(isLoggedIn)
 
@@ -100,6 +120,8 @@ const Signup = () => {
         </Link>
 
         <button type='submit'>Créer compte</button>
+        <p className='Login-container__message'>{message}</p>
+
       </form>
       
       {email && <Connected email={email}/>}

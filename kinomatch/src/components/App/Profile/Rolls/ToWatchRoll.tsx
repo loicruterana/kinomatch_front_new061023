@@ -12,56 +12,9 @@ import React, {useContext, useState, useEffect} from 'react'
 // ================ COMPOSANT ================
 export const ToWatchRoll = ({mobileVersion, showToWatchRoll, toWatchList, isLoading, toWatchListWithName}) => {
 
-  const [tests, setTests] = useState(['321', '123']);
+ function handleRemoveBookmark () {
 
-  // const { load, unload, isLoading } = useContext(LoadingContext);
-
-
-
-  // bookmarkedMovies
-
-
-
-
-
-
-  // useEffect(() => {
-  //   load();
-  
-  //   axios.get('https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies')
-  //     .then(({ data }) => setPreselectedGenres(data.genres))
-  //     .catch((error) => console.error(error))
-  //     .finally(() => unload());
-  
-  //   axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
-  //     .then(({ data }) => {
-  //       const filteredProviders = data.results
-  //         .reduce((validProviders, currentProvider) => {
-  //           if(
-  //             currentProvider.display_priorities.hasOwnProperty('FR') &&
-  //             currentProvider.display_priorities['FR'] < 20 &&
-  //             !validProviders.includes(currentProvider)
-  //             // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
-  //           ) {
-  //             validProviders.push(currentProvider);
-  //           }
-  
-  //           return validProviders;
-  //         }, []);
-    
-  //       setPreselectedProviders(Array.isArray(filteredProviders) ? filteredProviders : [filteredProviders]); // array
-  
-  //       // console.log(Array.isArray(filteredProviders));
-  //       console.log(filteredProviders);
-  //       console.log(preselectedProviders);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     })
-  //     .finally(() => unload());
-  
-  // }, []);
-
+ }
 
 
 // ================ JSX ================
@@ -74,7 +27,12 @@ export const ToWatchRoll = ({mobileVersion, showToWatchRoll, toWatchList, isLoad
 
 {((showToWatchRoll && mobileVersion) || !mobileVersion) && (
   <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
-    <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>Liste des films favoris</div>
+    <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}> 
+    <i className='fa-sharp fa-solid fa-check'></i>
+    À voir
+    <i className='fa-regular fa-heart'></i>
+
+    </div>
     {isLoading ? (
       <div>Chargement en cours...</div>
     ) : (
@@ -87,7 +45,11 @@ export const ToWatchRoll = ({mobileVersion, showToWatchRoll, toWatchList, isLoad
             // onClick={handleGenreClick}
             data-id={toWatchListWithNameItem}
           >
-            {toWatchListWithNameItem}
+            {toWatchListWithNameItem}    
+            <i 
+            onClick={handleRemoveBookmark}
+            className={`Profile-container__roll-modale--${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item fa-solid fa-xmark`}></i>
+
           </div>
         ))
     )}

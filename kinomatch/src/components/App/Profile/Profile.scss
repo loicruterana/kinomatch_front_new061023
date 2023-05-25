@@ -6,6 +6,23 @@
   background-color: vars.$theme1-primary;
   display: flex;
   flex-direction: row;
+  &-buttons {
+    margin: 40px 0 0 0;
+
+    &-button {
+      height: 25px;
+      width: 200px;
+      border-radius: 15px;
+      background-color: vars.$theme1-secondary;
+      border: vars.$theme1-secondary;
+      color: vars.$theme1-primary;
+      font-family: 'Creato Display';
+      border: none;
+      font-size: 20px;
+      padding: 0 1%;
+      margin-right: 20px;
+    }
+  }
   &__roll-modale {
     &-desktop-version {
       &-backdropfilter {
@@ -21,6 +38,8 @@
         overflow: hidden;
         overflow-y: auto;
         background-color: vars.$theme1-secondary;
+        margin-top: 70px;
+        margin-bottom: 55px;
         &::-webkit-scrollbar {
           display: none;
         }
@@ -33,9 +52,31 @@
           background-color: vars.$theme1-primary;
           width: 200px;
           height: 70px;
-          padding: 20px 0;
+          padding: 20px 20px;
           margin: 5px;
           cursor: pointer;
+          flex-wrap: nowrap;
+          position: relative;
+          i {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+          }
+
+          &-category {
+            position: sticky;
+            top: 0;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: vars.$theme1-primary;
+            font-size: 32px;
+            background-color: vars.$theme1-secondary;
+            width: 200px;
+            padding: 10px;
+            margin: 5px;
+          }
         }
       }
     }
