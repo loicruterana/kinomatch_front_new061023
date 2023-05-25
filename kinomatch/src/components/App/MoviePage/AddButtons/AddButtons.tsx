@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
+import { CurrentMovieIdContext } from '../../../../contexts/CurrentMovieIdContext';
+
 import axios from 'axios';
 
 import './AddButton.scss';
@@ -10,7 +12,7 @@ function AddButton(movieId) {
 
   {/* ========================== USESTATE =============================== */ }
   const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked } = useContext(AuthContext);
-
+  const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
 
@@ -20,25 +22,34 @@ function AddButton(movieId) {
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
+  {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
+  useEffect(() => {
+    const getUserBookmarked = () => {
+      axios.get('https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=4')
+        .then(function (response) {
+          const responseData = response.data;
+          const filmIds = responseData.map(item => item.film_id);
+          console.log(filmIds);
 
-  const getUserBookmarked = () => {
-    axios.get('https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=4')
-      .then(function (response) {
-        const responseData = response.data;
-        const filmIds = responseData.map(item => item.film_id);
-        console.log(filmIds);
+          console.log(movieId.movie.toString());
 
-        const movieId = '829560';
+          if (filmIds.includes(movieId.movie.toString())) {
+            setHeartIsClicked(true);
+          } else {
+            setHeartIsClicked(false);
+          }
+          console.log(heartIsClicked);
+          
+        })
+    };
 
-        if (filmIds.includes(movieId)) {
-          setHeartIsClicked(true);
-        } else {
-          setHeartIsClicked(false);
-        }
-      })
-  };
+    {/* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */ }
+    {
+      isLoggedIn &&
+      getUserBookmarked()
+    }
+  }, [currentMovieId, heartIsClicked, isLoggedIn, movieId]);
 
-  getUserBookmarked()
 
   {/* ============================ HANDLERS ============================= */ }
 
@@ -47,7 +58,6 @@ function AddButton(movieId) {
     setHeartIsClicked(!heartIsClicked);
     heartIsClicked === false ? addBookmarked(movieId) : deleteBookmarked(movieId);
   };
-  console.log(movieId);
 
   // Favoris
   const handleBookMarkClick = () => {
