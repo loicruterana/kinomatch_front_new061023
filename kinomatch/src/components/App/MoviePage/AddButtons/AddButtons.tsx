@@ -6,7 +6,7 @@ import './AddButton.scss';
 function AddButton(movieId) {
 
     {/* ========================== USESTATE =============================== */ }
-    const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked } = useContext(AuthContext);
+    const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked } = useContext(AuthContext);
 
     // Coeur
     const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -26,15 +26,16 @@ function AddButton(movieId) {
     // Coeur
     const handleHeartClick = () => {
         setHeartIsClicked(!heartIsClicked);
+        // addBookmarked(movieId);
+        heartIsClicked === false ? addBookmarked(movieId) : deleteBookmarked(movieId);
 
-        // addBookmarked(movieId)
+        
     };
     console.log(movieId);
 
     // Favoris
     const handleBookMarkClick = () => {
         setBookmarkIsClicked(!bookmartIsClicked);
-        addBookmarked(movieId)
     };
 
     // Check

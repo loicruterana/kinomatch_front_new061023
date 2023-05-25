@@ -254,7 +254,6 @@ export const Home = () => {
                 {filter.name}
                 <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemoveGenre} data-id={filter.name}>
                   <i className="fa-solid fa-xmark" data-id={filter.name} onClick={handleRemoveGenre}></i>            </div>
-
               </div>
             ))
             }

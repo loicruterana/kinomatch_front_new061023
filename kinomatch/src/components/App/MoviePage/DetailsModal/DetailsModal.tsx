@@ -84,10 +84,10 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-budget'>Budget</h3>
-          <p className='detailsModal__container-budgetAmount'>{movie.budget.toLocaleString('us-US')} $</p>
+          <p className='detailsModal__container-budgetAmount'>{movie.budget.toLocaleString('us-US') !== '0' ? `${movie.budget.toLocaleString('us-US')} $` : 'Budget non précisé'} </p>
 
           <h3 className='detailsModal__container-revenue'>Recettes</h3>
-          <p className='detailsModal__container-revenueAmount'>{movie.revenue.toLocaleString('us-US')} $</p>
+          <p className='detailsModal__container-revenueAmount'>{movie.revenue.toLocaleString('us-US')!== '0' ? `${movie.revenue.toLocaleString('us-US')} $` : 'Recettes non précisées'} $</p>
 
           <h3 className='detailsModal__container-duration'>Durée</h3>
           <p className='detailsModal__container-durationTime'>{convertMinutesInHours(movie.runtime)}</p>
@@ -156,7 +156,7 @@ function DetailsModal(props: DetailsModalProps) {
               credits.cast.map((actor: { id: Key | null | undefined; name: string; profile_path: string; character: string }) => (
                 <li key={actor.id} className='detailsModal__container-actor'>
                   <h4 className='detailsModal__container-actor--title'>{actor.name}</h4>
-                  <img className='detailsModal__container-actor--image' src={`https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face//${actor.profile_path}`} alt={`Photo de ${actor.name}`} />
+                  <img className='detailsModal__container-actor--image' src={actor.profile_path ? `https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face//${actor.profile_path}` : '../../../../../../public/images/SamplePic.png'} alt={`Photo de ${actor.name}`} />
                   <p className='detailsModal__container-actor--role'>{actor.character}</p>
                 </li>
               ))
