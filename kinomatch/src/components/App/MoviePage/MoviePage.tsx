@@ -8,6 +8,7 @@ import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 
 import './style.scss';
@@ -65,7 +66,7 @@ function MoviePage() {
 
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
-
+  const { isLoggedIn } = useContext(AuthContext);
 
   console.log(selectedId);
 
@@ -187,7 +188,11 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'> {/* RENOMMER LE CLASSNAME AVEC LE BEM */}
             <cite className='movieFound__essentiel-title'>{movie.title}</cite>
-            <AddButton movie={movie.id} />
+            {
+              isLoggedIn &&
+              <AddButton movie={movie.id} />
+            }
+
           </div>
           <div className='movieFound__essentiel-imageFrame'>
             <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt='Image du film' onClick={handleImageModal} />
@@ -198,7 +203,9 @@ function MoviePage() {
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
             </div>
           </div>
+
           <Providers providers={providers} />
+
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
@@ -247,7 +254,9 @@ function MoviePage() {
             <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
             </div>
+
             <CommentPost />
+
             <div className='movieDetails__filters'>
               <button
                 className='movieDetails__filters-otherResultsBtn'
@@ -262,7 +271,10 @@ function MoviePage() {
             </div>
           </div>
         </section>
-        <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId={setSelectedId} />
+
+        <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId=
+
+          {setSelectedId} />
       </section >
     </div>
   )

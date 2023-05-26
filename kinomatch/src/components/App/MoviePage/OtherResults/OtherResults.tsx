@@ -6,19 +6,19 @@ function OtherResults(movieID, randomID, selectedId, setSelectedId) {
 
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
-  console.log(movieID);
-  console.log(movieID.randomID);
-  console.log(randomID);
+  // console.log(movieID);
+  // console.log(movieID.randomID);
+  // console.log(randomID);
 
 
   const handleClick = (event) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
-    console.log(`Ligne 13 ${id}`)
+    // console.log(`Ligne 13 ${id}`)
     addMovieData(id);
 
   }
-  console.log(`Ligne 21 ${currentMovieId}`);
+  // console.log(`Ligne 21 ${currentMovieId}`);
 
   return (
     <aside className='otherResults-container'>

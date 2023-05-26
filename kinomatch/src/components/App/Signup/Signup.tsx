@@ -51,7 +51,7 @@ const Signup = () => {
       console.log('Error:', error);
     }
 
-    console.log(isLoggedIn)
+    // console.log(isLoggedIn)
 
   };
 
