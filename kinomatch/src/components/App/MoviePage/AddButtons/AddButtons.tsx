@@ -9,7 +9,7 @@ import './AddButton.scss';
 function AddButton(movieId) {
 
   {/* ========================== USESTATE =============================== */ }
-  const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch } = useContext(AuthContext);
+  const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched  } = useContext(AuthContext);
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -76,14 +76,48 @@ function AddButton(movieId) {
         })
     };
 
-    {/* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */ }
+    {/* Condition qui éxecute "getUserToWatch" uniquement si un user est connecté */ }
     {
       isLoggedIn &&
         getUserToWatch()
     }
   }, [currentMovieId, bookmartIsClicked, isLoggedIn, movieId]);
+// console.log(userDataToWatch);
+// console.log(userData);
+
+{/* ======================================= WATCHED ====================================================== */ }
+
+  {/*  */ }
+  useEffect(() => {
+    const getUserWatched = () => {
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?userID=${userDataWatched.id}`)
+        .then(function (response) {
+          const responseData = response.data;
+          const filmIds = responseData.map(item => item.film_id);
+          console.log(filmIds);
+          console.log(userDataWatched.id);
+
+          console.log(movieId.movie.toString());
+
+          if (filmIds.includes(movieId.movie.toString())) {
+            setCheckIsClicked(true);
+          } else {
+            setCheckIsClicked(false);
+          }
+          console.log(checkIsClicked);
+
+        })
+    };
+
+    {/* Condition qui éxecute "getUserWatched" uniquement si un user est connecté */ }
+    {
+      isLoggedIn &&
+        getUserWatched()
+    }
+  }, [currentMovieId, checkIsClicked, isLoggedIn, movieId]);
 console.log(userDataToWatch);
-console.log(userData);
+// console.log(userData);
+
 
   {/* ============================ HANDLERS ============================= */ }
 
@@ -112,8 +146,11 @@ console.log(userData);
 
     {/* Met à jour l'état de "sCheckIsClicked" en inversant sa valeur actuelle. */ }
     setCheckIsClicked(!checkIsClicked);
+    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId);
+
   };
 
+  
   {/* =================================================================== */ }
 
   return (
