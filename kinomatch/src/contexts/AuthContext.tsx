@@ -5,23 +5,26 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
   const [userDataToWatch, setUserDataToWatch] = useState({ email: '', id: '', toWatch: '' });
-  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false); 
-  const [isToWatchModified, setIsToWatchModified] = useState(false); 
+  const [userDataWatched, setUserDataWatched] = useState({ email: '', id: '', watched: '' });
+  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false);
+  const [isToWatchModified, setIsToWatchModified] = useState(false);
+  const [isWatchedModified, setIsWatchedModified] = useState(false);
 
   const login = () => {
     setIsLoggedIn(true);
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
+  setIsLoggedIn(false);
   };
 
   const addUserData = (email, userId) => {
     setUserData({ ...userData, email: email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email: email, id: userId });
+    setUserDataWatched({ ...userDataWatched, email: email, id: userId });
   };
 
-{/* ======================================= BOOKMARKED ====================================================== */}
+  {/* ======================================= BOOKMARKED ====================================================== */ }
 
   const addBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie });
@@ -30,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie });
+    setUserData({ ...userData, bookmarked: element.movie || element});
     console.log(element.movie);
   };
 
@@ -56,13 +59,13 @@ export const AuthProvider = ({ children }) => {
     const deleteData = async () => {
       try {
         const searchParams = new URLSearchParams();
-        searchParams.append('userID', userData.id);   
-        searchParams.append('movieID', userData.bookmarked);   
+        searchParams.append('userID', userData.id);
+        searchParams.append('movieID', userData.bookmarked);
 
         console.log(userData.id);
         axios
           .delete(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
-          console.log(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
+        console.log(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
       } catch (error) {
         console.log(error);
       }
@@ -76,64 +79,119 @@ export const AuthProvider = ({ children }) => {
 
   console.log(userData);
 
-{/* ======================================= TO WATCH ====================================================== */}
+  {/* ======================================= TO WATCH ====================================================== */ }
 
-const addToWatch = async (element) => {
-  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
-  setIsToWatchModified(true); 
-  console.log(element.movie);
-};
-
-const deleteToWatch = async (element) => {
-  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
-  console.log(element.movie);
-};
-
-useEffect(() => {
-  const postData = async () => {
-    try {
-      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/toWatchMovies', userDataToWatch);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+  const addToWatch = async (element) => {
+    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+    setIsToWatchModified(true);
+    console.log(element.movie);
   };
 
-  if (userDataToWatch.toWatch !== '' && isToWatchModified) {
-    postData();
-    setIsToWatchModified(false);
-  } else {
-    setIsToWatchModified(false); // Réinitialiser l'état lorsque le tableau a été posté
-  }
-}, [userDataToWatch, isToWatchModified]);
+  const deleteToWatch = async (element) => {
+    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
+    console.log(element.movie);
+  };
 
-useEffect(() => {
-  const deleteData = async () => {
-    try {
-      const searchParams = new URLSearchParams();
-      searchParams.append('userID', userDataToWatch.id);   
-      searchParams.append('movieID', userDataToWatch.toWatch);   
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/toWatchMovies', userDataToWatch);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      axios
-        .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`)
+    if (userDataToWatch.toWatch !== '' && isToWatchModified) {
+      postData();
+      setIsToWatchModified(false);
+    } else {
+      setIsToWatchModified(false); // Réinitialiser l'état lorsque le tableau a été posté
+    }
+  }, [userDataToWatch, isToWatchModified]);
+
+  useEffect(() => {
+    const deleteData = async () => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.append('userID', userDataToWatch.id);
+        searchParams.append('movieID', userDataToWatch.toWatch);
+
+        axios
+          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`)
         console.log(`https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`)
-    } catch (error) {
-      console.log(error);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (userDataToWatch.toWatch !== '' && !isToWatchModified) {
+      deleteData();
+      setUserDataToWatch({ ...userDataToWatch, toWatch: "" });
     }
+  }, [userDataToWatch]);
+
+  console.log(userDataToWatch);
+  console.log(userDataToWatch.id);
+
+
+   {/* ======================================= WATCHED ====================================================== */ }
+
+   const addWatched = async (element) => {
+    setUserDataWatched({ ...userDataWatched, watched: element.movie });
+    setIsWatchedModified(true);
+    console.log(element.movie);
   };
 
-  if (userDataToWatch.toWatch !== '' && !isToWatchModified) {
-    deleteData();
-    setUserDataToWatch({ ...userDataToWatch, toWatch: "" });
-  }
-}, [userDataToWatch]);
+  const deleteWatched = async (element) => {
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element});
+    console.log(element.movie);
+  };
 
-console.log(userDataToWatch);
-console.log(userDataToWatch.id);
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/watchedMovies', userDataWatched);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (userDataWatched.watched !== '' && isWatchedModified) {
+      postData();
+      setIsWatchedModified(false);
+    } else {
+      setIsWatchedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
+    }
+  }, [userDataWatched, isWatchedModified]);
+
+  useEffect(() => {
+    const deleteData = async () => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.append('userID', userDataWatched.id);
+        searchParams.append('movieID', userDataWatched.watched);
+
+        axios
+          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (userDataWatched.watched !== '' && !isWatchedModified) {
+      deleteData();
+      setUserDataWatched({ ...userDataWatched, watched: "" });
+    }
+  }, [userDataWatched]);
+
+  console.log(userDataWatched);
+  console.log(userDataWatched.id);
 
 
 
-{/* ======================================= RETURN ====================================================== */}
+  {/* ======================================= RETURN ====================================================== */ }
 
 
   return (
@@ -147,8 +205,11 @@ console.log(userDataToWatch.id);
         addUserData,
         addToWatch,
         deleteToWatch,
+        addWatched,
+        deleteWatched,
         userData,
         userDataToWatch,
+        userDataWatched,
       }}
     >
       {children}
