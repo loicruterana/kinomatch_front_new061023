@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
         console.log(userData.id);
         axios
           .delete(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
-        console.log(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
       } catch (error) {
         console.log(error);
       }
