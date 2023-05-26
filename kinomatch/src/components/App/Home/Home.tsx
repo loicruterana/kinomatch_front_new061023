@@ -80,8 +80,8 @@ export const Home = () => {
         setPreselectedProviders(Array.isArray(filteredProviders) ? filteredProviders : [filteredProviders]); // array
 
         // console.log(Array.isArray(filteredProviders));
-        console.log(filteredProviders);
-        console.log(preselectedProviders);
+        // console.log(filteredProviders);
+        // console.log(preselectedProviders);
       })
       .catch((error) => {
         console.error(error);
@@ -116,8 +116,8 @@ export const Home = () => {
 
     // searchParams.append('provider', '344');
 
-    console.log(selectedGenreFilters)
-    console.log(selectedDecadeFilters)
+    // console.log(selectedGenreFilters)
+    // console.log(selectedDecadeFilters)
 
 
     selectedGenreFilters.forEach((filter) => {
@@ -135,7 +135,7 @@ export const Home = () => {
 
     const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
 
-    console.log(url)
+    // console.log(url)
 
     navigate(`/films?${searchParams.toString()}`);
 
@@ -230,7 +230,7 @@ export const Home = () => {
     removeDecadeFilter(event.target.dataset.id)
   }
 
-  console.log(fetchedData)
+  // console.log(fetchedData)
 
 
   if (goToMoviePage) {

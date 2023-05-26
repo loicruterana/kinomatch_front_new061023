@@ -8,10 +8,8 @@ import './AddButton.scss';
 
 function AddButton(movieId) {
 
-
-
   {/* ========================== USESTATE =============================== */ }
-  const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked } = useContext(AuthContext);
+  const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch } = useContext(AuthContext);
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -22,6 +20,8 @@ function AddButton(movieId) {
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
+
+  {/* ======================================= BOOKMARKED ====================================================== */ }
   {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
   useEffect(() => {
     const getUserBookmarked = () => {
@@ -31,7 +31,7 @@ function AddButton(movieId) {
           const filmIds = responseData.map(item => item.film_id);
           console.log(filmIds);
           console.log(userData.id);
-          
+
           console.log(movieId.movie.toString());
 
           if (filmIds.includes(movieId.movie.toString())) {
@@ -40,7 +40,8 @@ function AddButton(movieId) {
             setHeartIsClicked(false);
           }
           console.log(heartIsClicked);
-
+          console.log(userDataToWatch);
+          console.log(userData);
         })
     };
 
@@ -51,6 +52,38 @@ function AddButton(movieId) {
     }
   }, [currentMovieId, heartIsClicked, isLoggedIn, movieId]);
 
+  {/* ======================================= TO WATCH ====================================================== */ }
+
+  {/*  */ }
+  useEffect(() => {
+    const getUserToWatch = () => {
+      axios.get(`https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?userID=${userDataToWatch.id}`)
+        .then(function (response) {
+          const responseData = response.data;
+          const filmIds = responseData.map(item => item.film_id);
+          console.log(filmIds);
+          console.log(userDataToWatch.id);
+
+          console.log(movieId.movie.toString());
+
+          if (filmIds.includes(movieId.movie.toString())) {
+            setBookmarkIsClicked(true);
+          } else {
+            setBookmarkIsClicked(false);
+          }
+          console.log(bookmartIsClicked);
+
+        })
+    };
+
+    {/* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */ }
+    {
+      isLoggedIn &&
+        getUserToWatch()
+    }
+  }, [currentMovieId, bookmartIsClicked, isLoggedIn, movieId]);
+console.log(userDataToWatch);
+console.log(userData);
 
   {/* ============================ HANDLERS ============================= */ }
 
@@ -69,6 +102,9 @@ function AddButton(movieId) {
 
     {/* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */ }
     setBookmarkIsClicked(!bookmartIsClicked);
+
+    {/* Si le drapeau n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */ }
+    bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
   // Check
