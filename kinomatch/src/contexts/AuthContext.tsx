@@ -25,12 +25,13 @@ export const AuthProvider = ({ children }) => {
 
   const addBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie });
+    console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
   };
-
   const deleteBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie });
+    console.log(element);
+    setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
   };
 
@@ -43,7 +44,6 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
-
     if (userData.bookmarked !== '' && isBookmarkedModified) {
       postData();
       setIsBookmarkedModified(false);
@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }) => {
       setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
     }
   }, [userData, isBookmarkedModified]);
-
   useEffect(() => {
     const deleteData = async () => {
       try {
@@ -67,7 +66,6 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
-
     if (userData.bookmarked !== '' && !isBookmarkedModified) {
       deleteData();
       setUserData({ ...userData, bookmarked: "" });

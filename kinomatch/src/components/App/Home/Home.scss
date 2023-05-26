@@ -4,7 +4,7 @@
     background-color: vars.$theme1-primary;
     position: absolute;
     bottom: 0;
-    height: 20%;
+    height: 25%;
     width: 100%;
     z-index: 2;
     border-top: 2px vars.$theme1-secondary solid;
@@ -19,10 +19,11 @@
       border-radius: 15px;
       border: vars.$theme1-secondary;
       font-size: 20px;
-      height: 30px;
+      height: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 0 10px;
     }
     &__containers {
       height: 100%;
@@ -82,7 +83,7 @@
         display: none;
       }
       &__roll-container {
-        margin-top: 100px;
+        margin-top: 70px;
         z-index: 1;
         display: flex;
         flex-direction: column;
@@ -144,8 +145,9 @@
     &__filters-selector {
       display: flex;
       border: none;
-      height: 20%;
+      height: 25%;
       padding-bottom: 5%;
+
       &__containers {
         margin-bottom: 15px;
       }
@@ -269,6 +271,5 @@
     }
   }
 }
-
 @media screen and (max-height: 900px) {
 }

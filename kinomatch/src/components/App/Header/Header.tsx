@@ -42,7 +42,7 @@ function Header() {
 
       {isLoggedIn && (
         <div className='Header-profile'>
-          <img src="images/1681073113956.jpg"></img>
+          <img src="images/SamplePic.png"></img>
           <Link to="/profile">
             <div className='Header-profile-username'>{userData.email}</div>
           </Link>
