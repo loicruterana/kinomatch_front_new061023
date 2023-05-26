@@ -4,6 +4,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
+  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false); // Nouvel état
   const login = () => {
     setIsLoggedIn(true);
   };
@@ -15,6 +16,13 @@ export const AuthProvider = ({ children }) => {
   };
   const addBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie });
+    console.log(element)
+    setIsBookmarkedModified(true); // Marquer le tableau comme modifié
+    console.log(element.movie);
+  };
+  const deleteBookmarked = async (element) => {
+    console.log(element);
+    setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
   };
   useEffect(() => {
@@ -26,8 +34,30 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
-    if (userData.bookmarked !== '') {
+    if (userData.bookmarked !== '' && isBookmarkedModified) {
       postData();
+      setIsBookmarkedModified(false);
+    } else {
+      setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
+    }
+  }, [userData, isBookmarkedModified]);
+  useEffect(() => {
+    const deleteData = async () => {
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.append('userID', userData.id);
+        searchParams.append('movieID', userData.bookmarked);
+        console.log(userData.id);
+        axios
+          .delete(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
+          console.log(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (userData.bookmarked !== '' && !isBookmarkedModified) {
+      deleteData();
+      setUserData({ ...userData, bookmarked: "" });
     }
   }, [userData]);
   console.log(userData);
@@ -38,6 +68,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         addBookmarked,
+        deleteBookmarked,
         addUserData,
         userData,
       }}
