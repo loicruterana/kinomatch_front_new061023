@@ -65,7 +65,7 @@ function handleGenreClick(event) {
 
   const decades = [];
 
-  for (let i = 1890; i < 2030; i += 10) {
+  for (let i = 2020; i >= 1890; i -= 10) {
     decades.push(i);
   }
 
