@@ -19,18 +19,22 @@ export const BookmarkedRoll = ({
 
   watchedList, 
   setWatchedList,
-  movies, 
-  setMovies,
+  watchedMovies, 
+  setWatchedMovies,
   deleteWatched, // à supprimer ?
 
   toWatchList, 
   setToWatchList,
-  toWatchListWithName,
-  setToWatchListWithName,
+  toWatchMovies,
+  setMoviesToWatch,
   deleteToWatch,
 
 
   deleteBookmarkedAndWatched, 
+
+  bookmarkedList,
+  deleteBookmarked,
+  addBookmarked
 }) => {
 
       // =========================== HANDLERS
@@ -39,82 +43,26 @@ export const BookmarkedRoll = ({
 
   function handleRemoveWatched(film_id) {
     deleteBookmarkedAndWatched(film_id)
-
-    // essai pour gérer la partie dynamique
-
     setWatchedList(state => state.filter(element => element.film_id !== film_id));
-
-    // console.log('Avant le filtrage :', movies);
-    // setMovies(state => state.filter(element => element.movie_id !== event.target.dataset.id));
-    // console.log('Après le filtrage :', movies);
-
   }
 
-    // =========================== HANDLER BOUTON COEUR
+      // =========================== HANDLERBOUTON COEUR
 
 
-  // function handleRemoveBookmarksAndWatched(event) {
+  function handleRemoveBookmarked(film_id) {
+    deleteBookmarked(film_id)
+  }
 
-  //   deleteBookmarkedAndWatched(event.target.dataset.id.toString())
-
-  // }
-
-
- 
-  
-
-//  function handleRemoveBookmark(event) {
-//   const movieId = event.target.dataset.id;
-//   deleteBookmarked(movieId);
-
-//   // Supprimer l'élément de la liste bookmarkedList
-//   setBookmarkedList(prevList => {
-//     const index = prevList.findIndex(item => item.id === movieId);
-//     if (index !== -1) {
-//       const newList = [...prevList];
-//       newList.splice(index, 1);
-//       return newList;
-//     }
-//     return prevList;
-//   });
-
-//   // Supprimer l'élément de la liste bookmarkedListWithName en comparant les valeurs d'ID
-//   setBookmarkedListWithName(prevList => {
-//     const index = prevList.findIndex(item => item.movie_id === movieId);
-//     if (index !== -1) {
-//       const newList = [...prevList];
-//       newList.splice(index, 1);
-//       return newList;
-//     }
-//     return prevList;
-//   });
-// }
-
-console.log('WITHOUT NAME:');
-console.log(watchedList);
-
-console.log('WITh NAME :' );
-console.log(movies);
-// console.log(toWatchWithName);
+  function handleAddBookmarked(film_id) {
+    addBookmarked(film_id)
+  }
 
 
-
-function handleRemoveToWatch(event) {
-  console.log((event.target.dataset.id));
-
-  console.log(event.target.dataset.id);
-  deleteToWatch(event.target.dataset.id.toString());
-
-  // essai pour gérer la partie dynamique
-  
-  setToWatchList(state => state.filter(element => element !== event.target.dataset.id));
-  
-  setToWatchListWithName(toWatchList.filter(item => item.movie_id !== event.target.dataset.id));
-
-
+function handleRemoveToWatch(film_id) {
+  deleteToWatch(film_id);  
+  setToWatchList(state => state.filter(element => element.film_id !== film_id));
 }
 
-console.log(toWatchListWithName)
 
 
 // ================ JSX ================
@@ -141,17 +89,17 @@ console.log(toWatchListWithName)
           <div
             className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
             key={watchedListItem.id}
-            // onClick={handleGenreClick}
-            data-id={watchedListItem.film_id}
           >
             {/* COEUR */}
             <i 
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-regular fa-heart`}
-            // onClick={() => handleRemoveWatched(watchedListItem.film_id)}
-            data-id={watchedListItem.film_id}
+            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${ bookmarkedList[watchedListItem.film_id] ? 'solid ' : 'regular'
+            }
+            fa-heart`}
+            onClick={() => handleRemoveBookmarked(watchedListItem.film_id)}
+            style={{ color: bookmarkedList[watchedListItem.film_id] ? '#D42121' : '' }}
             ></i>
 
-            {movies[watchedListItem.film_id]?.name}
+            {watchedMovies[watchedListItem.film_id]?.name}
 
             <i 
             onClick={() => handleRemoveWatched(watchedListItem.film_id)}
@@ -179,24 +127,20 @@ console.log(toWatchListWithName)
     {isLoading ? (
       <div>Chargement en cours...</div>
     ) : (
-      toWatchListWithName
-        .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
-        .map((toWatchListWithNameItem) => (
+      toWatchList
+        .map((toWatchListItem) => {
+          return(
           <div
             className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
-            key={toWatchListWithNameItem.movie_id}
-            // onClick={handleGenreClick}
-            data-id=
-            {toWatchListWithNameItem.movie_id}
+            key={toWatchListItem.id}
           >
-            {toWatchListWithNameItem.name}
+            {toWatchMovies[toWatchListItem.film_id]?.name}
             <i 
-            data-id={toWatchListWithNameItem.movie_id}
-            onClick={handleRemoveToWatch}
+            onClick={() => handleRemoveToWatch(toWatchListItem.film_id)}
             className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-b fa-solid fa-xmark`}></i>
           </div>
-        ))
-    )}
+        )})
+        )}
   </div>
 )}
 

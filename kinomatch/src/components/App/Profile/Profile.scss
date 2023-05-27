@@ -27,11 +27,12 @@
     &-desktop-version {
       display: flex;
       flex-direction: row;
+      z-index: 1;
+
       &-backdropfilter {
         display: none;
       }
       &__roll-container {
-        z-index: 1001;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -187,7 +188,7 @@
         display: flex;
         justify-content: center;
         &-backdropfilter {
-          z-index: 1000;
+          z-index: 4;
           position: absolute;
           top: 0;
           width: 100%;

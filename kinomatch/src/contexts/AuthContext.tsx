@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }) => {
     console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
+    console.log('onpasseici')
+
   };
   const deleteBookmarked = async (element) => {
     console.log(element);
@@ -87,6 +89,7 @@ const addToWatch = async (element) => {
   setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
   setIsToWatchModified(true); 
   console.log(element.movie);
+
 };
 
 const deleteToWatch = async (element) => {

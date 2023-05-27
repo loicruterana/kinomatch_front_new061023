@@ -1,20 +1,128 @@
 @use '../../../../styles/vars';
 
-
 .container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(1.3rem);
+}
+
+.legalModal {
+  position: fixed;
+  z-index: 1;
+  width: 900px;
+  height: 470px;
+  overflow: auto;
+  background-color: vars.$theme1-primary;
+  border-radius: 1.5rem;
+  margin: 20%;
+  border: none;
+  text-align: center;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: vars.$theme1-primary;
+    background-color: vars.$theme1-secondary;
+    border-radius: 0.7rem;
+    margin: 2rem auto;
+    padding: 20px;
+    width: 80%;
+  }
+
+  &__content {
+    font-size: 1.2rem;
+    color: vars.$theme1-secondary;
+    max-width: 80%;
+    margin: auto;
+    text-align: justify;
+  }
+
+  &__button {
+    width: 20rem;
+    font-size: 2rem;
+    color: vars.$theme1-primary;
+    font-weight: bold;
+    background-color: vars.$theme1-secondary;
+    margin: 2rem auto;
+    border-radius: 0.5rem;
+    border: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
     display: flex;
     height: 100vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(1.3rem);
-}
+  }
 
-.legalModal {
+  .legalModal {
     position: fixed;
     z-index: 1;
-    width: 900px;
-    height: 470px;
+    // width: 80vw;
+    // height: 90vh;
+    overflow: auto;
+    background-color: vars.$theme1-primary;
+    border-radius: 1.5rem;
+    margin: 20%;
+    padding: 20% 5% 0 5%;
+    border: none;
+    text-align: center;
+
+    &__title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: vars.$theme1-primary;
+      background-color: vars.$theme1-secondary;
+      border-radius: 0.7rem;
+      margin: 3rem auto;
+      padding: 20px;
+      width: 80%;
+    }
+
+    &__content {
+      font-size: 1.2rem;
+      color: vars.$theme1-secondary;
+      max-width: 80%;
+      margin: auto;
+      text-align: justify;
+    }
+
+    &__button {
+      width: 20rem;
+      font-size: 2rem;
+      color: vars.$theme1-primary;
+      font-weight: bold;
+      background-color: vars.$theme1-secondary;
+      margin: 3rem auto;
+      border-radius: 0.5rem;
+      border: none;
+    }
+  }
+}
+
+// MOBILE VERSION =================
+@media screen and (max-width: 900px) {
+  .container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(1.3rem);
+  }
+
+  .legalModal {
+    position: fixed;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
     overflow: auto;
     background-color: vars.$theme1-primary;
     border-radius: 1.5rem;
@@ -22,144 +130,34 @@
     border: none;
     text-align: center;
 
-
     &__title {
-        font-size: 2rem;
-        font-weight: bold;
-        color: vars.$theme1-primary;
-        background-color: vars.$theme1-secondary;
-        border-radius: 0.7rem;
-        margin: 2rem auto;
-        padding: 20px;
-        width: 80%;
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: vars.$theme1-primary;
+      background-color: vars.$theme1-secondary;
+      border-radius: 0.7rem;
+      margin: 3rem auto;
+      padding: 15px;
+      width: 80%;
     }
 
     &__content {
-        font-size: 1.2rem;
-        color: vars.$theme1-secondary;
-        max-width: 80%;
-        margin: auto;
-        text-align: justify;
+      font-size: 1.1rem;
+      color: vars.$theme1-secondary;
+      max-width: 80%;
+      margin: auto;
+      text-align: justify;
     }
 
     &__button {
-        width: 20rem;
-        font-size: 2rem;
-        color: vars.$theme1-primary;
-        font-weight: bold;
-        background-color: vars.$theme1-secondary;
-        margin: 2rem auto;
-        border-radius: 0.5rem;
-        border: none;
+      width: 9rem;
+      font-size: 1.7rem;
+      color: vars.$theme1-primary;
+      font-weight: bold;
+      background-color: vars.$theme1-secondary;
+      margin: 3rem auto;
+      border-radius: 0.5rem;
+      border: none;
     }
-}
-
-@media screen and (max-width: 900px) {
-    .container {
-        display: flex;
-        height: 100vh;
-        width: 100vw;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(1.3rem);
-    }
-    
-    .legalModal {
-        position: fixed;
-        z-index: 1;
-        // width: 80vw;
-        // height: 90vh;
-        overflow: auto;
-        background-color: vars.$theme1-primary;
-        border-radius: 1.5rem;
-        margin: 20%;
-        padding: 20% 5% 0 5%;
-        border: none;
-        text-align: center;
-    
-        &__title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: vars.$theme1-primary;
-            background-color: vars.$theme1-secondary;
-            border-radius: 0.7rem;
-            margin: 3rem auto;
-            padding: 20px;
-            width: 80%;
-        }
-    
-        &__content {
-            font-size: 1.2rem;
-            color: vars.$theme1-secondary;
-            max-width: 80%;
-            margin: auto;
-            text-align: justify;
-        }
-    
-        &__button {
-            width: 20rem;
-            font-size: 2rem;
-            color: vars.$theme1-primary;
-            font-weight: bold;
-            background-color: vars.$theme1-secondary;
-            margin: 3rem auto;
-            border-radius: 0.5rem;
-            border: none;
-        }
-    }
-}
-
-// MOBILE VERSION =================
-@media screen and (max-width: 900px) {
-    .container {
-        display: flex;
-        height: 100vh;
-        width: 100vw;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(1.3rem);
-    }
-    
-    .legalModal {
-        position: fixed;
-        z-index: 1;
-        width: 100vw;
-        height: 100vh;
-        overflow: auto;
-        background-color: vars.$theme1-primary;
-        border-radius: 1.5rem;
-        margin: 20%;
-        border: none;
-        text-align: center;
-    
-        &__title {
-            font-size: 1.7rem;
-            font-weight: bold;
-            color: vars.$theme1-primary;
-            background-color: vars.$theme1-secondary;
-            border-radius: 0.7rem;
-            margin: 3rem auto;
-            padding: 15px;
-            width: 80%;
-        }
-    
-        &__content {
-            font-size: 1.1rem;
-            color: vars.$theme1-secondary;
-            max-width: 80%;
-            margin: auto;
-            text-align: justify;
-        }
-    
-        &__button {
-            width: 9rem;
-            font-size: 1.7rem;
-            color: vars.$theme1-primary;
-            font-weight: bold;
-            background-color: vars.$theme1-secondary;
-            margin: 3rem auto;
-            border-radius: 0.5rem;
-            border: none;
-        }
-    }
+  }
 }

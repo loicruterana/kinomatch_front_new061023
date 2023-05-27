@@ -18,7 +18,9 @@ export const Profile = () => {
   const [showWatchedRoll, setShowWatchedRoll] = useState(true);
   const [showToWatchRoll, setShowToWatchRoll] = useState(true);
   const [watchedList, setWatchedList] = useState([]);
-  const [movies, setMovies] = useState([]);
+  const [watchedMovies, setWatchedMovies] = useState({});
+  const [toWatchMovies, setToWatchMovies] = useState({});
+  const [bookmarkedList, setBookmarkedList] = useState({});
   const [toWatchList, setToWatchList] = useState([]);
   const [toWatchListWithName, setToWatchListWithName] = useState([]);
   const { load, unload, isLoading } = useContext(LoadingContext);
@@ -32,7 +34,8 @@ export const Profile = () => {
   // const [isClicked, setIsClicked] = useState(false)
 
 
-  const { userData, logout, deleteBookmarked, deleteToWatch, deleteBookmarkedAndWatched, deleteWatched } = useContext(AuthContext);
+  const { userData, logout, deleteBookmarked, deleteToWatch, deleteBookmarkedAndWatched, deleteWatched, addBookmarked
+  } = useContext(AuthContext);
 
   // ================ HANDLERS ================
 
@@ -100,36 +103,27 @@ export const Profile = () => {
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize((prevState) => ({
-        ...prevState,
-        width: window.innerWidth,
-      }));
 
-      if (windowSize.width >= 900) {
+      if (window.innerWidth >= 900) {
         setMobileVersion(false);
         setShowWatchedRoll(true);
         setShowToWatchRoll(true);
-
-        // setShowRollProvider(true)
-        // setShowRollDecade(true)
       }
-      if (windowSize.width < 900) {
+      if (window.innerWidth < 900) {
         setMobileVersion(true);
         setShowWatchedRoll(false);
         setShowToWatchRoll(false);
-
-        // setShowRollProvider(false)
-        // setShowRollDecade(false)
       }
     }
 
     window.addEventListener('resize', handleResize);
     // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
     // et actualiser le state windowSize
-    // handleResize()
-    return () => window.removeEventListener('resize', handleResize);
+    handleResize()
+
+  return () => window.removeEventListener('resize', handleResize);
     // un removeEventListener pour éviter les fuites de mémoire
-  }, [windowSize]);
+  }, []);
   
 
 
@@ -159,7 +153,7 @@ export const Profile = () => {
   }, []);
   console.log(watchedList);
 
-    // =========================== WATCHEDLISTWITHNAME
+    // =========================== MOVIES
 
   useEffect(() => {
     const fetchMovieTitles = async () => {
@@ -180,15 +174,14 @@ export const Profile = () => {
   
             // Parcourir la liste des films à ajouter
             moviesToAdd.forEach((movie) => {
-              // Vérifier si le film existe déjà dans l'objet uniqueMovies
-              if (!uniqueMovies[movie.movie_id?.toString()]) {
+
                 // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
                 uniqueMovies[movie.movie_id?.toString()] = movie;
-              }
+
             });
   
   
-            setMovies(uniqueMovies);
+            setWatchedMovies(uniqueMovies);
           })
           .catch((error) => {
             console.error(error);
@@ -201,7 +194,41 @@ export const Profile = () => {
     fetchMovieTitles();
   }, [watchedList]);
 
-  console.log(movies)
+
+    // =========================== BOOKMARKED (COEUR)
+
+
+
+  useEffect(() => {
+    const fetchMoviesBookmarked = async () => {
+      try {
+    
+          const searchParams = new URLSearchParams();
+          searchParams.append('userID', userData.id);
+          axios.get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`)
+          .then(({data}) => {
+  
+            // Utiliser un objet pour stocker les films uniques
+            const bookmarked = {};
+            data.forEach(element => {
+              const key = element.film_id?.toString()
+              bookmarked[key] = element
+            })
+  
+            setBookmarkedList(bookmarked);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchMoviesBookmarked();
+  }, []);
+
+  console.log(watchedMovies)
   
       // ===========================ToWatchMovies
 
@@ -213,7 +240,6 @@ export const Profile = () => {
     
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
-        // console.log(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`);
         axios
          .get(`https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?${searchParams.toString()}`
 
@@ -246,7 +272,9 @@ export const Profile = () => {
             Promise.all(requests)
               .then((responses) => {
                 const moviesToAdd = responses.map(({ data }) => ({ name: data.title, movie_id: data.id }));
-                setToWatchListWithName((state) => [...new Set([...state, ...moviesToAdd])]);
+                const uniqueMovies = {};
+                moviesToAdd.forEach((movie) => {uniqueMovies[movie.movie_id?.toString()] = movie});
+                setToWatchMovies(uniqueMovies)
               })
               .catch((error) => {
                 console.error(error);
@@ -259,7 +287,8 @@ export const Profile = () => {
         fetchMovieTitles();
       }, [toWatchList]);
 
-      console.log(toWatchListWithName)
+      console.log(toWatchMovies)
+
 
       //==========
 
@@ -324,17 +353,21 @@ export const Profile = () => {
 
               watchedList={watchedList}
               setWatchedList={setWatchedList}
-              movies={movies}
-              setMovies={setMovies}
+              watchedMovies={watchedMovies}
+              setWatchedMovies={setWatchedMovies}
               deleteWatched={deleteWatched}
 
               toWatchList={toWatchList}
               setToWatchList={setToWatchList}
-              toWatchListWithName={toWatchListWithName}
-              setToWatchListWithName={setToWatchListWithName}
+              toWatchMovies={toWatchMovies}
+              setToWatchMovies={setToWatchMovies}
               deleteToWatch={deleteToWatch}
               
               deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
+
+              bookmarkedList={bookmarkedList}
+              deleteBookmarked={deleteBookmarked}
+              addBookmarked={addBookmarked}
             />
             {/* <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/> */}
           </div>
