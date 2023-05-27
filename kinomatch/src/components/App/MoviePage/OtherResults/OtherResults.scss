@@ -45,3 +45,45 @@
     }
   }
 }
+
+//* DESKTOP VERSION =================
+
+@media screen and (max-width: 900px) {
+
+  .otherResults-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0rem 0;
+    background-color: vars.$theme1-primary;
+    width: 100%;
+    height: auto;
+
+
+    &--scrollList {
+      // display: flex;
+      // width: 80%;
+      padding-bottom: 160px;
+      background-image: url('../../../../../public/images/pelloche.png');
+      background-size:contain;
+      background-position: center;
+      align-items: center;
+      width: 100%;
+
+      &---title {
+        display: none;
+      }
+
+      &---images {
+        display: block;
+        margin: 1rem auto;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 220px;
+
+      }
+    }
+  }
+}

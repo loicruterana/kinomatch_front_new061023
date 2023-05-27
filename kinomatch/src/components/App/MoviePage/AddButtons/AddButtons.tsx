@@ -142,6 +142,9 @@ console.log(userDataToWatch);
 
     {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */ }
     heartIsClicked === false ? addBookmarked(movieId) : deleteBookmarked(movieId);
+
+    {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark et aux "vus" sinon il le supprime */ }
+    heartIsClicked === false ? addWatched(movieId) : deleteWatched(movieId);
   };
 
   // Favoris
@@ -150,17 +153,18 @@ console.log(userDataToWatch);
     {/* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */ }
     setBookmarkIsClicked(!bookmartIsClicked);
 
-    {/* Si le drapeau n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */ }
+    {/* Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */ }
     bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
   // Check
   const handleCheckClick = () => {
 
-    {/* Met à jour l'état de "sCheckIsClicked" en inversant sa valeur actuelle. */ }
+    {/* Met à jour l'état de "CheckIsClicked" en inversant sa valeur actuelle. */ }
     setCheckIsClicked(!checkIsClicked);
-    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId);
 
+    {/* Si "CheckIsClicked" est false alors au click il ajoutera le film auw vus sinon il supprimera le film des vus et des favoris */ }
+    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId);
   };
 
   

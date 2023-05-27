@@ -34,7 +34,7 @@ function MoviePage() {
 
   {/* MODALE AUTRES RÉSULTATS */ }
 
-  const [showOtherResults, setShowOtherResults] = useState(false);
+  const [showOtherResults, setShowOtherResults] = useState(true);
 
   const handleOtherResults = () => {
     setShowOtherResults(!showOtherResults);
@@ -271,10 +271,10 @@ function MoviePage() {
             </div>
           </div>
         </section>
-
-        <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId=
-
-          {setSelectedId} />
+        {
+          showOtherResults &&
+          <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId={setSelectedId} />
+        }
       </section >
     </div>
   )

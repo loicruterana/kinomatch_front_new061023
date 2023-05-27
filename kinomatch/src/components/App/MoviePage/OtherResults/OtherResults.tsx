@@ -6,6 +6,10 @@ function OtherResults(movieID, randomID, selectedId, setSelectedId) {
 
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
+  const otherResults = movieID.movieID.filter((movie) => movie.id !== currentMovieId);
+  console.log(currentMovieId);
+  console.log(otherResults);
+
   // console.log(movieID);
   // console.log(movieID.randomID);
   // console.log(randomID);
@@ -18,13 +22,12 @@ function OtherResults(movieID, randomID, selectedId, setSelectedId) {
     addMovieData(id);
 
   }
-  // console.log(`Ligne 21 ${currentMovieId}`);
 
   return (
     <aside className='otherResults-container'>
       <div className='otherResults-container--scrollList'>
-        <h3 className='otherResults-container--scrollList---title'>Autres résultats</h3>
-        {movieID.movieID.map((movieElem: { title: any; poster_path: any; id: Key }) => (
+        <h3 className='otherResults-container--scrollList---title'>Autres résulats</h3>
+        {otherResults.map((movieElem: { title: any; poster_path: any; id: Key }) => (
 
           <a
             key={movieElem.id}
