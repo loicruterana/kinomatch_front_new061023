@@ -8,18 +8,21 @@ import './Header.scss';
 
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
-  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
-  const { email } = useContext(EmailContext);
+  const { userData, isLoggedIn} = useContext(AuthContext);
 
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
   }
 
+  function handleCloseClick() {
+    setShowBurgerMenu(false);
+  }
+
   return (
     <div className='Header'>
       {/* Logo du Header */}
-      <Link key='home' to='/' className='Header-logo'>
+      <Link key='home' to='/' className='Header-logo' onClick={handleCloseClick}>
         <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
       </Link>
       {/* Bouton qui au clic amènera une recommandation de film aléatoire */}

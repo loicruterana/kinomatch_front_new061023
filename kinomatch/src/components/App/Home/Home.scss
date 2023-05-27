@@ -13,17 +13,17 @@
     align-items: center;
     flex-direction: column;
     button {
-      margin-bottom: 55px;
+      margin-bottom: 70px;
       background-color: vars.$theme1-secondary;
       color: vars.$theme1-primary;
       border-radius: 15px;
       border: vars.$theme1-secondary;
-      font-size: 20px;
-      height: 40px;
+      font-size: 30px;
+      height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 10px;
+      padding: 0 20px;
     }
     &__containers {
       height: 100%;
@@ -40,15 +40,19 @@
           color: vars.$theme1-primary;
           border-radius: 15px;
           border: vars.$theme1-secondary;
-          height: 15px;
-          margin: 0 5px;
+          height: 25px;
+          margin: 5px 10px;
           font-size: 14px;
-          padding: 0 10px 0 3px;
-          cursor: pointer;
+          padding: 0 12px 0 7px;
+          display: flex;
+          align-items: center;
+          font-size: 20px;
           &__cross {
             position: absolute;
             right: 0px;
             top: -3px;
+            cursor: pointer;
+
             i {
               scale: 0.6;
               color: vars.$theme1-primary;
@@ -60,11 +64,12 @@
     }
   }
   &-container {
-    height: 80vh;
+    height: 75vh;
     width: 100vw;
     background-color: vars.$theme1-primary;
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 100px;
     &__buttons {
       display: none;
     }
@@ -153,7 +158,7 @@
       }
     }
     &-container {
-      height: 100vh;
+      // height: 100vh;
       width: 100vw;
       display: flex;
       flex-direction: column;
@@ -166,6 +171,7 @@
       }
       &__roll-modale-mobile-version {
         position: absolute;
+        top: 0px;
         display: flex;
         justify-content: center;
         width: 100%;

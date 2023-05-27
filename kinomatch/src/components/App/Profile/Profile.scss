@@ -57,24 +57,22 @@
           height: 70px;
           padding: 20px 20px;
           margin: 5px;
-          cursor: pointer;
           flex-wrap: nowrap;
           position: relative;
           text-align: center;
-          // &.fa-regular {
-          //   position: relative;
-
-          //   &.fa-heart {
-          //     position: absolute;
-          //     left: 5px;
-          //     bottom: 5px;
-          //   }
-          // }
-          // i {
-          //   position: absolute;
-          //   bottom: 5px;
-          //   left: 5px;
-          // }
+          display: relative;
+          &-a {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            cursor: pointer;
+          }
+          &-b {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+          }
           &-category {
             position: sticky;
             top: 0;
@@ -114,8 +112,30 @@
       flex-direction: row;
       &__emailpassword {
         margin: 20px 0 0 20px;
-        &__item {
+        &__email {
           margin-bottom: 20px;
+          font-size: 20px;
+          display: flex;
+          span {
+            font-style: italic;
+          }
+          div {
+            margin-left: 5px;
+            font-weight: 700;
+          }
+        }
+        &__password {
+          margin-left: 17px;
+          margin-bottom: 20px;
+          font-size: 20px;
+          display: flex;
+          span {
+            font-style: italic;
+          }
+          div {
+            margin-left: 5px;
+            font-weight: 700;
+          }
         }
       }
     }
@@ -156,14 +176,16 @@
 
 //=============MOBILE VERSION
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1100px) {
   .Profile-container {
     display: flex;
     flex-direction: column;
     &__roll-modale {
       &-mobile-version {
-        width: 0vw;
-        height: 0vh;
+        // width: 0vw;
+        // height: 0vh;
+        display: flex;
+        justify-content: center;
         &-backdropfilter {
           z-index: 1000;
           position: absolute;
@@ -177,7 +199,6 @@
           height: 100vh;
           position: absolute;
           top: 0;
-          left: 50%;
           z-index: 1001;
           display: flex;
           flex-direction: column;
@@ -210,13 +231,19 @@
               top: 5px;
               right: 5px;
             }
-            i {
+            &-a {
+              position: absolute;
+              bottom: 5px;
+              left: 5px;
+              cursor: pointer;
             }
-            // i {
-            //   position: absolute;
-            //   top: 5px;
-            //   right: 5px;
-            // }
+            &-b {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              cursor: pointer;
+            }
+
             &-category {
               position: sticky;
               top: 0;
@@ -250,6 +277,7 @@
           display: flex;
           flex-direction: column;
           margin-top: 30%;
+          align-items: center;
         }
       }
     }
@@ -284,3 +312,9 @@
     }
   }
 }
+
+// .fa-regular .fa-heart {
+//   position: absolute;
+//   left: 5px;
+//   bottom: 5px;
+// }

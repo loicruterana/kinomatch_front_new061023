@@ -5,8 +5,12 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
   const [userDataToWatch, setUserDataToWatch] = useState({ email: '', id: '', toWatch: '' });
+  const [userDataWatched, setUserDataWatched] = useState({ email: '', id: '', watched: '' });
+
   const [isBookmarkedModified, setIsBookmarkedModified] = useState(false); 
   const [isToWatchModified, setIsToWatchModified] = useState(false); 
+  const [isWatchedModified, setIsWatchedModified] = useState(false); 
+
 
   const login = () => {
     setIsLoggedIn(true);
@@ -19,6 +23,8 @@ export const AuthProvider = ({ children }) => {
   const addUserData = (email, userId) => {
     setUserData({ ...userData, email: email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email: email, id: userId });
+    setUserDataWatched({ ...userDataWatched, email: email, id: userId });
+    console.log(userDataWatched)
   };
 
 {/* ======================================= BOOKMARKED ====================================================== */}
@@ -51,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
     }
   }, [userData, isBookmarkedModified]);
+
   useEffect(() => {
     const deleteData = async () => {
       try {
@@ -83,7 +90,8 @@ const addToWatch = async (element) => {
 };
 
 const deleteToWatch = async (element) => {
-  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+  console.log(element)
+  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element.toString() });
   console.log(element.movie);
 };
 
@@ -129,8 +137,56 @@ useEffect(() => {
 console.log(userDataToWatch);
 console.log(userDataToWatch.id);
 
-
-
+{/* ======================================= WATCHED ====================================================== */}
+const addWatched = async (element) => {
+  setUserDataWatched({ ...userDataWatched, watched: element.movie });
+  setIsWatchedModified(true);
+  console.log(element.movie);
+};
+const deleteWatched = async (element) => {
+  setUserDataWatched({ ...userDataWatched, watched: element.movie || element});
+  console.log(element.movie);
+};
+const deleteBookmarkedAndWatched = async (element) => {
+  console.log(element);
+  setUserData({ ...userData, bookmarked: element.movie || element.toString() });
+  setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString()});
+};
+useEffect(() => {
+  const postData = async () => {
+    try {
+      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/watchedMovies', userDataWatched);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (userDataWatched.watched !== '' && isWatchedModified) {
+    postData();
+    setIsWatchedModified(false);
+  } else {
+    setIsWatchedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
+  }
+}, [userDataWatched, isWatchedModified]);
+useEffect(() => {
+  const deleteData = async () => {
+    try {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', userDataWatched.id);
+      searchParams.append('movieID', userDataWatched.watched);
+      axios
+        .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (userDataWatched.watched !== '' && !isWatchedModified) {
+    deleteData();
+    setUserDataWatched({ ...userDataWatched, watched: "" });
+  }
+}, [userDataWatched]);
+console.log(userDataWatched);
+console.log(userDataWatched.id);
 {/* ======================================= RETURN ====================================================== */}
 
 
@@ -145,8 +201,12 @@ console.log(userDataToWatch.id);
         addUserData,
         addToWatch,
         deleteToWatch,
+        addWatched,
+        deleteWatched,
         userData,
         userDataToWatch,
+        userDataWatched,
+        deleteBookmarkedAndWatched,
       }}
     >
       {children}
