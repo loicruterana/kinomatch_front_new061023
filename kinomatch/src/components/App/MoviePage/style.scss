@@ -352,6 +352,7 @@
         display: flex;
         position: fixed;
         z-index: 3;
+        align-items: center;
         filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
         bottom: 0;
         left: 0;
@@ -373,7 +374,7 @@
             padding: 0.2rem 1rem;
             border: none;
             border-radius: 6px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: vars.$theme1-primary;
             background-color: vars.$theme1-secondary;
         }
@@ -384,7 +385,7 @@
             height: fit-content;
             font-weight: bold;
             margin: 0.5rem 0.5rem 0.8rem 0.5rem;
-            padding: 0.2rem 0.3rem;
+            padding: 0.25rem 0.4rem;
             border: none;
             border-radius: 6px;
             color: vars.$theme1-primary;

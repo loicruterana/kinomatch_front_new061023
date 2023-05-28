@@ -53,6 +53,12 @@
             min-width: fit-content;
             padding-bottom: 2rem;
 
+            :hover {
+                transform: none;
+                cursor: pointer;
+                // transition: all 0.2s ease;
+            }
+
             // Plateforme individuelle
             & li {
                 font-size: 1rem;
@@ -65,10 +71,10 @@
                 padding: 0.5rem;
                 border-radius: 6px;
 
-                :hover {
-                    transform: scale(1.1);
-                    // transition: all 0.2s ease;
-                }
+                // :hover {
+                //     transform: scale(1.1);
+                //     // transition: all 0.2s ease;
+                // }
             }
         }
 

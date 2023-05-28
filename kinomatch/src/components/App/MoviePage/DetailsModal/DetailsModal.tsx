@@ -84,10 +84,10 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-budget'>Budget</h3>
-          <p className='detailsModal__container-budgetAmount'>{movie.budget.toLocaleString('us-US') !== '0' ? `${movie.budget.toLocaleString('us-US')} $` : 'Budget non précisé'} </p>
+          <p className='detailsModal__container-budgetAmount'>{movie.budget !== 0 ? `${movie.budget} $` : 'Budget non précisé'} </p>
 
           <h3 className='detailsModal__container-revenue'>Recettes</h3>
-          <p className='detailsModal__container-revenueAmount'>{movie.revenue.toLocaleString('us-US')!== '0' ? `${movie.revenue.toLocaleString('us-US')} $` : 'Recettes non précisées'} $</p>
+          <p className='detailsModal__container-revenueAmount'>{movie.revenue !== 0 ? `${movie.revenue} $` : 'Recettes non précisées'} </p>
 
           <h3 className='detailsModal__container-duration'>Durée</h3>
           <p className='detailsModal__container-durationTime'>{convertMinutesInHours(movie.runtime)}</p>
@@ -166,6 +166,7 @@ function DetailsModal(props: DetailsModalProps) {
       </div>
       <div className='detailsModal__container-button'>
         <button className='detailsModal__container-button--btn' onClick={handleDetailsModel}>Retour</button>
+        {movie.homepage ? (<a className='detailsModal__container-button--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
       </div>
     </div>
   )

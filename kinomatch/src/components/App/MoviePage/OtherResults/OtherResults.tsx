@@ -29,31 +29,33 @@ function OtherResults(props: OtherResultsModalProps) {
     const id = event.currentTarget.getAttribute('data-id');
     addMovieData(id);
     setShowOtherResults(!showOtherResults);
+    if (window.pageYOffset > 100) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    // window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
 
+return (
+  <aside className='otherResults-container'>
+    <div className='otherResults-container--scrollList'>
+      <h3 className='otherResults-container--scrollList---title'>Autres résultats</h3>
+      {movieArray.map((movieElem: { title: any; poster_path: any; id: Key }) => (
 
-    
-  return (
-    <aside className='otherResults-container'>
-      <div className='otherResults-container--scrollList'>
-        <h3 className='otherResults-container--scrollList---title'>Autres résulats</h3>
-        {movieArray.map((movieElem: { title: any; poster_path: any; id: Key }) => (
-
-          <a
-            key={movieElem.id}
-            data-id={movieElem.id}
-            onClick={handleClick}>
-            <img
-              className='otherResults-container--scrollList---images'
-              src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
-              alt={`Affiche du film ${movieElem.title}`}
-            />
-          </a>
-        ))}
-      </div>
-    </aside>
-  )
+        <a
+          key={movieElem.id}
+          data-id={movieElem.id}
+          onClick={handleClick}>
+          <img
+            className='otherResults-container--scrollList---images'
+            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
+            alt={`Affiche du film ${movieElem.title}`}
+          />
+        </a>
+      ))}
+    </div>
+  </aside>
+)
 }
 
 export default OtherResults;

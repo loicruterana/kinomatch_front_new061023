@@ -60,18 +60,21 @@ function MoviePage() {
   {/* UseState qui récupère un id de film aléatoire en parcourant le résultat de requête axios */ }
   const [randomID, setRandomID] = useState('');
 
+  {/* UseState qui récupère l'id du film sélectionné par l'utilisateur */ }
   const [selectedId, setSelectedId] = useState('');
 
+  {/* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */ }
   const [desktopVersion, setDesktopVersion] = useState(false);
 
   {/* ================ USECONTEXT ================================= */ }
 
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
-  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
+  const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
 
   console.log(selectedId);
 
+  {/* UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre  */ }
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 900) {
@@ -92,6 +95,7 @@ function MoviePage() {
   }, []);
 
 
+  {/*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */ }
   useEffect(() => {
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
@@ -283,7 +287,7 @@ function MoviePage() {
             <div className='movieDetails__filters'>
               <button
                 className='movieDetails__filters-otherResultsBtn'
-                onClick={handleOtherResults}>Autres Résultats</button>
+                onClick={handleOtherResults}>{!showOtherResults ? "Autres Résultats" : "Retour"}</button>
               {/* Affichage des filtres concernant le film affiché */}
               {
                 movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
