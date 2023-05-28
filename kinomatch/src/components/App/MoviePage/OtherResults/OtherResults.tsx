@@ -1,14 +1,23 @@
-import { Key, useState, useContext } from 'react';
-import './OtherResults.scss';
+import { Key, useContext, useEffect } from 'react';
 import { CurrentMovieIdContext } from '../../../../contexts/CurrentMovieIdContext';
 
-function OtherResults(movieID, randomID, selectedId, setSelectedId) {
+
+import './OtherResults.scss';
+
+interface OtherResultsModalProps {
+  movieArray: any | null;
+  showOtherResults: boolean;
+  setShowOtherResults: (showOtherResults: boolean) => void;
+}
+
+function OtherResults(props: OtherResultsModalProps) {
+  const { movieArray, showOtherResults, setShowOtherResults } = props;
 
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
-  const otherResults = movieID.movieID.filter((movie) => movie.id !== currentMovieId);
-  console.log(currentMovieId);
-  console.log(otherResults);
+  // const otherResults = movieArray.movieID.filter((movie) => movie.id !== currentMovieId);
+  // console.log(currentMovieId);
+  // console.log(otherResults);
 
   // console.log(movieID);
   // console.log(movieID.randomID);
@@ -18,16 +27,18 @@ function OtherResults(movieID, randomID, selectedId, setSelectedId) {
   const handleClick = (event) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
-    // console.log(`Ligne 13 ${id}`)
     addMovieData(id);
-
+    setShowOtherResults(!showOtherResults);
   }
 
+
+
+    
   return (
     <aside className='otherResults-container'>
       <div className='otherResults-container--scrollList'>
         <h3 className='otherResults-container--scrollList---title'>Autres résulats</h3>
-        {otherResults.map((movieElem: { title: any; poster_path: any; id: Key }) => (
+        {movieArray.map((movieElem: { title: any; poster_path: any; id: Key }) => (
 
           <a
             key={movieElem.id}

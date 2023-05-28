@@ -56,21 +56,21 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin: 0rem 0;
-    background-color: vars.$theme1-primary;
+    margin: 1rem auto;
     width: 100%;
     height: auto;
 
 
     &--scrollList {
-      // display: flex;
-      // width: 80%;
       padding-bottom: 160px;
+      padding-top: 48px;
+      background-color: vars.$theme1-secondary;
       background-image: url('../../../../../public/images/pelloche.png');
-      background-size:contain;
+      background-size: contain;
       background-position: center;
       align-items: center;
       width: 100%;
+      height: auto;
 
       &---title {
         display: none;

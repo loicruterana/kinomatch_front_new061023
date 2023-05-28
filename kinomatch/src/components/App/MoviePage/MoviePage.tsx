@@ -34,7 +34,7 @@ function MoviePage() {
 
   {/* MODALE AUTRES RÉSULTATS */ }
 
-  const [showOtherResults, setShowOtherResults] = useState(true);
+  const [showOtherResults, setShowOtherResults] = useState(false);
 
   const handleOtherResults = () => {
     setShowOtherResults(!showOtherResults);
@@ -55,12 +55,14 @@ function MoviePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   {/* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */ }
-  const [movieID, setMovieID] = useState([]);
+  const [movieArray, setMovieArray] = useState([]);
 
   {/* UseState qui récupère un id de film aléatoire en parcourant le résultat de requête axios */ }
   const [randomID, setRandomID] = useState('');
 
   const [selectedId, setSelectedId] = useState('');
+
+  const [desktopVersion, setDesktopVersion] = useState(false);
 
   {/* ================ USECONTEXT ================================= */ }
 
@@ -71,12 +73,32 @@ function MoviePage() {
   console.log(selectedId);
 
   useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 900) {
+        setDesktopVersion(true);
+
+      }
+      if (window.innerWidth < 900) {
+        setDesktopVersion(false);
+
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+    // et actualiser le state windowSize
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize);
+    // un removeEventListener pour éviter les fuites de mémoire
+  }, []);
+
+
+  useEffect(() => {
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
         const filteredResults = data.results.filter((result: { id: any; }) => result.id !== randomID);
-        setMovieID(filteredResults);
+        setMovieArray(filteredResults);
 
         const searchParams = new URLSearchParams();
         if (currentMovieId) {
@@ -150,6 +172,7 @@ function MoviePage() {
 
   const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
   const mappedActorCastMembers = actorCastMembers.slice(0, 3);
+
 
 
   return (
@@ -272,8 +295,16 @@ function MoviePage() {
           </div>
         </section>
         {
-          showOtherResults &&
-          <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId={setSelectedId} />
+          desktopVersion ?
+            <OtherResults
+              movieArray={movieArray}
+              showOtherResults={showOtherResults}
+              setShowOtherResults={setShowOtherResults} /> :
+            showOtherResults &&
+            <OtherResults
+              movieArray={movieArray}
+              showOtherResults={showOtherResults}
+              setShowOtherResults={setShowOtherResults} />
         }
       </section >
     </div>
