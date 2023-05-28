@@ -37,6 +37,9 @@ export const BookmarkedRoll = ({
   addBookmarked
 }) => {
 
+  // const [bookmarkedItems, setBookmarkedItems] = useState([]);
+
+
       // =========================== HANDLERS
 
     // =========================== HANDLERBOUTON X
@@ -51,10 +54,14 @@ export const BookmarkedRoll = ({
 
   function handleRemoveBookmarked(film_id) {
     deleteBookmarked(film_id)
+    // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
+
   }
 
   function handleAddBookmarked(film_id) {
     addBookmarked(film_id)
+    // setBookmarkedItems((prevItems) => [...prevItems, film_id]);
+
   }
 
 
@@ -63,6 +70,8 @@ function handleRemoveToWatch(film_id) {
   setToWatchList(state => state.filter(element => element.film_id !== film_id));
 }
 
+console.log(bookmarkedList)
+console.log(watchedList)
 
 
 // ================ JSX ================
@@ -85,17 +94,25 @@ function handleRemoveToWatch(film_id) {
       watchedList
         // .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
         .map((watchedListItem) => {
-          return(
-          <div
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
-            key={watchedListItem.id}
-          >
-            {/* COEUR */}
-            <i 
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${ bookmarkedList[watchedListItem.film_id] ? 'solid ' : 'regular'
-            }
-            fa-heart`}
-            onClick={() => handleRemoveBookmarked(watchedListItem.film_id)}
+          // const isBookmarked = bookmarkedItems.includes(watchedListItem.film_id);
+
+          return (
+            <div
+              className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+              key={watchedListItem.id}
+            >
+              {/* Bouton de bookmark */}
+              <i
+                className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${
+                  bookmarkedList[watchedListItem.film_id] ? 'solid' : 'regular'
+                } fa-heart`}
+                onClick={() => {
+                  if (bookmarkedList[watchedListItem.film_id]) {
+                    handleRemoveBookmarked(watchedListItem.film_id);
+                  } else {
+                    handleAddBookmarked(watchedListItem.film_id);
+                  }
+                }}
             style={{ color: bookmarkedList[watchedListItem.film_id] ? '#D42121' : '' }}
             ></i>
 

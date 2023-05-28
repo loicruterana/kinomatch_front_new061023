@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 {/* ======================================= BOOKMARKED ====================================================== */}
 
   const addBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie });
+    setUserData({ ...userData, bookmarked: element.movie || element});
     console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);

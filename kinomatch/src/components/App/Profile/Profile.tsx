@@ -226,7 +226,7 @@ export const Profile = () => {
     };
   
     fetchMoviesBookmarked();
-  }, []);
+  }, [bookmarkedList]);
 
   console.log(watchedMovies)
   
