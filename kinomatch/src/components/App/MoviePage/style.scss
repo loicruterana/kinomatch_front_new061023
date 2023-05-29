@@ -14,7 +14,8 @@
 @media screen and (min-width: 900px) {
     .movieFound {
         display: flex;
-        width: 100%;
+        align-items: center;
+        width: 100vw;
         height: 100vh;
         padding: 85px 3rem 3.4rem 3rem;
 
@@ -24,9 +25,11 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-content: center;
-            max-width: 20%;
+            // align-content: center;
+            width: 24%;
+            max-width: 500px;
             height: 100%;
+            padding-top: 1.5rem;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -37,7 +40,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: flex-end;
-                width: 90%;
+                width: 70%;
                 margin-bottom: 1.3rem;
             }
 
@@ -45,10 +48,11 @@
             &-title {
                 font-size: 1.6rem;
                 font-weight: bold;
-                margin-right: 1rem;
+                margin-right: auto;
+                text-align: start;
             }
 
-            &-imageFrame {
+             &-imageFrame {
                 :hover {
                     cursor: pointer;
                     transform: scale(1.02);
@@ -60,7 +64,7 @@
                 // min-width: fit-content;
                 // max-height: 55vh;
                 max-width: auto;
-                max-height: 55vh;
+                max-height: 60vh;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
             }
@@ -69,7 +73,7 @@
             &-body {
                 display: flex;
                 width: 100%;
-                margin: 0.6rem;
+                height: fit-content;
                 justify-content: center;
 
 
@@ -107,6 +111,7 @@
     .movieDetails {
         overflow: auto;
         width: 60%;
+        height: 100%;
         padding: 40px 2rem 0 2rem;
 
         &::-webkit-scrollbar {
