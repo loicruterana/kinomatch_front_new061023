@@ -47,6 +47,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-director'>{directingCrewMembers.length > 1 ? 'Réalisateurs' : 'Réalisateur'}</h3>
           <ul className='detailsModal__container-directorList'>
             {
+              directingCrewMembers.length === 0 ? '-' :
               directingCrewMembers.map((director: { id: Key | null | undefined; name: string }) => (
                 <li key={director.id} className='detailsModal__container-directorName'>{director.name}</li>
 
@@ -56,6 +57,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
           <ul className='detailsModal__container-screenwriterList'>
             {
+              writingCrewMembers.length === 0 ? '-' :
               writingCrewMembers.map((writer: { id: Key | null | undefined; name: string }) => (
                 <li key={writer.id} className='detailsModal__container-screenwriterName'>{writer.name}</li>
 
@@ -67,6 +69,7 @@ function DetailsModal(props: DetailsModalProps) {
           <ul className='detailsModal__container-producers-list'>
             {/* Affichage de la liste des sociétés de production */}
             {
+               movie.production_companies.length === 0 ? '-' :
               movie.production_companies.map((production_company: { key: Key | number | undefined; name: string }) => (
                 <li key={Math.random()} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
               ))
@@ -78,6 +81,7 @@ function DetailsModal(props: DetailsModalProps) {
           <ul className='detailsModal__container-productionCountry-list'>
             {/* Affichage de la liste des pays de production */}
             {
+              movie.production_countries.length === 0 ? '-' :
               movie.production_countries.map((production_country: { iso_3166_1: Key | null | undefined; name: string }) => (
                 <li key={production_country.iso_3166_1} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
               ))
@@ -100,6 +104,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-composer'>Musique</h3>
           <ul className='detailsModal__container-composerList'>
             {
+              musicCrewMembers.length === 0 ? '-':
               musicCrewMembers.map((composer: { id: Key | null | undefined; name: string }) => (
                 <li key={composer.id} className='detailsModal__container-composerName'>{composer.name}</li>
               ))
@@ -108,6 +113,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-artisticDirection'>Direction artistique</h3>
           <ul className='detailsModal__container-artistsList'>
             {
+              artCrewMembers.length === 0 ? '-' :              
               artCrewMembers.map((artist: { id: Key | null | undefined; name: string }) => (
                 <li key={artist.id} className='detailsModal__container-artists'>{artist.name}</li>
               ))
@@ -116,6 +122,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-productionDesigner'>Décors</h3>
           <ul className='detailsModal__container-productionDesignerList'>
             {
+              designerCrewMembers.length === 0 ? '-' :
               designerCrewMembers.map((designer: { id: Key | null | undefined; name: string }) => (
                 <li key={designer.id} className='detailsModal__container-designers'>{designer.name}</li>
               ))
@@ -124,6 +131,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-costuming'>Costumes</h3>
           <ul className='detailsModal__container-costumingList'>
             {
+              costumeCrewMembers.length === 0 ? '-' :
               costumeCrewMembers.map((costumeDesigner: { id: Key | null | undefined; name: string }) => (
                 <li key={costumeCrewMembers.id} className='detailsModal__container-costumeDesigner'>{costumeDesigner.name}</li>
               ))
@@ -132,6 +140,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-photography'>Photographie</h3>
           <ul className='detailsModal__container-photographyList'>
             {
+              photographyCrewMembers.length === 0 ? '-' :
               photographyCrewMembers.map((photographer: { id: Key | null | undefined; name: string }) => (
                 <li key={photographer.id} className='detailsModal__container-photographer'>{photographer.name}</li>
               ))
@@ -141,6 +150,7 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-genreTitle'>Genres</h3>
           <ul className='detailsModal__container-genreList'>
             {
+              movie.genres.length === 0 ? '-' :
               movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
                 <li key={genre.id} className='detailsModal__container-genre'>{genre.name}</li>
               ))

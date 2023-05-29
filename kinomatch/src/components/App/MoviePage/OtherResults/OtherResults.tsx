@@ -36,26 +36,28 @@ function OtherResults(props: OtherResultsModalProps) {
   }
 
 
-return (
-  <aside className='otherResults-container'>
-    <div className='otherResults-container--scrollList'>
-      <h3 className='otherResults-container--scrollList---title'>Autres résultats</h3>
-      {movieArray.map((movieElem: { title: any; poster_path: any; id: Key }) => (
+  return (
+    <aside className='otherResults-container'>
+      {/* <h3 className='otherResults-container--title'>Autres résultats</h3> */}
+      <div className='otherResults-container--pellicule'>
+        <div className='otherResults-container--scrollList'>
+          {movieArray.map((movieElem: { title: any; poster_path: any; id: Key }) => (
 
-        <a
-          key={movieElem.id}
-          data-id={movieElem.id}
-          onClick={handleClick}>
-          <img
-            className='otherResults-container--scrollList---images'
-            src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
-            alt={`Affiche du film ${movieElem.title}`}
-          />
-        </a>
-      ))}
-    </div>
-  </aside>
-)
+            <a
+              key={movieElem.id}
+              data-id={movieElem.id}
+              onClick={handleClick}>
+              <img
+                className='otherResults-container--scrollList---images'
+                src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
+                alt={`Affiche du film ${movieElem.title}`}
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    </aside>
+  )
 }
 
 export default OtherResults;

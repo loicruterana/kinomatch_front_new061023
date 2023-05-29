@@ -53,8 +53,11 @@ function AddButton(movieId) {
             setHeartIsClicked(false);
           }
           console.log(heartIsClicked);
-          console.log(userDataToWatch);
+
           console.log(userData);
+          console.log(userDataToWatch);
+          console.log(userDataWatched);
+          
         })
     };
 
@@ -128,8 +131,6 @@ function AddButton(movieId) {
         getUserWatched()
     }
   }, [currentMovieId, checkIsClicked, isLoggedIn, movieId]);
-console.log(userDataToWatch);
-// console.log(userData);
 
 
   {/* ============================ HANDLERS ============================= */ }

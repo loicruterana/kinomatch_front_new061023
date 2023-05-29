@@ -9,10 +9,10 @@ import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
+import Loading from '../Loading/Loading';
 
 
 import './style.scss';
-import Loading from '../Loading/Loading';
 
 
 function MoviePage() {
@@ -144,7 +144,7 @@ function MoviePage() {
     )
   }
 
-  {/* DURÉE DU FIL EN HEURES*/ }
+  {/* DURÉE DU FILM EN HEURES*/ }
 
   function convertMinutesInHours(minutes: number) {
     const hours = Math.floor(minutes / 60);
@@ -167,6 +167,7 @@ function MoviePage() {
   }
 
   {/* RECUPERATION RÉALISATEURS */ }
+  
   console.log(credits)
 
   const directingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director");

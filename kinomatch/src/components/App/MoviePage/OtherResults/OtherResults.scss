@@ -5,44 +5,58 @@
 @media screen and (min-width: 900px) {
   .otherResults-container {
     display: flex;
+    flex-wrap: wrap;
     overflow: auto;
     align-items: flex-start;
     justify-content: center;
     width: 18%;
     max-width: 16%;
     height: 100%;
-    background-image: url('../../../../../public/images/pelloche.png');
-    background-size: cover;
-    background-position: center;
+    // background-image: url('../../../../../public/images/pelloche.png');
+    // background-size: cover;
+    // background-position: center;
     margin: auto;
 
     &::-webkit-scrollbar {
       display: none;
-  }
+    }
+
+    // &--title {
+    //   position: fixed;
+    //   width: fit-content;
+    //   background-color: vars.$theme1-secondary;
+    //   padding: 1.8rem 1.1rem 1rem 1.1rem;
+    //   font-size: 1.5rem;
+    //   color: vars.$theme1-primary;
+    //   font-weight: bold;
+    //   text-align: center;
+    // }
+
+    &--pellicule {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      background-image: url('../../../../../public/images/pelloche.png');
+      background-size: contain;
+      background-position: center;
+      margin: auto;
+    }
 
     &--scrollList {
       display: flex;
-      background-color: vars.$theme1-secondary;;
-      width: 78%;
+      background-color: vars.$theme1-secondary;
+      width: 77%;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      padding: 0 0.2rem;
+      padding: 1.5rem 0.2rem;
 
-      &---title {
-        font-size: 1.5rem;
-        color: vars.$theme1-primary;
-        font-weight: bold;
-        padding-top: 2rem;
-        text-align: center;
-      }
-
+  
       &---images {
         display: block;
         margin-bottom: 0.2rem;
         margin: 0.8rem auto;
         border-radius: 10px;
-        // width: 90%;
         max-width: 100%;
 
       }

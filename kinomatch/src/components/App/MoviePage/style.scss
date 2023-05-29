@@ -24,10 +24,9 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-content: flex-start;
+            align-content: center;
             max-width: 20%;
             height: 100%;
-            padding-top: 40px;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -36,8 +35,9 @@
             // Titre et icones
             &-head {
                 display: flex;
+                justify-content: center;
                 align-items: flex-end;
-                width: 82%;
+                width: 90%;
                 margin-bottom: 1.3rem;
             }
 
@@ -45,7 +45,7 @@
             &-title {
                 font-size: 1.6rem;
                 font-weight: bold;
-                margin-right: auto;
+                margin-right: 1rem;
             }
 
             &-imageFrame {
@@ -57,7 +57,10 @@
             }
 
             &-image {
-                width: 16vw;
+                // min-width: fit-content;
+                // max-height: 55vh;
+                max-width: auto;
+                max-height: 55vh;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
             }
@@ -285,6 +288,7 @@
             overflow: auto;
             flex-wrap: wrap;
             justify-content: center;
+            align-content: center;
             border-bottom: vars.$theme1-secondary solid 1px;
 
             &-disponibility {
