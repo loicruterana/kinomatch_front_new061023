@@ -38,9 +38,9 @@
             // Titre et icones
             &-head {
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
                 align-items: flex-end;
-                width: 70%;
+                width: 80%;
                 margin-bottom: 1.3rem;
             }
 
@@ -48,8 +48,8 @@
             &-title {
                 font-size: 1.6rem;
                 font-weight: bold;
-                margin-right: auto;
-                text-align: start;
+                // margin-right: auto;
+                text-align: center;
             }
 
              &-imageFrame {
@@ -430,6 +430,24 @@
         // Résumé du synopsis
         &-resume {
             margin-bottom: 1rem;
+        }
+
+        &-directorsList {
+            margin-bottom: 1rem;
+
+            &--director {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+        }
+
+        &-actorsList {
+            &--actors {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: bold;
+            }
         }
 
         // Durée

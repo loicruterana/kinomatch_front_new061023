@@ -9,7 +9,7 @@ import './AddButton.scss';
 function AddButton(movieId) {
 
   {/* ========================== USESTATE =============================== */ }
-  const { userData, isLoggedIn, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched  } = useContext(AuthContext);
+  const { userData, isLoggedIn, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched } = useContext(AuthContext);
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -34,6 +34,39 @@ function AddButton(movieId) {
   //   }
   // })
 
+  {/* ============================ HANDLERS ============================= */ }
+
+  // Coeur
+  const handleHeartClick = () => {
+
+    {/* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */ }
+    setHeartIsClicked(!heartIsClicked);
+
+    {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */ }
+    heartIsClicked === false ? addBookmarked(movieId) && addWatched(movieId) && setCheckIsClicked(true) : deleteBookmarked(movieId);
+
+  };
+
+  // Favoris
+  const handleBookMarkClick = () => {
+
+    {/* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */ }
+    setBookmarkIsClicked(!bookmartIsClicked);
+
+    {/* Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */ }
+    bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
+  };
+
+  // Check
+  const handleCheckClick = () => {
+
+    {/* Met à jour l'état de "CheckIsClicked" en inversant sa valeur actuelle. */ }
+    setCheckIsClicked(!checkIsClicked);
+
+    {/* Si "CheckIsClicked" est false alors au click il ajoutera le film auw vus sinon il supprimera le film des vus et des favoris */ }
+    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId) && setBookmarkIsClicked(false);
+  };
+
   {/* ======================================= BOOKMARKED ====================================================== */ }
   {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
   useEffect(() => {
@@ -57,7 +90,7 @@ function AddButton(movieId) {
           console.log(userData);
           console.log(userDataToWatch);
           console.log(userDataWatched);
-          
+
         })
     };
 
@@ -66,7 +99,7 @@ function AddButton(movieId) {
       isLoggedIn &&
         getUserBookmarked()
     }
-  }, [currentMovieId, heartIsClicked, isLoggedIn, movieId]);
+  }, [currentMovieId, heartIsClicked, isLoggedIn, movieId, handleBookMarkClick, handleCheckClick]);
 
   {/* ======================================= TO WATCH ====================================================== */ }
 
@@ -98,10 +131,10 @@ function AddButton(movieId) {
         getUserToWatch()
     }
   }, [currentMovieId, bookmartIsClicked, isLoggedIn, movieId]);
-// console.log(userDataToWatch);
-// console.log(userData);
+  // console.log(userDataToWatch);
+  // console.log(userData);
 
-{/* ======================================= WATCHED ====================================================== */ }
+  {/* ======================================= WATCHED ====================================================== */ }
 
   {/*  */ }
   useEffect(() => {
@@ -130,49 +163,16 @@ function AddButton(movieId) {
       isLoggedIn &&
         getUserWatched()
     }
-  }, [currentMovieId, checkIsClicked, isLoggedIn, movieId]);
+  }, [currentMovieId, checkIsClicked, isLoggedIn, movieId, handleCheckClick, handleBookMarkClick]);
 
-
-  {/* ============================ HANDLERS ============================= */ }
-
-  // Coeur
-  const handleHeartClick = () => {
-
-    {/* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */ }
-    setHeartIsClicked(!heartIsClicked);
-
-    {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */ }
-    heartIsClicked === false ? addBookmarked(movieId) : deleteBookmarked(movieId);
-
-    {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark et aux "vus" sinon il le supprime */ }
-    heartIsClicked === false ? addWatched(movieId) : deleteWatched(movieId);
-  };
-
-  // Favoris
-  const handleBookMarkClick = () => {
-
-    {/* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */ }
-    setBookmarkIsClicked(!bookmartIsClicked);
-
-    {/* Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */ }
-    bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
-  };
-
-  // Check
-  const handleCheckClick = () => {
-
-    {/* Met à jour l'état de "CheckIsClicked" en inversant sa valeur actuelle. */ }
-    setCheckIsClicked(!checkIsClicked);
-
-    {/* Si "CheckIsClicked" est false alors au click il ajoutera le film auw vus sinon il supprimera le film des vus et des favoris */ }
-    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId);
-  };
 
   
+
+
   {/* =================================================================== */ }
 
   return (
-    <>
+    <div className='movieFound__essentiel-btn--container'>
       <button
         className='movieFound__essentiel-btn--addToLike'
         type='submit'
@@ -191,7 +191,7 @@ function AddButton(movieId) {
         onClick={handleCheckClick}>
         <i className={`fa-sharp fa-solid fa-check ${checkIsClicked ? 'checkClicked' : ''}`}
           style={{ color: checkIsClicked ? '#7deb00' : '' }}></i></button>
-    </>
+    </div>
   )
 }
 
