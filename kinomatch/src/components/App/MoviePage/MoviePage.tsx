@@ -69,15 +69,34 @@ function MoviePage() {
   const { isLoggedIn } = useContext(AuthContext);
 
   console.log(selectedId);
-
   useEffect(() => {
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
+        const numberOfPages = data.total_pages;
+        console.log(numberOfPages);
+        let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
+        if (chosenPage > 500) {
+          chosenPage = Math.floor(Math.random() * 500) + 1;
+        }
+  
+        const searchParams1 = new URLSearchParams();
+        searchParams1.append('randomPage', chosenPage.toString());
+        console.log(window.location.search);
+  
+        if (window.location.search === "") {
+          console.log('ça passe ici');
+          return axios.get(`https://deploy-back-kinomatch.herokuapp.com/randomFilms`);
+        }
+  
+        return axios.get(`https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`);
+      })
+      .then(({ data }) => {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
-        const filteredResults = data.results.filter((result: { id: any; }) => result.id !== randomID);
+        const filteredResults = data.results.filter((result) => result.id !== randomID);
         setMovieID(filteredResults);
-
+        console.log(data.results);
+  
         const searchParams = new URLSearchParams();
         if (currentMovieId) {
           searchParams.append('movieID', currentMovieId);
@@ -85,15 +104,13 @@ function MoviePage() {
           searchParams.append('movieID', randomID);
           setRandomID(randomID);
         }
-
-        console.log(data.results);
-
+  
         const requests = [
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
         ];
-
+  
         return Promise.all(requests);
       })
       .then(([movieData, creditsData, providersData]) => {
@@ -105,9 +122,11 @@ function MoviePage() {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }, [currentMovieId]);
+  
+  
 
   console.log(movie);
 

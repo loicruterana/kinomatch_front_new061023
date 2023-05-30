@@ -19,7 +19,7 @@ function Footer() {
           !showModal &&
           <>
             <p className='footer__content-copyright'>© 2023 KinoMatch</p>
-            <a className='footer__content-contact' href="mailto:fakeAdress@mail.fr">Contact</a>
+            <a className='footer__content-contact' href="mailto:lruterana@gmail.com">Contact</a>
             <button className='footer__content-legal' onClick={handleModal}>Mentions légales</button>
           </>
         }

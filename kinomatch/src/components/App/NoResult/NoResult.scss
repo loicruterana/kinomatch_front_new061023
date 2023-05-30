@@ -1,24 +1,35 @@
 @use './../../../styles/vars';
 
 .NoResult-container {
-  transition: 1s ease-in-out;
+  transition: 0.3s ease-in-out;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  opacity: 0.9;
   z-index: 99999;
   background-color: vars.$theme1-primary;
   color: vars.$theme1-secondary;
   font-size: 45px;
   text-align: center;
-  backdrop-filter: blur(7px);
+  flex-direction: column;
+  &-text {
+    margin-bottom: 20px;
+  }
+  img {
+    scale: 0.8;
+  }
 }
 
 @media screen and (max-width: 1000px) {
   .NoResult-container {
     font-size: 22px;
+    &-text {
+      margin: 0px 10px;
+    }
+    img {
+      scale: 0.6;
+      margin: 0 10px;
+    }
   }
 }
