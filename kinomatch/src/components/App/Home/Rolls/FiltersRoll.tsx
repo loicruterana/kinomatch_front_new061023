@@ -112,7 +112,7 @@ function handleGenreClick(event) {
 {( (showRollDecade && mobileVersion) || !mobileVersion) && 
 
 <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
-  <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DÉCÉNNIE</div>
+  <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DÉCENNIE</div>
 
   {decades.map((decade, index) => (
         <div key={index} className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} 
