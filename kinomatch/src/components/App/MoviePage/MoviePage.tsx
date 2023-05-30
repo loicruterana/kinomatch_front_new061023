@@ -1,4 +1,5 @@
 import { Key, useContext, useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -167,7 +168,7 @@ function MoviePage() {
   }
 
   {/* RECUPERATION RÉALISATEURS */ }
-  
+
   console.log(credits)
 
   const directingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director");
@@ -286,26 +287,33 @@ function MoviePage() {
             <CommentPost />
 
             <div className='movieDetails__filters'>
-              <button
-                className='movieDetails__filters-otherResultsBtn'
-                onClick={handleOtherResults}>{!showOtherResults ? "Autres Résultats" : "Retour"}</button>
-              {/* Affichage des filtres concernant le film affiché */}
-              {
-                movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                  <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>{genre.name}</p>
-                ))
-              }
+              {!desktopVersion && (
+                <React.Fragment>
+                  <button
+                    className='movieDetails__filters-otherResultsBtn'
+                    onClick={handleOtherResults}
+                  >
+                    {!showOtherResults ? "Autres Résultats" : "Retour"}
+                  </button>
+                  {/* Affichage des filtres concernant le film affiché */}
+                  {movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
+                    <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>
+                      {genre.name}
+                    </p>
+                  ))}
+                </React.Fragment>
+              )}
               {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
             </div>
           </div>
         </section>
         {
-          desktopVersion ?
-            <OtherResults
+          desktopVersion
+            ? <OtherResults
               movieArray={movieArray}
               showOtherResults={showOtherResults}
-              setShowOtherResults={setShowOtherResults} /> :
-            showOtherResults &&
+              setShowOtherResults={setShowOtherResults} />
+            : showOtherResults &&
             <OtherResults
               movieArray={movieArray}
               showOtherResults={showOtherResults}

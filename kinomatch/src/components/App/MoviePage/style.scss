@@ -49,10 +49,10 @@
                 font-size: 1.6rem;
                 font-weight: bold;
                 // margin-right: auto;
-                text-align: center;
+                text-align: start;
             }
 
-             &-imageFrame {
+            &-imageFrame {
                 :hover {
                     cursor: pointer;
                     transform: scale(1.02);
@@ -67,6 +67,7 @@
                 max-height: 60vh;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
+                transition: transform 0.2s ease-in-out;
             }
 
             // Note et plateformes
@@ -88,17 +89,18 @@
 
                     &---noteNumber {
                         margin-right: 0.5rem;
+                        transition: transform 0.2s ease-in-out;
                     }
 
                     :hover {
-                        transform: scale(1.1);
-                        // transition: all 0.2s ease;
+                        transform: scale(1.05);
+                        cursor: pointer;
                     }
 
 
                     // Avis
                     &---opinion {
-                        font-size: 0.9rem;
+                        font-size: 1rem;
                         margin-top: 0.3rem;
                     }
                 }
@@ -161,7 +163,7 @@
 
     .movieDetails__filters {
         // display: flex;
-        display: none;
+        // display: none;
     }
 
     //======================================================
@@ -240,21 +242,25 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
 
-            :hover {
+            &:hover {
                 transform: scale(1.1);
-                // transition: all 0.2s ease;
+                transform: scale(1.05);
+                cursor: pointer;
             }
         }
 
         // Container du bouton scroll vers la zone pour commenter 
         &-writeComment {
             display: flex;
+            width: fit-content;
             margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
 
-            :hover {
+            &:hover {
                 transform: scale(1.05);
-                // transition: all 0.2s ease;
+                cursor: pointer;
             }
         }
 

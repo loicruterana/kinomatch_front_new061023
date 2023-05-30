@@ -54,17 +54,23 @@
   
       &---images {
         display: block;
-        margin-bottom: 0.2rem;
-        margin: 0.8rem auto;
+        margin: 1rem auto;
         border-radius: 10px;
-        max-width: 100%;
-
+        width: 100%;
+        max-width: 220px;
+        transition: transform 0.2s ease-in-out;
+        
+        &:hover {
+        transform: scale(1.03);
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }
 }
 
-//* DESKTOP VERSION =================
+//* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
 
@@ -80,10 +86,10 @@
 
 
     &--scrollList {
-      padding-bottom: 160px;
+      padding-bottom: 130px;
       padding-top: 48px;
       background-color: vars.$theme1-secondary;
-      background-image: url('../../../../../public/images/pelloche.png');
+      background-image: url('../../../../../public/images/pellochebleuenew.png');
       background-size: contain;
       background-position: center;
       align-items: center;
@@ -100,7 +106,6 @@
         border-radius: 10px;
         width: 100%;
         max-width: 220px;
-
       }
     }
   }

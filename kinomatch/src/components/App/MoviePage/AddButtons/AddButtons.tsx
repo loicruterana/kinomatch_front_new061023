@@ -9,6 +9,7 @@ import './AddButton.scss';
 function AddButton(movieId) {
 
   {/* ========================== USESTATE =============================== */ }
+
   const { userData, isLoggedIn, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched } = useContext(AuthContext);
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
@@ -20,19 +21,6 @@ function AddButton(movieId) {
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
-  // useEffect(() => {
-  //   const getUserInfo = () => {
-
-  //     const requests = [ 
-  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=${userData.id}`),
-  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?userID=${userDataToWatch.id}`),
-  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?userID=${userDataWatched.id}`)
-  //     ];
-
-  //     return Promise.all(requests.map((request) => axios.get(request)))
-  //     .then(axios.spread((...allData)));
-  //   }
-  // })
 
   {/* ============================ HANDLERS ============================= */ }
 
@@ -67,7 +55,24 @@ function AddButton(movieId) {
     checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId) && setBookmarkIsClicked(false);
   };
 
+
+  // useEffect(() => {
+  //   const getUserInfo = () => {
+
+  //     const requests = [ 
+  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=${userData.id}`),
+  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?userID=${userDataToWatch.id}`),
+  //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?userID=${userDataWatched.id}`)
+  //     ];
+
+  //     return Promise.all(requests.map((request) => axios.get(request)))
+  //     .then(axios.spread((...allData)));
+  //   }
+  // })
+
+
   {/* ======================================= BOOKMARKED ====================================================== */ }
+
   {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
   useEffect(() => {
     const getUserBookmarked = () => {
