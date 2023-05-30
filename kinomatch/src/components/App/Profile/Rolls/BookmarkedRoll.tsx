@@ -4,177 +4,160 @@ import React, {useContext, useState, useEffect} from 'react'
 
 
 // ================ IMPORT SCSS ================
-// import './Rolls.scss';
 
 // ================ IMPORT CONTEXTS ================
 
 
 // ================ COMPOSANT ================
-export const BookmarkedRoll = ({mobileVersion, showBookmarkedRoll, bookmarkedList, isLoading, bookmarkedListWithName, deleteBookmarked, setBookmarkedList, setBookmarkedListWithName}) => {
+export const BookmarkedRoll = ({
+  isLoading, 
+  mobileVersion, 
+  showWatchedRoll, 
+  setShowWatchedRoll,
+  showToWatchRoll, 
+  setShowToWatchRoll,
 
- function handleRemoveBookmark (event) {
-  console.log(event.target.dataset.id)
-  deleteBookmarked(event.target.dataset.id)
-  setBookmarkedList(state => state.filter(element => element !== event.target.dataset.id));
-  setBookmarkedListWithName(prevList => prevList.filter(item => item.movie_id !== event.target.dataset.id))
-  console.log(bookmarkedList)
-  console.log(bookmarkedListWithName)
+  watchedList, 
+  setWatchedList,
+  watchedMovies, 
+  setWatchedMovies,
+  deleteWatched, // à supprimer ?
 
- }
+  toWatchList, 
+  setToWatchList,
+  toWatchMovies,
+  setMoviesToWatch,
+  deleteToWatch,
 
 
-//  function handleRemoveBookmark(event) {
-//   const movieId = event.target.dataset.id;
-//   deleteBookmarked(movieId);
+  deleteBookmarkedAndWatched, 
 
-//   // Supprimer l'élément de la liste bookmarkedList
-//   setBookmarkedList(prevList => {
-//     const index = prevList.findIndex(item => item.id === movieId);
-//     if (index !== -1) {
-//       const newList = [...prevList];
-//       newList.splice(index, 1);
-//       return newList;
-//     }
-//     return prevList;
-//   });
+  bookmarkedList,
+  deleteBookmarked,
+  addBookmarked
+}) => {
 
-//   // Supprimer l'élément de la liste bookmarkedListWithName en comparant les valeurs d'ID
-//   setBookmarkedListWithName(prevList => {
-//     const index = prevList.findIndex(item => item.movie_id === movieId);
-//     if (index !== -1) {
-//       const newList = [...prevList];
-//       newList.splice(index, 1);
-//       return newList;
-//     }
-//     return prevList;
-//   });
-// }
+  // const [bookmarkedItems, setBookmarkedItems] = useState([]);
 
+
+      // =========================== HANDLERS
+
+    // =========================== HANDLERBOUTON X
+
+  function handleRemoveWatched(film_id) {
+    deleteBookmarkedAndWatched(film_id)
+    setWatchedList(state => state.filter(element => element.film_id !== film_id));
+  }
+
+      // =========================== HANDLERBOUTON COEUR
+
+
+  function handleRemoveBookmarked(film_id) {
+    deleteBookmarked(film_id)
+    // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
+
+  }
+
+  function handleAddBookmarked(film_id) {
+    addBookmarked(film_id)
+    // setBookmarkedItems((prevItems) => [...prevItems, film_id]);
+
+  }
+
+
+function handleRemoveToWatch(film_id) {
+  deleteToWatch(film_id);  
+  setToWatchList(state => state.filter(element => element.film_id !== film_id));
+}
+
+console.log(bookmarkedList)
+console.log(watchedList)
 
 
 // ================ JSX ================
   return (
     <>
 
-      {/* <div className={`Profile-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}`}> */}
 
-{/* // ================ JSX : ROLL BOOKMARKED ================ */}
+{/* // ================ JSX : ROLL WATCHED ================ */}
 
-{((showBookmarkedRoll && mobileVersion) || !mobileVersion) && (
+{((showWatchedRoll && mobileVersion) || !mobileVersion) && (
   <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
     <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>
-      <i className='fa-sharp fa-solid fa-check'></i>
-      Vus
       <i className='fa-regular fa-heart'></i>
+      Vus
+      <i className='fa-sharp fa-solid fa-check'></i>
     </div>
     {isLoading ? (
       <div>Chargement en cours...</div>
     ) : (
-      bookmarkedListWithName
-        .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
-        .map((bookmarkedListWithNameItem) => (
-          <div
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
-            key={bookmarkedListWithNameItem.id}
-            // onClick={handleGenreClick}
-            data-id={bookmarkedListWithNameItem.movie_id}
-          >
-            <i className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item fa-regular fa-heart`}></i>
+      watchedList
+        // .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
+        .map((watchedListItem) => {
+          // const isBookmarked = bookmarkedItems.includes(watchedListItem.film_id);
 
-            {bookmarkedListWithNameItem.name}
+          return (
+            <div
+              className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+              key={watchedListItem.id}
+            >
+              {/* Bouton de bookmark */}
+              <i
+                className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${
+                  bookmarkedList[watchedListItem.film_id] ? 'solid' : 'regular'
+                } fa-heart`}
+                onClick={() => {
+                  if (bookmarkedList[watchedListItem.film_id]) {
+                    handleRemoveBookmarked(watchedListItem.film_id);
+                  } else {
+                    handleAddBookmarked(watchedListItem.film_id);
+                  }
+                }}
+            style={{ color: bookmarkedList[watchedListItem.film_id] ? '#D42121' : '' }}
+            ></i>
+
+            {watchedMovies[watchedListItem.film_id]?.name}
 
             <i 
-            onClick={handleRemoveBookmark}
-            data-id={bookmarkedListWithNameItem.movie_id}
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item fa-solid fa-xmark`}></i>
+            onClick={() => handleRemoveWatched(watchedListItem.film_id)}
+            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-b fa-solid fa-xmark`}></i>
           </div>
-        ))
+        )})
     )}
   </div>
 )}
 
-{((showBookmarkedRoll && mobileVersion) || !mobileVersion) && (
+
+{/* // ================ JSX : ROLL TOWATCH ================ */}
+
+{((showToWatchRoll && mobileVersion) || !mobileVersion) && (
   <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
     <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>
       {/* <i className='fa-sharp fa-solid fa-check'></i> */}
       <i className='fa-sharp fa-regular fa-bookmark'></i> 
       À voir
-      {/* <i className='fa-regular fa-heart'></i> */}
+      {/* <i className='fa-rexgular fa-heart'></i> */}
       <div></div>
     </div>
     {isLoading ? (
       <div>Chargement en cours...</div>
     ) : (
-      bookmarkedListWithName
-        .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
-        .map((bookmarkedListWithNameItem) => (
+      toWatchList
+        .map((toWatchListItem) => {
+          return(
           <div
             className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
-            key={bookmarkedListWithNameItem.id}
-            // onClick={handleGenreClick}
-            data-id={bookmarkedListWithNameItem.movie_id}
+            key={toWatchListItem.id}
           >
-            {bookmarkedListWithNameItem.name}
+            {toWatchMovies[toWatchListItem.film_id]?.name}
             <i 
-            // onClick={handleRemoveBookmark()}
-            className={`Profile-container__roll-modale--${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item fa-solid fa-xmark`}></i>
+            onClick={() => handleRemoveToWatch(toWatchListItem.film_id)}
+            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-b fa-solid fa-xmark`}></i>
           </div>
-        ))
-    )}
+        )})
+        )}
   </div>
 )}
-
-
-{/* // ================ JSX : ROLL PROVIDERS ================ */}
-{/* {((showToWatchRoll && mobileVersion) || !mobileVersion) && (
-  <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
-    <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}> 
-    <i className='fa-sharp fa-solid fa-check'></i>
-    À voir
-    <i className='fa-regular fa-heart'></i>
-
-    </div>
-    {isLoading ? (
-      <div>Chargement en cours...</div>
-    ) : (
-      toWatchListWithName
-        .filter((value, index, self) => self.indexOf(value) === index) // Supprime les doublons
-        .map((toWatchListWithNameItem) => (
-          <div
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
-            key={toWatchListWithNameItem}
-            // onClick={handleGenreClick}
-            data-id={toWatchListWithNameItem}
-          >
-            {toWatchListWithNameItem}    
-            <i 
-            // onClick={handleRemoveBookmark()}
-            className={`Profile-container__roll-modale--${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item fa-solid fa-xmark`}></i>
-
-          </div>
-        ))
-    )}
-  </div>
-)} */}
-
-{/* // ================ JSX : ROLL DECENNIES ================ */}
-{/* {( (showRollDecade && mobileVersion) || !mobileVersion) && 
-
-<div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
-  <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DECENNIE</div>
-
-  {decades.map((decade, index) => (
-        <div key={index} className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} 
-        onClick={handleDecadeClick}
-        >
-        {decade}
-      </div>
-    ))}
-   
-</div>
-}  */}
-      {/* </div> */}
-          
 
     </>
   )

@@ -25,6 +25,7 @@ import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 
 
 import './App.scss';
+import PageNotFound from './PageNotFound/PageNotFound';
 
 function App() {
 
@@ -66,6 +67,10 @@ function App() {
                     <Route
                       path="/profile"
                       element={<Profile />}
+                    />
+                    <Route
+                      path="*"
+                      element={<PageNotFound />}
                     />
 
                   </Routes>

@@ -6,9 +6,11 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
   const [userDataToWatch, setUserDataToWatch] = useState({ email: '', id: '', toWatch: '' });
   const [userDataWatched, setUserDataWatched] = useState({ email: '', id: '', watched: '' });
-  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false);
-  const [isToWatchModified, setIsToWatchModified] = useState(false);
-  const [isWatchedModified, setIsWatchedModified] = useState(false);
+
+  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false); 
+  const [isToWatchModified, setIsToWatchModified] = useState(false); 
+  const [isWatchedModified, setIsWatchedModified] = useState(false); 
+
 
   const login = () => {
     setIsLoggedIn(true);
@@ -22,15 +24,18 @@ export const AuthProvider = ({ children }) => {
     setUserData({ ...userData, email: email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email: email, id: userId });
     setUserDataWatched({ ...userDataWatched, email: email, id: userId });
+    console.log(userDataWatched)
   };
 
   {/* ======================================= BOOKMARKED ====================================================== */ }
 
   const addBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie });
+    setUserData({ ...userData, bookmarked: element.movie || element});
     console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
+    console.log('onpasseici')
+
   };
   const deleteBookmarked = async (element) => {
     console.log(element);
@@ -54,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
     }
   }, [userData, isBookmarkedModified]);
+
   useEffect(() => {
     const deleteData = async () => {
       try {

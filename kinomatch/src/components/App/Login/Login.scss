@@ -31,12 +31,12 @@
           color: grey;
           opacity: 0.4;
         }
-        &[type='password'] {
-          font-size: vars.$input-text-size;
-        }
-        &[type='text'] {
-          font-size: vars.$input-text-size;
-        }
+        // &[type='password'] {
+        //   font-size: vars.$input-text-size;
+        // }
+        // &[type='email'] {
+        //   font-size: vars.$input-text-size;
+        // }
         &:focus {
           background: vars.$theme1-secondary;
           border: black 2px solid;
@@ -57,4 +57,7 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 1100px) {
 }

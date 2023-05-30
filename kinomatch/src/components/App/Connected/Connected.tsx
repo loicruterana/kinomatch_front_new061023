@@ -4,7 +4,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import './Connected.scss';
 
 
-export const Connected = ({email}) => {
+export const Connected = () => {
   const { userData } = useContext(AuthContext);
 
   return (

@@ -37,6 +37,9 @@ export const Home = () => {
   // goToMoviePage
   const [goToMoviePage, setGoToMoviePage] = useState(false);
 
+  // const [isFirstRender, setIsFirstRender] = useState(true);
+
+
 
 
   // ================ IMPORT PROPS CONTEXTS ================
@@ -78,10 +81,6 @@ export const Home = () => {
           }, []);
 
         setPreselectedProviders(Array.isArray(filteredProviders) ? filteredProviders : [filteredProviders]); // array
-
-        // console.log(Array.isArray(filteredProviders));
-        // console.log(filteredProviders);
-        // console.log(preselectedProviders);
       })
       .catch((error) => {
         console.error(error);
@@ -91,35 +90,12 @@ export const Home = () => {
   }, []);
 
 
-  // console.log(preselectedProviders); 
-
-
   //=================================
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // load();
-    // console.log("on passe par ici")
 
-    // const queryData = {
-    //   genres: selectedGenreFilters,
-    //   providers: selectedProviderFilters,
-    //   decades: selectedDecadeFilters,
-    // };
-    //   const queryString = 
-    // {
-    //   genre: 14,
-    // }
     const searchParams = new URLSearchParams();
-    // searchParams.append('genreID', '8');
-    // searchParams.append('genre', '14');
-
-    // searchParams.append('provider', '344');
-
-    // console.log(selectedGenreFilters)
-    // console.log(selectedDecadeFilters)
-
-
     selectedGenreFilters.forEach((filter) => {
       searchParams.append('genreID', filter.id);
     });
@@ -132,60 +108,26 @@ export const Home = () => {
       searchParams.append('decade', filter);
     });
 
-
     const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
 
-    // console.log(url)
-
     navigate(`/films?${searchParams.toString()}`);
-
-    // try {
-    //   axios
-    //     .get(url)
-    //     .then((response) => {
-    //       console.log(response.status, response.data.token, response.data);
-    //       console.log(response.data)
-    //       addData(response.data)
-    //       console.log(fetchedData)
-    //       setGoToMoviePage(true)
-    //     })
-    //     .catch((error) => {
-    //       console.log('Response data:', error.response.data.error);
-    //       console.log('Response status:', error.response.status);
-    //       console.log('Response headers:', error.response.headers);
-    //     });
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // } finally{
-    //   console.log(fetchedData)
-    // }
   };
 
+  //======== USEWINDOWSIZE
 
-
-  //========
-
-
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-  });
 
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize((prevState) => ({
-        ...prevState,
-        width: window.innerWidth
-      }));
 
-      if (windowSize.width > 900) {
+      if (window.innerWidth >= 900) {
         setMobileVersion(false)
         setShowRollGenre(true)
         setShowRollProvider(true)
         setShowRollDecade(true)
 
       }
-      if (windowSize.width < 900) {
+      if (window.innerWidth < 900) {
         setMobileVersion(true)
         setShowRollGenre(false)
         setShowRollProvider(false)
@@ -196,9 +138,10 @@ export const Home = () => {
     window.addEventListener('resize', handleResize);
     // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize 
     // et actualiser le state windowSize
+    handleResize()
     return () => window.removeEventListener('resize', handleResize);
     // un removeEventListener pour éviter les fuites de mémoire
-  }, [windowSize]);
+  }, []);
 
   // ================ HANDLERS ================
   function handleClickOut() {
@@ -230,13 +173,9 @@ export const Home = () => {
     removeDecadeFilter(event.target.dataset.id)
   }
 
-  // console.log(fetchedData)
-
-
   if (goToMoviePage) {
     return <Navigate to="/films" />;
   }
-
 
   // ================ JSX ================
   return (
@@ -257,10 +196,6 @@ export const Home = () => {
               </div>
             ))
             }
-          </div>
-
-          <div className="Home__filters-selector__containers__filters-container">
-            {/* // affichage des filtres sélectionnés */}
             {
               selectedProviderFilters.map((filter) => (
                 <div key={filter.provider_id} className="Home__filters-selector__containers__filters-container__filter"
@@ -273,12 +208,7 @@ export const Home = () => {
                 </div>
               ))
             }
-          </div>
-
-
-          <div className="Home__filters-selector__containers__filters-container">
-            {/* // affichage des filtres sélectionnés */}
-            {selectedDecadeFilters.map((filter) => (
+                        {selectedDecadeFilters.map((filter) => (
               <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
               >
                 {filter}
@@ -290,6 +220,10 @@ export const Home = () => {
             }
           </div>
 
+
+
+
+
         </div>
         {/* // bouton validé */}
         <form onSubmit={handleFormSubmit}>
@@ -299,8 +233,6 @@ export const Home = () => {
         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         <path d="M0 0h24v24H0z" fill="none"/>
         </svg> */}
-
-        
 
           </button>
         </form>
