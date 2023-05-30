@@ -18,10 +18,10 @@ function LegalModal(props: LegalModalProps) {
   return (
     <div className='container'>
       <div className='legalModal'>
-        <h2>Mentions légales</h2>
-
-        <h3>En vigueur au 30/05/23</h3>
-
+        <div className='legalModal__title'>
+          <h2>Mentions légales </h2>
+          <h3>En vigueur au 30/05/23</h3>
+        </div>
         <p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs, ci-après l""Utilisateur", du site www.kinomatch.com , ci-après le "Site", les présentes mentions légales.</p>
 
         <p>La connexion et la navigation sur le Site par l’Utilisateur implique l'acceptation intégrale et sans réserve des présentes mentions légales.</p>
@@ -39,7 +39,7 @@ function LegalModal(props: LegalModalProps) {
         <h4>ARTICLE 3 - COLLECTE DES DONNÉES </h4>
 
         <p>Le site est exempté de déclaration à la Commission Nationale Informatique et Libertés (CNIL) dans la mesure où il ne collecte aucune donnée concernant les utilisateurs. Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site, sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil. </p>
-        
+
         <button className='legalModal__button' onClick={handleModal}>Retour</button>
       </div>
     </div>
