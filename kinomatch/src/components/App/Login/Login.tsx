@@ -13,6 +13,9 @@ import './Login.scss';
 
 export const Login = () => {
 
+  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
+
+
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
@@ -20,10 +23,10 @@ export const Login = () => {
   });
 
   const { addEmail, email } = useContext(EmailContext);
-  const { isLoggedIn, login , addUserData } = useContext(AuthContext);
 
   const [goToHomePage, setGoToHomePage] = useState(false);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
 
   if (goToHomePage) {
     return <Navigate to="/" />;
@@ -49,36 +52,54 @@ export const Login = () => {
         console.log(response.status, response.data.token);
 
         // Check if there is an error returned by the back
-        if(response.data !== undefined) {
+
+
+
+
+        if(response.status === 200) {
+          //Utilisateur connecté
           console.log(response.data);
-          // error
-          // return;
+          console.log(response.data.message);
+          setMessage(response.data.message)
+          console.log(response.data.user.id)
+          addUserData(response.data.user.email, response.data.user.id)
+
+          login()
+          setTimeout(() => {
+            setGoToHomePage(true);
+          }, 1500);
         }
 
-        if(response.status === 500) {
-          console.log(response.data);
-          // error
-          return;
-        }
+
 
         // OK
-        
-        addUserData(response.data.user.email, response.data.user.id)
-        // addEmail(postProfil.email)
-        login();
 
-        setTimeout(() => {
-          setGoToHomePage(true);
-        }, 1500);
+       
       })
       .catch((error) => {
         console.log(error)
-        console.log('Response data:', error.response.data.error);
-        console.log('Response status:', error.response.status);
-        console.log('Response headers:', error.response.headers);    
+        // console.log('Response data:', error.response.data.error);
+        // console.log('Response status:', error.response.status);
+        // console.log('Response headers:', error.response.headers);   
+        if(error.response.status === 400) {
+          //Email et mot de passe obligatoires
+          //Email ou mot de passe invalide
+          console.log(error.response.data.error);
+          setMessage(error.response.data.error)
+          return;
+        }
+
+        if(error.response.status === 500) {
+          //Erreur lors de la connexion de l\'utilisateur
+          console.log(error.response.data.error);
+          setMessage(error.response.data.error)
+          return;
+        } 
       });
 
   };
+  console.log(userData)
+
 
   return (
     <div className='Login-container'>
@@ -120,6 +141,7 @@ export const Login = () => {
         </Link>
 
         <button type='submit'>Connexion</button>
+        <p className='Login-container__message'>{message}</p>
 
       </form>
       {isLoggedIn && <Connected email={email}/>}
@@ -129,4 +151,3 @@ export const Login = () => {
 };
 
 export default Login;
-

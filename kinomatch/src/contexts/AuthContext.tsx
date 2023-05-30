@@ -27,11 +27,13 @@ export const AuthProvider = ({ children }) => {
   {/* ======================================= BOOKMARKED ====================================================== */ }
 
   const addBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie });
+    setUserData({ ...userData, bookmarked: element.movie || element});
+    console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
-  };
+    console.log('onpasseici')
 
+  };
   const deleteBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie || element});
     console.log(element.movie);
@@ -46,7 +48,6 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
-
     if (userData.bookmarked !== '' && isBookmarkedModified) {
       postData();
       setIsBookmarkedModified(false);
@@ -69,7 +70,6 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
-
     if (userData.bookmarked !== '' && !isBookmarkedModified) {
       deleteData();
       setUserData({ ...userData, bookmarked: "" });
@@ -80,16 +80,18 @@ export const AuthProvider = ({ children }) => {
 
   {/* ======================================= TO WATCH ====================================================== */ }
 
-  const addToWatch = async (element) => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
-    setIsToWatchModified(true);
-    console.log(element.movie);
-  };
+const addToWatch = async (element) => {
+  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+  setIsToWatchModified(true); 
+  console.log(element.movie);
 
-  const deleteToWatch = async (element) => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
-    console.log(element.movie);
-  };
+};
+
+const deleteToWatch = async (element) => {
+  console.log(element)
+  setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element.toString() });
+  console.log(element.movie);
+};
 
   useEffect(() => {
     const postData = async () => {

@@ -40,7 +40,9 @@ function LegalModal(props: LegalModalProps) {
 
         <p>Le site est exempté de déclaration à la Commission Nationale Informatique et Libertés (CNIL) dans la mesure où il ne collecte aucune donnée concernant les utilisateurs. Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site, sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil. </p>
 
-        <button className='legalModal__button' onClick={handleModal}>Retour</button>
+      </div>
+      <div className='legalModal__button--container'>
+        <button className='legalModal__button--container---btn' onClick={handleModal}>Retour</button>
       </div>
     </div>
 

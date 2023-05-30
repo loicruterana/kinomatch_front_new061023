@@ -8,6 +8,8 @@ import MoviePage from './MoviePage/MoviePage';
 import Home from './Home/Home';
 import Login from './Login/Login';
 import Signup from './Signup/Signup';
+import Profile from './Profile/Profile';
+
 import { AuthProvider } from '../../contexts/AuthContext';
 import { LoadingProvider } from '../../contexts/LoadingContext';
 import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFiltersContext';
@@ -23,6 +25,7 @@ import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 
 
 import './App.scss';
+import PageNotFound from './PageNotFound/PageNotFound';
 
 function App() {
 
@@ -61,6 +64,14 @@ function App() {
               path="/movie-page"
               element={<MoviePage/>}
             />      */}
+                    <Route
+                      path="/profile"
+                      element={<Profile />}
+                    />
+                    <Route
+                      path="*"
+                      element={<PageNotFound />}
+                    />
 
                   </Routes>
 

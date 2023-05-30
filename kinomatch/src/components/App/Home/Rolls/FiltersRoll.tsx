@@ -65,7 +65,7 @@ function handleGenreClick(event) {
 
   const decades = [];
 
-  for (let i = 1890; i < 2030; i += 10) {
+  for (let i = 2020; i >= 1890; i -= 10) {
     decades.push(i);
   }
 
@@ -112,7 +112,7 @@ function handleGenreClick(event) {
 {( (showRollDecade && mobileVersion) || !mobileVersion) && 
 
 <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container`}>
-  <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DECENNIE</div>
+  <div className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DÉCÉNNIE</div>
 
   {decades.map((decade, index) => (
         <div key={index} className={`Home-container__roll-modale-${mobileVersion? 'mobile-version' : 'desktop-version'}__roll-container__item`} 

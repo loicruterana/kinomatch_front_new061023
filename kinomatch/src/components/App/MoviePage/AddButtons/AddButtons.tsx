@@ -1,23 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { CurrentMovieIdContext } from '../../../../contexts/CurrentMovieIdContext';
-
 import axios from 'axios';
-
 import './AddButton.scss';
-
 function AddButton(movieId) {
-
   {/* ========================== USESTATE =============================== */ }
 
   const { userData, isLoggedIn, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched } = useContext(AuthContext);
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
-
   // Favoris
   const [bookmartIsClicked, setBookmarkIsClicked] = useState(false);
-
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
@@ -64,7 +58,6 @@ function AddButton(movieId) {
   //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?userID=${userDataToWatch.id}`),
   //       axios.get(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?userID=${userDataWatched.id}`)
   //     ];
-
   //     return Promise.all(requests.map((request) => axios.get(request)))
   //     .then(axios.spread((...allData)));
   //   }
@@ -82,9 +75,7 @@ function AddButton(movieId) {
           const filmIds = responseData.map(item => item.film_id);
           console.log(filmIds);
           console.log(userData.id);
-
           console.log(movieId.movie.toString());
-
           if (filmIds.includes(movieId.movie.toString())) {
             setHeartIsClicked(true);
           } else {
@@ -98,7 +89,6 @@ function AddButton(movieId) {
 
         })
     };
-
     {/* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */ }
     {
       isLoggedIn &&
@@ -107,7 +97,6 @@ function AddButton(movieId) {
   }, [currentMovieId, heartIsClicked, isLoggedIn, movieId, handleBookMarkClick, handleCheckClick]);
 
   {/* ======================================= TO WATCH ====================================================== */ }
-
   {/*  */ }
   useEffect(() => {
     const getUserToWatch = () => {
@@ -117,19 +106,15 @@ function AddButton(movieId) {
           const filmIds = responseData.map(item => item.film_id);
           console.log(filmIds);
           console.log(userDataToWatch.id);
-
           console.log(movieId.movie.toString());
-
           if (filmIds.includes(movieId.movie.toString())) {
             setBookmarkIsClicked(true);
           } else {
             setBookmarkIsClicked(false);
           }
           console.log(bookmartIsClicked);
-
         })
     };
-
     {/* Condition qui éxecute "getUserToWatch" uniquement si un user est connecté */ }
     {
       isLoggedIn &&
@@ -175,7 +160,6 @@ function AddButton(movieId) {
 
 
   {/* =================================================================== */ }
-
   return (
     <div className='movieFound__essentiel-btn--container'>
       <button
@@ -189,7 +173,7 @@ function AddButton(movieId) {
         type='submit'
         onClick={handleBookMarkClick}>
         <i className={`fa-sharp fa-${bookmartIsClicked ? 'solid' : 'regular'} fa-bookmark ${bookmartIsClicked ? 'bookMarkClicked' : ''}`}
-          style={{ color: bookmartIsClicked ? '#fff3b0' : '' }}></i></button>
+          style={{ color: bookmartIsClicked ? '#FFF3B0' : '' }}></i></button>
       <button
         className='movieFound__essentiel-btn--addToViewed'
         type='submit'
