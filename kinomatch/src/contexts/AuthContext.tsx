@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-  setIsLoggedIn(false);
+    setIsLoggedIn(false);
   };
 
   const addUserData = (email, userId) => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   {/* ======================================= BOOKMARKED ====================================================== */ }
 
   const addBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie || element});
+    setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element)
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   };
   const deleteBookmarked = async (element) => {
-    setUserData({ ...userData, bookmarked: element.movie || element});
+    setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
   };
 
@@ -134,17 +134,23 @@ export const AuthProvider = ({ children }) => {
   console.log(userDataToWatch.id);
 
 
-   {/* ======================================= WATCHED ====================================================== */ }
+  {/* ======================================= WATCHED ====================================================== */ }
 
-   const addWatched = async (element) => {
+  const addWatched = async (element) => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
     setIsWatchedModified(true);
     console.log(element.movie);
   };
 
   const deleteWatched = async (element) => {
-    setUserDataWatched({ ...userDataWatched, watched: element.movie || element});
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
     console.log(element.movie);
+  };
+
+  const deleteBookmarkedAndWatched = async (element) => {
+    console.log(element);
+    setUserData({ ...userData, bookmarked: element.movie || element.toString() });
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString()});
   };
 
   useEffect(() => {
@@ -209,6 +215,7 @@ export const AuthProvider = ({ children }) => {
         userData,
         userDataToWatch,
         userDataWatched,
+        deleteBookmarkedAndWatched,
       }}
     >
       {children}

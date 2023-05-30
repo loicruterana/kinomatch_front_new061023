@@ -70,8 +70,8 @@ function handleRemoveToWatch(film_id) {
   setToWatchList(state => state.filter(element => element.film_id !== film_id));
 }
 
-console.log(bookmarkedList)
-console.log(watchedList)
+// console.log(bookmarkedList)
+// console.log(watchedList)
 
 
 // ================ JSX ================

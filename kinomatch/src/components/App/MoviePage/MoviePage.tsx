@@ -240,7 +240,7 @@ function MoviePage() {
 
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`: '../../../../../../public/images/SamplePoster1.png'} alt='Image du film' onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>

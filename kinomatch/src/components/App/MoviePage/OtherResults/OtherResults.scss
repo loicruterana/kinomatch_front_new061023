@@ -70,6 +70,11 @@
     width: 100%;
     height: auto;
 
+    &--pellicule {
+      display: flex;
+      justify-content: center;
+      background-color: vars.$theme1-secondary;
+    }
 
     &--scrollList {
       padding-bottom: 130px;
@@ -80,6 +85,7 @@
       background-position: center;
       align-items: center;
       width: 100%;
+      max-width: 400px;
       height: auto;
 
       &---title {

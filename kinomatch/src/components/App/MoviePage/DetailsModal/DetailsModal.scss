@@ -53,6 +53,7 @@
             background-color: vars.$theme1-secondary;
             width: 78%;
             height: fit-content;
+            min-height:  100%;
             padding-bottom: 10rem;
 
             &-title {
@@ -305,6 +306,7 @@
 
         &-distribution {
             width: 75%;
+            min-height: 100%;
             background-color: vars.$theme1-secondary;
 
             &-title {
@@ -417,6 +419,7 @@
 
             // Acteur
             & li {
+                text-align: center;
                 font-size: 1.2rem;
                 padding: 0.2rem 0;
             }

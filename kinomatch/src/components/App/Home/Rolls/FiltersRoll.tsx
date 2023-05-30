@@ -11,7 +11,7 @@ import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecad
 
 
 // ================ COMPOSANT ================
-export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade, isLoading }) => {
+export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade, isLoading, handleClickOut }) => {
 
   // ================ IMPORT PROPS CONTEXTS ================
   const { addGenreFilter, selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
@@ -73,7 +73,7 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
   return (
     <>
 
-      <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}`}>
+      <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__filterRoll`}>
 
         {/* // ================ JSX : ROLL GENRE ================ */}
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-backgroundContainer`}>
@@ -115,7 +115,7 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
         </div>
         {/* // ================ JSX : ROLL DECENNIES ================ */}
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-backgroundContainer`}>
-          <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-background`}>
+          <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-background`}  onClick={handleClickOut}>
             {((showRollDecade && mobileVersion) || !mobileVersion) &&
 
               <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>

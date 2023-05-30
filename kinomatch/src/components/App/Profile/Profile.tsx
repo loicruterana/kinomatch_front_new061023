@@ -214,8 +214,6 @@ export const Profile: React.FC = () => {
     fetchMoviesBookmarked();
   }, [bookmarkedList]);
 
-  console.log(bookmarkedList)
-  
       // ===========================ToWatchMovies
 
     // =========================== TOWATCHLIST
