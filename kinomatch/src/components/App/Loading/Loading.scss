@@ -7,6 +7,7 @@
   height: 100vh;
   background-color: vars.$theme1-primary;
   opacity: 0.8;
+  backdrop-filter: blur(5px);  
   display: flex;
   justify-content: center;
   align-items: center;

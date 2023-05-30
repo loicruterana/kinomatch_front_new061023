@@ -6,11 +6,9 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
   const [userDataToWatch, setUserDataToWatch] = useState({ email: '', id: '', toWatch: '' });
   const [userDataWatched, setUserDataWatched] = useState({ email: '', id: '', watched: '' });
-
-  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false); 
-  const [isToWatchModified, setIsToWatchModified] = useState(false); 
-  const [isWatchedModified, setIsWatchedModified] = useState(false); 
-
+  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false);
+  const [isToWatchModified, setIsToWatchModified] = useState(false);
+  const [isWatchedModified, setIsWatchedModified] = useState(false);
 
   const login = () => {
     setIsLoggedIn(true);
@@ -24,7 +22,6 @@ export const AuthProvider = ({ children }) => {
     setUserData({ ...userData, email: email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email: email, id: userId });
     setUserDataWatched({ ...userDataWatched, email: email, id: userId });
-    console.log(userDataWatched)
   };
 
   {/* ======================================= BOOKMARKED ====================================================== */ }
@@ -38,8 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   };
   const deleteBookmarked = async (element) => {
-    console.log(element);
-    setUserData({ ...userData, bookmarked: element.movie || element });
+    setUserData({ ...userData, bookmarked: element.movie || element});
     console.log(element.movie);
   };
 
@@ -70,7 +66,6 @@ export const AuthProvider = ({ children }) => {
         console.log(userData.id);
         axios
           .delete(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
-        console.log(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
       } catch (error) {
         console.log(error);
       }
@@ -148,7 +143,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteWatched = async (element) => {
-    setUserDataWatched({ ...userDataWatched, watched: element.movie });
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element});
     console.log(element.movie);
   };
 
@@ -178,8 +173,7 @@ export const AuthProvider = ({ children }) => {
         searchParams.append('movieID', userDataWatched.watched);
 
         axios
-          .delete(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`)
-        console.log(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`)
+          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`)
       } catch (error) {
         console.log(error);
       }

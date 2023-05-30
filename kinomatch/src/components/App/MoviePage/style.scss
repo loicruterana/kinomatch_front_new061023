@@ -14,9 +14,10 @@
 @media screen and (min-width: 900px) {
     .movieFound {
         display: flex;
-        width: 100%;
+        align-items: center;
+        width: 100vw;
         height: 100vh;
-        padding: 85px 3rem 3.4rem 3rem;
+        padding: 52px 3rem 3.4rem 3rem;
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {
@@ -24,20 +25,23 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-content: flex-start;
-            max-width: 20%;
+            // align-content: center;
+            width: 24%;
+            max-width: 500px;
             height: 100%;
-            padding-top: 40px;
+            padding-top: 1.5rem;
 
             &::-webkit-scrollbar {
                 display: none;
             }
 
+
             // Titre et icones
             &-head {
                 display: flex;
+                justify-content: space-between;
                 align-items: flex-end;
-                width: 82%;
+                width: 80%;
                 margin-bottom: 1.3rem;
             }
 
@@ -45,7 +49,8 @@
             &-title {
                 font-size: 1.6rem;
                 font-weight: bold;
-                margin-right: auto;
+                // margin-right: auto;
+                text-align: start;
             }
 
             &-imageFrame {
@@ -57,16 +62,20 @@
             }
 
             &-image {
-                width: 16vw;
+                // min-width: fit-content;
+                // max-height: 55vh;
+                max-width: auto;
+                max-height: 60vh;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
+                transition: transform 0.2s ease-in-out;
             }
 
             // Note et plateformes
             &-body {
                 display: flex;
                 width: 100%;
-                margin: 0.6rem;
+                height: fit-content;
                 justify-content: center;
 
 
@@ -81,17 +90,18 @@
 
                     &---noteNumber {
                         margin-right: 0.5rem;
+                        transition: transform 0.2s ease-in-out;
                     }
 
                     :hover {
-                        transform: scale(1.1);
-                        // transition: all 0.2s ease;
+                        transform: scale(1.05);
+                        cursor: pointer;
                     }
 
 
                     // Avis
                     &---opinion {
-                        font-size: 0.9rem;
+                        font-size: 1rem;
                         margin-top: 0.3rem;
                     }
                 }
@@ -104,6 +114,7 @@
     .movieDetails {
         overflow: auto;
         width: 60%;
+        height: 100%;
         padding: 40px 2rem 0 2rem;
 
         &::-webkit-scrollbar {
@@ -146,15 +157,6 @@
         }
     }
 
-    // =======================================================
-
-    // ZONE DES FILTRES EN VERSION MOBILE ==================
-    //! A RETRAVAILLER
-
-    .movieDetails__filters {
-        // display: flex;
-        display: none;
-    }
 
     //======================================================
 
@@ -232,21 +234,25 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
 
-            :hover {
+            &:hover {
                 transform: scale(1.1);
-                // transition: all 0.2s ease;
+                transform: scale(1.05);
+                cursor: pointer;
             }
         }
 
         // Container du bouton scroll vers la zone pour commenter 
         &-writeComment {
             display: flex;
+            width: fit-content;
             margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
 
-            :hover {
+            &:hover {
                 transform: scale(1.05);
-                // transition: all 0.2s ease;
+                cursor: pointer;
             }
         }
 
@@ -272,7 +278,7 @@
 
     .movieFound {
         height: 100vh;
-        padding: 5rem 2rem 10rem 2rem;
+        padding: 5rem 2rem 7rem 2rem;
         overflow-y: auto;
 
         &::-webkit-scrollbar {
@@ -284,8 +290,19 @@
             display: flex;
             overflow: auto;
             flex-wrap: wrap;
+            width: 100%;
             justify-content: center;
+            align-content: center;
             border-bottom: vars.$theme1-secondary solid 1px;
+
+            h3{
+                font-size: 0.85rem;
+            }
+
+            li {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
 
             &-disponibility {
                 margin-bottom: 1rem;
@@ -351,6 +368,8 @@
     .movieDetails__filters {
         display: flex;
         position: fixed;
+        z-index: 3;
+        align-items: center;
         filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
         bottom: 0;
         left: 0;
@@ -359,7 +378,7 @@
         justify-content: center;
         background: vars.$theme1-primary;
         width: 100vw;
-        height: 16%;
+        // height: 16%;
         padding-top: 5px;
 
         // Bouton pour afficher les autres résultats de films
@@ -372,18 +391,18 @@
             padding: 0.2rem 1rem;
             border: none;
             border-radius: 6px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: vars.$theme1-primary;
             background-color: vars.$theme1-secondary;
         }
 
         // filtres sélectionnés pour le film affiché
         &-mobile--filterElem {
-            font-size: 1rem;
+            font-size: 0.9rem;
             height: fit-content;
             font-weight: bold;
             margin: 0.5rem 0.5rem 0.8rem 0.5rem;
-            padding: 0.2rem 0.3rem;
+            padding: 0.25rem 0.4rem;
             border: none;
             border-radius: 6px;
             color: vars.$theme1-primary;
@@ -419,6 +438,24 @@
         // Résumé du synopsis
         &-resume {
             margin-bottom: 1rem;
+        }
+
+        &-directorsList {
+            margin-bottom: 1rem;
+
+            &--director {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+        }
+
+        &-actorsList {
+            &--actors {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: bold;
+            }
         }
 
         // Durée

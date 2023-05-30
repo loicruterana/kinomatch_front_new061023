@@ -54,40 +54,40 @@
                 font-size: 1rem;
                 font-weight: bold;
                 margin-bottom: 2rem;
+                transition: transform 0.2s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.05);
+                    cursor: pointer;
+                }
             }
-
-            // Mise en forme du placeholder
-            ::placeholder {
-                color: vars.$theme1-secondary;
-                font-size: 0.8rem;
-                font-weight: bold;
-            }
         }
-    }
-
-    // ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
-    .movieDetails__comments {
-        border-top: vars.$theme1-secondary solid 1px;
-
-        // Pseudo de l'utilisateur
-        &-pseudo {
-            font-size: 1.2rem;
-            margin: 2rem 0 1rem 0;
-        }
-
-        // Commentaire de l'utilisateur
-        &-comment {
-            font-size: 1.2rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-        }
-    }
-
-    // Scroll ancre ralentit
-    #movieDetails__comments {
-        scroll-behavior: smooth;
     }
 }
+
+// ZONE D'AFFICHAGE DES COMMENTAIRES UTILISATEURS
+.movieDetails__comments {
+    border-top: vars.$theme1-secondary solid 1px;
+
+    // Pseudo de l'utilisateur
+    &-pseudo {
+        font-size: 1.2rem;
+        margin: 2rem 0 1rem 0;
+    }
+
+    // Commentaire de l'utilisateur
+    &-comment {
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+    }
+}
+
+// Scroll ancre ralentit
+#movieDetails__comments {
+    scroll-behavior: smooth;
+}
+
 
 
 //* MOBILE VERSION =================

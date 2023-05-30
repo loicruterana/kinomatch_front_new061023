@@ -1,4 +1,5 @@
 import { Key, useContext, useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
@@ -9,10 +10,10 @@ import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
+import Loading from '../Loading/Loading';
 
 
 import './style.scss';
-import Loading from '../Loading/Loading';
 
 
 function MoviePage() {
@@ -55,21 +56,50 @@ function MoviePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   {/* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */ }
-  const [movieID, setMovieID] = useState([]);
+  const [movieArray, setMovieArray] = useState([]);
 
   {/* UseState qui récupère un id de film aléatoire en parcourant le résultat de requête axios */ }
   const [randomID, setRandomID] = useState('');
 
+  {/* UseState qui récupère l'id du film sélectionné par l'utilisateur */ }
   const [selectedId, setSelectedId] = useState('');
+
+  {/* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */ }
+  const [desktopVersion, setDesktopVersion] = useState(false);
 
   {/* ================ USECONTEXT ================================= */ }
 
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
-  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
+  const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
 
   console.log(selectedId);
+
+  {/* UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre  */ }
   useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 900) {
+        setDesktopVersion(true);
+
+      }
+      if (window.innerWidth < 900) {
+        setDesktopVersion(false);
+
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+    // et actualiser le state windowSize
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize);
+    // un removeEventListener pour éviter les fuites de mémoire
+  }, []);
+
+
+  {/*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */ }
+  useEffect(() => {
+    setIsLoading(true);
+    
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
@@ -79,24 +109,20 @@ function MoviePage() {
         if (chosenPage > 500) {
           chosenPage = Math.floor(Math.random() * 500) + 1;
         }
-  
         const searchParams1 = new URLSearchParams();
         searchParams1.append('randomPage', chosenPage.toString());
         console.log(window.location.search);
-  
         if (window.location.search === "") {
           console.log('ça passe ici');
           return axios.get(`https://deploy-back-kinomatch.herokuapp.com/randomFilms`);
         }
-  
         return axios.get(`https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`);
       })
       .then(({ data }) => {
         const randomID = data.results[Math.floor(Math.random() * data.results.length)].id;
         const filteredResults = data.results.filter((result) => result.id !== randomID);
-        setMovieID(filteredResults);
+        setMovieArray(filteredResults);
         console.log(data.results);
-  
         const searchParams = new URLSearchParams();
         if (currentMovieId) {
           searchParams.append('movieID', currentMovieId);
@@ -104,13 +130,11 @@ function MoviePage() {
           searchParams.append('movieID', randomID);
           setRandomID(randomID);
         }
-  
         const requests = [
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`),
           axios.get(`https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`)
         ];
-  
         return Promise.all(requests);
       })
       .then(([movieData, creditsData, providersData]) => {
@@ -137,7 +161,7 @@ function MoviePage() {
     )
   }
 
-  {/* DURÉE DU FIL EN HEURES*/ }
+  {/* DURÉE DU FILM EN HEURES*/ }
 
   function convertMinutesInHours(minutes: number) {
     const hours = Math.floor(minutes / 60);
@@ -160,6 +184,7 @@ function MoviePage() {
   }
 
   {/* RECUPERATION RÉALISATEURS */ }
+
   console.log(credits)
 
   const directingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Director");
@@ -169,6 +194,7 @@ function MoviePage() {
 
   const actorCastMembers = credits.cast.filter((person: { known_for_department: string; }) => person.known_for_department === "Acting");
   const mappedActorCastMembers = actorCastMembers.slice(0, 3);
+
 
 
   return (
@@ -277,23 +303,38 @@ function MoviePage() {
             <CommentPost />
 
             <div className='movieDetails__filters'>
-              <button
-                className='movieDetails__filters-otherResultsBtn'
-                onClick={handleOtherResults}>Autres Résultats</button>
-              {/* Affichage des filtres concernant le film affiché */}
-              {
-                movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                  <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>{genre.name}</p>
-                ))
-              }
+              {!desktopVersion && (
+                <React.Fragment>
+                  <button
+                    className='movieDetails__filters-otherResultsBtn'
+                    onClick={handleOtherResults}
+                  >
+                    {!showOtherResults ? "Autres Résultats" : "Retour"}
+                  </button>
+                  {/* Affichage des filtres concernant le film affiché */}
+                  {movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
+                    <p key={genre.id} className='movieDetails__filters-mobile--filterElem'>
+                      {genre.name}
+                    </p>
+                  ))}
+                </React.Fragment>
+              )}
               {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
             </div>
           </div>
         </section>
-
-        <OtherResults movieID={movieID} randomID={randomID} selectedId={selectedId} setSelectedId=
-
-          {setSelectedId} />
+        {
+          desktopVersion
+            ? <OtherResults
+              movieArray={movieArray}
+              showOtherResults={showOtherResults}
+              setShowOtherResults={setShowOtherResults} />
+            : showOtherResults &&
+            <OtherResults
+              movieArray={movieArray}
+              showOtherResults={showOtherResults}
+              setShowOtherResults={setShowOtherResults} />
+        }
       </section >
     </div>
   )

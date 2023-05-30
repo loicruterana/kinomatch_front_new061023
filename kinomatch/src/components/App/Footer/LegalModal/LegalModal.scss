@@ -1,163 +1,155 @@
 @use '../../../../styles/vars';
 
-.container {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(1.3rem);
-}
+//* DESKTOP VERSION =================
 
-.legalModal {
-  position: fixed;
-  z-index: 1;
-  width: 900px;
-  height: 470px;
-  overflow: auto;
-  background-color: vars.$theme1-primary;
-  border-radius: 1.5rem;
-  margin: 20%;
-  border: none;
-  text-align: center;
+@media screen and (min-width: 900px) {
 
-  &__title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: vars.$theme1-primary;
-    background-color: vars.$theme1-secondary;
-    border-radius: 0.7rem;
-    margin: 2rem auto;
-    padding: 20px;
-    width: 80%;
-  }
-
-  &__content {
-    font-size: 1.2rem;
-    color: vars.$theme1-secondary;
-    max-width: 80%;
-    margin: auto;
-    text-align: justify;
-  }
-
-  &__button {
-    width: 20rem;
-    font-size: 2rem;
-    color: vars.$theme1-primary;
-    font-weight: bold;
-    background-color: vars.$theme1-secondary;
-    margin: 2rem auto;
-    border-radius: 0.5rem;
-    border: none;
-  }
-}
-
-@media screen and (max-width: 900px) {
   .container {
     display: flex;
     height: 100vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(1.3rem);
   }
 
   .legalModal {
     position: fixed;
-    z-index: 1;
-    // width: 80vw;
-    // height: 90vh;
     overflow: auto;
-    background-color: vars.$theme1-primary;
-    border-radius: 1.5rem;
+    z-index: 1;
+    width: 75vw;
+    height: auto;
     margin: 20%;
-    padding: 20% 5% 0 5%;
     border: none;
     text-align: center;
+    padding-bottom: 3rem;
 
     &__title {
+      display: flex;
+      flex-direction: column;
+      color: vars.$theme1-primary;
+      background-color: vars.$theme1-secondary;
+      border-radius: 0.7rem;
+      margin: 2rem auto;
+      padding: 20px;
+      width: 80%;
+      white-space: pre-wrap;
+    }
+
+    h2 {
       font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+
+    h4 {
+      font-size: 1.3rem;
       font-weight: bold;
       color: vars.$theme1-primary;
       background-color: vars.$theme1-secondary;
       border-radius: 0.7rem;
-      margin: 3rem auto;
-      padding: 20px;
+      margin: 2rem auto;
+      padding: 10px;
       width: 80%;
     }
 
-    &__content {
+    p {
       font-size: 1.2rem;
       color: vars.$theme1-secondary;
       max-width: 80%;
-      margin: auto;
+      margin: 1rem auto;
       text-align: justify;
     }
 
-    &__button {
-      width: 20rem;
-      font-size: 2rem;
-      color: vars.$theme1-primary;
-      font-weight: bold;
-      background-color: vars.$theme1-secondary;
-      margin: 3rem auto;
-      border-radius: 0.5rem;
-      border: none;
+    &__button--container {
+      display: flex;
+      width: 100vw;
+      height: 70px;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      background-color: #335c67;
+      filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+
+      &---btn {
+        font-size: 1.2rem;
+        width: 20%;
+        height: 2rem;
+        border: none;
+        background: none;
+        background-color: #fff3b0;
+        color: vars.$theme1-primary;
+        border-radius: 6px;
+        font-weight: bold;
+      }
     }
   }
-}
 
-// MOBILE VERSION =================
-@media screen and (max-width: 900px) {
-  .container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(1.3rem);
-  }
+  //* MOBILE VERSION =================
 
-  .legalModal {
-    position: fixed;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    overflow: auto;
-    background-color: vars.$theme1-primary;
-    border-radius: 1.5rem;
-    margin: 20%;
-    border: none;
-    text-align: center;
-
-    &__title {
-      font-size: 1.7rem;
-      font-weight: bold;
-      color: vars.$theme1-primary;
-      background-color: vars.$theme1-secondary;
-      border-radius: 0.7rem;
-      margin: 3rem auto;
-      padding: 15px;
-      width: 80%;
+  @media screen and (max-width: 900px) {
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(1.3rem);
     }
 
-    &__content {
-      font-size: 1.1rem;
-      color: vars.$theme1-secondary;
-      max-width: 80%;
-      margin: auto;
-      text-align: justify;
-    }
-
-    &__button {
-      width: 9rem;
-      font-size: 1.7rem;
-      color: vars.$theme1-primary;
-      font-weight: bold;
-      background-color: vars.$theme1-secondary;
-      margin: 3rem auto;
-      border-radius: 0.5rem;
+    .legalModal {
+      position: fixed;
+      z-index: 1;
+      overflow: auto;
+      background-color: vars.$theme1-primary;
+      border-radius: 1.5rem;
+      margin: 20%;
+      padding: 20% 5% 0 5%;
       border: none;
+      text-align: center;
+
+      &__title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: vars.$theme1-primary;
+        background-color: vars.$theme1-secondary;
+        border-radius: 0.7rem;
+        margin: 3rem auto;
+        padding: 20px;
+        width: 80%;
+      }
+
+      &__content {
+        font-size: 1.2rem;
+        color: vars.$theme1-secondary;
+        max-width: 80%;
+        margin: auto;
+        text-align: justify;
+      }
+
+      &__button {
+        width: 20rem;
+        font-size: 2rem;
+        color: vars.$theme1-primary;
+        font-weight: bold;
+        background-color: vars.$theme1-secondary;
+        margin: 3rem auto;
+        border-radius: 0.5rem;
+        border: none;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          transform: scale(1.03);
+          cursor: pointer;
+        }
+      }
     }
   }
 }

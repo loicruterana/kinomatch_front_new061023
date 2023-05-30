@@ -29,7 +29,7 @@
             width: 100%;
 
             :hover {
-                transform: scale(1.05);
+                // transform: scale(1.05);
                 cursor: pointer;
                 // transition: all 0.2s ease;
             }
@@ -50,8 +50,14 @@
         &-disponibility {
             display: flex;
             justify-content: space-around;
-            min-width: fit-content;
+            // min-width: fit-content;
             padding-bottom: 2rem;
+
+            :hover {
+                transform: none;
+                cursor: pointer;
+                // transition: all 0.2s ease;
+            }
 
             // Plateforme individuelle
             & li {
@@ -65,10 +71,10 @@
                 padding: 0.5rem;
                 border-radius: 6px;
 
-                :hover {
-                    transform: scale(1.1);
-                    // transition: all 0.2s ease;
-                }
+                // :hover {
+                //     transform: scale(1.1);
+                //     // transition: all 0.2s ease;
+                // }
             }
         }
 
