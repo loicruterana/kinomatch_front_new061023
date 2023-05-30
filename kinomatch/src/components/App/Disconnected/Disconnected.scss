@@ -13,4 +13,12 @@
   background-color: vars.$theme1-primary;
   color: vars.$theme1-secondary;
   font-size: 45px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+@media screen and (max-width: 1000px) {
+  .Disconnected-container {
+    font-size: 22px;
+  }
 }

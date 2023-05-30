@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
 import axios from 'axios';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { WatchedListArray, WatchedMoviesObject, ToWatchListArray, toWatchMoviesObject, BookmarkedListObject } from '../../../../utils/interfaces'
 
 
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
@@ -11,63 +12,53 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 
 import './Profile.scss';
 
-export const Profile = () => {
-  const navigate = useNavigate();
 
-  const [mobileVersion, setMobileVersion] = useState(false);
-  const [showWatchedRoll, setShowWatchedRoll] = useState(true);
-  const [showToWatchRoll, setShowToWatchRoll] = useState(true);
-  const [watchedList, setWatchedList] = useState([]);
-  const [watchedMovies, setWatchedMovies] = useState({});
-  const [toWatchMovies, setToWatchMovies] = useState({});
-  const [bookmarkedList, setBookmarkedList] = useState({});
-  const [toWatchList, setToWatchList] = useState([]);
-  const [toWatchListWithName, setToWatchListWithName] = useState([]);
+export const Profile: React.FC = () => {
+  const navigate: (path: string) => void = useNavigate();
+
+  const [mobileVersion, setMobileVersion] = useState<boolean>(false);
+  const [showWatchedRoll, setShowWatchedRoll] = useState<boolean>(true);
+  const [showToWatchRoll, setShowToWatchRoll] = useState<boolean>(true);
+  const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
+  const [watchedMovies, setWatchedMovies] = useState<WatchedMoviesObject>({});
+  const [toWatchList, setToWatchList] = useState<ToWatchListArray>([]);
+  const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
+  const [bookmarkedList, setBookmarkedList] = useState<BookmarkedListObject>({});
   const { load, unload, isLoading } = useContext(LoadingContext);
 
   const coucou = watchedList === undefined; // false
-
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-  });
-
-  // const [isClicked, setIsClicked] = useState(false)
-
-
+  
   const { userData, logout, deleteBookmarked, deleteToWatch, deleteBookmarkedAndWatched, deleteWatched, addBookmarked
   } = useContext(AuthContext);
 
   // ================ HANDLERS ================
 
-  function handleClickOut() {
-    setShowWatchedRoll(false)
-    setShowToWatchRoll(false)
+  function handleClickOut(): void {
+    setShowWatchedRoll(false);
+    setShowToWatchRoll(false);
   }
 
 
-  function handleShowWatchedRoll(){
+
+  function handleShowWatchedRoll(): void {
     setShowWatchedRoll(true);
-    }
+  }
 
 
-  function handleShowToWatchRoll(){
+  function handleShowToWatchRoll(): void {
     setShowToWatchRoll(true);
-    }
+  }
 
-  function handleDeleteProfile() {
+  function handleDeleteProfile(): void {
     try {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', userData.id);
-      // searchParams.append('email', userData.email);
-
-      console.log(userData.id)
       axios
         .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`)
         .then((response) => {
           console.log(response.data.message);
           logout();
           navigate(`/`);
-
         })
         .catch((error) => {
           console.error(error);
@@ -77,11 +68,10 @@ export const Profile = () => {
     }
   }
 
-  function handleLogout() {
+  function handleLogout(): void {
     try {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', userData.id);
-      console.log(userData.id)
       axios
         .get(`https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`)
         .then((response) => {
@@ -101,29 +91,25 @@ export const Profile = () => {
     // ================ USEWINDOWSIZE ================
 
 
-  useEffect(() => {
-    function handleResize() {
-
-      if (window.innerWidth >= 900) {
-        setMobileVersion(false);
-        setShowWatchedRoll(true);
-        setShowToWatchRoll(true);
+    useEffect(() => {
+      function handleResize(): void {
+        if (window.innerWidth >= 900) {
+          setMobileVersion(false);
+          setShowWatchedRoll(true);
+          setShowToWatchRoll(true);
+        }
+        if (window.innerWidth < 900) {
+          setMobileVersion(true);
+          setShowWatchedRoll(false);
+          setShowToWatchRoll(false);
+        }
       }
-      if (window.innerWidth < 900) {
-        setMobileVersion(true);
-        setShowWatchedRoll(false);
-        setShowToWatchRoll(false);
-      }
-    }
-
-    window.addEventListener('resize', handleResize);
-    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
-    // et actualiser le state windowSize
-    handleResize()
-
-  return () => window.removeEventListener('resize', handleResize);
-    // un removeEventListener pour éviter les fuites de mémoire
-  }, []);
+  
+      window.addEventListener('resize', handleResize);
+      handleResize();
+  
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
   
 
 
@@ -134,24 +120,24 @@ export const Profile = () => {
 
   useEffect(() => {
     load();
-    console.log(isLoading);
+    // console.log(isLoading);
 
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
     axios
      .get(`https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         setWatchedList(data);
  
       })
       .catch((error) => {
         console.error(error);
       });
-    console.log(watchedList);
+    // console.log(watchedList);
 
   }, []);
-  console.log(watchedList);
+  // console.log(watchedList);
 
     // =========================== MOVIES
 
@@ -228,7 +214,7 @@ export const Profile = () => {
     fetchMoviesBookmarked();
   }, [bookmarkedList]);
 
-  console.log(watchedMovies)
+  console.log(bookmarkedList)
   
       // ===========================ToWatchMovies
 
@@ -236,7 +222,7 @@ export const Profile = () => {
 
       useEffect(() => {
         load();
-        console.log(isLoading);
+        // console.log(isLoading);
     
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
@@ -245,17 +231,15 @@ export const Profile = () => {
 
         )
           .then(({ data }) => {
-            console.log(data);
+            // console.log(data);
             setToWatchList(data);
      
           })
           .catch((error) => {
             console.error(error);
           });
-        console.log(toWatchList);
     
       }, []);
-      console.log(toWatchList);
     
     // =========================== TOWATCHLISTWITHNAME
 
@@ -287,12 +271,9 @@ export const Profile = () => {
         fetchMovieTitles();
       }, [toWatchList]);
 
-      console.log(toWatchMovies)
-
-
       //==========
 
-  return (
+   return (
     <div className='Profile-container'>
       <div className='Profile-container__personnal'>
         <div className='Profile-container__personnal__infos'>

@@ -6,7 +6,10 @@ import './Disconnected.scss';
 export const Disconnected = () => {
 
   return (
-    <div className="Disconnected-container">Vous êtes déconnecté</div>
+    <div className="Disconnected-container">
+      <span>Vous êtes déconnecté
+      </span>
+      </div>
   )
 }
 

@@ -84,9 +84,9 @@ console.log(watchedList)
 {((showWatchedRoll && mobileVersion) || !mobileVersion) && (
   <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
     <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>
-      <i className='fa-sharp fa-solid fa-check'></i>
-      Vus
       <i className='fa-regular fa-heart'></i>
+      Vus
+      <i className='fa-sharp fa-solid fa-check'></i>
     </div>
     {isLoading ? (
       <div>Chargement en cours...</div>
@@ -129,8 +129,6 @@ console.log(watchedList)
 
 
 {/* // ================ JSX : ROLL TOWATCH ================ */}
-
-
 
 {((showToWatchRoll && mobileVersion) || !mobileVersion) && (
   <div className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>
