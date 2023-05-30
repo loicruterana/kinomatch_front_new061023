@@ -22,7 +22,8 @@ function LegalModal(props: LegalModalProps) {
           <h2>Mentions légales </h2>
           <h3>En vigueur au 30/05/23</h3>
         </div>
-        <p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs, ci-après l""Utilisateur", du site www.kinomatch.com , ci-après le "Site", les présentes mentions légales.</p>
+        <p>
+          Conformément aux dispositions des articles 6-III et 19 de la loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs, ci-après dénommés "l'Utilisateur", du site www.kinomatch.com, ci-après dénommé "le Site", les présentes mentions légales.</p>
 
         <p>La connexion et la navigation sur le Site par l’Utilisateur implique l'acceptation intégrale et sans réserve des présentes mentions légales.</p>
 
@@ -30,7 +31,7 @@ function LegalModal(props: LegalModalProps) {
 
         <h4>ARTICLE 1 - L'ÉDITEUR </h4>
 
-        <p>L’édition et la direction de la publication du Site est assurée par Loïc Ruterana, domicilié 76 rue des jonquilles, dont le numéro de téléphone est 0600112233, et l'adresse e-mail lruterana@gmail.com. ci-après l'”ÉDITEUR".</p>
+        <p>L’édition et la direction de la publication du Site est assurée par Loïc Ruterana, domicilié 76 rue des jonquilles, dont le numéro de téléphone est 0600112233, et l'adresse e-mail lruterana@gmail.com. ci-après "l'ÉDITEUR".</p>
 
         <h4>ARTICLE 2 - ACCES AU SITE</h4>
 

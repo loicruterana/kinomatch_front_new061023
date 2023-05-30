@@ -17,7 +17,7 @@
         align-items: center;
         width: 100vw;
         height: 100vh;
-        padding: 85px 3rem 3.4rem 3rem;
+        padding: 52px 3rem 3.4rem 3rem;
 
         // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
         &__essentiel {
@@ -157,15 +157,6 @@
         }
     }
 
-    // =======================================================
-
-    // ZONE DES FILTRES EN VERSION MOBILE ==================
-    //! A RETRAVAILLER
-
-    .movieDetails__filters {
-        // display: flex;
-        // display: none;
-    }
 
     //======================================================
 
@@ -287,7 +278,7 @@
 
     .movieFound {
         height: 100vh;
-        padding: 5rem 2rem 10rem 2rem;
+        padding: 5rem 2rem 7rem 2rem;
         overflow-y: auto;
 
         &::-webkit-scrollbar {
@@ -387,7 +378,7 @@
         justify-content: center;
         background: vars.$theme1-primary;
         width: 100vw;
-        height: 16%;
+        // height: 16%;
         padding-top: 5px;
 
         // Bouton pour afficher les autres résultats de films
@@ -407,7 +398,7 @@
 
         // filtres sélectionnés pour le film affiché
         &-mobile--filterElem {
-            font-size: 1rem;
+            font-size: 0.9rem;
             height: fit-content;
             font-weight: bold;
             margin: 0.5rem 0.5rem 0.8rem 0.5rem;

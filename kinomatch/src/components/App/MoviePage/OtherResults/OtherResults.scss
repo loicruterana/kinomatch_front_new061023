@@ -12,25 +12,11 @@
     width: 18%;
     max-width: 16%;
     height: 100%;
-    // background-image: url('../../../../../public/images/pelloche.png');
-    // background-size: cover;
-    // background-position: center;
     margin: auto;
 
     &::-webkit-scrollbar {
       display: none;
     }
-
-    // &--title {
-    //   position: fixed;
-    //   width: fit-content;
-    //   background-color: vars.$theme1-secondary;
-    //   padding: 1.8rem 1.1rem 1rem 1.1rem;
-    //   font-size: 1.5rem;
-    //   color: vars.$theme1-primary;
-    //   font-weight: bold;
-    //   text-align: center;
-    // }
 
     &--pellicule {
       display: flex;
@@ -105,7 +91,7 @@
         margin: 1rem auto;
         border-radius: 10px;
         width: 100%;
-        max-width: 220px;
+        max-width: 260px;
       }
     }
   }

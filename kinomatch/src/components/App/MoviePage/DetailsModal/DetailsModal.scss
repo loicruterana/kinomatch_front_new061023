@@ -312,7 +312,7 @@
                 font-size: 1.8rem;
                 font-weight: bold;
                 padding-bottom: 0.8rem;
-                padding-top: 1.8rem;
+                padding-top: 1rem;
                 text-align: center;
             }
         }
@@ -427,7 +427,8 @@
             display: flex;
             flex-wrap: wrap;
             width: 100vw;
-            height: 90px;
+            height: auto;
+            min-height: 70px;
             justify-content: center;
             align-items: center;
             position: fixed;
