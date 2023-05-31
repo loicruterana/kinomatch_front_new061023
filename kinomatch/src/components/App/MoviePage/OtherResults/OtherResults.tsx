@@ -49,7 +49,7 @@ function OtherResults(props: OtherResultsModalProps) {
               onClick={handleClick}>
               <img
                 className='otherResults-container--scrollList---images'
-                src={`https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`}
+                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} 
                 alt={`Affiche du film ${movieElem.title}`}
               />
             </a>
