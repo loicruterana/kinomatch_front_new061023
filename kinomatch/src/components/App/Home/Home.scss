@@ -105,6 +105,12 @@
         display: none;
       }
 
+      &__filterRoll {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+      }
+
       &__roll-backgroundContainer {
         justify-content: center;
         display: flex;
@@ -114,6 +120,7 @@
         &::-webkit-scrollbar {
           display: none;
         }
+
       }
 
       &__roll-background {
