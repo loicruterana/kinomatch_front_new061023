@@ -41,8 +41,10 @@
     }
     &-logo {
       max-width: 400px;
+      transition: transform 0.2s ease-in-out;
 
       &:hover {
+        transform: scale(1.03);
         cursor: pointer;
       }
 

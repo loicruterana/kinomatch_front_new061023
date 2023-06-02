@@ -15,13 +15,12 @@ function OtherResults(props: OtherResultsModalProps) {
 
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
-  // const otherResults = movieArray.movieID.filter((movie) => movie.id !== currentMovieId);
-  // console.log(currentMovieId);
-  // console.log(otherResults);
+  {/* Variable permettant de récupérer un nouveau tableau de films dont la date de sortie est inférieure à 1940 */ }
+  const ancientMovieTitle = movieArray.filter((movie) => {
+    const releaseYear = parseInt(movie.release_date.substring(0, 4));
+    return releaseYear < 1940;
+  }).map((movie) => movie.title);
 
-  // console.log(movieID);
-  // console.log(movieID.randomID);
-  // console.log(randomID);
 
 
   const handleClick = (event) => {
@@ -32,7 +31,6 @@ function OtherResults(props: OtherResultsModalProps) {
     if (window.pageYOffset > 100) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    // window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
 
@@ -49,9 +47,14 @@ function OtherResults(props: OtherResultsModalProps) {
               onClick={handleClick}>
               <img
                 className='otherResults-container--scrollList---images'
-                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} 
+                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '../../../../../../public/images/SamplePoster1.png'}
                 alt={`Affiche du film ${movieElem.title}`}
               />
+              {
+                ancientMovieTitle.length > 0 ?
+                  <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
+                  : null
+              }
             </a>
           ))}
         </div>

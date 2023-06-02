@@ -40,7 +40,7 @@
   
       &---images {
         display: block;
-        margin: 1rem auto;
+        margin: 1rem auto 0.3rem auto;
         border-radius: 10px;
         width: 100%;
         max-width: 220px;
@@ -51,6 +51,14 @@
         cursor: pointer;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
         }
+      }
+
+      &---movieTitle {
+        color: vars.$theme1-primary;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: 0 0.2rem;
       }
     }
   }
@@ -98,6 +106,15 @@
         border-radius: 10px;
         width: 100%;
         max-width: 260px;
+      }
+      
+      &---movieTitle {
+        color: vars.$theme1-primary;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: auto 4rem;
+
       }
     }
   }

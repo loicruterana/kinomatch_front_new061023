@@ -62,10 +62,9 @@
             }
 
             &-image {
-                // min-width: fit-content;
-                // max-height: 55vh;
                 max-width: auto;
                 max-height: 60vh;
+                height: auto;
                 border: vars.$theme1-secondary solid 7px;
                 border-radius: 6px;
                 transition: transform 0.2s ease-in-out;
@@ -170,7 +169,7 @@
             margin-bottom: 0.8rem;
 
             &--tagline {
-                font-size: 0.9rem;
+                font-size: 1rem;
                 font-style: italic;
                 padding-bottom: 1rem;
             }
