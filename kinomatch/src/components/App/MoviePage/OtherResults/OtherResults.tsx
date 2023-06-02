@@ -15,12 +15,6 @@ function OtherResults(props: OtherResultsModalProps) {
 
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
 
-  {/* Variable permettant de récupérer un nouveau tableau de films dont la date de sortie est inférieure à 1940 */ }
-  const ancientMovieTitle = movieArray.filter((movie) => {
-    const releaseYear = parseInt(movie.release_date.substring(0, 4));
-    return releaseYear < 1940;
-  }).map((movie) => movie.title);
-
 
 
   const handleClick = (event) => {
@@ -51,7 +45,7 @@ function OtherResults(props: OtherResultsModalProps) {
                 alt={`Affiche du film ${movieElem.title}`}
               />
               {
-                ancientMovieTitle.length > 0 ?
+                movieElem.poster_path === null ?
                   <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
                   : null
               }

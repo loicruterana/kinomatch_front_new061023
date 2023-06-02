@@ -275,14 +275,14 @@ function MoviePage() {
             </blockquote>
 
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
-            <p className='movieDetails__description-resume'>{movie.overview}</p>
+            <p className='movieDetails__description-resume'>{movie.overview ? movie.overview : 'Synopsis non précisé'}</p>
 
             {/* Affichage des réalisateurs concernant le film affiché */}
             <ul className='movieDetails__description-directorsList'>
               {
                 mappedDirectingCrewMembers.map((director, index) => (
                   <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {director.name}
-                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length - 1 ? '' : '...'}</li>
+                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length && '...'}</li>
                 ))
               }
             </ul>
@@ -291,13 +291,13 @@ function MoviePage() {
               {
                 mappedActorCastMembers.map((actor, index) => (
                   <li key={actor.credit_id} className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {actor.name}
-                    {index !== mappedActorCastMembers.length - 1 && ','}{index === mappedActorCastMembers.length - 1 && '...'}</li>
+                    {index !== mappedActorCastMembers.length - 1 ? ', ' : '...'}</li>
                 ))
               }
             </ul>
             {/* <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p> */}
-            <p className='movieDetails__description-duration'>{convertMinutesInHours(movie.runtime)}</p>
-            <p className='movieDetails__description-date'>{formatDate(movie.release_date)}</p>
+            <p className='movieDetails__description-duration'>{movie.runtime ? convertMinutesInHours(movie.runtime) : 'Durée non précisée'}</p>
+            <p className='movieDetails__description-date'>{movie.release_date ? formatDate(movie.release_date) : 'Date de sortie non précisée'}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
             <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
