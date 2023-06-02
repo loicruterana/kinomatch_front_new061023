@@ -266,11 +266,14 @@ function MoviePage() {
             <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
           </div>
           <div className='movieDetails__description'>
+
+            {/* Affichage de la tag line */}
             <blockquote className='movieDetails__description-blockquote'>
               {
-                movie.tagline ? <cite className='movieDetails__description-blockquote--tagline'>"{movie.tagline}"</cite> : null
+                movie.tagline ? <cite className='movieDetails__description-blockquote--tagline'>{`"${movie.tagline}"`}</cite> : null
               }
             </blockquote>
+
             <h3 className='movieDetails__description-resumeTitle'>Synopsis</h3>
             <p className='movieDetails__description-resume'>{movie.overview}</p>
 
