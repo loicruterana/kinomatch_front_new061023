@@ -28,34 +28,60 @@
       display: flex;
       flex-direction: row;
       z-index: 1;
+      width: 55%;
 
       &-backdropfilter {
         display: none;
+      }
+
+      &__column {
+        display: flex;
+        overflow: hidden;
+        overflow-y: auto;
+        
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+      &__roll {
+        display: flex;
+        justify-content: center;
+        width: 420px;
+        height: fit-content;
+        min-height: 100vh;
+        background-image: url('../../../../../public/images/pelloche.png');
+        background-size: cover;
+        background-position: center;
+        margin-right: 100px;
+
       }
       &__roll-container {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        max-height: 100%;
+        width: 320px;
+        // height: fit-content;
         background-color: vars.$theme1-secondary;
         margin-top: 70px;
         margin-bottom: 55px;
-        margin-right: 50px;
-        overflow: hidden;
-        overflow-y: auto;
-        &::-webkit-scrollbar {
-          display: none;
-        }
+        // margin-right: 50px;
+        // overflow: hidden;
+        // overflow-y: auto;
+        // &::-webkit-scrollbar {
+        //   display: none;
+        // }
+        
         &__item {
+          font-size: 20px;
           border-radius: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
           color: vars.$theme1-secondary;
           background-color: vars.$theme1-primary;
-          width: 200px;
-          height: 70px;
+          width: 280px;
+          height: 100px;
           padding: 20px 20px;
           margin: 5px;
           flex-wrap: nowrap;
@@ -101,7 +127,7 @@
     //   }
   }
   &__personnal {
-    width: 50vw;
+    width: 45vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
