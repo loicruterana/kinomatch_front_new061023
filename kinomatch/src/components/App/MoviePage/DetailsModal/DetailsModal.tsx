@@ -17,10 +17,19 @@ function DetailsModal(props: DetailsModalProps) {
   const { showDetailsModal, setShowDetailsModal, movie, credits, directingCrewMembers, formatDate, convertMinutesInHours } = props;
 
   {/* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ }
-
   const handleDetailsModel = () => {
     setShowDetailsModal(!showDetailsModal);
   }
+
+  {/* Fonction permettant de générer un nombre aléatoire pour les key unique des Sociétés de production */ }
+  function getRandomNumber() {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const index = Math.floor(Math.random() * numbers.length);
+    const number = numbers[index];
+    numbers.splice(index, 1);
+    return number;
+  }
+
 
   {/* Fonctions permettant de trouver des personnes suivant leur job */ }
 
@@ -48,20 +57,20 @@ function DetailsModal(props: DetailsModalProps) {
           <ul className='detailsModal__container-directorList'>
             {
               directingCrewMembers.length === 0 ? '-' :
-              directingCrewMembers.map((director: { id: Key | null | undefined; name: string }) => (
-                <li key={director.id} className='detailsModal__container-directorName'>{director.name}</li>
+                directingCrewMembers.map((director: { id: Key | null | undefined; name: string }) => (
+                  <li key={director.id} className='detailsModal__container-directorName'>{director.name}</li>
 
-              ))
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
           <ul className='detailsModal__container-screenwriterList'>
             {
               writingCrewMembers.length === 0 ? '-' :
-              writingCrewMembers.map((writer: { id: Key | null | undefined; name: string }) => (
-                <li key={writer.id} className='detailsModal__container-screenwriterName'>{writer.name}</li>
+                writingCrewMembers.map((writer: { id: Key | null | undefined; name: string }) => (
+                  <li key={writer.id} className='detailsModal__container-screenwriterName'>{writer.name}</li>
 
-              ))
+                ))
             }
           </ul>
           {/* <p className='detailsModal__container-screenwriterName'>James Gunn</p> */}
@@ -69,10 +78,10 @@ function DetailsModal(props: DetailsModalProps) {
           <ul className='detailsModal__container-producers-list'>
             {/* Affichage de la liste des sociétés de production */}
             {
-               movie.production_companies.length === 0 ? '-' :
-              movie.production_companies.map((production_company: { key: Key | number | undefined; name: string }) => (
-                <li key={Math.random()} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
-              ))
+              movie.production_companies.length === 0 ? '-' :
+                movie.production_companies.map((production_company: { key: Key | number | undefined; name: string }) => (
+                  <li key={getRandomNumber()} className='detailsModal__container-producers-list-name'>{production_company.name}</li>
+                ))
             }
           </ul>
           {/* <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
@@ -82,9 +91,9 @@ function DetailsModal(props: DetailsModalProps) {
             {/* Affichage de la liste des pays de production */}
             {
               movie.production_countries.length === 0 ? '-' :
-              movie.production_countries.map((production_country: { iso_3166_1: Key | null | undefined; name: string }) => (
-                <li key={production_country.iso_3166_1} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
-              ))
+                movie.production_countries.map((production_country: { iso_3166_1: Key | null | undefined; name: string }) => (
+                  <li key={production_country.iso_3166_1} className='detailsModal__container-productionCountry-list-country'>{production_country.name}</li>
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-budget'>Budget</h3>
@@ -104,46 +113,46 @@ function DetailsModal(props: DetailsModalProps) {
           <h3 className='detailsModal__container-composer'>Musique</h3>
           <ul className='detailsModal__container-composerList'>
             {
-              musicCrewMembers.length === 0 ? '-':
-              musicCrewMembers.map((composer: { id: Key | null | undefined; name: string }) => (
-                <li key={composer.id} className='detailsModal__container-composerName'>{composer.name}</li>
-              ))
+              musicCrewMembers.length === 0 ? '-' :
+                musicCrewMembers.map((composer: { id: Key | null | undefined; name: string }) => (
+                  <li key={composer.id} className='detailsModal__container-composerName'>{composer.name}</li>
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-artisticDirection'>Direction artistique</h3>
           <ul className='detailsModal__container-artistsList'>
             {
-              artCrewMembers.length === 0 ? '-' :              
-              artCrewMembers.map((artist: { id: Key | null | undefined; name: string }) => (
-                <li key={artist.id} className='detailsModal__container-artists'>{artist.name}</li>
-              ))
+              artCrewMembers.length === 0 ? '-' :
+                artCrewMembers.map((artist: { id: Key | null | undefined; name: string }) => (
+                  <li key={artist.id} className='detailsModal__container-artists'>{artist.name}</li>
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-productionDesigner'>Décors</h3>
           <ul className='detailsModal__container-productionDesignerList'>
             {
               designerCrewMembers.length === 0 ? '-' :
-              designerCrewMembers.map((designer: { id: Key | null | undefined; name: string }) => (
-                <li key={designer.id} className='detailsModal__container-designers'>{designer.name}</li>
-              ))
+                designerCrewMembers.map((designer: { id: Key | null | undefined; name: string }) => (
+                  <li key={designer.id} className='detailsModal__container-designers'>{designer.name}</li>
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-costuming'>Costumes</h3>
           <ul className='detailsModal__container-costumingList'>
             {
               costumeCrewMembers.length === 0 ? '-' :
-              costumeCrewMembers.map((costumeDesigner: { id: Key | null | undefined; name: string }) => (
-                <li key={costumeCrewMembers.id} className='detailsModal__container-costumeDesigner'>{costumeDesigner.name}</li>
-              ))
+                costumeCrewMembers.map((costumeDesigner: { id: Key | null | undefined; name: string }) => (
+                  <li key={costumeCrewMembers.id} className='detailsModal__container-costumeDesigner'>{costumeDesigner.name}</li>
+                ))
             }
           </ul>
           <h3 className='detailsModal__container-photography'>Photographie</h3>
           <ul className='detailsModal__container-photographyList'>
             {
               photographyCrewMembers.length === 0 ? '-' :
-              photographyCrewMembers.map((photographer: { id: Key | null | undefined; name: string }) => (
-                <li key={photographer.id} className='detailsModal__container-photographer'>{photographer.name}</li>
-              ))
+                photographyCrewMembers.map((photographer: { id: Key | null | undefined; name: string }) => (
+                  <li key={photographer.id} className='detailsModal__container-photographer'>{photographer.name}</li>
+                ))
             }
           </ul>
 
@@ -151,9 +160,9 @@ function DetailsModal(props: DetailsModalProps) {
           <ul className='detailsModal__container-genreList'>
             {
               movie.genres.length === 0 ? '-' :
-              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                <li key={genre.id} className='detailsModal__container-genre'>{genre.name}</li>
-              ))
+                movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
+                  <li key={genre.id} className='detailsModal__container-genre'>{genre.name}</li>
+                ))
             }
           </ul>
         </div>

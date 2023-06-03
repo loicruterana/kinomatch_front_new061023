@@ -19,37 +19,45 @@ import './style.scss';
 function MoviePage() {
 
 
-  const [showImageModal, setShowImageModal] = useState(false);
 
-  const handleImageModal = () => {
-    setShowImageModal(!showImageModal);
-  };
+
 
   {/* ================= MODALE DETAILS ============================ */ }
 
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   const handleDetailsModal = () => {
     setShowDetailsModal(!showDetailsModal);
   };
 
-  {/* MODALE AUTRES RÉSULTATS */ }
+  const handleImageModal = () => {
+    setShowImageModal(!showImageModal);
+  };
 
-  const [showOtherResults, setShowOtherResults] = useState(false);
+  {/* MODALE AUTRES RÉSULTATS */ }
 
   const handleOtherResults = () => {
     setShowOtherResults(!showOtherResults);
   };
 
+
   {/* ================ USESTATES ================================= */ }
 
-  {/* UseState route Detail */ }
+  {/* UseState Modale "Résultats" */ }
+  const [showOtherResults, setShowOtherResults] = useState(false);
+
+  {/* UseState Modale "Détails" */ }
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+
+  {/* UseState Modale "Image" */ }
+  const [showImageModal, setShowImageModal] = useState(false);
+
+  {/* UseState route "Detail" */ }
   const [movie, setMovie] = useState(null);
 
-  {/* UseState route credits */ }
+  {/* UseState route "credits" */ }
   const [credits, setCredits] = useState(null);
 
-  {/* UseState route providers */ }
+  {/* UseState route "providers" */ }
   const [providers, setProviders] = useState(null);
 
   {/* UseState chargement de page */ }
@@ -99,7 +107,7 @@ function MoviePage() {
   {/*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */ }
   useEffect(() => {
     setIsLoading(true);
-    
+
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
@@ -149,8 +157,8 @@ function MoviePage() {
         setIsLoading(false);
       });
   }, [currentMovieId]);
-  
-  
+
+
 
   console.log(movie);
 
@@ -240,7 +248,7 @@ function MoviePage() {
 
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`: '../../../../../../public/images/SamplePoster1.png'} alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} alt='Image du film' onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
