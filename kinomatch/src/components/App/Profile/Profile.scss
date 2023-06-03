@@ -155,11 +155,10 @@
 
   &__personnal {
     width: 45vw;
-    height: 100vh;
+    height:90%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
     margin-top: 70px;
     color: vars.$theme1-secondary;
 

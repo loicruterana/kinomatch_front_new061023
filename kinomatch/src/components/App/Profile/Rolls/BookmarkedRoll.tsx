@@ -73,7 +73,6 @@ export const BookmarkedRoll = ({
   // console.log(bookmarkedList)
   // console.log(watchedList)
 
-
   // ================ JSX ================
   return (
     <>
