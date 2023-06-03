@@ -6,10 +6,14 @@
   background-color: vars.$theme1-primary;
   display: flex;
   flex-direction: row;
+
   &-buttons {
-    margin: 40px 0 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 50px auto;
 
     &-button {
+      display: flex;
       height: 25px;
       width: 200px;
       border-radius: 15px;
@@ -19,13 +23,17 @@
       font-family: 'Creato Display';
       border: none;
       font-size: 20px;
-      padding: 0 1%;
-      margin-right: 20px;
+      padding: 15px 1%;
+      align-items: center;
+      justify-content: center;
+      // margin-right: 20px;
     }
   }
+
   &__roll-modale {
     &-desktop-version {
       display: flex;
+      justify-content: space-evenly;
       flex-direction: row;
       z-index: 1;
       width: 55%;
@@ -38,11 +46,12 @@
         display: flex;
         overflow: hidden;
         overflow-y: auto;
-        
+
         &::-webkit-scrollbar {
           display: none;
         }
       }
+
       &__roll {
         display: flex;
         justify-content: center;
@@ -55,6 +64,7 @@
         margin-right: 100px;
 
       }
+
       &__roll-container {
         display: flex;
         flex-direction: column;
@@ -71,7 +81,7 @@
         // &::-webkit-scrollbar {
         //   display: none;
         // }
-        
+
         &__item {
           font-size: 20px;
           border-radius: 10px;
@@ -81,25 +91,40 @@
           color: vars.$theme1-secondary;
           background-color: vars.$theme1-primary;
           width: 280px;
-          height: 100px;
+          height: 110px;
           padding: 20px 20px;
           margin: 5px;
           flex-wrap: nowrap;
           position: relative;
           text-align: center;
           display: relative;
+
           &-a {
             position: absolute;
             bottom: 5px;
             left: 5px;
-            cursor: pointer;
+            margin: 0.6rem 0.6rem;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.3);
+              cursor: pointer;
+            }
           }
+
           &-b {
             position: absolute;
             top: 5px;
             right: 5px;
-            cursor: pointer;
+            margin: 0.6rem 0.6rem;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.3);
+              cursor: pointer;
+            }
           }
+
           &-category {
             position: sticky;
             top: 0;
@@ -118,6 +143,7 @@
         }
       }
     }
+
     // &__favoritefilters {
     //   h3 {
     //     font-size: 24px;
@@ -126,39 +152,49 @@
     //     margin-left: 50px;
     //   }
   }
+
   &__personnal {
     width: 45vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 5%;
+    align-items: center;
+    margin-top: 70px;
     color: vars.$theme1-secondary;
+
     &__pictureemailpassword {
       display: flex;
       flex-direction: row;
+
       &__emailpassword {
-        margin: 20px 0 0 20px;
+        margin: 35px 0 0 20px;
+
         &__email {
           margin-bottom: 20px;
-          font-size: 20px;
+          font-size: 25px;
           display: flex;
+
           span {
             font-style: italic;
           }
+
           div {
             margin-left: 5px;
             font-weight: 700;
           }
         }
+
         &__password {
           margin-left: 17px;
           margin-bottom: 20px;
           font-size: 20px;
           display: flex;
+
           span {
             font-style: italic;
           }
+
           div {
             margin-left: 5px;
             font-weight: 700;
@@ -166,10 +202,15 @@
         }
       }
     }
+
     h2 {
       font-size: 46px;
     }
+
     &__circle {
+
+      margin-bottom: 50px;
+      scale: 1.2;
       // width: 200px;
       // height: 200px;
       // border: vars.$theme1-secondary 3px solid;
@@ -187,13 +228,17 @@
         // border-bottom-left-radius: 50% 50%;
       }
     }
+
     &__infos {
       margin-bottom: 15%;
+
       &__pictureemailpassword {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
       }
     }
+
     &__title {
       margin-bottom: 50px;
       margin-left: 50px;
@@ -207,12 +252,14 @@
   .Profile-container {
     display: flex;
     flex-direction: column;
+
     &__roll-modale {
       &-mobile-version {
         // width: 0vw;
         // height: 0vh;
         display: flex;
         justify-content: center;
+
         &-backdropfilter {
           z-index: 4;
           position: absolute;
@@ -222,6 +269,7 @@
           display: block;
           backdrop-filter: brightness(60%);
         }
+
         &__roll-container {
           height: 100vh;
           position: absolute;
@@ -235,9 +283,11 @@
           overflow: hidden;
           overflow-y: auto;
           background-color: vars.$theme1-secondary;
+
           &::-webkit-scrollbar {
             display: none;
           }
+
           &__item {
             border-radius: 10px;
             display: flex;
@@ -253,17 +303,20 @@
             flex-wrap: nowrap;
             position: relative;
             text-align: center;
+
             &.fa-heart {
               position: absolute;
               top: 5px;
               right: 5px;
             }
+
             &-a {
               position: absolute;
               bottom: 5px;
               left: 5px;
               cursor: pointer;
             }
+
             &-b {
               position: absolute;
               top: 5px;
@@ -290,6 +343,7 @@
         }
       }
     }
+
     &__personnal {
       width: 100%;
       margin-left: 0;
@@ -297,9 +351,11 @@
       &__infos {
         display: flex;
         justify-content: center;
+
         &__title {
           display: none;
         }
+
         &__pictureemailpassword {
           display: flex;
           flex-direction: column;
@@ -308,6 +364,7 @@
         }
       }
     }
+
     &__rollbuttons {
       width: 100vw;
       height: 100vh;
@@ -315,6 +372,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
       // margin: 300px 0;
       &__button {
         z-index: 99;
@@ -331,6 +389,7 @@
         border: vars.$theme1-secondary;
         font-size: 32px;
         padding: 0 6px;
+
         // filter: drop-shadow(0px 3px 3px grey);
         &:hover {
           cursor: pointer;
