@@ -282,10 +282,10 @@ export const Profile: React.FC = () => {
             </div>
             <div className='Profile-container__personnal__pictureemailpassword__emailpassword'>
               <div className='Profile-container__personnal__pictureemailpassword__emailpassword__email'>
-                <span>Adresse email -</span><div>{userData.email}</div>
+                <span>Adresse email</span><div>{userData.email}</div>
               </div>
               <div className='Profile-container__personnal__pictureemailpassword__emailpassword__password'>
-              <span>Mot de passe -</span>
+              <span>Mot de passe</span>
                 <div>∗∗∗∗∗∗∗</div>
               </div>
             </div>

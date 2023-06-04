@@ -155,7 +155,7 @@
 
   &__personnal {
     width: 45vw;
-    height:90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -210,6 +210,7 @@
 
       margin-bottom: 50px;
       scale: 1.2;
+
       // width: 200px;
       // height: 200px;
       // border: vars.$theme1-secondary 3px solid;
@@ -251,11 +252,15 @@
   .Profile-container {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 
     &__roll-modale {
+
       &-mobile-version {
-        // width: 0vw;
-        // height: 0vh;
+        position: absolute;
+        padding-top: 70px;
+        width: 100vw;
+        height: 100vh;
         display: flex;
         justify-content: center;
 
@@ -269,18 +274,39 @@
           backdrop-filter: brightness(60%);
         }
 
+        &__column {
+          z-index: 5;
+          display: flex;
+          overflow: hidden;
+          overflow-y: auto;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+
+        &__roll {
+          display: flex;
+          justify-content: center;
+          width: 280px;
+          height: fit-content;
+          min-height: 100vh;
+          background-image: url('../../../../../public/images/pelloche.png');
+          background-size: cover;
+          background-position: center;
+
+        }
+
         &__roll-container {
-          height: 100vh;
-          position: absolute;
-          top: 0;
+          height: 100%;
+          // position: absolute;
+          // top: 0;
           z-index: 1001;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
           align-items: center;
           max-height: 100%;
-          overflow: hidden;
-          overflow-y: auto;
+
           background-color: vars.$theme1-secondary;
 
           &::-webkit-scrollbar {
@@ -347,9 +373,14 @@
       width: 100%;
       margin-left: 0;
 
+      &__circle {
+        margin-bottom: 20px;
+      }
+
       &__infos {
         display: flex;
         justify-content: center;
+        margin-bottom: 0;
 
         &__title {
           display: none;
@@ -358,8 +389,38 @@
         &__pictureemailpassword {
           display: flex;
           flex-direction: column;
-          margin-top: 30%;
+          margin-top: 15%;
           align-items: center;
+        }
+      }
+
+      &__pictureemailpassword__emailpassword {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 25px;
+
+        &__email {
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+
+          span {
+            font-style: italic;
+          }
+
+          div {
+            margin-left: 5px;
+            font-weight: 700;
+          }
+        }
+
+        &__password {
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+          margin: auto;
         }
       }
     }
@@ -374,7 +435,7 @@
 
       // margin: 300px 0;
       &__button {
-        z-index: 99;
+        // z-index: 99;
         width: 60vw;
         height: 8vh;
         display: flex;
