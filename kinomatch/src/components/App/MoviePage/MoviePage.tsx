@@ -10,6 +10,9 @@ import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
+import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
+import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
 import Loading from '../Loading/Loading';
 
 
@@ -80,6 +83,17 @@ function MoviePage() {
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
+  const { selectedGenreFilters, addGenreFilter, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
+  const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
+  const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+
+  console.log(selectedGenreFilters);
+  console.log(selectedProviderFilters);
+  console.log(selectedDecadeFilters);
+
+
+
+  {/* =============================================================== */ }
 
   console.log(selectedId);
 
@@ -265,13 +279,39 @@ function MoviePage() {
           <div className='movieDetails__filters-desktop'>
 
             {/* Affichage des filtres concernant le film affiché */}
-            {
+            {/* {
               movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
                 <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
               ))
-            }
+            } */}
+            {/* Affichage des filtres sélectionnés par l'utilisateur' */}
 
-            <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p>
+            {/* <p className='movieDetails__filters-desktop--title'>Filtres sélectionnés</p> */}
+            <ul className='movieDetails__filters-desktop--filterElemList'>
+              <li>
+                {
+                  selectedGenreFilters.map((genre: { id: Key | null | undefined; name: string }) => (
+                    <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
+                  ))
+                }
+              </li>
+              <li>
+                {
+                  selectedProviderFilters.map((provider: { id: Key | null | undefined; name: string }) => (
+                    <p key={provider.id} className='movieDetails__filters-desktop--filterElem'>{provider.provider_name}</p>
+                  ))
+                }
+              </li>
+              <li>
+                {
+                  selectedDecadeFilters.map((decade: { id: Key | null | undefined; name: string }) => (
+                    <p key={decade.id} className='movieDetails__filters-desktop--filterElem'>{decade}</p>
+                  ))
+                }
+              </li>
+            </ul>
+
+            {/* <p className='movieDetails__filters-desktop--filterElem--modifier'>Modifier</p> */}
           </div>
           <div className='movieDetails__description'>
 
@@ -289,8 +329,8 @@ function MoviePage() {
             <ul className='movieDetails__description-directorsList'>
               {
                 mappedDirectingCrewMembers.map((director, index) => (
-                  <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {director.name}
-                    {index !== mappedDirectingCrewMembers.length - 1 && ', '}{index === mappedDirectingCrewMembers.length && '...'}</li>
+                  <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {index !== 0 && ','} {director.name}
+                    {index === mappedDirectingCrewMembers.length  && '...'}</li>
                 ))
               }
             </ul>
@@ -298,12 +338,19 @@ function MoviePage() {
             <ul className='movieDetails__description-actorsList'>
               {
                 mappedActorCastMembers.map((actor, index) => (
-                  <li key={actor.credit_id} className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {actor.name}
-                    {index !== mappedActorCastMembers.length - 1 ? ', ' : '...'}</li>
+                  <li key={actor.credit_id} className='movieDetails__description-actorsList--actors'>{index === 0 ? 'Avec ' : ''} {index !== 0 && ','} {actor.name}
+                    {index === mappedActorCastMembers.length - 1 && '...'}</li>
                 ))
               }
             </ul>
-            {/* <p className='movieDetails__description-actors'>Avec Chris Pratt, Zoe Saldana ...</p> */}
+            <ul className='movieDetails__description-genresList'>
+              {/* Affichage des filtres concernant le film affiché */}
+              {
+                movie.genres.map((genre: { id: Key | null | undefined; name: string }, index) => (
+                  <li key={genre.id} className='movieDetails__description-genresList--genres'> {index !== 0 && ','} {genre.name} </li>
+                ))
+              }
+            </ul>
             <p className='movieDetails__description-duration'>{movie.runtime ? convertMinutesInHours(movie.runtime) : 'Durée non précisée'}</p>
             <p className='movieDetails__description-date'>{movie.release_date ? formatDate(movie.release_date) : 'Date de sortie non précisée'}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
