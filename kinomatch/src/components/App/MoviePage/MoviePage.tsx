@@ -266,8 +266,10 @@ function MoviePage() {
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
-              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
+              <p className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</p>
+              <p className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</p>
+              {/* <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
+              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a> */}
             </div>
           </div>
 
@@ -330,7 +332,7 @@ function MoviePage() {
               {
                 mappedDirectingCrewMembers.map((director, index) => (
                   <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {index !== 0 && ','} {director.name}
-                    {index === mappedDirectingCrewMembers.length  && '...'}</li>
+                    {index === mappedDirectingCrewMembers.length && '...'}</li>
                 ))
               }
             </ul>
@@ -354,11 +356,11 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>{movie.runtime ? convertMinutesInHours(movie.runtime) : 'Durée non précisée'}</p>
             <p className='movieDetails__description-date'>{movie.release_date ? formatDate(movie.release_date) : 'Date de sortie non précisée'}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
-            <div className='movieDetails__description-writeComment'>
+            {/* <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
-            </div>
+            </div> */}
 
-            <CommentPost />
+            {/* <CommentPost /> */}
 
             <div className='movieDetails__filters'>
               {!desktopVersion && (

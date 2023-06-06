@@ -89,19 +89,19 @@
 
                     &---noteNumber {
                         margin-right: 0.5rem;
-                        transition: transform 0.2s ease-in-out;
+                        // transition: transform 0.2s ease-in-out;
                     }
 
-                    :hover {
-                        transform: scale(1.05);
-                        cursor: pointer;
-                    }
+                    // :hover {
+                    //     transform: scale(1.05);
+                    //     cursor: pointer;
+                    // }
 
 
                     // Avis
                     &---opinion {
                         font-size: 1rem;
-                        margin-top: 0.3rem;
+                        margin: 0.3rem 0.5rem 0 0;
                     }
                 }
             }
@@ -111,17 +111,15 @@
     // ZONE FIXED EN BAS DE PAGE CONTENANT LE BOUTON "AUTRES RESULTATS" ET LES FILTRES CONCERNANT LE FILM AFFICHÉ
 
     .movieDetails {
+        display: flex;
+        flex-direction: column;
         overflow: auto;
         width: 60%;
         height: 100%;
-        padding: 40px 2rem 0 2rem;
+        padding: 60px 2rem 0 2rem;
 
         &::-webkit-scrollbar {
             display: none;
-        }
-
-        &__description-actors {
-            margin-top: 1rem;
         }
     }
 
@@ -182,25 +180,25 @@
 
         // Slogan
         &-blockquote {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
 
             &--tagline {
-                font-size: 1rem;
+                font-size: 1.2rem;
                 font-style: italic;
-                padding-bottom: 1rem;
             }
         }
 
         // Titre du synopsis
         &-resumeTitle {
-            font-size: 1.7rem;
-            padding-bottom: 1rem;
+            font-size: 2rem;
+            padding-bottom: 1.5rem;
         }
 
         // Résumé du synopsis
         &-resume {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-bottom: 2.5rem;
+            letter-spacing: 0.2px;
             font-weight: 400;
         }
 
@@ -208,17 +206,13 @@
             margin-bottom: 1rem;
 
             &--director {
-                display: inline-block;
-                font-size: 1.2rem;
-                font-weight: 400;
+                @extend .-list-item;
             }
         }
 
         &-actorsList {
             &--actors {
-                display: inline-block;
-                font-size: 1.2rem;
-                font-weight: 400;
+                @extend .-list-item;
             }
         }
 
@@ -226,22 +220,27 @@
             margin-top: 1rem;
 
             &--genres {
-                display: inline-block;
-                font-size: 1.2rem;
-                font-weight: 400;
+                @extend .-list-item;
             }
+        }
+
+        // classe de référence pour "director", "actorList" et "genres"
+        .-list-item {
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 400;
         }
 
         // Durée
         &-duration {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin: 1rem 0;
             font-weight: 400;
         }
 
         // Date de sortie
         &-date {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 400;
         }
@@ -254,11 +253,11 @@
             color: vars.$theme1-primary;
             width: fit-content;
             height: fit-content;
-            padding: 0.15rem 0.4rem;
+            padding: 0.20rem 1rem;
             border-radius: 6px;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
             transition: transform 0.2s ease-in-out;
 
             &:hover {
@@ -445,7 +444,7 @@
 
         // Slogan
         &-blockquote {
-            margin: 1.2rem auto 0.5rem auto;
+            margin: 1.2rem auto 1rem auto;
 
             &--tagline {
                 font-size: 0.9rem;
@@ -456,13 +455,14 @@
 
         // Titre du synopsis
         &-resumeTitle {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             padding-bottom: 1rem;
         }
 
         // Résumé du synopsis
         &-resume {
             margin-bottom: 1rem;
+            letter-spacing: 0.2px;
         }
 
         &-directorsList {
@@ -477,6 +477,16 @@
 
         &-actorsList {
             &--actors {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+        }
+
+        &-genresList {
+            margin-top: 1rem;
+
+            &--genres {
                 display: inline-block;
                 font-size: 1rem;
                 font-weight: bold;
