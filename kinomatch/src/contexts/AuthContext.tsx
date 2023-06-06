@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteToWatch = async (element) => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
     console.log(element.movie);
   };
 
