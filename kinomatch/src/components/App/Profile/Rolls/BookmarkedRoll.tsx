@@ -34,7 +34,13 @@ export const BookmarkedRoll = ({
 
   bookmarkedList,
   deleteBookmarked,
-  addBookmarked
+  addBookmarked,
+
+  setIsBookmarkedModified,
+  isBookmarkedModified,
+
+  handleAddBookmarked,
+  handleRemoveBookmarked
 }) => {
 
   // const [bookmarkedItems, setBookmarkedItems] = useState([]);
@@ -52,17 +58,7 @@ export const BookmarkedRoll = ({
   // =========================== HANDLERBOUTON COEUR
 
 
-  function handleRemoveBookmarked(film_id) {
-    deleteBookmarked(film_id)
-    // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
 
-  }
-
-  function handleAddBookmarked(film_id) {
-    addBookmarked(film_id)
-    // setBookmarkedItems((prevItems) => [...prevItems, film_id]);
-
-  }
 
 
   function handleRemoveToWatch(film_id) {
