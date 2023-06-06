@@ -3,9 +3,21 @@ import axios from 'axios';
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({ email: '', id: '', bookmarked: '' });
-  const [userDataToWatch, setUserDataToWatch] = useState({ email: '', id: '', toWatch: '' });
-  const [userDataWatched, setUserDataWatched] = useState({ email: '', id: '', watched: '' });
+  const [userData, setUserData] = useState({
+    email: '',
+    id: '',
+    bookmarked: '',
+  });
+  const [userDataToWatch, setUserDataToWatch] = useState({
+    email: '',
+    id: '',
+    toWatch: '',
+  });
+  const [userDataWatched, setUserDataWatched] = useState({
+    email: '',
+    id: '',
+    watched: '',
+  });
   const [isBookmarkedModified, setIsBookmarkedModified] = useState(false);
   const [isToWatchModified, setIsToWatchModified] = useState(false);
   const [isWatchedModified, setIsWatchedModified] = useState(false);
@@ -24,27 +36,30 @@ export const AuthProvider = ({ children }) => {
     setUserDataWatched({ ...userDataWatched, email: email, id: userId });
   };
 
-  {/* ======================================= BOOKMARKED ====================================================== */ }
+  {
+    /* ======================================= BOOKMARKED ====================================================== */
+  }
 
   const addBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie || element });
-    console.log(element)
+    console.log(element);
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
-    console.log('onpasseici')
-
+    console.log('onpasseici');
   };
   const deleteBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
-    console.log('onpasseici')
-
+    console.log('onpasseici');
   };
 
   useEffect(() => {
     const postData = async () => {
       try {
-        const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies', userData);
+        const response = await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
+          userData
+        );
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -56,10 +71,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
     }
-  }, [userData
-    , 
-    isBookmarkedModified
-  ]);
+  }, [userData, isBookmarkedModified]);
 
   useEffect(() => {
     const deleteData = async () => {
@@ -69,21 +81,24 @@ export const AuthProvider = ({ children }) => {
         searchParams.append('movieID', userData.bookmarked);
 
         console.log(userData.id);
-        axios
-          .delete(`https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`)
+        axios.delete(
+          `https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`
+        );
       } catch (error) {
         console.log(error);
       }
     };
     if (userData.bookmarked !== '' && !isBookmarkedModified) {
       deleteData();
-      setUserData({ ...userData, bookmarked: "" });
+      setUserData({ ...userData, bookmarked: '' });
     }
   }, [userData]);
 
   console.log(userData);
 
-  {/* ======================================= TO WATCH ====================================================== */ }
+  {
+    /* ======================================= TO WATCH ====================================================== */
+  }
 
   const addToWatch = async (element) => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
@@ -92,14 +107,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteToWatch = async (element) => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
+    setUserDataToWatch({
+      ...userDataToWatch,
+      toWatch: element.movie || element,
+    });
     console.log(element.movie);
   };
 
   useEffect(() => {
     const postData = async () => {
       try {
-        const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/toWatchMovies', userDataToWatch);
+        const response = await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
+          userDataToWatch
+        );
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -121,9 +142,12 @@ export const AuthProvider = ({ children }) => {
         searchParams.append('userID', userDataToWatch.id);
         searchParams.append('movieID', userDataToWatch.toWatch);
 
-        axios
-          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`)
-        console.log(`https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`)
+        axios.delete(
+          `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
+        );
+        console.log(
+          `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
+        );
       } catch (error) {
         console.log(error);
       }
@@ -131,15 +155,16 @@ export const AuthProvider = ({ children }) => {
 
     if (userDataToWatch.toWatch !== '' && !isToWatchModified) {
       deleteData();
-      setUserDataToWatch({ ...userDataToWatch, toWatch: "" });
+      setUserDataToWatch({ ...userDataToWatch, toWatch: '' });
     }
   }, [userDataToWatch]);
 
   console.log(userDataToWatch);
   console.log(userDataToWatch.id);
 
-
-  {/* ======================================= WATCHED ====================================================== */ }
+  {
+    /* ======================================= WATCHED ====================================================== */
+  }
 
   const addWatched = async (element) => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
@@ -148,20 +173,32 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteWatched = async (element) => {
-    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
+    setUserDataWatched({
+      ...userDataWatched,
+      watched: element.movie || element.toString(),
+    });
     console.log(element.movie);
   };
 
   const deleteBookmarkedAndWatched = async (element) => {
     console.log(element);
-    setUserData({ ...userData, bookmarked: element.movie || element.toString() });
-    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString()});
+    setUserData({
+      ...userData,
+      bookmarked: element.movie || element.toString(),
+    });
+    setUserDataWatched({
+      ...userDataWatched,
+      watched: element.movie || element.toString(),
+    });
   };
 
   useEffect(() => {
     const postData = async () => {
       try {
-        const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/watchedMovies', userDataWatched);
+        const response = await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
+          userDataWatched
+        );
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -183,8 +220,9 @@ export const AuthProvider = ({ children }) => {
         searchParams.append('userID', userDataWatched.id);
         searchParams.append('movieID', userDataWatched.watched);
 
-        axios
-          .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`)
+        axios.delete(
+          `https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`
+        );
       } catch (error) {
         console.log(error);
       }
@@ -192,17 +230,16 @@ export const AuthProvider = ({ children }) => {
 
     if (userDataWatched.watched !== '' && !isWatchedModified) {
       deleteData();
-      setUserDataWatched({ ...userDataWatched, watched: "" });
+      setUserDataWatched({ ...userDataWatched, watched: '' });
     }
   }, [userDataWatched]);
 
   console.log(userDataWatched);
   console.log(userDataWatched.id);
 
-
-
-  {/* ======================================= RETURN ====================================================== */ }
-
+  {
+    /* ======================================= RETURN ====================================================== */
+  }
 
   return (
     <AuthContext.Provider
