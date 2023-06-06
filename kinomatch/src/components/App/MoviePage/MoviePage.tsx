@@ -262,7 +262,7 @@ function MoviePage() {
 
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/images/testsample.jpg'} alt={`Image du film: ${movie.title}`} onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
@@ -279,16 +279,6 @@ function MoviePage() {
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
           <div className='movieDetails__filters-desktop'>
-
-            {/* Affichage des filtres concernant le film affiché */}
-            {/* {
-              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
-              ))
-            } */}
-            {/* Affichage des filtres sélectionnés par l'utilisateur' */}
-
-            {/* <p className='movieDetails__filters-desktop--title'>Filtres sélectionnés</p> */}
             <ul className='movieDetails__filters-desktop--filterElemList'>
               <li>
                 {

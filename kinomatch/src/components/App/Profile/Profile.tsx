@@ -212,7 +212,7 @@ export const Profile: React.FC = () => {
     };
   
     fetchMoviesBookmarked();
-  }, [bookmarkedList]);
+  }, []);
 
       // ===========================ToWatchMovies
 
