@@ -1,13 +1,16 @@
 import { Key, useContext, useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 import axios from 'axios';
 
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
-import CommentPost from './CommentPost/CommentPost';
+// import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
+import NoResult from '../NoResult/NoResult';
+
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
@@ -21,8 +24,7 @@ import './style.scss';
 
 function MoviePage() {
 
-
-
+  const navigate = useNavigate();
 
 
   {/* ================= MODALE DETAILS ============================ */ }
@@ -78,6 +80,9 @@ function MoviePage() {
   {/* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */ }
   const [desktopVersion, setDesktopVersion] = useState(false);
 
+  {/* UseState qui permet l'affichage du composant NoResult lorsqu'il n'a pas de résultat trouvé avec les filtres sélectionnés*/ }
+  const [displayNoResult ,setDisplayNoResult] = useState(false)
+
   {/* ================ USECONTEXT ================================= */ }
 
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
@@ -125,6 +130,16 @@ function MoviePage() {
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
+        console.log(data, typeof data)
+        if(data.results.length === 0 ){
+          console.log('je passe par le if noresult')
+          setDisplayNoResult(true)
+          setTimeout(function() {
+            navigate(`/`)
+          }, 2500);
+          return
+        }
+
         const numberOfPages = data.total_pages;
         console.log(numberOfPages);
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
@@ -171,8 +186,6 @@ function MoviePage() {
         setIsLoading(false);
       });
   }, [currentMovieId]);
-
-
 
   console.log(movie);
 
@@ -386,6 +399,7 @@ function MoviePage() {
               setShowOtherResults={setShowOtherResults} />
         }
       </section >
+      {displayNoResult && <NoResult/>}
     </div>
   )
 }

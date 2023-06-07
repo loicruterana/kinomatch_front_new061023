@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }) => {
   const deleteBookmarked = async (element) => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
+    console.log('onpasseici')
+
   };
 
   useEffect(() => {
@@ -54,7 +56,10 @@ export const AuthProvider = ({ children }) => {
     } else {
       setIsBookmarkedModified(false); // Réinitialiser l'état lorsque le tableau a été posté
     }
-  }, [userData, isBookmarkedModified]);
+  }, [userData
+    , 
+    isBookmarkedModified
+  ]);
 
   useEffect(() => {
     const deleteData = async () => {
@@ -87,7 +92,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const deleteToWatch = async (element) => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
     console.log(element.movie);
   };
 
