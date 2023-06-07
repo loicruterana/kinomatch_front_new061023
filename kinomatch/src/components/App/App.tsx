@@ -18,6 +18,7 @@ import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFilt
 import { EmailProvider } from '../../contexts/EmailContext';
 import { FetchedDataProvider } from '../../contexts/FetchedDataContext';
 import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
+import { NoResultProvider } from '../../contexts/NoResultContext';
 
 
 
@@ -30,6 +31,7 @@ import PageNotFound from './PageNotFound/PageNotFound';
 function App() {
 
   return (
+    <NoResultProvider>
     <CurrentMovieIdProvider>
 
     <FetchedDataProvider>
@@ -84,7 +86,7 @@ function App() {
       </EmailProvider>
     </FetchedDataProvider>
     </CurrentMovieIdProvider>
-
+    </NoResultProvider>
 
   )
 }

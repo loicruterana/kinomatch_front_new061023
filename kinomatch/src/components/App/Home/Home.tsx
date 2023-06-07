@@ -10,6 +10,8 @@ import './Home.scss';
 // ================ IMPORT COMPOSANTS ================
 import FiltersRoll from './Rolls/FiltersRoll';
 import Loading from '../Loading/Loading';
+import NoResult from '../NoResult/NoResult';
+
 
 
 // ================ IMPORT CONTEXTS ================
@@ -19,6 +21,8 @@ import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFi
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
+import { NoResultContext } from '../../../contexts/NoResultContext';
+
 
 
 
@@ -49,6 +53,8 @@ export const Home = () => {
   const { load, unload, isLoading } = useContext(LoadingContext);
   const { fetchedData, setFetchedData, addData } = useContext(FetchedDataContext);
   const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
+  const { handleNoResult, noResult } = useContext(NoResultContext);
+
 
 
   const coucou = preselectedProviders === undefined; // false
@@ -173,8 +179,15 @@ export const Home = () => {
     removeDecadeFilter(event.target.dataset.id)
   }
 
+
   if (goToMoviePage) {
     return <Navigate to="/films" />;
+  }
+
+  if (noResult) {
+    setTimeout(function() {
+      handleNoResult()
+    }, 3000);
   }
 
   // ================ JSX ================
@@ -275,6 +288,8 @@ export const Home = () => {
       }
 
       {isLoading && <Loading />}
+      {noResult && <NoResult/>}
+
 
     </div>
   )

@@ -3,22 +3,24 @@ import { useNavigate } from "react-router-dom";
 import React from 'react';
 import axios from 'axios';
 
+// ================ IMPORT COMPOSANTS ================
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
 // import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
-import NoResult from '../NoResult/NoResult';
 
+// ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
+import { NoResultContext } from '../../../contexts/NoResultContext';
 import Loading from '../Loading/Loading';
 
-
+// ================ IMPORT SCSS ================
 import './style.scss';
 
 
@@ -80,9 +82,6 @@ function MoviePage() {
   {/* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */ }
   const [desktopVersion, setDesktopVersion] = useState(false);
 
-  {/* UseState qui permet l'affichage du composant NoResult lorsqu'il n'a pas de résultat trouvé avec les filtres sélectionnés*/ }
-  const [displayNoResult ,setDisplayNoResult] = useState(false)
-
   {/* ================ USECONTEXT ================================= */ }
 
   {/* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */ }
@@ -91,6 +90,7 @@ function MoviePage() {
   const { selectedGenreFilters, addGenreFilter, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+  const { handleNoResult } = useContext(NoResultContext);
 
   console.log(selectedGenreFilters);
   console.log(selectedProviderFilters);
@@ -126,20 +126,21 @@ function MoviePage() {
   {/*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */ }
   useEffect(() => {
     setIsLoading(true);
-
+  
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
-        console.log(data, typeof data)
-        if(data.results.length === 0 ){
-          console.log('je passe par le if noresult')
-          setDisplayNoResult(true)
-          setTimeout(function() {
-            navigate(`/`)
-          }, 2500);
-          return
+        console.log(data, typeof data);
+        if (data.results.length === 0) {
+          // console.log('je passe par le if noresult');
+          // setDisplayNoResult(true);
+          // setTimeout(function() {
+            handleNoResult()
+            navigate(`/`);
+          // }, 2500);
+          return;
         }
-
+  
         const numberOfPages = data.total_pages;
         console.log(numberOfPages);
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
@@ -186,6 +187,7 @@ function MoviePage() {
         setIsLoading(false);
       });
   }, [currentMovieId]);
+  
 
   console.log(movie);
 
@@ -399,7 +401,6 @@ function MoviePage() {
               setShowOtherResults={setShowOtherResults} />
         }
       </section >
-      {displayNoResult && <NoResult/>}
     </div>
   )
 }
