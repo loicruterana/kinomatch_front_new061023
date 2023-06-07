@@ -1,12 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
-import { CurrentMovieIdContext } from '../../../../contexts/CurrentMovieIdContext';
 import axios from 'axios';
 import './AddButton.scss';
 function AddButton(movieId) {
   {/* ========================== USESTATE =============================== */ }
-  const { userData, addUserEmail, addUserData, isLoggedIn, login, logout, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched } = useContext(AuthContext);
-  const { currentMovieId } = useContext(CurrentMovieIdContext);
+  const { userData, isLoggedIn, addBookmarked, deleteBookmarked, addToWatch, deleteToWatch, userDataToWatch, addWatched, deleteWatched, userDataWatched } = useContext(AuthContext);
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
   // Favoris
@@ -25,7 +23,6 @@ function AddButton(movieId) {
 
     {/* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */ }
     heartIsClicked === false ? addBookmarked(movieId) && addWatched(movieId) && setCheckIsClicked(true) : deleteBookmarked(movieId);
-
   };
 
   // Favoris
@@ -44,8 +41,8 @@ function AddButton(movieId) {
     {/* Met à jour l'état de "CheckIsClicked" en inversant sa valeur actuelle. */ }
     setCheckIsClicked(!checkIsClicked);
 
-    {/* Si "CheckIsClicked" est false alors au click il ajoutera le film auw vus sinon il supprimera le film des vus et des favoris */ }
-    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId) && setBookmarkIsClicked(false);
+    {/* Si "CheckIsClicked" est false alors au click il ajoutera le film aux vus sinon il supprimera le film des vus et des favoris */ }
+    checkIsClicked === false ? addWatched(movieId) : deleteWatched(movieId) && deleteBookmarked(movieId) && setHeartIsClicked(false);
   };
 
 
@@ -63,7 +60,7 @@ function AddButton(movieId) {
   // })
 
 
-  {/* ======================================= BOOKMARKED ====================================================== */ }
+  {/* ======================================= COEUR ====================================================== */ }
 
   {/* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */ }
   useEffect(() => {
@@ -93,7 +90,7 @@ function AddButton(movieId) {
       isLoggedIn &&
         getUserBookmarked()
     }
-  }, [currentMovieId, heartIsClicked, isLoggedIn, movieId, handleBookMarkClick, handleCheckClick]);
+  }, []);
 
   {/* ======================================= TO WATCH ====================================================== */ }
   {/*  */ }
@@ -119,7 +116,7 @@ function AddButton(movieId) {
       isLoggedIn &&
         getUserToWatch()
     }
-  }, [currentMovieId, bookmartIsClicked, isLoggedIn, movieId]);
+  }, []);
   // console.log(userDataToWatch);
   // console.log(userData);
 
@@ -152,7 +149,7 @@ function AddButton(movieId) {
       isLoggedIn &&
         getUserWatched()
     }
-  }, [currentMovieId, checkIsClicked, isLoggedIn, movieId, handleCheckClick, handleBookMarkClick]);
+  }, []);
 
 
 

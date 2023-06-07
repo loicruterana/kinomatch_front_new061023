@@ -1,28 +1,32 @@
 import { Key, useContext, useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 import axios from 'axios';
 
+// ================ IMPORT COMPOSANTS ================
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
-import CommentPost from './CommentPost/CommentPost';
+// import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
+
+// ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
+import { NoResultContext } from '../../../contexts/NoResultContext';
 import Loading from '../Loading/Loading';
 
-
+// ================ IMPORT SCSS ================
 import './style.scss';
 
 
 function MoviePage() {
 
-
-
+  const navigate = useNavigate();
 
 
   {/* ================= MODALE DETAILS ============================ */ }
@@ -86,6 +90,7 @@ function MoviePage() {
   const { selectedGenreFilters, addGenreFilter, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+  const { handleNoResult } = useContext(NoResultContext);
 
   console.log(selectedGenreFilters);
   console.log(selectedProviderFilters);
@@ -121,10 +126,21 @@ function MoviePage() {
   {/*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */ }
   useEffect(() => {
     setIsLoading(true);
-
+  
     axios
       .get(`https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`)
       .then(({ data }) => {
+        console.log(data, typeof data);
+        if (data.results.length === 0) {
+          // console.log('je passe par le if noresult');
+          // setDisplayNoResult(true);
+          // setTimeout(function() {
+            handleNoResult()
+            navigate(`/`);
+          // }, 2500);
+          return;
+        }
+  
         const numberOfPages = data.total_pages;
         console.log(numberOfPages);
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
@@ -171,8 +187,7 @@ function MoviePage() {
         setIsLoading(false);
       });
   }, [currentMovieId]);
-
-
+  
 
   console.log(movie);
 
@@ -262,12 +277,14 @@ function MoviePage() {
 
           </div>
           <div className='movieFound__essentiel-imageFrame'>
-            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} alt='Image du film' onClick={handleImageModal} />
+            <img className='movieFound__essentiel-image' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/images/testsample.jpg'} alt={`Image du film: ${movie.title}`} onClick={handleImageModal} />
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-              <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
-              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a>
+              <p className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</p>
+              <p className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</p>
+              {/* <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
+              <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a> */}
             </div>
           </div>
 
@@ -277,16 +294,6 @@ function MoviePage() {
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
           <div className='movieDetails__filters-desktop'>
-
-            {/* Affichage des filtres concernant le film affiché */}
-            {/* {
-              movie.genres.map((genre: { id: Key | null | undefined; name: string }) => (
-                <p key={genre.id} className='movieDetails__filters-desktop--filterElem'>{genre.name}</p>
-              ))
-            } */}
-            {/* Affichage des filtres sélectionnés par l'utilisateur' */}
-
-            {/* <p className='movieDetails__filters-desktop--title'>Filtres sélectionnés</p> */}
             <ul className='movieDetails__filters-desktop--filterElemList'>
               <li>
                 {
@@ -330,7 +337,7 @@ function MoviePage() {
               {
                 mappedDirectingCrewMembers.map((director, index) => (
                   <li key={director.id} className='movieDetails__description-directorsList--director'>{index === 0 ? 'De ' : ''} {index !== 0 && ','} {director.name}
-                    {index === mappedDirectingCrewMembers.length  && '...'}</li>
+                    {index === mappedDirectingCrewMembers.length && '...'}</li>
                 ))
               }
             </ul>
@@ -354,11 +361,11 @@ function MoviePage() {
             <p className='movieDetails__description-duration'>{movie.runtime ? convertMinutesInHours(movie.runtime) : 'Durée non précisée'}</p>
             <p className='movieDetails__description-date'>{movie.release_date ? formatDate(movie.release_date) : 'Date de sortie non précisée'}</p>
             <button className='movieDetails__description-details' onClick={handleDetailsModal}>+ de détails</button>
-            <div className='movieDetails__description-writeComment'>
+            {/* <div className='movieDetails__description-writeComment'>
               <a className='movieDetails__description-commentShortCut' href="#movieDetails__description-comments-form--content">Laisser un commentaire</a>
-            </div>
+            </div> */}
 
-            <CommentPost />
+            {/* <CommentPost /> */}
 
             <div className='movieDetails__filters'>
               {!desktopVersion && (

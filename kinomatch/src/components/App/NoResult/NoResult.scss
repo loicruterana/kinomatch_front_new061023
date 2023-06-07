@@ -1,6 +1,7 @@
 @use './../../../styles/vars';
 
 .NoResult-container {
+  position: absolute;
   transition: 0.3s ease-in-out;
   width: 100vw;
   height: 100vh;
@@ -13,17 +14,19 @@
   font-size: 45px;
   text-align: center;
   flex-direction: column;
-  &-text {
-    margin-bottom: 20px;
+  span {
+    margin-bottom: 100px;
   }
   img {
-    scale: 0.8;
+    width: 60%;
+    height: auto;
   }
 }
 
 @media screen and (max-width: 1000px) {
   .NoResult-container {
     font-size: 22px;
+    height: 100vh;
     &-text {
       margin: 0px 10px;
     }
