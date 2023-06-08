@@ -1,29 +1,47 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
 // Création du contexte
-export const LoadingContext = createContext();
+interface LoadingContextType {
+  isLoading: boolean;
+  load: () => void;
+  unload: () => void;
+  error: string | null;
+  addError: (error: string) => void;
+}
+
+export const LoadingContext = createContext<LoadingContextType>();
 
 // Fournisseur de contexte
-export const LoadingProvider = ({ children }) => {
+interface LoadingProviderProps {
+  children: ReactNode;
+}
+
+export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-
-  const load = () => {
+  const load = (): void => {
     setIsLoading(true);
   };
 
-  const unload = () => {
+  const unload = (): void => {
     setIsLoading(false);
   };
 
-  const addError = (error) => {
+  const addError = (error: string): void => {
     setError(error);
   };
 
+  const contextValue: LoadingContextType = {
+    isLoading,
+    load,
+    unload,
+    error,
+    addError,
+  };
 
   return (
-    <LoadingContext.Provider value={{ isLoading, load, unload, error, addError }}>
+    <LoadingContext.Provider value={contextValue}>
       {children}
     </LoadingContext.Provider>
   );

@@ -1,10 +1,16 @@
 import './ImageModal.scss';
 
 {/* Création de l'interface pour Typescript */ }
+interface Movie {
+    id: string;
+    title: string;
+    poster_path: string;
+    }
+
 interface ImageModalProps {
     showImageModal: boolean;
     setShowImageModal: (showImageModal: boolean) => void;
-    movie: unknown;
+    movie: Movie | null;
 }
 
 {/* Fonction permettant de cacher la modale ImageModal */ }
@@ -18,7 +24,7 @@ function ImageModal(props: ImageModalProps) {
 
     return (
         <div className='imageModal__container'>
-          <img className='imageModal__container-image' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt={`Image du film: ${movie.title}`} onClick={handleImageModal}/>
+          <img className='imageModal__container-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={`Image du film: ${movie.title}`} onClick={handleImageModal}/>
         </div>
 
     )

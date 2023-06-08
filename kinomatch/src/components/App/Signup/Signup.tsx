@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import Connected from '../Connected/Connected';
-import { EmailContext } from '../../../contexts/EmailContext';
-
 
 import './Signup.scss';
 
@@ -16,21 +14,20 @@ const Signup = () => {
     passwordConfirm: '',
   });
 
-  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
-  const { addEmail, email } = useContext(EmailContext);
+  const { userData, addUserData, login } = useContext(AuthContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [message, setMessage] = useState('');
 
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPostProfil({
       ...postProfil,
       [event.target.name]: value,
     });
   };
-
-  const handleSubmit = async (event) => {
+  
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userData = {
       email: postProfil.email,
@@ -40,8 +37,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
-      console.log(response.status, 
-        // response.data.token
+      console.log(response.status
         );
       login();
       setMessage(response.data.message)
@@ -51,7 +47,7 @@ const Signup = () => {
       setTimeout(() => {
       setGoToHomePage(true);
       }, 1500);
-    } catch (error) {
+    } catch (error: any) {
      console.log(error)
         // console.log('Response data:', error.response.data.error);
         // console.log('Response status:', error.response.status);
@@ -124,7 +120,7 @@ const Signup = () => {
 
       </form>
       
-      {email && <Connected email={email}/>}
+      {userData.email && <Connected/>}
     </div>
   );
 };

@@ -1,19 +1,60 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-export const AuthContext = createContext();
-export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({
+
+export interface UserData {
+  email: string;
+  id: string;
+  bookmarked: string
+}
+
+export interface UserDataToWatch {
+  email: string;
+  id: string;
+  toWatch: string
+}
+
+export interface UserDataWatched {
+  email: string;
+  id: string;
+  watched: string
+}
+
+export interface AuthContextProps {
+  isLoggedIn: boolean;
+  login: () => void;
+  logout: () => void;
+  addUserData: (email: string, userId: string) => void;
+  addBookmarked: (element: { movie: any }) => void;
+  deleteBookmarked: (element: { movie: any }) => void;
+  addToWatch: (element: { movie: any }) => void;
+  deleteToWatch: (element: { movie: any }) => void;
+  addWatched: (element: { movie: any }) => void;
+  deleteWatched: (element: { movie: any }) => void;
+  deleteBookmarkedAndWatched: (element: { movie: any }) => void;
+  userData: UserData;
+  userDataToWatch: UserDataToWatch;
+  userDataWatched: UserDataWatched;
+}
+
+export const AuthContext = createContext<AuthContextProps >();
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserData>({
     email: '',
     id: '',
     bookmarked: '',
   });
-  const [userDataToWatch, setUserDataToWatch] = useState({
+  const [userDataToWatch, setUserDataToWatch] = useState<UserDataToWatch>({
     email: '',
     id: '',
     toWatch: '',
   });
-  const [userDataWatched, setUserDataWatched] = useState({
+  const [userDataWatched, setUserDataWatched] = useState<UserDataWatched>({
     email: '',
     id: '',
     watched: '',
@@ -22,39 +63,36 @@ export const AuthProvider = ({ children }) => {
   const [isToWatchModified, setIsToWatchModified] = useState(false);
   const [isWatchedModified, setIsWatchedModified] = useState(false);
 
-  const login = () => {
+  const login = (): void => {
     setIsLoggedIn(true);
   };
 
-  const logout = () => {
+  const logout = (): void => {
     setIsLoggedIn(false);
   };
 
-  const addUserData = (email, userId) => {
-    setUserData({ ...userData, email: email, id: userId });
-    setUserDataToWatch({ ...userDataToWatch, email: email, id: userId });
-    setUserDataWatched({ ...userDataWatched, email: email, id: userId });
+  const addUserData = (email: string, userId: string): void => {
+    setUserData({ ...userData, email, id: userId });
+    setUserDataToWatch({ ...userDataToWatch, email, id: userId });
+    setUserDataWatched({ ...userDataWatched, email, id: userId });
   };
 
-  {
-    /* ======================================= BOOKMARKED ====================================================== */
-  }
-
-  const addBookmarked = async (element) => {
+  const addBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element);
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
     console.log(element.movie);
     console.log('onpasseici');
   };
-  const deleteBookmarked = async (element) => {
+
+  const deleteBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
     console.log('onpasseici');
   };
 
   useEffect(() => {
-    const postData = async () => {
+    const postData = async (): Promise<void> => {
       try {
         const response = await axios.post(
           'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
@@ -65,6 +103,7 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
+
     if (userData.bookmarked !== '' && isBookmarkedModified) {
       postData();
       setIsBookmarkedModified(false);
@@ -74,7 +113,7 @@ export const AuthProvider = ({ children }) => {
   }, [userData, isBookmarkedModified]);
 
   useEffect(() => {
-    const deleteData = async () => {
+    const deleteData = async (): Promise<void> => {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
@@ -88,34 +127,29 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
       }
     };
+
     if (userData.bookmarked !== '' && !isBookmarkedModified) {
       deleteData();
       setUserData({ ...userData, bookmarked: '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   console.log(userData);
 
-  {
-    /* ======================================= TO WATCH ====================================================== */
-  }
-
-  const addToWatch = async (element) => {
+  const addToWatch = async (element: { movie: any }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
     setIsToWatchModified(true);
     console.log(element.movie);
   };
 
-  const deleteToWatch = async (element) => {
-    setUserDataToWatch({
-      ...userDataToWatch,
-      toWatch: element.movie || element,
-    });
+  const deleteToWatch = async (element: { movie: any }): Promise<void> => {
+    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
     console.log(element.movie);
   };
 
   useEffect(() => {
-    const postData = async () => {
+    const postData = async (): Promise<void> => {
       try {
         const response = await axios.post(
           'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
@@ -136,7 +170,7 @@ export const AuthProvider = ({ children }) => {
   }, [userDataToWatch, isToWatchModified]);
 
   useEffect(() => {
-    const deleteData = async () => {
+    const deleteData = async (): Promise<void> => {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userDataToWatch.id);
@@ -157,43 +191,31 @@ export const AuthProvider = ({ children }) => {
       deleteData();
       setUserDataToWatch({ ...userDataToWatch, toWatch: '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataToWatch]);
 
   console.log(userDataToWatch);
   console.log(userDataToWatch.id);
 
-  {
-    /* ======================================= WATCHED ====================================================== */
-  }
-
-  const addWatched = async (element) => {
+  const addWatched = async (element: { movie: any }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
     setIsWatchedModified(true);
     console.log(element.movie);
   };
 
-  const deleteWatched = async (element) => {
-    setUserDataWatched({
-      ...userDataWatched,
-      watched: element.movie || element.toString(),
-    });
+  const deleteWatched = async (element: { movie: any }): Promise<void> => {
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
     console.log(element.movie);
   };
 
-  const deleteBookmarkedAndWatched = async (element) => {
+  const deleteBookmarkedAndWatched = async (element: { movie: any }): Promise<void> => {
     console.log(element);
-    setUserData({
-      ...userData,
-      bookmarked: element.movie || element.toString(),
-    });
-    setUserDataWatched({
-      ...userDataWatched,
-      watched: element.movie || element.toString(),
-    });
+    setUserData({ ...userData, bookmarked: element.movie || element.toString() });
+    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
   };
 
   useEffect(() => {
-    const postData = async () => {
+    const postData = async (): Promise<void> => {
       try {
         const response = await axios.post(
           'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
@@ -214,7 +236,7 @@ export const AuthProvider = ({ children }) => {
   }, [userDataWatched, isWatchedModified]);
 
   useEffect(() => {
-    const deleteData = async () => {
+    const deleteData = async (): Promise<void> => {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userDataWatched.id);
@@ -232,14 +254,11 @@ export const AuthProvider = ({ children }) => {
       deleteData();
       setUserDataWatched({ ...userDataWatched, watched: '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataWatched]);
 
   console.log(userDataWatched);
   console.log(userDataWatched.id);
-
-  {
-    /* ======================================= RETURN ====================================================== */
-  }
 
   return (
     <AuthContext.Provider
@@ -264,5 +283,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthProvider;

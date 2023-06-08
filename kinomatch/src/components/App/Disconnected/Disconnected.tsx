@@ -1,9 +1,7 @@
-import React from 'react'
-
 import './Disconnected.scss';
 
 
-export const Disconnected = () => {
+const Disconnected: React.FC = () => {
 
   return (
     <div className="Disconnected-container">

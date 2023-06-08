@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { EmailContext } from '../../../contexts/EmailContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Connected from '../Connected/Connected';
 
@@ -13,7 +12,7 @@ import './Login.scss';
 
 export const Login = () => {
 
-  const { userData, addUserEmail, addUserData , isLoggedIn, login, logout} = useContext(AuthContext);
+  const { userData, addUserData, login} = useContext(AuthContext);
 
 
   const [postProfil, setPostProfil] = useState({
@@ -22,7 +21,6 @@ export const Login = () => {
     passwordConfirm: '',
   });
 
-  const { addEmail, email } = useContext(EmailContext);
 
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [message, setMessage] = useState('');
@@ -32,7 +30,7 @@ export const Login = () => {
     return <Navigate to="/" />;
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     setPostProfil({
       ...postProfil,
@@ -40,9 +38,9 @@ export const Login = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const userData = {
+    const userData: { email: string, password: string } = {
       email: postProfil.email,
       password: postProfil.password,
     };
@@ -144,7 +142,7 @@ export const Login = () => {
         <p className='Login-container__message'>{message}</p>
 
       </form>
-      {isLoggedIn && <Connected email={email}/>}
+      {userData.email && <Connected/>}
 
     </div>
   );

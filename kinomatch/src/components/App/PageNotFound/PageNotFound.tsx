@@ -1,9 +1,9 @@
-import React, {useContext} from 'react'
+import React from 'react'
 
 import './PageNotFound.scss';
 
 
-export const PageNotFound = () => {
+const PageNotFound: React.FC = () => {
 
   return (
     <div className="PageNotFound-container">

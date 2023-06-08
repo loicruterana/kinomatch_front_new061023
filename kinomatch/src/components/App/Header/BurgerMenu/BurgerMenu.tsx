@@ -1,140 +1,106 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Disconnected from '../../Disconnected/Disconnected';
-
 
 import './BurgerMenu.scss';
 import { Link } from 'react-router-dom';
 
 interface Props {
   showBurgerMenu: boolean;
-  setShowBurgerMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowBurgerMenu: (showBurgerMenu: boolean) => void;
 }
 
-function BurgerMenu({ showBurgerMenu, setShowBurgerMenu }: Props) {
-  const { isLoggedIn, userData, logout } = useContext(AuthContext);
+const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Props): JSX.Element => {
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  function handleClick() {
-
-
+  const handleClick = (): void => {
     setShowBurgerMenu(!showBurgerMenu);
-  }
+  };
 
-  function handleProfile() {
-            navigate(`/profile`);
-            setShowBurgerMenu(!showBurgerMenu);
+  const handleProfile = (): void => {
+    navigate(`/profile`);
+    setShowBurgerMenu(!showBurgerMenu);
+  };
 
-  }
-
-  function handleDeleteProfile() {
+  const handleDeleteProfile = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
-      searchParams.append('userID', userData.id);
-      // searchParams.append('email', userData.email);
+      searchParams.append('userID', authContext?.userData.id || '');
 
-      console.log(userData.id)
-      axios
-        .delete(`https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`)
-        .then((response) => {
-          console.log(response.data.message);
-          logout();
-          navigate(`/`);
-
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      const response = await axios.delete(
+        `https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`
+      );
+      console.log(response.data.message);
+      authContext?.logout();
+      navigate(`/`);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-
-  function handleLogout() {
+  const handleLogout = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
-      searchParams.append('userID', userData.id);
-      console.log(userData.id)
-      axios
-        .get(`https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`)
-        .then((response) => {
-          console.log(response.data.message);
-          logout();
-          setTimeout(function() {
-            navigate("/");
-          }, 1500);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      searchParams.append('userID', authContext?.userData.id || '');
+
+      const response = await axios.get(
+        `https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`
+      );
+      console.log(response.data.message);
+      authContext?.logout();
+      setTimeout(function () {
+        navigate('/');
+      }, 1500);
     } catch (error) {
       console.error(error);
     }
-  }
-  
+  };
 
   return (
-    <div className='BurgerMenu'>
-      <div className='BurgerMenu__container'>
-        <div className='BurgerMenu__container__items'>
-          {isLoggedIn && (
+    <div className="BurgerMenu">
+      <div className="BurgerMenu__container">
+        <div className="BurgerMenu__container__items">
+          {authContext?.isLoggedIn && (
             <>
               {/* Nom de l'utilisateur */}
-              <div className='BurgerMenu__container__items__text'>
+              <div className="BurgerMenu__container__items__text">
                 <div>Bonjour</div>
-                <div>{userData.email}</div>
+                <div>{authContext?.userData.email}</div>
               </div>
               {/* Les boutons lorsque l'utilisateur est connecté */}
-              <button 
-              className='BurgerMenu__container__items__button'
-              onClick={handleProfile}
-              >Mon profil</button>
+              <button className="BurgerMenu__container__items__button" onClick={handleProfile}>
+                Mon profil
+              </button>
 
-              <button 
-              className='BurgerMenu__container__items__button'
-              onClick={handleDeleteProfile}
-              >
-                Supprimer compte</button>
-              <button 
-              className='BurgerMenu__container__items__button'
-              onClick={handleLogout}
-              >Se déconnecter</button>
-
+              <button className="BurgerMenu__container__items__button" onClick={handleDeleteProfile}>
+                Supprimer compte
+              </button>
+              <button className="BurgerMenu__container__items__button" onClick={handleLogout}>
+                Se déconnecter
+              </button>
             </>
           )}
           {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
-          {!isLoggedIn && (
+          {!authContext?.isLoggedIn && (
             <>
-              <Link
-              to='login'
-              key='login'
-              >
-                <button 
-                className='BurgerMenu__container__button'
-                onClick={handleClick}>
-                Se connecter 
+              <Link to="login" key="login">
+                <button className="BurgerMenu__container__button" onClick={handleClick}>
+                  Se connecter
                 </button>
-              </Link>  
-              <Link
-              to='signup'
-              key='signup'
-              >
-                <button 
-                className='BurgerMenu__container__button'
-                onClick={handleClick}
-                >Créer un compte 
+              </Link>
+              <Link to="signup" key="signup">
+                <button className="BurgerMenu__container__button" onClick={handleClick}>
+                  Créer un compte
                 </button>
               </Link>
             </>
           )}
         </div>
       </div>
-      {/* {!isLoggedIn && <Disconnected/>} */}
     </div>
   );
-}
+};
 
 export default BurgerMenu;

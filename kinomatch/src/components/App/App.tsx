@@ -15,8 +15,6 @@ import { LoadingProvider } from '../../contexts/LoadingContext';
 import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersProvider } from '../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFiltersContext';
-import { EmailProvider } from '../../contexts/EmailContext';
-import { FetchedDataProvider } from '../../contexts/FetchedDataContext';
 import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 import { NoResultProvider } from '../../contexts/NoResultContext';
 
@@ -33,10 +31,6 @@ function App() {
   return (
     <NoResultProvider>
     <CurrentMovieIdProvider>
-
-    <FetchedDataProvider>
-      <EmailProvider>
-
         <SelectedDecadeFiltersProvider>
 
           <SelectedProviderFiltersProvider>
@@ -62,10 +56,6 @@ function App() {
                       path="/login"
                       element={<Login />}
                     />
-                    {/* <Route
-              path="/movie-page"
-              element={<MoviePage/>}
-            />      */}
                     <Route
                       path="/profile"
                       element={<Profile />}
@@ -83,8 +73,6 @@ function App() {
             </SelectedGenreFiltersProvider>
           </SelectedProviderFiltersProvider>
         </SelectedDecadeFiltersProvider>
-      </EmailProvider>
-    </FetchedDataProvider>
     </CurrentMovieIdProvider>
     </NoResultProvider>
 

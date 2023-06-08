@@ -1,13 +1,29 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, ReactNode, Key } from 'react';
 
-// Création du contexte
-export const SelectedProviderFiltersContext = createContext();
+interface ProviderFilter {
+  id: Key | null | undefined;
+  provider_name: string;
+  provider_id: string;
+}
 
-// Fournisseur de contexte
-export const SelectedProviderFiltersProvider = ({ children }) => {
-  const [selectedProviderFilters, setSelectedProviderFilters] = useState([]);
+interface SelectedProviderFiltersContextType {
+  selectedProviderFilters: ProviderFilter[];
+  addProviderFilter: (name: string, providerId: string) => void;
+  removeProviderFilter: (name: string) => void;
+}
 
-  const addProviderFilter = (name, providerId) => {
+interface SelectedProviderFiltersProviderProps {
+  children: ReactNode;
+}
+
+export const SelectedProviderFiltersContext = createContext<SelectedProviderFiltersContextType>(
+  {} as SelectedProviderFiltersContextType
+);
+
+export const SelectedProviderFiltersProvider: React.FC<SelectedProviderFiltersProviderProps> = ({ children }) => {
+  const [selectedProviderFilters, setSelectedProviderFilters] = useState<ProviderFilter[]>([]);
+
+  const addProviderFilter = (name: string, providerId: string) => {
     if (selectedProviderFilters.some((f) => f.provider_name === name)) {
       removeProviderFilter(name);
       return;
@@ -15,13 +31,14 @@ export const SelectedProviderFiltersProvider = ({ children }) => {
     setSelectedProviderFilters((state) => [
       ...state,
       {
+        id:0,
         provider_name: name,
         provider_id: providerId,
       }
     ]);
-  };  
+  };
 
-  const removeProviderFilter = (name) => {
+  const removeProviderFilter = (name: string) => {
     setSelectedProviderFilters((state) => state.filter((f) => f.provider_name !== name));
   };
 

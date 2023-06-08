@@ -6,38 +6,39 @@ import React, { useContext, useState, useEffect } from 'react'
 // ================ IMPORT SCSS ================
 
 // ================ IMPORT CONTEXTS ================
+interface BookmarkedRollProps {
+  isLoading: boolean;
+  mobileVersion: boolean;
+  showWatchedRoll: boolean;
+  showToWatchRoll: boolean;
+  watchedList: [];
+  watchedMovies: object;
+  toWatchList: [];
+  toWatchMovies: object;
+  bookmarkedList: object;
 
+}
 
 // ================ COMPOSANT ================
-export const BookmarkedRoll = ({
+export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
   isLoading,
   mobileVersion,
   showWatchedRoll,
-  setShowWatchedRoll,
   showToWatchRoll,
-  setShowToWatchRoll,
 
   watchedList,
   setWatchedList,
   watchedMovies,
-  setWatchedMovies,
-  deleteWatched, // à supprimer ?
 
   toWatchList,
   setToWatchList,
   toWatchMovies,
-  setMoviesToWatch,
   deleteToWatch,
 
 
   deleteBookmarkedAndWatched,
 
   bookmarkedList,
-  deleteBookmarked,
-  addBookmarked,
-
-  setIsBookmarkedModified,
-  isBookmarkedModified,
 
   handleAddBookmarked,
   handleRemoveBookmarked
@@ -50,7 +51,7 @@ export const BookmarkedRoll = ({
 
   // =========================== HANDLERBOUTON X
 
-  function handleRemoveWatched(film_id) {
+  function handleRemoveWatched(film_id : string) {
     deleteBookmarkedAndWatched(film_id)
     setWatchedList(state => state.filter(element => element.film_id !== film_id));
   }
@@ -66,8 +67,8 @@ export const BookmarkedRoll = ({
     setToWatchList(state => state.filter(element => element.film_id !== film_id));
   }
 
-  // console.log(bookmarkedList)
-  // console.log(watchedList)
+  console.log(bookmarkedList)
+  // console.log(toWatchMovies)
 
   // ================ JSX ================
   return (

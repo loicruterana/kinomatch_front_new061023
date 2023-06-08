@@ -1,13 +1,24 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
-// Création du contexte
-export const SelectedGenreFiltersContext = createContext();
+interface Genre {
+  name: string;
+  id: string;
+}
 
-// Fournisseur de contexte
-export const SelectedGenreFiltersProvider = ({ children }) => {
-  const [selectedGenreFilters, setSelectedGenreFilters] = useState([]);
+interface SelectedGenreFiltersContextType {
+  selectedGenreFilters: Genre[];
+  addGenreFilter: (name: string, genreId: string) => void;
+  removeGenreFilter: (name: string) => void;
+}
 
-  const addGenreFilter = (name, genreId) => {
+export const SelectedGenreFiltersContext = createContext<SelectedGenreFiltersContextType>(
+  {} as SelectedGenreFiltersContextType
+);
+
+export const SelectedGenreFiltersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [selectedGenreFilters, setSelectedGenreFilters] = useState<Genre[]>([]);
+
+  const addGenreFilter = (name: string, genreId: string) => {
     if (selectedGenreFilters.some((f) => f.name === name)) {
       removeGenreFilter(name);
       return;
@@ -19,10 +30,9 @@ export const SelectedGenreFiltersProvider = ({ children }) => {
         id: genreId,
       }
     ]);
-  };  
-  
+  };
 
-  const removeGenreFilter = (name) => {
+  const removeGenreFilter = (name: string) => {
     setSelectedGenreFilters((state) => state.filter((f) => f.name !== name));
   };
 

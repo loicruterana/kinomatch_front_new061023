@@ -1,9 +1,7 @@
-import React from 'react'
-
 import './Loading.scss';
 
 
-export const Loading = () => {
+const Loading: React.FC = () => {
   
     return (
     <div className='Loading-container'>

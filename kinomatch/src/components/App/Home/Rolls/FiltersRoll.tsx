@@ -14,55 +14,40 @@ import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecad
 export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade, isLoading, handleClickOut }) => {
 
   // ================ IMPORT PROPS CONTEXTS ================
-  const { addGenreFilter, selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { addProviderFilter, selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
-  const { addDecadeFilter, selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
+  const { addGenreFilter } = useContext(SelectedGenreFiltersContext);
+  const { addProviderFilter } = useContext(SelectedProviderFiltersContext);
+  const { addDecadeFilter } = useContext(SelectedDecadeFiltersContext);
 
 
   // const [isClicked, setIsClicked] = useState(false)
 
   // ================ HANDLERS ================
-  function handleGenreClick(event) {
-    const name = event.target.textContent;
-    const genreId = event.target.dataset.id;
-    // console.log(name, genreId)
-    addGenreFilter(name, genreId)
-    // console.log(selectedGenreFilters)
+  function handleGenreClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const target = event.target as HTMLButtonElement;
+    const name = target.textContent;
+    const genreId = target.dataset.id;
+    if (name !== null && genreId !== undefined) {
+      addGenreFilter(name, genreId);
+    }
   }
-
-
-  function handleProviderClick(event) {
-    console.log('i')
-    const name = event.target.textContent;
-    const providerId = event.target.dataset.id;
-    // console.log(name, providerId)
-
-    addProviderFilter(name, providerId);
-    // console.log(name, providerId)
-
-    // if (clickedItems.includes(filter)) {
-    //   setClickedItems(clickedItems.filter(item => item !== filter));
-    // } else {
-    //   setClickedItems([...clickedItems, filter]);
-    // }
-    // faire en sorte de changer le style
-    // setIsClicked(true)
+  
+  function handleProviderClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const target = event.target as HTMLButtonElement;
+    const name = target.textContent;
+    const providerId = target.dataset.id;
+    if (name !== null && providerId !== undefined) {
+      addProviderFilter(name, providerId);
+    }
   }
-
-  function handleDecadeClick(event) {
-    const filter = event.target.textContent;
-    addDecadeFilter(filter);
-    // if (clickedItems.includes(filter)) {
-    //   setClickedItems(clickedItems.filter(item => item !== filter));
-    // } else {
-    //   setClickedItems([...clickedItems, filter]);
-    // }
-    // faire en sorte de changer le style
-    // setIsClicked(true)
+  
+  function handleDecadeClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const target = event.target as HTMLButtonElement;
+    const filter = target.textContent;
+    if (filter !== null) {
+      addDecadeFilter(filter);
+    }
   }
-
-
-
+  
   const decades = [];
 
   for (let i = 2020; i >= 1890; i -= 10) {

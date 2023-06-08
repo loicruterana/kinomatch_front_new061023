@@ -52,6 +52,11 @@ export interface BookmarkedListEntry {
 
 export type BookmarkedListObject = Record<number , BookmarkedListEntry | undefined>;
 
+//=========== AUTHCONTEXT
 
 
-
+export interface UserData {
+  email: string;
+  id: string;
+  bookmarked: string;
+}

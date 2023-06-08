@@ -8,6 +8,7 @@ import {
   ToWatchListArray,
   toWatchMoviesObject,
   BookmarkedListObject,
+  UserData
 } from '../../../utils/interfaces';
 
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
@@ -30,9 +31,16 @@ export const Profile: React.FC = () => {
     {}
   );
   const [userEvent, setUserEvent] = useState(false);
-  const { load, unload, isLoading } = useContext(LoadingContext);
+  const { load } = useContext(LoadingContext);
+  
 
   const coucou = watchedList === undefined; // false
+
+  interface BookmarkedItem {
+    film_id: string;
+    // Autres propriétés de l'élément bookmarked
+    // Spécifiez les types appropriés pour chaque propriété
+  }
 
   const {
     userData,
@@ -42,12 +50,20 @@ export const Profile: React.FC = () => {
     deleteBookmarkedAndWatched,
     deleteWatched,
     addBookmarked,
-  } = useContext(AuthContext);
+  } = useContext(AuthContext) as {
+    userData : UserData;
+    logout: () => void;
+    deleteBookmarked: (element: { movie: any }) => void;
+    deleteToWatch: (element: { movie: any }) => void;
+    deleteBookmarkedAndWatched: (element: { movie: any; toString: () => any }) => void;
+    deleteWatched: (element: { movie: any }) => void;
+    addBookmarked: (element: { movie: any }) => void;
+  };
 
   // ================ HANDLERS ================
 
-  function handleRemoveBookmarked(film_id) {
-    deleteBookmarked(film_id)
+  function handleRemoveBookmarked(film_id : string) {
+    deleteBookmarked({ movie: film_id });
     setUserEvent(true);
     // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
     console.log("je passe par la suppression")
@@ -55,8 +71,8 @@ export const Profile: React.FC = () => {
 
   }
 
-  function handleAddBookmarked(film_id) {
-    addBookmarked(film_id)
+  function handleAddBookmarked(film_id : string) {
+    addBookmarked({ movie: film_id })
     setUserEvent(true);
     console.log("je passe par l'ajout")
 
@@ -174,7 +190,7 @@ export const Profile: React.FC = () => {
       try {
         const requests = watchedList.map((watchedListItem) => {
           const searchParams = new URLSearchParams();
-          searchParams.append('movieID', watchedListItem.film_id);
+          searchParams.append('movieID', watchedListItem?.film_id ?? '');
           return axios.get(
             `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
           );
@@ -188,7 +204,7 @@ export const Profile: React.FC = () => {
             }));
 
             // Utiliser un objet pour stocker les films uniques
-            const uniqueMovies = {};
+            const uniqueMovies: Record<string, { name: string; movie_id?: string }> = {};
 
             // Parcourir la liste des films à ajouter
             moviesToAdd.forEach((movie) => {
@@ -196,7 +212,7 @@ export const Profile: React.FC = () => {
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
 
-            setWatchedMovies(uniqueMovies);
+            setWatchedMovies(uniqueMovies as WatchedMoviesObject);
           })
           .catch((error) => {
             console.error(error);
@@ -222,10 +238,10 @@ export const Profile: React.FC = () => {
           )
           .then(({ data }) => {
             // Utiliser un objet pour stocker les films uniques
-            const bookmarked = {};
-            data.forEach((element) => {
+            const bookmarked: { [key: string]: BookmarkedItem } = {};
+            data.forEach((element: any) => {
               const key = element.film_id?.toString();
-              bookmarked[key] = element;
+              bookmarked[key] = element as BookmarkedItem;
             });
   
             setBookmarkedList(bookmarked);
@@ -381,7 +397,7 @@ export const Profile: React.FC = () => {
             toWatchList={toWatchList}
             setToWatchList={setToWatchList}
             toWatchMovies={toWatchMovies}
-            setToWatchMovies={setToWatchMovies}
+            // setToWatchMovies={setToWatchMovies}
             deleteToWatch={deleteToWatch}
             deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
             bookmarkedList={bookmarkedList}

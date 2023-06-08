@@ -1,8 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import { Navigate, useNavigate } from "react-router-dom";
-
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
@@ -19,7 +18,6 @@ import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFilt
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
-import { FetchedDataContext } from '../../../contexts/FetchedDataContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
 
@@ -37,29 +35,23 @@ export const Home = () => {
   const [showRollProvider, setShowRollProvider] = useState(false);
   const [showRollDecade, setShowRollDecade] = useState(false);
   const [mobileVersion, setMobileVersion] = useState(false);
-  // const [ dataToTransfer, setDataToTransfer ] = useState(null);
-  // goToMoviePage
   const [goToMoviePage, setGoToMoviePage] = useState(false);
 
-  // const [isFirstRender, setIsFirstRender] = useState(true);
 
 
 
 
   // ================ IMPORT PROPS CONTEXTS ================
-  const { selectedGenreFilters, addGenreFilter, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters, addProviderFilter, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
-  const { selectedDecadeFilters, addDecadeFilter, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+  const { selectedGenreFilters, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
+  const { selectedProviderFilters, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
+  const { selectedDecadeFilters, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
   const { load, unload, isLoading } = useContext(LoadingContext);
-  const { fetchedData, setFetchedData, addData } = useContext(FetchedDataContext);
-  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(CurrentMovieIdContext);
+  const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
 
 
 
   const coucou = preselectedProviders === undefined; // false
-
-  // console.log(selectedGenreFilters)
 
   // ================ USE EFFECT API ================
   useEffect(() => {
@@ -114,8 +106,6 @@ export const Home = () => {
       searchParams.append('decade', filter);
     });
 
-    const url = `https://deploy-back-kinomatch.herokuapp.com/films?${searchParams.toString()}`
-
     navigate(`/films?${searchParams.toString()}`);
   };
 
@@ -168,15 +158,15 @@ export const Home = () => {
     setShowRollDecade(!showRollDecade)
   }
 
-  function handleRemoveGenre(event) {
-    removeGenreFilter(event.target.dataset.id)
+  function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
+    removeGenreFilter(event.currentTarget.dataset.id || '');
   }
-  function handleRemoveProvider(event) {
-    removeProviderFilter(event.target.dataset.id)
+  function handleRemoveProvider(event: React.MouseEvent<HTMLDivElement>): void {
+    removeProviderFilter(event.currentTarget.dataset.id || '');
   }
 
-  function handleRemoveDecade(event) {
-    removeDecadeFilter(event.target.dataset.id)
+  function handleRemoveDecade(event: React.MouseEvent<HTMLDivElement>): void {
+    removeDecadeFilter(event.currentTarget.dataset.id || '');
   }
 
 

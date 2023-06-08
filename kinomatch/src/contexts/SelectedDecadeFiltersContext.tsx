@@ -1,15 +1,19 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
-// Création du contexte
-export const SelectedDecadeFiltersContext = createContext();
+interface SelectedDecadeFiltersContextProps {
+  selectedDecadeFilters: string[];
+  addDecadeFilter: (filter: string) => void;
+  removeDecadeFilter: () => void;
+}
 
-// Fournisseur de contexte
-export const SelectedDecadeFiltersProvider = ({ children }) => {
-  const [selectedDecadeFilters, setSelectedDecadeFilters] = useState([]);
+export const SelectedDecadeFiltersContext = createContext<SelectedDecadeFiltersContextProps | undefined>(undefined);
 
-  const addDecadeFilter = (filter) => {
+export const SelectedDecadeFiltersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [selectedDecadeFilters, setSelectedDecadeFilters] = useState<string[]>([]);
+
+  const addDecadeFilter = (filter: string) => {
     if (selectedDecadeFilters.includes(filter)) {
-      removeDecadeFilter(filter)
+      removeDecadeFilter();
       return;
     }
     setSelectedDecadeFilters([filter]);
@@ -19,11 +23,15 @@ export const SelectedDecadeFiltersProvider = ({ children }) => {
     setSelectedDecadeFilters([]);
   };
 
+  const contextValue: SelectedDecadeFiltersContextProps = {
+    selectedDecadeFilters,
+    addDecadeFilter,
+    removeDecadeFilter,
+  };
+
   return (
-    <SelectedDecadeFiltersContext.Provider value={{ selectedDecadeFilters, addDecadeFilter, removeDecadeFilter }}>
+    <SelectedDecadeFiltersContext.Provider value={contextValue}>
       {children}
     </SelectedDecadeFiltersContext.Provider>
   );
 };
-
-export default SelectedDecadeFiltersProvider;
