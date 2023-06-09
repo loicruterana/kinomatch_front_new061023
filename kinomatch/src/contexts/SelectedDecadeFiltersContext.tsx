@@ -6,7 +6,9 @@ interface SelectedDecadeFiltersContextProps {
   removeDecadeFilter: () => void;
 }
 
-export const SelectedDecadeFiltersContext = createContext<SelectedDecadeFiltersContextProps | undefined>(undefined);
+export const SelectedDecadeFiltersContext = createContext<SelectedDecadeFiltersContextProps>(
+  {} as SelectedDecadeFiltersContextProps
+);
 
 export const SelectedDecadeFiltersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedDecadeFilters, setSelectedDecadeFilters] = useState<string[]>([]);

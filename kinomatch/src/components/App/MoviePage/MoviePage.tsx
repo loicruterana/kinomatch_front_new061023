@@ -12,7 +12,7 @@ import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 
 // ================ IMPORT CONTEXTS ================
-import { CurrentMovieIdContext } from './../../../contexts/CurrentMovieIdContext';
+import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
@@ -445,9 +445,9 @@ function MoviePage() {
               </li>
               <li>
                 {selectedDecadeFilters.map(
-                  (decade: {id: Key | null | undefined}) => (
+                  (decade) => (
                     <p
-                      key={decade.id}
+                      key={decade}
                       className='movieDetails__filters-desktop--filterElem'
                     >
                       {decade}
@@ -475,6 +475,7 @@ function MoviePage() {
             {/* Affichage des réalisateurs concernant le film affiché */}
             <ul className='movieDetails__description-directorsList'>
               {mappedDirectingCrewMembers.map(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (director: any, index: number) => (
                   <li
                     key={director.id}

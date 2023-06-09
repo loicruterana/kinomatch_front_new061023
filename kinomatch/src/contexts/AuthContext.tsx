@@ -24,19 +24,19 @@ export interface AuthContextProps {
   login: () => void;
   logout: () => void;
   addUserData: (email: string, userId: string) => void;
-  addBookmarked: (element: { movie: any }) => void;
-  deleteBookmarked: (element: { movie: any }) => void;
-  addToWatch: (element: { movie: any }) => void;
-  deleteToWatch: (element: { movie: any }) => void;
-  addWatched: (element: { movie: any }) => void;
-  deleteWatched: (element: { movie: any }) => void;
-  deleteBookmarkedAndWatched: (element: { movie: any }) => void;
+  addBookmarked: (element: { movie: string }) => void;
+  deleteBookmarked: (element: { movie: string }) => void;
+  addToWatch: (element: { movie: string }) => void;
+  deleteToWatch: (element: { movie: string }) => void;
+  addWatched: (element: { movie: string }) => void;
+  deleteWatched: (element: { movie: string }) => void;
+  deleteBookmarkedAndWatched: (element: { movie: string }) => void;
   userData: UserData;
   userDataToWatch: UserDataToWatch;
   userDataWatched: UserDataWatched;
 }
 
-export const AuthContext = createContext<AuthContextProps >();
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -77,6 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserDataWatched({ ...userDataWatched, email, id: userId });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element);
@@ -85,6 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     console.log('onpasseici');
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deleteBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
     console.log(element.movie);
@@ -137,12 +139,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   console.log(userData);
 
-  const addToWatch = async (element: { movie: any }): Promise<void> => {
+  const addToWatch = async (element: { movie: string }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
     setIsToWatchModified(true);
     console.log(element.movie);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deleteToWatch = async (element: { movie: any }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
     console.log(element.movie);
@@ -197,18 +200,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   console.log(userDataToWatch);
   console.log(userDataToWatch.id);
 
-  const addWatched = async (element: { movie: any }): Promise<void> => {
+  const addWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
     setIsWatchedModified(true);
     console.log(element.movie);
   };
 
-  const deleteWatched = async (element: { movie: any }): Promise<void> => {
+  const deleteWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
     console.log(element.movie);
   };
 
-  const deleteBookmarkedAndWatched = async (element: { movie: any }): Promise<void> => {
+  const deleteBookmarkedAndWatched = async (element: { movie: string }): Promise<void> => {
     console.log(element);
     setUserData({ ...userData, bookmarked: element.movie || element.toString() });
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });

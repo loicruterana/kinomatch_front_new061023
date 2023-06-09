@@ -3,7 +3,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import axios from 'axios';
 import './AddButton.scss';
 
-function AddButton(movieId) {
+function AddButton(movieId: { movie: string; }) {
   {
     /* ========================== USESTATE =============================== */
   }
@@ -31,19 +31,23 @@ function AddButton(movieId) {
   }
 
   // Coeur
-  const handleHeartClick = () => {
-    {
-      /* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */
-    }
-    setHeartIsClicked(!heartIsClicked);
+    const handleHeartClick = () => {
+  /* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */
 
-    {
+      setHeartIsClicked(!heartIsClicked);
+    
+      if (!heartIsClicked) {
+        addBookmarked(movieId);
+        addWatched(movieId);
+        setCheckIsClicked(true);
+      } else {
+
       /* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au bookmark sinon il le supprime */
-    }
-    heartIsClicked === false
-      ? addBookmarked(movieId) && addWatched(movieId) && setCheckIsClicked(true)
-      : deleteBookmarked(movieId);
-  };
+
+        deleteBookmarked(movieId);
+      }
+    };
+    
 
   // Favoris
   const handleBookMarkClick = () => {
@@ -60,20 +64,19 @@ function AddButton(movieId) {
 
   // Check
   const handleCheckClick = () => {
-    {
-      /* Met à jour l'état de "CheckIsClicked" en inversant sa valeur actuelle. */
-    }
     setCheckIsClicked(!checkIsClicked);
-
-    {
-      /* Si "CheckIsClicked" est false alors au click il ajoutera le film aux vus sinon il supprimera le film des vus et des favoris */
+  
+    if (!checkIsClicked) {
+      addWatched(movieId);
+    } else {
+      deleteWatched(movieId);
+      deleteBookmarked(movieId);
+      setHeartIsClicked(false);
     }
-    checkIsClicked === false
-      ? addWatched(movieId)
-      : deleteWatched(movieId) &&
-        deleteBookmarked(movieId) &&
-        setHeartIsClicked(false);
   };
+  
+
+  
 
   {
     /* ======================================= COEUR ====================================================== */
@@ -90,7 +93,7 @@ function AddButton(movieId) {
         )
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item) => item.film_id);
+          const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
           console.log(filmIds);
           console.log(userData.id);
           console.log(movieId.movie.toString());
@@ -129,7 +132,7 @@ function AddButton(movieId) {
         )
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item) => item.film_id);
+          const filmIds = responseData.map((item: { film_id: string}) => item.film_id);
           console.log(filmIds);
           console.log(userDataToWatch.id);
           console.log(movieId.movie.toString());
@@ -167,7 +170,7 @@ function AddButton(movieId) {
         )
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item) => item.film_id);
+          const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
           console.log(filmIds);
           console.log(userDataWatched.id);
 

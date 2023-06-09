@@ -37,10 +37,13 @@ export const Profile: React.FC = () => {
   const coucou = watchedList === undefined; // false
 
   interface BookmarkedItem {
+    createdAt: string;
     film_id: string;
-    // Autres propriétés de l'élément bookmarked
-    // Spécifiez les types appropriés pour chaque propriété
+    id: number;
+    updatedAt: string;
+    user_id: string;
   }
+
 
   const {
     userData,
@@ -53,22 +56,22 @@ export const Profile: React.FC = () => {
   } = useContext(AuthContext) as {
     userData : UserData;
     logout: () => void;
-    deleteBookmarked: (element: { movie: any }) => void;
-    deleteToWatch: (element: { movie: any }) => void;
-    deleteBookmarkedAndWatched: (element: { movie: any; toString: () => any }) => void;
-    deleteWatched: (element: { movie: any }) => void;
-    addBookmarked: (element: { movie: any }) => void;
+    deleteBookmarked: (element: { movie: string }) => void;
+    deleteToWatch: (element: { movie: string }) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    deleteBookmarkedAndWatched: (element: { movie: string; toString: () => any }) => void;
+    deleteWatched: (element: { movie: string }) => void;
+    addBookmarked: (element: { movie: string }) => void;
   };
 
   // ================ HANDLERS ================
 
   function handleRemoveBookmarked(film_id : string) {
+    console.log(film_id)
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
     // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
     console.log("je passe par la suppression")
-
-
   }
 
   function handleAddBookmarked(film_id : string) {
@@ -179,9 +182,8 @@ export const Profile: React.FC = () => {
       .catch((error) => {
         console.error(error);
       });
-    // console.log(watchedList);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(watchedList);
 
   // =========================== MOVIES
 
@@ -225,6 +227,8 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [watchedList]);
 
+  console.log(bookmarkedList)
+
   // =========================== BOOKMARKED (COEUR)
 
   useEffect(() => {
@@ -238,12 +242,11 @@ export const Profile: React.FC = () => {
           )
           .then(({ data }) => {
             // Utiliser un objet pour stocker les films uniques
-            const bookmarked: { [key: string]: BookmarkedItem } = {};
+            const bookmarked: BookmarkedListObject = {};
             data.forEach((element: any) => {
               const key = element.film_id?.toString();
               bookmarked[key] = element as BookmarkedItem;
             });
-  
             setBookmarkedList(bookmarked);
           })
           .catch((error) => {
@@ -260,8 +263,10 @@ export const Profile: React.FC = () => {
     // if (userEvent) {
       fetchMoviesBookmarked();
     // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
   
+  console.log(bookmarkedList)
 
 
   // =========================== TOWATCHLIST
@@ -283,6 +288,7 @@ export const Profile: React.FC = () => {
       .catch((error) => {
         console.error(error);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // =========================== TOWATCHLISTWITHNAME
@@ -320,6 +326,8 @@ export const Profile: React.FC = () => {
 
     fetchMovieTitles();
   }, [toWatchList]);
+
+console.log(toWatchList)
 
   //==========
 

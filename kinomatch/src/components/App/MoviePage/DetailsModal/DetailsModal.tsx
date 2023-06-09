@@ -5,10 +5,15 @@ import './DetailsModal.scss';
 interface DetailsModalProps {
   showDetailsModal: boolean;
   setShowDetailsModal: (showDetailsModal: boolean) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   movie: any | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   credits: any | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   directingCrewMembers: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formatDate: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   convertMinutesInHours: (showDetailsModal: any) => ReactNode;
 }
 

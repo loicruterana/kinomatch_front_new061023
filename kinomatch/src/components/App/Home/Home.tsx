@@ -1,7 +1,11 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  Genre,
+  Provider
+} from '../../../utils/interfaces';
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
@@ -25,18 +29,29 @@ import { NoResultContext } from '../../../contexts/NoResultContext';
 
 
 // ================ COMPOSANT ================
-export const Home = () => {
+export const Home: React.FC = () => {  
+  
   const navigate = useNavigate();
 
   // ================ USESTATE ================
-  const [preselectedGenres, setPreselectedGenres] = useState([])
-  const [preselectedProviders, setPreselectedProviders] = useState();
+
+  interface ProviderFromAPI {
+    display_priorities: {
+      [countryCode: string]: number;
+    };
+    display_priority: number;
+    logo_path: string;
+    provider_id: number;
+    provider_name: string;
+  }
+  
+  const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
+
+  const [preselectedProviders, setPreselectedProviders] = useState<Provider[]>([]);
   const [showRollGenre, setShowRollGenre] = useState(false);
   const [showRollProvider, setShowRollProvider] = useState(false);
   const [showRollDecade, setShowRollDecade] = useState(false);
   const [mobileVersion, setMobileVersion] = useState(false);
-  const [goToMoviePage, setGoToMoviePage] = useState(false);
-
 
 
 
@@ -58,16 +73,20 @@ export const Home = () => {
     load();
     setCurrentMovieId('');
     axios.get('https://deploy-back-kinomatch.herokuapp.com/genres')
-      .then(({ data }) => setPreselectedGenres(data.genres))
+      .then(({ data }) => 
+      setPreselectedGenres(data.genres)
+)
       .catch((error) => console.error(error))
       .finally(() => unload());
 
     axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
       .then(({ data }) => {
-        const filteredProviders = data.results
-          .reduce((validProviders, currentProvider) => {
+        console.log(data.results);
+        const filteredProviders : Provider[] = data.results        
+          .reduce((validProviders: Provider[], currentProvider : ProviderFromAPI) => {
             if (
-              currentProvider.display_priorities.hasOwnProperty('FR') &&
+              //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
+              Object.prototype.hasOwnProperty.call(currentProvider.display_priorities, 'FR') &&
               currentProvider.display_priorities['FR'] < 20 &&
               !validProviders.includes(currentProvider)
               // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
@@ -85,12 +104,13 @@ export const Home = () => {
       })
       .finally(() => unload());
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   //=================================
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const searchParams = new URLSearchParams();
@@ -102,7 +122,7 @@ export const Home = () => {
       searchParams.append('providerID', filter.provider_id);
     });
 
-    selectedDecadeFilters.map((filter) => {
+    selectedDecadeFilters.map((filter : string) => {
       searchParams.append('decade', filter);
     });
 
@@ -165,14 +185,10 @@ export const Home = () => {
     removeProviderFilter(event.currentTarget.dataset.id || '');
   }
 
-  function handleRemoveDecade(event: React.MouseEvent<HTMLDivElement>): void {
-    removeDecadeFilter(event.currentTarget.dataset.id || '');
+  function handleRemoveDecade(): void {
+    removeDecadeFilter();
   }
 
-
-  if (goToMoviePage) {
-    return <Navigate to="/films" />;
-  }
 
   if (noResult) {
     setTimeout(function() {
@@ -211,8 +227,8 @@ export const Home = () => {
                 </div>
               ))
             }
-                        {selectedDecadeFilters.map((filter) => (
-              <div key={filter.id} className="Home__filters-selector__containers__filters-container__filter"
+                        {selectedDecadeFilters.map((filter : string) => (
+              <div key={filter} className="Home__filters-selector__containers__filters-container__filter"
               >
                 {filter}
                 <div className="Home__filters-selector__containers__filters-container__filter__cross" onClick={handleRemoveDecade} data-id={filter}>

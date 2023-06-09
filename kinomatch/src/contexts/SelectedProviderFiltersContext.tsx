@@ -28,10 +28,11 @@ export const SelectedProviderFiltersProvider: React.FC<SelectedProviderFiltersPr
       removeProviderFilter(name);
       return;
     }
+    //!  ================"id" DÉCLARÉ MAIS NON UTILISÉ EN BDD =============
     setSelectedProviderFilters((state) => [
       ...state,
       {
-        id:0,
+        id:0, 
         provider_name: name,
         provider_id: providerId,
       }

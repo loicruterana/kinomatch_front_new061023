@@ -9,8 +9,16 @@ interface LoadingContextType {
   addError: (error: string) => void;
 }
 
-export const LoadingContext = createContext<LoadingContextType>();
-
+export const LoadingContext = createContext<LoadingContextType>({
+  isLoading: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  load: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  unload: () => {},
+  error: null,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  addError: () => {},
+});
 // Fournisseur de contexte
 interface LoadingProviderProps {
   children: ReactNode;

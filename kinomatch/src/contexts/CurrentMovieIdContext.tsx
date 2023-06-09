@@ -7,7 +7,13 @@ export interface CurrentMovieIdContextProps {
   addMovieData: (movieId: string) => void;
 }
 
-export const CurrentMovieIdContext = createContext<CurrentMovieIdContextProps>();
+export const CurrentMovieIdContext = createContext<CurrentMovieIdContextProps>({
+  currentMovieId: '',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setCurrentMovieId: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  addMovieData: () => {},
+});
 
 // Fournisseur de contexte
 interface CurrentMovieIdProviderProps {

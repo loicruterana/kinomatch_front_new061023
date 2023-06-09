@@ -1,23 +1,37 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useContext, useState, useEffect } from 'react'
-// import { LoadingContext } from '../../../../contexts/LoadingContext';
-
+import React from 'react'
+import {
+  WatchedListArray,
+  WatchedMoviesObject,
+  ToWatchListArray,
+  toWatchMoviesObject,
+  BookmarkedListObject,
+} from '../../../../utils/interfaces';
 
 // ================ IMPORT SCSS ================
 
 // ================ IMPORT CONTEXTS ================
+
 interface BookmarkedRollProps {
   isLoading: boolean;
   mobileVersion: boolean;
   showWatchedRoll: boolean;
   showToWatchRoll: boolean;
-  watchedList: [];
-  watchedMovies: object;
-  toWatchList: [];
-  toWatchMovies: object;
-  bookmarkedList: object;
-
+  watchedList: WatchedListArray; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films regardés
+  watchedMovies: WatchedMoviesObject;
+  toWatchList: ToWatchListArray; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films à regarder
+  toWatchMovies: toWatchMoviesObject;
+  bookmarkedList: BookmarkedListObject; // Remplacez "{ [key: string]: boolean }" par le type approprié pour le dictionnaire des films favoris
+  setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films regardés
+  setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films à regarder
+  deleteToWatch: (element: { movie: string; }) => void; // Remplacez "string" par le type approprié pour l'ID du film
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  deleteBookmarkedAndWatched: (element: { movie: string; toString: () => any; }) => void; // Remplacez "string" par le type approprié pour l'ID du film
+  handleAddBookmarked: (film_id: string) => void; // Remplacez "string" par le type approprié pour l'ID du film
+  handleRemoveBookmarked: (film_id: string) => void; // Remplacez "string" par le type approprié pour l'ID du film
 }
+
+
 
 // ================ COMPOSANT ================
 export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
@@ -62,7 +76,7 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
 
 
 
-  function handleRemoveToWatch(film_id) {
+  function handleRemoveToWatch(film_id : string) {
     deleteToWatch(film_id);
     setToWatchList(state => state.filter(element => element.film_id !== film_id));
   }

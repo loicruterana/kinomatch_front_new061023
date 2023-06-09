@@ -3,7 +3,7 @@
 export interface WatchedListEntry {
   id: number;
   user_id: string;
-  film_id: string | null;
+  film_id: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -13,7 +13,7 @@ export type WatchedListArray = WatchedListEntry[];
 //---
 
 export interface WatchedMoviesListEntry {
-  movie_id: string | undefined;
+  movie_id: string;
   name: string;
 }
 
@@ -24,7 +24,7 @@ export type WatchedMoviesObject = Record<number, WatchedMoviesListEntry | undefi
 export interface ToWatchListEntry {
   id: number;
   user_id: string;
-  film_id: string | null | undefined;
+  film_id: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -45,12 +45,15 @@ export type toWatchMoviesObject = Record<number , ToWatchListEntry | undefined>;
 export interface BookmarkedListEntry {
   id: number;
   user_id: string;
-  film_id: string | null;
+  film_id: string | undefined;
   createdAt: string;
   updatedAt: string;
 }
 
-export type BookmarkedListObject = Record<number , BookmarkedListEntry | undefined>;
+export type BookmarkedListObject = {
+  [key: number]: BookmarkedListEntry | undefined;
+};
+
 
 //=========== AUTHCONTEXT
 
@@ -59,4 +62,17 @@ export interface UserData {
   email: string;
   id: string;
   bookmarked: string;
+}
+
+//=========== HOME & FILTERSROLL
+
+
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface Provider {
+  provider_id: number;
+  provider_name: string;
 }

@@ -1,5 +1,9 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import {
+  Genre,
+  Provider
+} from '../../../../utils/interfaces';
 
 // ================ IMPORT SCSS ================
 // import './Rolls.scss';
@@ -9,10 +13,28 @@ import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreF
 import { SelectedProviderFiltersContext } from '../../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecadeFiltersContext';
 
+interface RollGenreProps {
+  preselectedGenres: Genre[];
+  preselectedProviders: Provider[];
+  mobileVersion: boolean;
+  showRollGenre: boolean;
+  showRollProvider: boolean;
+  showRollDecade: boolean;
+  isLoading: boolean;
+  handleClickOut: () => void;
+}
 
 // ================ COMPOSANT ================
-export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersion, showRollGenre, showRollProvider, showRollDecade, isLoading, handleClickOut }) => {
-
+export const RollGenre = ({
+  preselectedGenres,
+  preselectedProviders,
+  mobileVersion,
+  showRollGenre,
+  showRollProvider,
+  showRollDecade,
+  isLoading,
+  handleClickOut
+}: RollGenreProps) => {
   // ================ IMPORT PROPS CONTEXTS ================
   const { addGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { addProviderFilter } = useContext(SelectedProviderFiltersContext);
@@ -68,9 +90,9 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>GENRE</div>
                 {
                   isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
-                    <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick} data-id={preselectedGenre.id}>
+                    <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick} data-id={preselectedGenre.id}>
                       {preselectedGenre.name}
-                    </div>
+                    </button>
                   ))
                 }
               </div>
@@ -86,12 +108,12 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>PLATEFORME</div>
                 {
                   isLoading ? "Chargement en cours" : preselectedProviders.map((preselectedProvider) => (
-                    <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+                    <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
                       onClick={handleProviderClick}
                       data-id={preselectedProvider.provider_id}
                     >
                       {preselectedProvider.provider_name}
-                    </div>
+                    </button>
                   ))
                 }
               </div>
@@ -107,11 +129,13 @@ export const RollGenre = ({ preselectedGenres, preselectedProviders, mobileVersi
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>DÉCENNIE</div>
 
                 {decades.map((decade, index) => (
-                  <div key={index} className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+                  <button
+                    key={index}
+                    className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
                     onClick={handleDecadeClick}
                   >
                     {decade}
-                  </div>
+                  </button>
                 ))}
 
               </div>
