@@ -384,7 +384,7 @@ function MoviePage() {
             <img
               className='movieFound__essentiel-image'
               src={
-                movie?.poster_path
+                movie.poster_path
                   ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
                   : '/images/testsample.jpg'
               }
@@ -481,7 +481,6 @@ function MoviePage() {
             </ul>
             {/* Affichage des acteurs concernant le film affiché */}
             <ul className='movieDetails__description-actorsList'>
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               {mappedActorCastMembers.map((actor: { name: string; credit_id: string }, index: number) => (
                 <li
                   key={actor.credit_id}

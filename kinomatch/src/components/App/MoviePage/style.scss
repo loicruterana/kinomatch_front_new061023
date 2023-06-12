@@ -16,7 +16,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    padding: 52px 3rem 3.4rem 3rem;
+    padding: 50px 3rem 1rem 3rem;
 
     // TITRE, AFFICHE, ICONES, NOTE, AVIS ET PLATEFORMES
     &__essentiel {
@@ -386,7 +386,7 @@
   .movieDetails__filters {
     display: flex;
     position: fixed;
-    z-index: 3;
+    z-index: 1001;
     align-items: center;
     filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
     bottom: 0;
@@ -473,6 +473,16 @@
         display: inline-block;
         font-size: 1rem;
         font-weight: bold;
+      }
+    }
+
+    &-genresList {
+      margin-top: 1rem;
+
+      &--genres {
+        display: inline-block;
+        font-size: 1.2rem;
+        font-weight: 400;
       }
     }
 
