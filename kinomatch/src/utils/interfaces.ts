@@ -34,11 +34,11 @@ export type ToWatchListArray = ToWatchListEntry[];
 //---
 
 export interface toWatchMoviesEntry {
-  movie_id?: string;
   name: string;
+  movie_id?: string;
 }
 
-export type toWatchMoviesObject = Record<number , ToWatchListEntry | undefined>;
+export type toWatchMoviesObject = Record<number , toWatchMoviesEntry | undefined>;
 
 //---
 

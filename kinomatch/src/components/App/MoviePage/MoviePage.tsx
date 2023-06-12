@@ -55,6 +55,7 @@ interface Providers {
   };
 }
 
+
 function MoviePage() {
   const navigate = useNavigate();
 
@@ -149,16 +150,6 @@ function MoviePage() {
   const [movieArray, setMovieArray] = useState([]);
 
   {
-    /* UseState qui récupère un id de film aléatoire en parcourant le résultat de requête axios */
-  }
-  const [randomID, setRandomID] = useState('');
-
-  {
-    /* UseState qui récupère l'id du film sélectionné par l'utilisateur */
-  }
-  const [selectedId, setSelectedId] = useState('');
-
-  {
     /* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */
   }
   const [desktopVersion, setDesktopVersion] = useState(false);
@@ -173,7 +164,9 @@ function MoviePage() {
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
+  const { selectedProviderFilters } = useContext(
+    SelectedProviderFiltersContext
+  );
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
@@ -184,8 +177,6 @@ function MoviePage() {
   {
     /* =============================================================== */
   }
-
-  console.log(selectedId);
 
   {
     /* UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre  */
@@ -212,7 +203,6 @@ function MoviePage() {
   }
   useEffect(() => {
     setIsLoading(true);
-
     axios
       .get(
         `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
@@ -220,15 +210,10 @@ function MoviePage() {
       .then(({ data }) => {
         console.log(data, typeof data);
         if (data.results.length === 0) {
-          // console.log('je passe par le if noresult');
-          // setDisplayNoResult(true);
-          // setTimeout(function() {
           handleNoResult();
           navigate(`/`);
-          // }, 2500);
           return;
         }
-
         const numberOfPages = data.total_pages;
         console.log(numberOfPages);
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
@@ -250,40 +235,50 @@ function MoviePage() {
           }&${searchParams1.toString()}`
         );
       })
-      .then(({ data }) => {
-        console.log('data2', data);
-        const selectRandomID =
-          data.results[Math.floor(Math.random() * data.results.length)].id;
-        const filteredResults = data.results.filter(
-          (result: { id: string }) => result.id !== selectRandomID
-        );
-        setMovieArray(filteredResults);
-        console.log(data.results);
-        const searchParams = new URLSearchParams();
-        if (currentMovieId) {
-          searchParams.append('movieID', currentMovieId);
-        } else {
-          searchParams.append('movieID', selectRandomID);
-          setRandomID(selectRandomID);
+      .then((response) => {
+        const data = response?.data;
+        if (data) {
+          console.log('data2', data);
+          const selectRandomID =
+            data.results[Math.floor(Math.random() * data.results.length)].id;
+          const filteredResults = data.results.filter(
+            (result: { id: string }) => result.id !== selectRandomID
+          );
+          setMovieArray(filteredResults);
+          console.log(data.results);
+          const searchParams = new URLSearchParams();
+          if (currentMovieId) {
+            searchParams.append('movieID', currentMovieId);
+          } else {
+            searchParams.append('movieID', selectRandomID);
+          }
+          const requests = [
+            axios.get(
+              `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+            ),
+            axios.get(
+              `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+            ),
+            axios.get(
+              `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+            ),
+          ];
+          return Promise.all(requests);
         }
-        const requests = [
-          axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-          ),
-          axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-          ),
-          axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-          ),
-        ];
-        return Promise.all(requests);
       })
-      .then(([movieData, creditsData, providersData]) => {
-        if (movieData.data && creditsData.data && providersData.data) {
-          setMovie(movieData.data);
-          setCredits(creditsData.data);
-          setProviders(providersData.data);
+      .then((responses) => {
+        if (Array.isArray(responses)) {
+          const [movieData, creditsData, providersData] = responses;
+          if (
+            movieData.data &&
+            creditsData.data &&
+            providersData.data
+          ) {
+            setMovie(movieData.data);
+            setCredits(creditsData.data);
+            setProviders(providersData.data);
+            console.log(movieData);
+          }
         }
       })
       .catch((error) => console.error(error))
@@ -432,28 +427,24 @@ function MoviePage() {
                 )}
               </li>
               <li>
-                {selectedProviderFilters.map(
-                  (provider) => (
-                    <p
-                      key={provider.id}
-                      className='movieDetails__filters-desktop--filterElem'
-                    >
-                      {provider.provider_name}
-                    </p>
-                  )
-                )}
+                {selectedProviderFilters.map((provider) => (
+                  <p
+                    key={provider.id}
+                    className='movieDetails__filters-desktop--filterElem'
+                  >
+                    {provider.provider_name}
+                  </p>
+                ))}
               </li>
               <li>
-                {selectedDecadeFilters.map(
-                  (decade) => (
-                    <p
-                      key={decade}
-                      className='movieDetails__filters-desktop--filterElem'
-                    >
-                      {decade}
-                    </p>
-                  )
-                )}
+                {selectedDecadeFilters.map((decade) => (
+                  <p
+                    key={decade}
+                    className='movieDetails__filters-desktop--filterElem'
+                  >
+                    {decade}
+                  </p>
+                ))}
               </li>
             </ul>
 
@@ -490,7 +481,8 @@ function MoviePage() {
             </ul>
             {/* Affichage des acteurs concernant le film affiché */}
             <ul className='movieDetails__description-actorsList'>
-              {mappedActorCastMembers.map((actor: any, index: number) => (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              {mappedActorCastMembers.map((actor: { name: string; credit_id: string }, index: number) => (
                 <li
                   key={actor.credit_id}
                   className='movieDetails__description-actorsList--actors'

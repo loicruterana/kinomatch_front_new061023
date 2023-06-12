@@ -11,6 +11,10 @@ import {
   UserData
 } from '../../../utils/interfaces';
 
+import {
+  toWatchMoviesEntry
+} from './../../../utils/interfaces'
+
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
 
 import { LoadingContext } from '../../../contexts/LoadingContext';
@@ -51,15 +55,14 @@ export const Profile: React.FC = () => {
     deleteBookmarked,
     deleteToWatch,
     deleteBookmarkedAndWatched,
-    deleteWatched,
+    // deleteWatched,
     addBookmarked,
   } = useContext(AuthContext) as {
     userData : UserData;
     logout: () => void;
     deleteBookmarked: (element: { movie: string }) => void;
     deleteToWatch: (element: { movie: string }) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    deleteBookmarkedAndWatched: (element: { movie: string; toString: () => any }) => void;
+    deleteBookmarkedAndWatched: (element: { movie: string }) => void;
     deleteWatched: (element: { movie: string }) => void;
     addBookmarked: (element: { movie: string }) => void;
   };
@@ -243,6 +246,7 @@ export const Profile: React.FC = () => {
           .then(({ data }) => {
             // Utiliser un objet pour stocker les films uniques
             const bookmarked: BookmarkedListObject = {};
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.forEach((element: any) => {
               const key = element.film_id?.toString();
               bookmarked[key] = element as BookmarkedItem;
@@ -310,11 +314,12 @@ export const Profile: React.FC = () => {
               name: data.title,
               movie_id: data.id,
             }));
-            const uniqueMovies = {};
+            const uniqueMovies: Record<string, toWatchMoviesEntry> = {};
             moviesToAdd.forEach((movie) => {
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
             setToWatchMovies(uniqueMovies);
+            
           })
           .catch((error) => {
             console.error(error);
@@ -394,14 +399,14 @@ console.log(toWatchList)
             isLoading={coucou}
             mobileVersion={mobileVersion}
             showWatchedRoll={showWatchedRoll}
-            setShowWatchedRoll={setShowWatchedRoll}
+            // setShowWatchedRoll={setShowWatchedRoll}
             showToWatchRoll={showToWatchRoll}
-            setShowToWatchRoll={setShowToWatchRoll}
+            // setShowToWatchRoll={setShowToWatchRoll}
             watchedList={watchedList}
             setWatchedList={setWatchedList}
             watchedMovies={watchedMovies}
-            setWatchedMovies={setWatchedMovies}
-            deleteWatched={deleteWatched}
+            // setWatchedMovies={setWatchedMovies}
+            // deleteWatched={deleteWatched}
             toWatchList={toWatchList}
             setToWatchList={setToWatchList}
             toWatchMovies={toWatchMovies}
@@ -409,8 +414,8 @@ console.log(toWatchList)
             deleteToWatch={deleteToWatch}
             deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
             bookmarkedList={bookmarkedList}
-            deleteBookmarked={deleteBookmarked}
-            addBookmarked={addBookmarked}
+            // deleteBookmarked={deleteBookmarked}
+            // addBookmarked={addBookmarked}
 
             handleRemoveBookmarked={handleRemoveBookmarked}
             handleAddBookmarked={handleAddBookmarked}

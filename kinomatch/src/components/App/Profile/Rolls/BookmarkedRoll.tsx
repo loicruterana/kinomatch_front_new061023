@@ -1,6 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import React from 'react'
 import {
+  WatchedListEntry,
   WatchedListArray,
   WatchedMoviesObject,
   ToWatchListArray,
@@ -16,44 +17,44 @@ interface BookmarkedRollProps {
   isLoading: boolean;
   mobileVersion: boolean;
   showWatchedRoll: boolean;
-  showToWatchRoll: boolean;
-  watchedList: WatchedListArray; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films regardés
+  // setShowWatchedRoll: React.Dispatch<React.SetStateAction<boolean>>;
+  watchedList: WatchedListArray;
   watchedMovies: WatchedMoviesObject;
-  toWatchList: ToWatchListArray; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films à regarder
+  toWatchList: ToWatchListArray;
   toWatchMovies: toWatchMoviesObject;
-  bookmarkedList: BookmarkedListObject; // Remplacez "{ [key: string]: boolean }" par le type approprié pour le dictionnaire des films favoris
-  setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films regardés
-  setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>; // Remplacez "{ id: string; film_id: string }[]" par le type approprié pour la liste des films à regarder
-  deleteToWatch: (element: { movie: string; }) => void; // Remplacez "string" par le type approprié pour l'ID du film
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  deleteBookmarkedAndWatched: (element: { movie: string; toString: () => any; }) => void; // Remplacez "string" par le type approprié pour l'ID du film
-  handleAddBookmarked: (film_id: string) => void; // Remplacez "string" par le type approprié pour l'ID du film
-  handleRemoveBookmarked: (film_id: string) => void; // Remplacez "string" par le type approprié pour l'ID du film
+  bookmarkedList: BookmarkedListObject;
+  setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>;
+  showToWatchRoll: boolean;
+  // setShowToWatchRoll: React.Dispatch<React.SetStateAction<boolean>>;
+  setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>;
+  deleteToWatch: (element: { movie: string; }) => void;
+  deleteBookmarkedAndWatched: (element: { movie: string }) => void;
+  handleAddBookmarked: (film_id: string) => void;
+  handleRemoveBookmarked: (film_id: string) => void;
 }
 
+// interface toWatchMoviesEntry<T> {
+//   [key: number]: T;
+// }
 
 
 // ================ COMPOSANT ================
-export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
+export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   isLoading,
   mobileVersion,
   showWatchedRoll,
-  showToWatchRoll,
-
+  // setShowWatchedRoll,
   watchedList,
-  setWatchedList,
   watchedMovies,
-
   toWatchList,
-  setToWatchList,
   toWatchMovies,
-  deleteToWatch,
-
-
-  deleteBookmarkedAndWatched,
-
   bookmarkedList,
-
+  setWatchedList,
+  showToWatchRoll,
+  // setShowToWatchRoll,
+  setToWatchList,
+  deleteToWatch,
+  deleteBookmarkedAndWatched,
   handleAddBookmarked,
   handleRemoveBookmarked
 }) => {
@@ -66,7 +67,7 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
   // =========================== HANDLERBOUTON X
 
   function handleRemoveWatched(film_id : string) {
-    deleteBookmarkedAndWatched(film_id)
+    deleteBookmarkedAndWatched({ movie: film_id });
     setWatchedList(state => state.filter(element => element.film_id !== film_id));
   }
 
@@ -77,12 +78,15 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
 
 
   function handleRemoveToWatch(film_id : string) {
-    deleteToWatch(film_id);
+    const film = { movie: film_id };
+    deleteToWatch(film);
     setToWatchList(state => state.filter(element => element.film_id !== film_id));
   }
 
   console.log(bookmarkedList)
-  // console.log(toWatchMovies)
+  console.log(toWatchMovies)
+  console.log(toWatchList)
+
 
   // ================ JSX ================
   return (
@@ -105,7 +109,7 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
               ) : (
                 watchedList
                   // .filter((value, index, self) => self.findIndex(item => item.name === value.name) === index) // Supprime les doublons en se basant sur le nom
-                  .map((watchedListItem) => {
+                  .map((watchedListItem : WatchedListEntry) => {
                     // const isBookmarked = bookmarkedItems.includes(watchedListItem.film_id);
 
                     return (
@@ -115,19 +119,19 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
                       >
                         {/* Bouton de bookmark */}
                         <i
-                          className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${bookmarkedList[watchedListItem.film_id] ? 'solid' : 'regular'
+                          className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-a fa-${bookmarkedList[Number(watchedListItem.film_id)] ? 'solid' : 'regular'
                             } fa-heart`}
                           onClick={() => {
-                            if (bookmarkedList[watchedListItem.film_id]) {
+                            if (bookmarkedList[Number(watchedListItem.film_id)]) {
                               handleRemoveBookmarked(watchedListItem.film_id);
                             } else {
                               handleAddBookmarked(watchedListItem.film_id);
                             }
                           }}
-                          style={{ color: bookmarkedList[watchedListItem.film_id] ? '#D42121' : '' }}
+                          style={{ color: bookmarkedList[Number(watchedListItem.film_id)] ? '#D42121' : '' }}
                         ></i>
 
-                        {watchedMovies[watchedListItem.film_id]?.name}
+                          {watchedMovies[Number(watchedListItem.film_id)]?.name}
 
                         <i
                           onClick={() => handleRemoveWatched(watchedListItem.film_id)}
@@ -159,13 +163,14 @@ export const BookmarkedRoll : React.FC<BookmarkedRollProps> = ({
                 <div>Chargement en cours...</div>
               ) : (
                 toWatchList
-                  .map((toWatchListItem) => {
+                  .map((toWatchListItem
+                    ) => {
                     return (
                       <div
                         className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
                         key={toWatchListItem.id}
                       >
-                        {toWatchMovies[toWatchListItem.film_id]?.name}
+                        {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
                         <i
                           onClick={() => handleRemoveToWatch(toWatchListItem.film_id)}
                           className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-b fa-solid fa-xmark`}></i>
