@@ -1,173 +1,160 @@
 @use '../../../../styles/vars';
 
-
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
+  // Element commun au titre de chaque catégorie de disponibilité
+  .common-title--desktop {
+    font-size: 1rem;
+    font-weight: bold;
+    height: fit-content;
+    text-align: center;
+    text-transform: uppercase;
+    color: vars.$theme1-primary;
+    background-color: vars.$theme1-secondary;
+    margin: 0.3rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
 
-    // Element commun au titre de chaque catégorie de disponibilité
-    .common-title--desktop {
+  // Plateformes
+  .movieFound__essentiel {
+    width: 100%;
+
+    // Container affichage plateformes
+    .movieFound__essentiel-detailPlateforms {
+      width: 100%;
+
+      :hover {
+        // transform: scale(1.05);
+        cursor: pointer;
+        // transition: all 0.2s ease;
+      }
+
+      &--details {
+        background-color: #fff3b0;
+        color: #335c67;
+        width: fit-content;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0.3rem auto 1rem auto;
+      }
+    }
+
+    // Container regroupant les plateformes
+    &-disponibility {
+      display: flex;
+      justify-content: space-around;
+      // min-width: fit-content;
+      padding-bottom: 2rem;
+
+      :hover {
+        transform: none;
+        cursor: pointer;
+        // transition: all 0.2s ease;
+      }
+
+      // Plateforme individuelle
+      & li {
         font-size: 1rem;
         font-weight: bold;
         height: fit-content;
         text-align: center;
-        text-transform: uppercase;
         color: vars.$theme1-primary;
         background-color: vars.$theme1-secondary;
         margin: 0.3rem;
-        margin-bottom: 1rem;
         padding: 0.5rem;
         border-radius: 6px;
+
+        // :hover {
+        //     transform: scale(1.1);
+        //     // transition: all 0.2s ease;
+        // }
+      }
     }
 
-    // Plateformes
-    .movieFound__essentiel {
-        width: 100%;
-
-        // Container affichage plateformes
-        .movieFound__essentiel-detailPlateforms {
-            width: 100%;
-
-            :hover {
-                // transform: scale(1.05);
-                cursor: pointer;
-                // transition: all 0.2s ease;
-            }
-
-            &--details {
-                background-color: #fff3b0;
-                color: #335c67;
-                width: fit-content;
-                padding: 0.6rem 1rem;
-                border-radius: 6px;
-                font-size: 1.3rem;
-                font-weight: bold;
-                margin: 0.3rem auto 1rem auto;
-            }
+    // Boucle sur chaque élément + implémentation du .common-title
+    @each $option in flatrate, rent, buy, free, ads {
+      &-#{$option} {
+        &--title {
+          @extend .common-title--desktop;
         }
-
-        // Container regroupant les plateformes
-        &-disponibility {
-            display: flex;
-            justify-content: space-around;
-            // min-width: fit-content;
-            padding-bottom: 2rem;
-
-            :hover {
-                transform: none;
-                cursor: pointer;
-                // transition: all 0.2s ease;
-            }
-
-            // Plateforme individuelle
-            & li {
-                font-size: 1rem;
-                font-weight: bold;
-                height: fit-content;
-                text-align: center;
-                color: vars.$theme1-primary;
-                background-color: vars.$theme1-secondary;
-                margin: 0.3rem;
-                padding: 0.5rem;
-                border-radius: 6px;
-
-                // :hover {
-                //     transform: scale(1.1);
-                //     // transition: all 0.2s ease;
-                // }
-            }
-        }
-
-        // Boucle sur chaque élément + implémentation du .common-title
-        @each $option in flatrate,
-        rent,
-        buy,
-        free,
-        ads {
-            &-#{$option} {
-                &--title {
-                    @extend .common-title--desktop;
-                }
-            }
-        }
+      }
     }
+  }
 }
 
 //* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
+  // Element commun au titre de chaque catégorie de disponibilité
+  .common-title--mobile {
+    font-size: 1rem;
+    font-weight: bold;
+    height: fit-content;
+    text-align: center;
+    text-transform: uppercase;
+    color: vars.$theme1-primary;
+    background-color: vars.$theme1-secondary;
+    margin: 1rem 0.3rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
 
-    // Element commun au titre de chaque catégorie de disponibilité
-    .common-title--mobile {
+  // Plateformes
+  .movieFound__essentiel {
+    // Container affichage plateformes
+    .movieFound__essentiel-detailPlateforms {
+      width: 100%;
+
+      &--details {
+        background-color: #fff3b0;
+        color: #335c67;
+        width: fit-content;
+        padding: 0.6rem 0.5rem;
+        height: fit-content;
+        border-radius: 6px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0.2rem auto 1.3rem auto;
+      }
+    }
+
+    // Container regroupant les plateformes
+    &-disponibility {
+      display: flex;
+      justify-content: space-around;
+      min-width: fit-content;
+
+      // Plateforme individuelle
+      & li {
         font-size: 1rem;
         font-weight: bold;
         height: fit-content;
         text-align: center;
-        text-transform: uppercase;
         color: vars.$theme1-primary;
         background-color: vars.$theme1-secondary;
-        margin: 1rem 0.3rem;
+        margin: 0.3rem;
         padding: 0.5rem;
         border-radius: 6px;
+
+        :hover {
+          transform: scale(1.1);
+          // transition: all 0.2s ease;
+        }
+      }
     }
 
-    // Plateformes
-    .movieFound__essentiel {
-
-        // Container affichage plateformes
-        .movieFound__essentiel-detailPlateforms {
-            width: 100%;
-
-            &--details {
-                background-color: #fff3b0;
-                color: #335c67;
-                width: fit-content;
-                padding: 0.6rem 0.5rem;
-                height: fit-content;
-                border-radius: 6px;
-                font-size: 1.3rem;
-                font-weight: bold;
-                margin: 0.2rem auto 1.3rem auto;
-            }
+    // Boucle sur chaque élément + implémentation du .common-title
+    @each $option in flatrate, rent, buy, free, ads {
+      &-#{$option} {
+        &--title {
+          @extend .common-title--mobile;
         }
-
-        // Container regroupant les plateformes
-        &-disponibility {
-            display: flex;
-            justify-content: space-around;
-            min-width: fit-content;
-
-            // Plateforme individuelle
-            & li {
-                font-size: 1rem;
-                font-weight: bold;
-                height: fit-content;
-                text-align: center;
-                color: vars.$theme1-primary;
-                background-color: vars.$theme1-secondary;
-                margin: 0.3rem;
-                padding: 0.5rem;
-                border-radius: 6px;
-
-                :hover {
-                    transform: scale(1.1);
-                    // transition: all 0.2s ease;
-                }
-            }
-        }
-
-        // Boucle sur chaque élément + implémentation du .common-title
-        @each $option in flatrate,
-        rent,
-        buy,
-        free,
-        ads {
-            &-#{$option} {
-                &--title {
-                    @extend .common-title--mobile;
-                }
-            }
-        }
+      }
     }
-
+  }
 }
