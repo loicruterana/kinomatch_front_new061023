@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import Footer from '../../Footer/Footer';
+
 import './BurgerMenu.scss';
-import { Link } from 'react-router-dom';
 
 interface Props {
   showBurgerMenu: boolean;
@@ -98,6 +100,7 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
             </>
           )}
         </div>
+        <Footer />
       </div>
     </div>
   );

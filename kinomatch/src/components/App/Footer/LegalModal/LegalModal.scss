@@ -10,84 +10,91 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
-  }
 
-  .legalModal {
-    position: fixed;
-    overflow: auto;
-    z-index: 1;
-    width: 75vw;
-    height: auto;
-    margin: 20%;
-    border: none;
-    text-align: center;
-    padding-bottom: 3rem;
 
-    &__title {
-      display: flex;
-      flex-direction: column;
-      color: vars.$theme1-primary;
-      background-color: vars.$theme1-secondary;
-      border-radius: 0.7rem;
-      margin: 2rem auto;
-      padding: 20px;
-      width: 80%;
-      white-space: pre-wrap;
-    }
-
-    h2 {
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    h3 {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-top: 0.6rem;
-      text-align: center;
-    }
-
-    h4 {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: vars.$theme1-primary;
-      background-color: vars.$theme1-secondary;
-      border-radius: 0.7rem;
-      margin: 2rem auto;
-      padding: 10px;
-      width: 80%;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: vars.$theme1-secondary;
-      max-width: 80%;
-      margin: 1rem auto;
-      text-align: justify;
-    }
-
-    &__button--container {
-      display: flex;
-      width: 100vw;
-      height: 70px;
-      justify-content: center;
-      align-items: center;
+    &__legalModal {
       position: fixed;
-      bottom: 0;
-      background-color: #335c67;
-      filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+      overflow: auto;
+      z-index: 1;
+      width: 75vw;
+      height: auto;
+      margin: 20%;
+      border: none;
+      text-align: center;
+      padding-bottom: 3rem;
 
-      &---btn {
-        font-size: 1.2rem;
-        width: 20%;
-        height: 2rem;
-        border: none;
-        background: none;
-        background-color: #fff3b0;
+      &__title {
+        display: flex;
+        flex-direction: column;
         color: vars.$theme1-primary;
-        border-radius: 6px;
+        background-color: vars.$theme1-secondary;
+        border-radius: 0.7rem;
+        margin: 2rem auto;
+        padding: 20px;
+        width: 80%;
+        white-space: pre-wrap;
+      }
+
+      h2 {
+        font-size: 2rem;
         font-weight: bold;
+        text-align: center;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-top: 0.6rem;
+        text-align: center;
+      }
+
+      h4 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: vars.$theme1-primary;
+        background-color: vars.$theme1-secondary;
+        border-radius: 0.7rem;
+        margin: 2rem auto;
+        padding: 10px;
+        width: 80%;
+      }
+
+      p {
+        font-size: 1.2rem;
+        color: vars.$theme1-secondary;
+        max-width: 80%;
+        margin: 1rem auto;
+        text-align: justify;
+      }
+
+      &__button--container {
+        z-index: 3;
+        display: flex;
+        width: 100vw;
+        height: 70px;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        background-color: #335c67;
+        filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+
+        &---btn {
+          font-size: 1.2rem;
+          width: 20%;
+          height: 2rem;
+          border: none;
+          background: none;
+          background-color: #fff3b0;
+          color: vars.$theme1-primary;
+          border-radius: 6px;
+          font-weight: bold;
+
+          &:hover {
+            transform: scale(1.03);
+            cursor: pointer;
+          }
+        }
       }
     }
   }
@@ -101,7 +108,6 @@
       width: 100vw;
       justify-content: center;
       align-items: center;
-      backdrop-filter: blur(1.3rem);
     }
 
     .legalModal {

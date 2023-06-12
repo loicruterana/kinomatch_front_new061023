@@ -272,7 +272,7 @@
 
       &__roll-modale-mobile-version {
         position: absolute;
-        z-index: 1000;
+        z-index: 5;
         top: 0px;
         display: flex;
         justify-content: center;
@@ -281,7 +281,7 @@
         background-color: vars.$theme1-primary;
 
         &-backdropfilter {
-          z-index: 1000;
+          z-index: 5;
           position: absolute;
           width: 100%;
           height: 100%;
@@ -291,7 +291,7 @@
 
         &__filterRoll {
           width: 275px;
-          z-index: 1001;
+          z-index: 6;
           overflow-y: auto;
 
           &::-webkit-scrollbar {
@@ -315,7 +315,7 @@
         }
 
         &__roll-container {
-          z-index: 1001;
+          z-index: 6;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
@@ -388,7 +388,7 @@
         margin: 300px 0;
 
         &__button {
-          z-index: 99;
+          z-index: 4;
           width: 60vw;
           height: 8vh;
           display: flex;

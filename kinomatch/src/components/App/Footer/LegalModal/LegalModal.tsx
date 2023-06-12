@@ -17,8 +17,8 @@ function LegalModal(props: LegalModalProps) {
 
   return (
     <div className='container'>
-      <div className='legalModal'>
-        <div className='legalModal__title'>
+      <div className='container__legalModal'>
+        <div className='container__legalModal__title'>
           <h2>Mentions légales </h2>
           <h3>En vigueur au 30/05/23</h3>
         </div>
@@ -42,8 +42,8 @@ function LegalModal(props: LegalModalProps) {
         <p>Le site est exempté de déclaration à la Commission Nationale Informatique et Libertés (CNIL) dans la mesure où il ne collecte aucune donnée concernant les utilisateurs. Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du Site, sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil. </p>
 
       </div>
-      <div className='legalModal__button--container'>
-        <button className='legalModal__button--container---btn' onClick={handleModal}>Retour</button>
+      <div className='container__legalModal__button--container'>
+        <button className='container__legalModal__button--container---btn' onClick={handleModal}>Retour</button>
       </div>
     </div>
 

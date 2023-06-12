@@ -30,11 +30,9 @@ function App() {
 
   return (
     <NoResultProvider>
-    <CurrentMovieIdProvider>
+      <CurrentMovieIdProvider>
         <SelectedDecadeFiltersProvider>
-
           <SelectedProviderFiltersProvider>
-
             <SelectedGenreFiltersProvider>
               <AuthProvider>
                 <LoadingProvider>
@@ -66,14 +64,12 @@ function App() {
                     />
 
                   </Routes>
-
-                  <Footer />
                 </LoadingProvider>
               </AuthProvider>
             </SelectedGenreFiltersProvider>
           </SelectedProviderFiltersProvider>
         </SelectedDecadeFiltersProvider>
-    </CurrentMovieIdProvider>
+      </CurrentMovieIdProvider>
     </NoResultProvider>
 
   )

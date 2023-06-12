@@ -14,6 +14,7 @@ import './Home.scss';
 import FiltersRoll from './Rolls/FiltersRoll';
 import Loading from '../Loading/Loading';
 import NoResult from '../NoResult/NoResult';
+import Footer from '../Footer/Footer';
 
 
 
@@ -29,8 +30,8 @@ import { NoResultContext } from '../../../contexts/NoResultContext';
 
 
 // ================ COMPOSANT ================
-export const Home: React.FC = () => {  
-  
+export const Home: React.FC = () => {
+
   const navigate = useNavigate();
 
   // ================ USESTATE ================
@@ -44,7 +45,7 @@ export const Home: React.FC = () => {
     provider_id: number;
     provider_name: string;
   }
-  
+
   const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
 
   const [preselectedProviders, setPreselectedProviders] = useState<Provider[]>([]);
@@ -73,17 +74,17 @@ export const Home: React.FC = () => {
     load();
     setCurrentMovieId('');
     axios.get('https://deploy-back-kinomatch.herokuapp.com/genres')
-      .then(({ data }) => 
-      setPreselectedGenres(data.genres)
-)
+      .then(({ data }) =>
+        setPreselectedGenres(data.genres)
+      )
       .catch((error) => console.error(error))
       .finally(() => unload());
 
     axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
       .then(({ data }) => {
         console.log(data.results);
-        const filteredProviders : Provider[] = data.results        
-          .reduce((validProviders: Provider[], currentProvider : ProviderFromAPI) => {
+        const filteredProviders: Provider[] = data.results
+          .reduce((validProviders: Provider[], currentProvider: ProviderFromAPI) => {
             if (
               //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
               Object.prototype.hasOwnProperty.call(currentProvider.display_priorities, 'FR') &&
@@ -104,7 +105,7 @@ export const Home: React.FC = () => {
       })
       .finally(() => unload());
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -122,7 +123,7 @@ export const Home: React.FC = () => {
       searchParams.append('providerID', filter.provider_id);
     });
 
-    selectedDecadeFilters.map((filter : string) => {
+    selectedDecadeFilters.map((filter: string) => {
       searchParams.append('decade', filter);
     });
 
@@ -191,7 +192,7 @@ export const Home: React.FC = () => {
 
 
   if (noResult) {
-    setTimeout(function() {
+    setTimeout(function () {
       handleNoResult()
     }, 3000);
   }
@@ -227,7 +228,7 @@ export const Home: React.FC = () => {
                 </div>
               ))
             }
-                        {selectedDecadeFilters.map((filter : string) => (
+            {selectedDecadeFilters.map((filter: string) => (
               <div key={filter} className="Home__filters-selector__containers__filters-container__filter"
               >
                 {filter}
@@ -247,7 +248,7 @@ export const Home: React.FC = () => {
         {/* // bouton validé */}
         <form onSubmit={handleFormSubmit}>
           <button type="submit">{!mobileVersion ? 'Valider mon choix' : 'Valider '}
-{/*          
+            {/*          
           <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         <path d="M0 0h24v24H0z" fill="none"/>
@@ -265,7 +266,7 @@ export const Home: React.FC = () => {
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}`}>
           <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}-backdropfilter`} onClick={handleClickOut}>
           </div>
-          <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion} handleClickOut={handleClickOut}/>
+          <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion} handleClickOut={handleClickOut} />
         </div>
       }
 
@@ -294,10 +295,15 @@ export const Home: React.FC = () => {
       }
 
       {isLoading && <Loading />}
-      {noResult && <NoResult/>}
+      {noResult && <NoResult />}
 
+      {
+        !mobileVersion &&
+        <Footer />
+      }
 
     </div>
+
   )
 
   // ================ FERMETURE DU COMPOSANT ================

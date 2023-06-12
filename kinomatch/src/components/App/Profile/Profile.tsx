@@ -20,6 +20,7 @@ import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 
 import './Profile.scss';
+import Footer from '../Footer/Footer';
 
 export const Profile: React.FC = () => {
   const navigate: (path: string) => void = useNavigate();
@@ -36,7 +37,7 @@ export const Profile: React.FC = () => {
   );
   const [userEvent, setUserEvent] = useState(false);
   const { load } = useContext(LoadingContext);
-  
+
 
   const coucou = watchedList === undefined; // false
 
@@ -58,7 +59,7 @@ export const Profile: React.FC = () => {
     // deleteWatched,
     addBookmarked,
   } = useContext(AuthContext) as {
-    userData : UserData;
+    userData: UserData;
     logout: () => void;
     deleteBookmarked: (element: { movie: string }) => void;
     deleteToWatch: (element: { movie: string }) => void;
@@ -69,7 +70,7 @@ export const Profile: React.FC = () => {
 
   // ================ HANDLERS ================
 
-  function handleRemoveBookmarked(film_id : string) {
+  function handleRemoveBookmarked(film_id: string) {
     console.log(film_id)
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
@@ -77,7 +78,7 @@ export const Profile: React.FC = () => {
     console.log("je passe par la suppression")
   }
 
-  function handleAddBookmarked(film_id : string) {
+  function handleAddBookmarked(film_id: string) {
     addBookmarked({ movie: film_id })
     setUserEvent(true);
     console.log("je passe par l'ajout")
@@ -185,7 +186,7 @@ export const Profile: React.FC = () => {
       .catch((error) => {
         console.error(error);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // =========================== MOVIES
@@ -263,13 +264,13 @@ export const Profile: React.FC = () => {
         console.error(error);
       }
     };
-  
+
     // if (userEvent) {
-      fetchMoviesBookmarked();
+    fetchMoviesBookmarked();
     // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
-  
+
   console.log(bookmarkedList)
 
 
@@ -292,7 +293,7 @@ export const Profile: React.FC = () => {
       .catch((error) => {
         console.error(error);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // =========================== TOWATCHLISTWITHNAME
@@ -319,7 +320,7 @@ export const Profile: React.FC = () => {
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
             setToWatchMovies(uniqueMovies);
-            
+
           })
           .catch((error) => {
             console.error(error);
@@ -332,7 +333,7 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [toWatchList]);
 
-console.log(toWatchList)
+  console.log(toWatchList)
 
   //==========
 
@@ -384,45 +385,43 @@ console.log(toWatchList)
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
-        <div
-          className={`Profile-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }`}
-        >
           <div
-            className={`Profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }-backdropfilter`}
-            onClick={handleClickOut}
-          ></div>
-          <BookmarkedRoll
-            isLoading={coucou}
-            mobileVersion={mobileVersion}
-            showWatchedRoll={showWatchedRoll}
-            // setShowWatchedRoll={setShowWatchedRoll}
-            showToWatchRoll={showToWatchRoll}
-            // setShowToWatchRoll={setShowToWatchRoll}
-            watchedList={watchedList}
-            setWatchedList={setWatchedList}
-            watchedMovies={watchedMovies}
-            // setWatchedMovies={setWatchedMovies}
-            // deleteWatched={deleteWatched}
-            toWatchList={toWatchList}
-            setToWatchList={setToWatchList}
-            toWatchMovies={toWatchMovies}
-            // setToWatchMovies={setToWatchMovies}
-            deleteToWatch={deleteToWatch}
-            deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
-            bookmarkedList={bookmarkedList}
-            // deleteBookmarked={deleteBookmarked}
-            // addBookmarked={addBookmarked}
+            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }`}
+          >
+            <div
+              className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }-backdropfilter`}
+              onClick={handleClickOut}
+            ></div>
+            <BookmarkedRoll
+              isLoading={coucou}
+              mobileVersion={mobileVersion}
+              showWatchedRoll={showWatchedRoll}
+              // setShowWatchedRoll={setShowWatchedRoll}
+              showToWatchRoll={showToWatchRoll}
+              // setShowToWatchRoll={setShowToWatchRoll}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+              watchedMovies={watchedMovies}
+              // setWatchedMovies={setWatchedMovies}
+              // deleteWatched={deleteWatched}
+              toWatchList={toWatchList}
+              setToWatchList={setToWatchList}
+              toWatchMovies={toWatchMovies}
+              // setToWatchMovies={setToWatchMovies}
+              deleteToWatch={deleteToWatch}
+              deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
+              bookmarkedList={bookmarkedList}
+              // deleteBookmarked={deleteBookmarked}
+              // addBookmarked={addBookmarked}
 
-            handleRemoveBookmarked={handleRemoveBookmarked}
-            handleAddBookmarked={handleAddBookmarked}
-          />
-          {/* <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/> */}
-        </div>
-      )}
+              handleRemoveBookmarked={handleRemoveBookmarked}
+              handleAddBookmarked={handleAddBookmarked}
+            />
+            {/* <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/> */}
+          </div>
+        )}
 
       {/* BOUTONS */}
 
@@ -446,6 +445,11 @@ console.log(toWatchList)
           </div>
         </div>
       )}
+      {
+        !mobileVersion &&
+        <Footer />
+
+      }
     </div>
   );
 };

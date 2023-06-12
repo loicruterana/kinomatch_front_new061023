@@ -10,6 +10,7 @@ import DetailsModal from './DetailsModal/DetailsModal';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
+import Footer from '../Footer/Footer';
 
 // ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
@@ -230,8 +231,7 @@ function MoviePage() {
           );
         }
         return axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
-            window.location.search
+          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search
           }&${searchParams1.toString()}`
         );
       })
@@ -317,9 +317,8 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${
-      month < 10 ? '0' + month : month
-    }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
+      }/${year}`;
   }
 
   {
@@ -572,6 +571,10 @@ function MoviePage() {
           )
         )}
       </section>
+      {
+        desktopVersion &&
+        <Footer />
+      }
     </div>
   );
 }
