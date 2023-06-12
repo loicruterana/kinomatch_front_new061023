@@ -24,7 +24,7 @@ function ImageModal(props: ImageModalProps) {
 
     return (
         <div className='imageModal__container'>
-          <img className='imageModal__container-image' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={`Image du film: ${movie.title}`} onClick={handleImageModal}/>
+          <img className='imageModal__container-image' src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} alt={`Image du film: ${movie?.title}`} onClick={handleImageModal}/>
         </div>
 
     )
