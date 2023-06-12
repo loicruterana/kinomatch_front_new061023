@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Header from './Header/Header';
-import Footer from './Footer/Footer';
 import MoviePage from './MoviePage/MoviePage';
 // import Home from './Home/Home';
 // import CreateProfile from './CreateProfile/CreateProfile';
