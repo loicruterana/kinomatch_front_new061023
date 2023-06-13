@@ -37,7 +37,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
             >
               <img
                 className='otherResults-container--scrollList---images'
-                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '../../../../../../public/images/SamplePoster1.png'}
+                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '/images/SamplePoster1.png'}
                 alt={`Affiche du film ${movieElem.title}`}
               />
               {

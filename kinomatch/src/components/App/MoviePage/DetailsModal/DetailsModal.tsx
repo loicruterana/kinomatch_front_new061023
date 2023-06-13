@@ -52,7 +52,7 @@ function DetailsModal(props: DetailsModalProps) {
         <h3 className='detailsModal__container-originalTitle'>Titre original</h3>
         <p className='detailsModal__container-originalTitleName'>{movie.original_title}</p>
         <div className='detailsModal__container-image--container'>
-          <img className='detailsModal__container-image--container--movie' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '../../../../../../public/images/SamplePoster1.png'} alt="Affiche du film" />
+          <img className='detailsModal__container-image--container--movie' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/images/SamplePoster1.png'} alt="Affiche du film" />
           {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
         </div>
       </div>
@@ -180,7 +180,7 @@ function DetailsModal(props: DetailsModalProps) {
               credits.cast.map((actor: { id: Key | null | undefined; name: string; profile_path: string; character: string }) => (
                 <li key={actor.id} className='detailsModal__container-actor'>
                   <h4 className='detailsModal__container-actor--title'>{actor.name}</h4>
-                  <img className='detailsModal__container-actor--image' src={actor.profile_path ? `https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face/${actor.profile_path}` : '../../../../../../public/images/SamplePic.png'} alt={`Photo de ${actor.name}`} />
+                  <img className='detailsModal__container-actor--image' src={actor.profile_path ? `https://image.tmdb.org/t/p/original/t/p/w138_and_h175_face/${actor.profile_path}` : '/images/SamplePic.png'} alt={`Photo de ${actor.name}`} />
                   <p className='detailsModal__container-actor--role'>{actor.character}</p>
                 </li>
               ))
