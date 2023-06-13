@@ -296,7 +296,7 @@
 @media screen and (max-width: 900px) {
   .movieFound {
     height: 100vh;
-    padding: 5rem 2rem 7rem 2rem;
+    padding: 75px 28px 140px 28px;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -403,7 +403,7 @@
     &-otherResultsBtn {
       font-weight: bold;
       width: 90vw;
-      height: 2.5rem;
+      height: 50pxrem;
       margin: 0.75rem;
       margin-bottom: 0.5rem;
       padding: 0.2rem 1rem;
@@ -414,12 +414,25 @@
       background-color: vars.$theme1-secondary;
     }
 
+    &-mobile--filterElemList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 0.5rem;
+
+      li {
+        display: flex;
+      }
+    }
+
     // filtres sélectionnés pour le film affiché
     &-mobile--filterElem {
       font-size: 0.9rem;
       height: fit-content;
       font-weight: bold;
-      margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+      text-align: center;
+      margin: 0.3rem 0.5rem 0.3rem 0.5rem;
       padding: 0.25rem 0.4rem;
       border: none;
       border-radius: 6px;
@@ -481,8 +494,7 @@
 
       &--genres {
         display: inline-block;
-        font-size: 1.2rem;
-        font-weight: 400;
+        font-size: 1rem;
       }
     }
 

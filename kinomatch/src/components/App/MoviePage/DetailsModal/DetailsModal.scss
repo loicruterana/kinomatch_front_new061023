@@ -161,9 +161,8 @@
         // CONTIENT TOUS LES STYLES SAUF LE BOUTTON RETOUR
         &-details {
             overflow: auto;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-around;
-            align-items: center;
             display: flex;
             width: 50%;
             height: 100%;
@@ -173,14 +172,9 @@
             }
 
 
-            &--principal {
+            &--principal, &--secondary {
                 width: 40%;
-                margin: 1rem;
-            }
-
-            &--secondary {
-                width: 40%;
-                margin: 2rem;
+                margin: 1rem auto 110px auto;
             }
 
             // Titres
@@ -371,9 +365,11 @@
         // CONTIENT TOUS LES STYLES SAUF LE BOUTTON RETOUR
         &-details {
             display: flex;
+            overflow: auto;
             justify-content: center;
             flex-wrap: wrap;
             width: 100%;
+            height: 100%;
             padding-bottom: 2rem;
             align-items: flex-start;
 

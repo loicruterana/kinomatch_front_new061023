@@ -165,9 +165,7 @@ function MoviePage() {
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters } = useContext(
-    SelectedProviderFiltersContext
-  );
+  const { selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
@@ -539,16 +537,40 @@ function MoviePage() {
                     {!showOtherResults ? 'Autres Résultats' : 'Retour'}
                   </button>
                   {/* Affichage des filtres concernant le film affiché */}
-                  {movie.genres.map(
-                    (genre: { id: Key | null | undefined; name: string }) => (
-                      <p
-                        key={genre.id}
-                        className='movieDetails__filters-mobile--filterElem'
-                      >
-                        {genre.name}
-                      </p>
-                    )
-                  )}
+                  <ul className='movieDetails__filters-mobile--filterElemList'>
+              <li>
+                {selectedGenreFilters.map(
+                  (genre: { id: Key | null | undefined; name: string }) => (
+                    <p
+                      key={genre.id}
+                      className='movieDetails__filters-mobile--filterElem'
+                    >
+                      {genre.name}
+                    </p>
+                  )
+                )}
+              </li>
+              <li>
+                {selectedProviderFilters.map((provider) => (
+                  <p
+                    key={provider.id}
+                    className='movieDetails__filters-mobile--filterElem'
+                  >
+                    {provider.provider_name}
+                  </p>
+                ))}
+              </li>
+              <li>
+                {selectedDecadeFilters.map((decade) => (
+                  <p
+                    key={decade}
+                    className='movieDetails__filters-mobile--filterElem'
+                  >
+                    {decade}
+                  </p>
+                ))}
+              </li>
+            </ul>
                 </React.Fragment>
               )}
               {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
