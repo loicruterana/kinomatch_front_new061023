@@ -3,15 +3,16 @@ import "./Providers.scss";
 
 function Providers(providers: { providers: { results: { FR: { flatrate: any[]; rent: any[]; buy: any[]; free: any[]; ads: any[]; link: string }; }; }; }) {
 
-    // ==================== Lien Just Watch =====================
-    const justWatchLink = providers.providers.results.FR && providers.providers.results.FR.link;
-    // console.log(justWatchLink);
-    //===========================================================
+
+    function handleClick() {
+        const justWatchLink = providers.providers.results.FR && providers.providers.results.FR.link;
+        window.open(justWatchLink, '_blank');
+    }
 
     return (
 
         <details className='movieFound__essentiel-detailPlateforms'>
-            <summary className='movieFound__essentiel-detailPlateforms--details'>Film disponible sur :</summary>
+            <summary className='movieFound__essentiel-detailPlateforms--details' >Film disponible sur :</summary>
             <section className='movieFound__essentiel-disponibility'>
                 <div className='movieFound__essentiel-flatrate'>
                     {
@@ -19,13 +20,13 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
                         providers.providers.results.FR.flatrate &&
                         <h3 className='movieFound__essentiel-flatrate--title'>Plateforme</h3>
                     }
-                    <ul className='movieFound__essentiel-flatrateList'>
+                    <ul className='movieFound__essentiel-flatrateList' onClick={handleClick}>
                         {
                             providers.providers.results.FR &&
                             providers.providers.results.FR.flatrate &&
                             providers.providers.results.FR.flatrate.map((flatrate) => (
                                 <li key={flatrate.provider_id}>
-                                    <a className='movieFound__essentiel-flatrateList--flaterate' href={justWatchLink} target='_blank'>{flatrate.provider_name}</a>
+                                    <a className='movieFound__essentiel-flatrateList--flaterate'>{flatrate.provider_name}</a>
                                 </li>
                             ))
                         }
@@ -37,13 +38,13 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
                         providers.providers.results.FR.rent &&
                         <h3 className='movieFound__essentiel-rent--title'>Location</h3>
                     }
-                    <ul className='movieFound__essentiel-rentList'>
+                    <ul className='movieFound__essentiel-rentList' onClick={handleClick}>
                         {
                             providers.providers.results.FR &&
                             providers.providers.results.FR.rent &&
                             providers.providers.results.FR.rent.map((rent) => (
                                 <li key={rent.provider_id}>
-                                    <a className='movieFound__essentiel-rentList--rent' href={justWatchLink} target='_blank'>{rent.provider_name}</a>
+                                    <a className='movieFound__essentiel-rentList--rent'>{rent.provider_name}</a>
                                 </li>
                             ))
                         }
@@ -55,13 +56,13 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
                         providers.providers.results.FR.buy &&
                         <h3 className='movieFound__essentiel-buy--title'>Achat</h3>
                     }
-                    <ul className='movieFound__essentiel-buyList'>
+                    <ul className='movieFound__essentiel-buyList' onClick={handleClick}>
                         {
                             providers.providers.results.FR &&
                             providers.providers.results.FR.buy &&
                             providers.providers.results.FR.buy.map((buy) => (
                                 <li key={buy.provider_id}>
-                                    <a className='movieFound__essentiel-buyList--buy' href={justWatchLink} target='_blank'>{buy.provider_name}</a>
+                                    <a className='movieFound__essentiel-buyList--buy'>{buy.provider_name}</a>
                                 </li>
                             ))
                         }
@@ -74,13 +75,13 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
                         providers.providers.results.FR.free &&
                         <h3 className='movieFound__essentiel-free--title'>Gratuit</h3>
                     }
-                    <ul className='movieFound__essentiel-freeList'>
+                    <ul className='movieFound__essentiel-freeList' onClick={handleClick}>
                         {
                             providers.providers.results.FR &&
                             providers.providers.results.FR.free &&
                             providers.providers.results.FR.free.map((free) => (
                                 <li key={free.provider_id}>
-                                    <a className='movieFound__essentiel-freeList--free' href={justWatchLink} target='_blank'>{free.provider_name}</a>
+                                    <a className='movieFound__essentiel-freeList--free'>{free.provider_name}</a>
                                 </li>
                             ))
                         }
@@ -92,13 +93,13 @@ function Providers(providers: { providers: { results: { FR: { flatrate: any[]; r
                         providers.providers.results.FR.ads &&
                         <h3 className='movieFound__essentiel-ads--title'>Plus</h3>
                     }
-                    <ul className='movieFound__essentiel-adsList'>
+                    <ul className='movieFound__essentiel-adsList' onClick={handleClick}>
                         {
                             providers.providers.results.FR &&
                             providers.providers.results.FR.ads &&
                             providers.providers.results.FR.ads.map((ads) => (
                                 <li key={ads.provider_id}>
-                                    <a className='movieFound__essentiel-adsList--ads' href={justWatchLink} target='_blank'>{ads.provider_name}</a>
+                                    <a className='movieFound__essentiel-adsList--ads'>{ads.provider_name}</a>
                                 </li>
                             ))
                         }

@@ -16,6 +16,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      label {
+        text-align: center;
+      }
+
       &-input {
         border: black 1px solid;
         margin: 15px 0;
@@ -37,6 +42,11 @@
           border: black 2px solid;
         }
       }
+
+      a {
+        margin-top: 40px;
+      }
+
       button {
         margin-top: 10px;
         color: vars.$theme1-primary;
