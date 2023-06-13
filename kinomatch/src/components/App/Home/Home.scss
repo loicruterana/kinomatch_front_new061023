@@ -172,6 +172,23 @@
           margin: 5px;
           transition: transform 0.2s ease-in-out;
           border: none;
+          &-selected {
+            font-size: 1.9rem;
+            font-weight: 700;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: vars.$theme1-primary;
+            background-color: vars.$theme1-secondary;
+            // box-shadow: 5px 10px 20px 5px vars.$theme1-primary inset;
+            border: vars.$theme1-primary 2px solid;
+            width: 315px;
+            height: 137px;
+            padding: 20px 0;
+            margin: 5px;
+            transition: transform 0.2s ease-in-out;
+          }
 
           &:hover {
             transform: scale(1.03);

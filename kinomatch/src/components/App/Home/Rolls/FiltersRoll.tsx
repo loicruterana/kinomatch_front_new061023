@@ -36,9 +36,9 @@ export const RollGenre = ({
   handleClickOut
 }: RollGenreProps) => {
   // ================ IMPORT PROPS CONTEXTS ================
-  const { addGenreFilter } = useContext(SelectedGenreFiltersContext);
-  const { addProviderFilter } = useContext(SelectedProviderFiltersContext);
-  const { addDecadeFilter } = useContext(SelectedDecadeFiltersContext);
+  const { addGenreFilter, selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
+  const { addProviderFilter, selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
+  const { addDecadeFilter, selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
 
 
   // const [isClicked, setIsClicked] = useState(false)
@@ -90,9 +90,15 @@ export const RollGenre = ({
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>GENRE</div>
                 {
                   isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
-                    <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`} key={preselectedGenre.id} onClick={handleGenreClick} data-id={preselectedGenre.id}>
-                      {preselectedGenre.name}
-                    </button>
+                  <button
+                  className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedGenreFilters.some(item => item.id.toString() === preselectedGenre.id.toString()) ? '-selected' : ''}`}
+                  key={preselectedGenre.id}
+                    onClick={handleGenreClick}
+                    data-id={preselectedGenre.id}
+                  >
+                    {preselectedGenre.name}
+                  </button>
+
                   ))
                 }
               </div>
@@ -108,7 +114,7 @@ export const RollGenre = ({
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>PLATEFORME</div>
                 {
                   isLoading ? "Chargement en cours" : preselectedProviders.map((preselectedProvider) => (
-                    <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+                    <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedProviderFilters.some(item => item.provider_id.toString() === preselectedProvider.provider_id.toString()) ? '-selected' : ''}`}
                       onClick={handleProviderClick}
                       data-id={preselectedProvider.provider_id}
                     >
@@ -131,7 +137,7 @@ export const RollGenre = ({
                 {decades.map((decade, index) => (
                   <button
                     key={index}
-                    className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item`}
+                    className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedDecadeFilters.some(item => item.toString() === decade.toString()) ? '-selected' : ''}`}
                     onClick={handleDecadeClick}
                   >
                     {decade}
@@ -150,3 +156,17 @@ export const RollGenre = ({
 }
 
 export default RollGenre;
+
+
+// {
+//   isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
+//     <button
+//       className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedGenre === preselectedGenre.id ? ' selected' : ''}`}
+//       key={preselectedGenre.id}
+//       onClick={handleGenreClick}
+//       data-id={preselectedGenre.id}
+//     >
+//       {preselectedGenre.name}
+//     </button>
+//   ))
+// }
