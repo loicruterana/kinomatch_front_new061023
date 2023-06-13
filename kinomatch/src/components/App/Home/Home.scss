@@ -356,6 +356,24 @@
             margin: 5px;
             cursor: pointer;
             border: none;
+            &-selected {
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 170px;
+              height: 70px;
+              padding: 20px 0;
+              margin: 5px;
+              cursor: pointer;
+              border: none;
+              color: vars.$theme1-primary;
+              background-color: vars.$theme1-secondary;
+              border: vars.$theme1-primary 2px solid;
+              transition: transform 0.2s ease-in-out;
+            }
 
             &-category {
               font-weight: 700;
