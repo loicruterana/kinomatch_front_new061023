@@ -293,6 +293,7 @@
           width: 275px;
           z-index: 6;
           overflow-y: auto;
+          margin-top: 70px;
 
           &::-webkit-scrollbar {
             display: none;
@@ -322,8 +323,6 @@
           align-items: center;
           width: 75%;
           max-height: 100%;
-          // overflow: hidden;
-          // overflow-y: auto;
           background-color: vars.$theme1-secondary;
 
           &__item {

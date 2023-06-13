@@ -1,4 +1,4 @@
-import { Key, useContext, MouseEvent } from 'react';
+import { Key, useContext } from 'react';
 import { CurrentMovieIdContext, CurrentMovieIdContextProps } from '../../../../contexts/CurrentMovieIdContext';
 
 import './OtherResults.scss';
@@ -14,7 +14,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
   const { addMovieData } = useContext(CurrentMovieIdContext) as CurrentMovieIdContextProps;
 
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = (event: { preventDefault: () => void; currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
     addMovieData(id || '');
@@ -26,11 +26,16 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
   return (
     <aside className='otherResults-container'>
-      {/* <h3 className='otherResults-container--title'>Autres résultats</h3> */}
       <div className='otherResults-container--pellicule'>
+        {/* <button
+          className='otherResults-container--OtherResultsBtn'
+          type='button'
+          onClick={handleClick} // Fonction non adaptée, ne rafrachit qu'une fois
+          >Voir d'autres résultats
+        </button> */}
         <div className='otherResults-container--scrollList'>
           {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
-            <a
+            <button
               key={movieElem.id}
               data-id={movieElem.id}
               onClick={handleClick}
@@ -45,7 +50,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                   <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
                   : null
               }
-            </a>
+            </button>
           ))}
         </div>
       </div>
