@@ -15,7 +15,7 @@ function Header() {
     return <div>Erreur: Contexte non défini</div>;
   }
 
-  const { userData, isLoggedIn } = authContext;
+  // const { userData, isLoggedIn } = authContext;
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
@@ -25,15 +25,24 @@ function Header() {
     setShowBurgerMenu(false);
   }
 
+  const movieArrayReload = () => {
+    window.location.reload();
+  }
+
   return (
     <div className='Header'>
       {/* Logo du Header */}
       <Link key='home' to='/' className='Header-logo' onClick={handleCloseClick}>
         <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
       </Link>
+      <button
+        className='Header--OtherResultsBtn'
+        type='button'
+        onClick={movieArrayReload} >Relancer une recherche
+      </button>
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
       {/* Au clic sera affichée une modale BurgerMenu */}
-      {!isLoggedIn && (
+      {/* {!isLoggedIn && (
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
             <Link key='login' to='/login'>
@@ -41,17 +50,17 @@ function Header() {
             </Link>
           </button>
         </div>
-      )}
+      )} */}
 
       {/* Profil de l'utilisateur connecté */}
-      {isLoggedIn && (
+      {/* {isLoggedIn && (
         <div className='Header-profile'>
           <img src='images/SamplePic.png' alt='profile' />
           <Link to='/profile'>
             <div className='Header-profile-username'>{userData.email}</div>
           </Link>
         </div>
-      )}
+      )} */}
 
       {/* Icône BurgerMenu */}
       <div onClick={handleClick} className={`menu-icon ${showBurgerMenu && 'active'}`}>

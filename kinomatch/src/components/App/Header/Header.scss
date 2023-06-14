@@ -20,25 +20,25 @@
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     border-bottom: 2px vars.$theme1-secondary solid;
-    &-random-button {
-      height: 25px;
-      width: 200px;
-      border-radius: 15px;
-      border: vars.$theme1-secondary;
-      color: vars.$theme1-primary;
-      font-family: 'Creato Display';
-      border: none;
-      font-size: 20px;
-      padding: 0 1%;
-      margin: 5px 0;
-      background: repeating-linear-gradient(
-        45deg,
-        vars.$theme1-secondary,
-        vars.$theme1-primary 10px,
-        vars.$theme1-secondary 10px,
-        red 20px
-      );
-    }
+
+    // &-random-button {
+    //   height: 25px;
+    //   width: 200px;
+    //   border-radius: 15px;
+    //   border: vars.$theme1-secondary;
+    //   color: vars.$theme1-primary;
+    //   font-family: 'Creato Display';
+    //   border: none;
+    //   font-size: 20px;
+    //   padding: 0 1%;
+    //   margin: 5px 0;
+    //   background: repeating-linear-gradient(45deg,
+    //       vars.$theme1-secondary,
+    //       vars.$theme1-primary 10px,
+    //       vars.$theme1-secondary 10px,
+    //       red 20px);
+    // }
+
     &-logo {
       max-width: 400px;
       transition: transform 0.2s ease-in-out;
@@ -54,9 +54,26 @@
         scale: 0.7;
       }
     }
+
+
+    &--OtherResultsBtn {
+      border: none;
+      background: none;
+      background-color: vars.$theme1-secondary;
+      color: #335c67;
+      width: 300px;
+      height: 30px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 15px;
+      margin-right: 25px;
+      transition: transform 0.2s ease-in-out;
+    }
+
     &-buttons {
       display: flex;
       flex-direction: column;
+
       &-button {
         height: 25px;
         width: 200px;
@@ -69,17 +86,21 @@
         font-size: 20px;
         padding: 0 1%;
         margin: 5px 0;
+
         i {
           padding-right: 5px;
         }
       }
     }
+
     &-profile {
       display: flex;
       align-items: center;
+
       &-username {
         font-size: 20px;
       }
+
       img {
         border-radius: 50px;
         border: 3px solid vars.$theme1-secondary;
@@ -114,14 +135,17 @@
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     z-index: 1000;
+
     &-profile {
       display: none;
     }
+
     &-buttons {
       &-button {
         display: none;
       }
     }
+
     &-random-button {
       display: none;
     }
@@ -175,6 +199,7 @@
     }
 
     &:hover {
+
       .line-1,
       .line-2,
       .line-3 {

@@ -408,6 +408,8 @@ function MoviePage() {
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
+            <h4>Les utilisateurs de TMDB ont noté ce film</h4>
+
               <p className='movieFound__essentiel-body--note---noteNumber'>
                 {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
                   ? movie.vote_average * 10

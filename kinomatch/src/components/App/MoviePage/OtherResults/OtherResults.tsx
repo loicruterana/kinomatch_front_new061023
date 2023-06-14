@@ -23,17 +23,17 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   }
 
-  const movieArrayReload = () => {
-    window.location.reload();
-  }
+  // const movieArrayReload = () => {
+  //   window.location.reload();
+  // }
 
   return (
     <aside className='otherResults-container'>
-      <button
+      {/* <button
         className='otherResults-container--OtherResultsBtn'
         type='button'
         onClick={movieArrayReload} >Voir d'autres résultats
-      </button>
+      </button> */}
       <div className='otherResults-container--pellicule'>
         <div className='otherResults-container--scrollList'>
           {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (

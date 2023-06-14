@@ -40,15 +40,14 @@
         border-radius: 6px;
         font-size: 1.3rem;
         font-weight: bold;
-        margin: 0.3rem auto 1rem auto;
+        margin: 0 auto 1rem auto;
       }
     }
 
     // Container regroupant les plateformes
     &-disponibility {
       display: flex;
-      justify-content: space-around;
-      // min-width: fit-content;
+      justify-content: center;
       padding-bottom: 2rem;
 
       :hover {

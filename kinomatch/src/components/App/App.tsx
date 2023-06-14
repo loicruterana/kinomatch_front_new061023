@@ -45,18 +45,18 @@ function App() {
                       path="/films"
                       element={<MoviePage />}
                     />
-                    <Route
+                    {/* <Route
                       path="/signup"
                       element={<Signup />}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                       path="/login"
                       element={<Login />}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                       path="/profile"
                       element={<Profile />}
-                    />
+                    /> */}
                     <Route
                       path="*"
                       element={<PageNotFound />}

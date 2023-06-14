@@ -55,8 +55,6 @@ export const Home: React.FC = () => {
   const [mobileVersion, setMobileVersion] = useState(false);
 
 
-
-
   // ================ IMPORT PROPS CONTEXTS ================
   const { selectedGenreFilters, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters, removeProviderFilter } = useContext(SelectedProviderFiltersContext);

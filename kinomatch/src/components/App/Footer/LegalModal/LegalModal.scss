@@ -17,11 +17,15 @@
       overflow: auto;
       z-index: 1;
       width: 75vw;
-      height: auto;
+      height: 100%;
       margin: 20%;
       border: none;
       text-align: center;
-      padding-bottom: 3rem;
+      padding-bottom: 5rem;
+
+      // &::-webkit-scrollbar {
+      //   display: none;
+      // }
 
       &__title {
         display: flex;
