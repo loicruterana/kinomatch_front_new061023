@@ -229,8 +229,7 @@ function MoviePage() {
           );
         }
         return axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search
-          }&${searchParams1.toString()}`
+          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`
         );
       })
       .then((response) => {
@@ -239,29 +238,47 @@ function MoviePage() {
           console.log('data2', data);
           const selectRandomID =
             data.results[Math.floor(Math.random() * data.results.length)].id;
+
           const filteredResults = data.results.filter(
-            (result: { id: string }) => result.id !== selectRandomID
-          );
-          setMovieArray(filteredResults);
-          console.log(data.results);
-          const searchParams = new URLSearchParams();
-          if (currentMovieId) {
-            searchParams.append('movieID', currentMovieId);
-          } else {
+            (result: { id: string }) => result.id !== selectRandomID);
+
+          if (movieArray.length === 0) {
+            setMovieArray(filteredResults);
+            console.log(data.results);
+            const searchParams = new URLSearchParams();
+            // if (currentMovieId) {
+            //   searchParams.append('movieID', currentMovieId);
+            // } else {
             searchParams.append('movieID', selectRandomID);
+            // }
+            const requests = [
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+              ),
+            ];
+            return Promise.all(requests);
+          } else {
+            const searchParams = new URLSearchParams();
+            searchParams.append('movieID', currentMovieId);
+            const requests = [
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+              ),
+            ];
+            return Promise.all(requests);
           }
-          const requests = [
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-            ),
-          ];
-          return Promise.all(requests);
         }
       })
       .then((responses) => {
@@ -538,39 +555,39 @@ function MoviePage() {
                   </button>
                   {/* Affichage des filtres concernant le film affiché */}
                   <ul className='movieDetails__filters-mobile--filterElemList'>
-              <li>
-                {selectedGenreFilters.map(
-                  (genre: { id: Key | null | undefined; name: string }) => (
-                    <p
-                      key={genre.id}
-                      className='movieDetails__filters-mobile--filterElem'
-                    >
-                      {genre.name}
-                    </p>
-                  )
-                )}
-              </li>
-              <li>
-                {selectedProviderFilters.map((provider) => (
-                  <p
-                    key={provider.id}
-                    className='movieDetails__filters-mobile--filterElem'
-                  >
-                    {provider.provider_name}
-                  </p>
-                ))}
-              </li>
-              <li>
-                {selectedDecadeFilters.map((decade) => (
-                  <p
-                    key={decade}
-                    className='movieDetails__filters-mobile--filterElem'
-                  >
-                    {decade}
-                  </p>
-                ))}
-              </li>
-            </ul>
+                    <li>
+                      {selectedGenreFilters.map(
+                        (genre: { id: Key | null | undefined; name: string }) => (
+                          <p
+                            key={genre.id}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {genre.name}
+                          </p>
+                        )
+                      )}
+                    </li>
+                    <li>
+                      {selectedProviderFilters.map((provider) => (
+                        <p
+                          key={provider.id}
+                          className='movieDetails__filters-mobile--filterElem'
+                        >
+                          {provider.provider_name}
+                        </p>
+                      ))}
+                    </li>
+                    <li>
+                      {selectedDecadeFilters.map((decade) => (
+                        <p
+                          key={decade}
+                          className='movieDetails__filters-mobile--filterElem'
+                        >
+                          {decade}
+                        </p>
+                      ))}
+                    </li>
+                  </ul>
                 </React.Fragment>
               )}
               {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}

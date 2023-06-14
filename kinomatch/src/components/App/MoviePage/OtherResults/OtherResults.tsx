@@ -11,7 +11,6 @@ interface OtherResultsModalProps {
 
 function OtherResults(props: OtherResultsModalProps): JSX.Element {
   const { movieArray, showOtherResults, setShowOtherResults } = props;
-
   const { addMovieData } = useContext(CurrentMovieIdContext) as CurrentMovieIdContextProps;
 
   const handleClick = (event: { preventDefault: () => void; currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
@@ -24,15 +23,18 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   }
 
+  const movieArrayReload = () => {
+    window.location.reload();
+  }
+
   return (
     <aside className='otherResults-container'>
+      <button
+        className='otherResults-container--OtherResultsBtn'
+        type='button'
+        onClick={movieArrayReload} >Voir d'autres résultats
+      </button>
       <div className='otherResults-container--pellicule'>
-        {/* <button
-          className='otherResults-container--OtherResultsBtn'
-          type='button'
-          onClick={handleClick} // Fonction non adaptée, ne rafrachit qu'une fois
-          >Voir d'autres résultats
-        </button> */}
         <div className='otherResults-container--scrollList'>
           {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
             <button
