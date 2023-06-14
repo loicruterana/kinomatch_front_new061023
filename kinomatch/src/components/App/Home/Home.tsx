@@ -80,7 +80,6 @@ export const Home: React.FC = () => {
 
     axios.get('https://deploy-back-kinomatch.herokuapp.com/providers')
       .then(({ data }) => {
-        console.log(data.results);
         const filteredProviders: Provider[] = data.results
           .reduce((validProviders: Provider[], currentProvider: ProviderFromAPI) => {
             if (

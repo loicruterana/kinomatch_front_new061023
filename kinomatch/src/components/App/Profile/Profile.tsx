@@ -71,17 +71,14 @@ export const Profile: React.FC = () => {
   // ================ HANDLERS ================
 
   function handleRemoveBookmarked(film_id: string) {
-    console.log(film_id)
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
     // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
-    console.log("je passe par la suppression")
   }
 
   function handleAddBookmarked(film_id: string) {
     addBookmarked({ movie: film_id })
     setUserEvent(true);
-    console.log("je passe par l'ajout")
 
     // setBookmarkedItems((prevItems) => [...prevItems, film_id]);
 
@@ -109,8 +106,7 @@ export const Profile: React.FC = () => {
         .delete(
           `https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`
         )
-        .then((response) => {
-          console.log(response.data.message);
+        .then(() => {
           logout();
           navigate(`/`);
         })
@@ -130,8 +126,7 @@ export const Profile: React.FC = () => {
         .get(
           `https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`
         )
-        .then((response) => {
-          console.log(response.data.message);
+        .then(() => {
           logout();
           navigate(`/`);
         })
@@ -171,7 +166,6 @@ export const Profile: React.FC = () => {
 
   useEffect(() => {
     load();
-    // console.log(isLoading);
 
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
@@ -180,7 +174,6 @@ export const Profile: React.FC = () => {
         `https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`
       )
       .then(({ data }) => {
-        // console.log(data);
         setWatchedList(data);
       })
       .catch((error) => {
@@ -231,7 +224,6 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [watchedList]);
 
-  console.log(bookmarkedList)
 
   // =========================== BOOKMARKED (COEUR)
 
@@ -271,14 +263,11 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
 
-  console.log(bookmarkedList)
-
 
   // =========================== TOWATCHLIST
 
   useEffect(() => {
     load();
-    // console.log(isLoading);
 
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
@@ -287,7 +276,6 @@ export const Profile: React.FC = () => {
         `https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?${searchParams.toString()}`
       )
       .then(({ data }) => {
-        // console.log(data);
         setToWatchList(data);
       })
       .catch((error) => {
@@ -333,7 +321,6 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [toWatchList]);
 
-  console.log(toWatchList)
 
   //==========
 

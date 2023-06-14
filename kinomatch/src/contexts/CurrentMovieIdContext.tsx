@@ -24,7 +24,6 @@ export const CurrentMovieIdProvider: React.FC<CurrentMovieIdProviderProps> = ({ 
   const [currentMovieId, setCurrentMovieId] = useState('');
 
   const addMovieData = (movieId: string): void => {
-    console.log(movieId);
     setCurrentMovieId(movieId || '');
   };
 

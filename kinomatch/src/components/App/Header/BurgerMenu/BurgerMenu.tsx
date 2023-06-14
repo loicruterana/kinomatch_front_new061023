@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import Footer from '../../Footer/Footer';
 
@@ -34,11 +33,6 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
     try {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', authContext?.userData.id || '');
-
-      const response = await axios.delete(
-        `https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`
-      );
-      console.log(response.data.message);
       authContext?.logout();
       navigate(`/`);
     } catch (error) {
@@ -50,11 +44,6 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
     try {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', authContext?.userData.id || '');
-
-      const response = await axios.get(
-        `https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`
-      );
-      console.log(response.data.message);
       authContext?.logout();
       setTimeout(function () {
         navigate('/');
@@ -92,9 +81,9 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
           {!authContext?.isLoggedIn && (
             <>
               <Link key='home' to='/' className='BurgerMenu__container__button--home' onClick={handleCloseClick}>
-              <button className="BurgerMenu__container__button">Accueil</button>
+                <button className="BurgerMenu__container__button">Accueil</button>
               </Link>
-              <Link to="login" key="login">
+              {/* <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter
                 </button>
@@ -103,7 +92,7 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Créer un compte
                 </button>
-              </Link>
+              </Link> */}
             </>
           )}
         </div>

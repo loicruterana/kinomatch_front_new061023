@@ -37,8 +37,6 @@ const Signup = () => {
 
     try {
       const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
-      console.log(response.status
-        );
       login();
       setMessage(response.data.message)
       addUserData(response.data.user.email, response.data.user.id)
@@ -49,9 +47,7 @@ const Signup = () => {
       }, 1500);
     } catch (error: any) {
      console.log(error)
-        // console.log('Response data:', error.response.data.error);
-        // console.log('Response status:', error.response.status);
-        // console.log('Response headers:', error.response.headers);   
+  
         if(error.response.status === 400) {
           //Email et mot de passe obligatoires
           //Email ou mot de passe invalide
@@ -66,8 +62,6 @@ const Signup = () => {
           setMessage(error.response.data.error)
           return;
         }     }
-
-    // console.log(isLoggedIn)
 
   };
 

@@ -80,17 +80,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
-    console.log(element);
     setIsBookmarkedModified(true); // Marquer le tableau comme modifié
-    console.log(element.movie);
-    console.log('onpasseici');
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deleteBookmarked = async (element: { movie: any }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element });
-    console.log(element.movie);
-    console.log('onpasseici');
   };
 
   useEffect(() => {
@@ -100,7 +95,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
           userData
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -121,7 +115,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         searchParams.append('userID', userData.id);
         searchParams.append('movieID', userData.bookmarked);
 
-        console.log(userData.id);
         axios.delete(
           `https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`
         );
@@ -137,7 +130,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
-  console.log(userData);
 
   const addToWatch = async (element: { movie: string }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
@@ -148,7 +140,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deleteToWatch = async (element: { movie: any }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
-    console.log(element.movie);
   };
 
   useEffect(() => {
@@ -158,7 +149,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
           userDataToWatch
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -182,9 +172,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         axios.delete(
           `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
         );
-        console.log(
-          `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
-        );
+
       } catch (error) {
         console.log(error);
       }
@@ -197,22 +185,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataToWatch]);
 
-  console.log(userDataToWatch);
-  console.log(userDataToWatch.id);
-
   const addWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
     setIsWatchedModified(true);
-    console.log(element.movie);
   };
 
   const deleteWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
-    console.log(element.movie);
   };
 
   const deleteBookmarkedAndWatched = async (element: { movie: string }): Promise<void> => {
-    console.log(element);
     setUserData({ ...userData, bookmarked: element.movie || element.toString() });
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
   };
@@ -224,7 +206,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
           userDataWatched
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -260,8 +241,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataWatched]);
 
-  console.log(userDataWatched);
-  console.log(userDataWatched.id);
 
   return (
     <AuthContext.Provider

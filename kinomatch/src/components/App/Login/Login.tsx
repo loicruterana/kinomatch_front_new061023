@@ -47,7 +47,6 @@ export const Login = () => {
 
     axios.post('https://deploy-back-kinomatch.herokuapp.com/login', userData)
       .then((response) => {
-        console.log(response.status, response.data.token);
 
         // Check if there is an error returned by the back
 
@@ -56,10 +55,7 @@ export const Login = () => {
 
         if(response.status === 200) {
           //Utilisateur connecté
-          console.log(response.data);
-          console.log(response.data.message);
           setMessage(response.data.message)
-          console.log(response.data.user.id)
           addUserData(response.data.user.email, response.data.user.id)
 
           login()
@@ -76,9 +72,7 @@ export const Login = () => {
       })
       .catch((error) => {
         console.log(error)
-        // console.log('Response data:', error.response.data.error);
-        // console.log('Response status:', error.response.status);
-        // console.log('Response headers:', error.response.headers);   
+  
         if(error.response.status === 400) {
           //Email et mot de passe obligatoires
           //Email ou mot de passe invalide
@@ -96,8 +90,6 @@ export const Login = () => {
       });
 
   };
-  console.log(userData)
-
 
   return (
     <div className='Login-container'>

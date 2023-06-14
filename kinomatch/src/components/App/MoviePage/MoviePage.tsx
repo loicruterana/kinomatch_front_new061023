@@ -169,10 +169,6 @@ function MoviePage() {
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
-  console.log(selectedGenreFilters);
-  console.log(selectedProviderFilters);
-  console.log(selectedDecadeFilters);
-
   {
     /* =============================================================== */
   }
@@ -207,23 +203,19 @@ function MoviePage() {
         `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
       )
       .then(({ data }) => {
-        console.log(data, typeof data);
         if (data.results.length === 0) {
           handleNoResult();
           navigate(`/`);
           return;
         }
         const numberOfPages = data.total_pages;
-        console.log(numberOfPages);
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
         if (chosenPage > 500) {
           chosenPage = Math.floor(Math.random() * 500) + 1;
         }
         const searchParams1 = new URLSearchParams();
         searchParams1.append('randomPage', chosenPage.toString());
-        console.log(window.location.search);
         if (window.location.search === '') {
-          console.log('ça passe ici');
           return axios.get(
             `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
           );
@@ -235,7 +227,6 @@ function MoviePage() {
       .then((response) => {
         const data = response?.data;
         if (data) {
-          console.log('data2', data);
           const selectRandomID =
             data.results[Math.floor(Math.random() * data.results.length)].id;
 
@@ -244,7 +235,6 @@ function MoviePage() {
 
           if (movieArray.length === 0) {
             setMovieArray(filteredResults);
-            console.log(data.results);
             const searchParams = new URLSearchParams();
             // if (currentMovieId) {
             //   searchParams.append('movieID', currentMovieId);
@@ -292,7 +282,6 @@ function MoviePage() {
             setMovie(movieData.data);
             setCredits(creditsData.data);
             setProviders(providersData.data);
-            console.log(movieData);
           }
         }
       })
@@ -303,7 +292,6 @@ function MoviePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
 
-  console.log(movie);
 
   if (isLoading) {
     return <Loading />;
@@ -340,7 +328,6 @@ function MoviePage() {
     /* RECUPERATION RÉALISATEURS */
   }
 
-  console.log(credits);
 
   const directingCrewMembers = credits.crew.filter(
     (person: { job: string }) => person.job === 'Director'

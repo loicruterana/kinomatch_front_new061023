@@ -83,10 +83,6 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
     setToWatchList(state => state.filter(element => element.film_id !== film_id));
   }
 
-  console.log(bookmarkedList)
-  console.log(toWatchMovies)
-  console.log(toWatchList)
-
 
   // ================ JSX ================
   return (

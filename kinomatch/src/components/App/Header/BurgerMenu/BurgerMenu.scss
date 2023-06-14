@@ -46,8 +46,9 @@
           background-color: vars.$theme1-secondary;
           border-radius: 15px;
           border: vars.$theme1-secondary;
-          font-size: 32px;
+          font-size: 50px;
           margin-bottom: 7px;
+          padding: 10px 20px;
           z-index: 4;
           &:hover {
             cursor: pointer;

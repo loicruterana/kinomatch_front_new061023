@@ -94,19 +94,13 @@ function AddButton(movieId: { movie: string; }) {
         .then(function (response) {
           const responseData = response.data;
           const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
-          console.log(filmIds);
-          console.log(userData.id);
-          console.log(movieId.movie.toString());
+
           if (filmIds.includes(movieId.movie.toString())) {
             setHeartIsClicked(true);
           } else {
             setHeartIsClicked(false);
           }
-          console.log(heartIsClicked);
-
-          console.log(userData);
-          console.log(userDataToWatch);
-          console.log(userDataWatched);
+ 
         });
     };
     {
@@ -133,9 +127,6 @@ function AddButton(movieId: { movie: string; }) {
         .then(function (response) {
           const responseData = response.data;
           const filmIds = responseData.map((item: { film_id: string}) => item.film_id);
-          console.log(filmIds);
-          console.log(userDataToWatch.id);
-          console.log(movieId.movie.toString());
           if (filmIds.includes(movieId.movie.toString())) {
             setBookmarkIsClicked(true);
           } else {
@@ -152,8 +143,7 @@ function AddButton(movieId: { movie: string; }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(userDataToWatch);
-  // console.log(userData);
+
 
   {
     /* ======================================= WATCHED ====================================================== */
@@ -171,17 +161,13 @@ function AddButton(movieId: { movie: string; }) {
         .then(function (response) {
           const responseData = response.data;
           const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
-          console.log(filmIds);
-          console.log(userDataWatched.id);
 
-          console.log(movieId.movie.toString());
 
           if (filmIds.includes(movieId.movie.toString())) {
             setCheckIsClicked(true);
           } else {
             setCheckIsClicked(false);
           }
-          console.log(checkIsClicked);
         });
     };
 
