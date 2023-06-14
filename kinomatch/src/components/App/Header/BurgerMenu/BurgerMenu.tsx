@@ -16,9 +16,9 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleClick = (): void => {
-    setShowBurgerMenu(!showBurgerMenu);
-  };
+  // const handleClick = (): void => {
+  //   setShowBurgerMenu(!showBurgerMenu);
+  // };
 
   const handleProfile = (): void => {
     navigate(`/profile`);

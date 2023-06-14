@@ -91,10 +91,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        const response = await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
-          userData
-        );
+        // const response = await axios.post(
+        //   'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
+        //   userData
+        // );
       } catch (error) {
         console.log(error);
       }
@@ -145,10 +145,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        const response = await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
-          userDataToWatch
-        );
+        // const response = await axios.post(
+        //   'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
+        //   userDataToWatch
+        // );
       } catch (error) {
         console.log(error);
       }
@@ -202,10 +202,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        const response = await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
-          userDataWatched
-        );
+        // const response = await axios.post(
+        //   'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
+        //   userDataWatched
+        // );
       } catch (error) {
         console.log(error);
       }

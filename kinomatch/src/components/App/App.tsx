@@ -5,9 +5,9 @@ import MoviePage from './MoviePage/MoviePage';
 // import Home from './Home/Home';
 // import CreateProfile from './CreateProfile/CreateProfile';
 import Home from './Home/Home';
-import Login from './Login/Login';
-import Signup from './Signup/Signup';
-import Profile from './Profile/Profile';
+// import Login from './Login/Login';
+// import Signup from './Signup/Signup';
+// import Profile from './Profile/Profile';
 
 import { AuthProvider } from '../../contexts/AuthContext';
 import { LoadingProvider } from '../../contexts/LoadingContext';
