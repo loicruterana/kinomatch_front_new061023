@@ -26,6 +26,10 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
     setShowBurgerMenu(!showBurgerMenu);
   };
 
+  function handleCloseClick() {
+    setShowBurgerMenu(false);
+  }
+
   const handleDeleteProfile = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
@@ -87,6 +91,9 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
           {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
           {!authContext?.isLoggedIn && (
             <>
+              <Link key='home' to='/' className='BurgerMenu__container__button--home' onClick={handleCloseClick}>
+              <button className="BurgerMenu__container__button">Accueil</button>
+              </Link>
               <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter

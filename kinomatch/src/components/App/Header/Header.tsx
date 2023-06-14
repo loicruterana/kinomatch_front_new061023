@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContext';
 
 import BurgerMenu from './BurgerMenu/BurgerMenu';
@@ -8,6 +8,26 @@ import './Header.scss';
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
   const authContext = useContext(AuthContext);
+  const [desktopVersion, setDesktopVersion] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 900) {
+        setDesktopVersion(true);
+      }
+      if (window.innerWidth < 900) {
+        setDesktopVersion(false);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+    // et actualiser le state windowSize
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+    // un removeEventListener pour éviter les fuites de mémoire
+  }, []);
 
   // Vérifiez si le contexte est défini
   if (!authContext) {
@@ -29,17 +49,25 @@ function Header() {
     window.location.reload();
   }
 
+
+
   return (
     <div className='Header'>
       {/* Logo du Header */}
-      <Link key='home' to='/' className='Header-logo' onClick={handleCloseClick}>
-        <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
-      </Link>
-      <button
-        className='Header--OtherResultsBtn'
-        type='button'
-        onClick={movieArrayReload} >Relancer une recherche
-      </button>
+      {
+        location.pathname === '/films' && !desktopVersion ?
+          <Link key='refresh' to='#' className='Header-logo' onClick={movieArrayReload}>
+            <img className='Header-logo__image--refresh' src='./images/RelancerLogo.png' alt='logo' />
+          </Link>
+          :
+          <Link key='home' to='/' className='Header-logo' onClick={handleCloseClick}>
+            <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
+          </Link>
+      }
+
+      {location.pathname === '/films' && desktopVersion && (
+        <button className='Header--OtherResultsBtn' type='button' onClick={movieArrayReload} > Relancer une recherche </button>)}
+
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
       {/* Au clic sera affichée une modale BurgerMenu */}
       {/* {!isLoggedIn && (

@@ -1,6 +1,7 @@
 @use './../../../styles/vars';
 
-// DESKTOP VERSION =================
+//* DESKTOP VERSION =================
+
 @media screen and (min-width: 900px) {
   body {
     font-size: 32px;
@@ -54,7 +55,6 @@
         scale: 0.7;
       }
     }
-
 
     &--OtherResultsBtn {
       border: none;
@@ -116,7 +116,7 @@
   }
 }
 
-// MOBILE VERSION =================
+//* MOBILE VERSION =================
 @media screen and (max-width: 900px) {
   body {
     font-size: 32px;
@@ -155,7 +155,12 @@
       z-index: 1000;
 
       &__image {
-        width: 200px;
+        width: 220px;
+        margin-top: 0.5rem;
+      }
+
+      &__image--refresh {
+        width: 160px;
         margin-top: 0.5rem;
       }
     }
