@@ -5,14 +5,12 @@ import {
   Provider
 } from '../../../../utils/interfaces';
 
-// ================ IMPORT SCSS ================
-// import './Rolls.scss';
-
 // ================ IMPORT CONTEXTS ================
 import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecadeFiltersContext';
 
+// ================ INTERFACES ================
 interface RollGenreProps {
   preselectedGenres: Genre[];
   preselectedProviders: Provider[];
@@ -24,7 +22,8 @@ interface RollGenreProps {
   handleClickOut: () => void;
 }
 
-// ================ COMPOSANT ================
+//* ================ COMPOSANT ================
+
 export const RollGenre = ({
   preselectedGenres,
   preselectedProviders,
@@ -35,15 +34,23 @@ export const RollGenre = ({
   isLoading,
   handleClickOut
 }: RollGenreProps) => {
+
+// ================ UTILS ================
+
+const decades = [];
+
+for (let i = 2020; i >= 1890; i -= 10) {
+  decades.push(i);
+}
+
   // ================ IMPORT PROPS CONTEXTS ================
+
   const { addGenreFilter, selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { addProviderFilter, selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
   const { addDecadeFilter, selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
 
-
-  // const [isClicked, setIsClicked] = useState(false)
-
   // ================ HANDLERS ================
+
   function handleGenreClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
@@ -68,12 +75,6 @@ export const RollGenre = ({
     if (filter !== null) {
       addDecadeFilter(filter);
     }
-  }
-  
-  const decades = [];
-
-  for (let i = 2020; i >= 1890; i -= 10) {
-    decades.push(i);
   }
 
   // ================ JSX ================
@@ -152,21 +153,7 @@ export const RollGenre = ({
     </>
   )
 
-  // ================ FERMETURE DU COMPOSANT ================
+  //* ================ FERMETURE DU COMPOSANT ================
 }
 
 export default RollGenre;
-
-
-// {
-//   isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
-//     <button
-//       className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedGenre === preselectedGenre.id ? ' selected' : ''}`}
-//       key={preselectedGenre.id}
-//       onClick={handleGenreClick}
-//       data-id={preselectedGenre.id}
-//     >
-//       {preselectedGenre.name}
-//     </button>
-//   ))
-// }

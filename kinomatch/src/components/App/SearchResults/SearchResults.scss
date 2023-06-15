@@ -1,0 +1,113 @@
+@use './../../../styles/vars';
+
+//* ============ VERSION DESKTOP ============
+
+.searchresults-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: vars.$theme1-primary;
+  color: vars.$theme1-secondary;
+  &-cardlist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    // background-color: red;
+    padding: 0 50px;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    &-card {
+      margin: 20px 10px;
+      display: flex;
+
+      &__image {
+        border: solid 4px vars.$theme1-secondary;
+        border-radius: 6px;
+        scale: 0.8;
+      }
+      &__infos {
+        margin-top: 40px;
+        margin-left: 20px;
+        &__title {
+          font-weight: 700;
+          margin-bottom: 15px;
+        }
+        // &__release {
+        //   margin-bottom: 10px;
+        // }
+        &__rate {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+// naimation
+
+.circle-big {
+  // position: relative;
+  width: 114px;
+  height: 114px;
+  // margin: 30px auto 25px auto;
+  scale: 0.7;
+}
+
+.circle-big svg {
+  width: 114px;
+  height: 114px;
+}
+
+.circle-big .bg {
+  fill: none;
+  stroke-width: 10px;
+  stroke: none;
+}
+
+.circle-big .progress {
+  fill: none;
+  stroke-width: 10px;
+  stroke: vars.$theme1-secondary;
+  stroke-linecap: round;
+  stroke-dasharray: 326.56;
+  stroke-dashoffset: 100;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  animation: big 1s linear forwards;
+}
+
+.circle-big .text {
+  position: absolute;
+  width: 100%;
+  top: 37px;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.circle-big .text .small {
+  font-size: 14px;
+  color: vars.$theme1-secondary;
+}
+
+@keyframes big {
+  from {
+    stroke-dashoffset: 326.56;
+  }
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+:root {
+  --stroke-dashoffset-start: 326.56;
+  --stroke-dashoffset-end: 100;
+}

@@ -1,4 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
+
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -8,17 +9,18 @@ import {
 } from '../../../utils/interfaces';
 
 // ================ IMPORT SCSS ================
+
 import './Home.scss';
 
 // ================ IMPORT COMPOSANTS ================
+
 import FiltersRoll from './Rolls/FiltersRoll';
 import Loading from '../Loading/Loading';
 import NoResult from '../NoResult/NoResult';
 import Footer from '../Footer/Footer';
 
-
-
 // ================ IMPORT CONTEXTS ================
+
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
@@ -26,36 +28,32 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
 
+// ================ INTERFACES ================
 
+interface ProviderFromAPI {
+  display_priorities: {
+    [countryCode: string]: number;
+  };
+  display_priority: number;
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+}
 
-
-// ================ COMPOSANT ================
-export const Home: React.FC = () => {
-
-  const navigate = useNavigate();
+//* ================ COMPOSANT ================
+const Home: React.FC = () => {
 
   // ================ USESTATE ================
 
-  interface ProviderFromAPI {
-    display_priorities: {
-      [countryCode: string]: number;
-    };
-    display_priority: number;
-    logo_path: string;
-    provider_id: number;
-    provider_name: string;
-  }
-
   const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
-
   const [preselectedProviders, setPreselectedProviders] = useState<Provider[]>([]);
   const [showRollGenre, setShowRollGenre] = useState(false);
   const [showRollProvider, setShowRollProvider] = useState(false);
   const [showRollDecade, setShowRollDecade] = useState(false);
   const [mobileVersion, setMobileVersion] = useState(false);
 
-
   // ================ IMPORT PROPS CONTEXTS ================
+
   const { selectedGenreFilters, removeGenreFilter } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters, removeProviderFilter } = useContext(SelectedProviderFiltersContext);
   const { selectedDecadeFilters, removeDecadeFilter } = useContext(SelectedDecadeFiltersContext);
@@ -63,9 +61,10 @@ export const Home: React.FC = () => {
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
 
+   // ================ UTILS ================
 
-
-  const coucou = preselectedProviders === undefined; // false
+   const navigate = useNavigate();
+   const presSelectedFiltersAreLoading = preselectedProviders === undefined; // false
 
   // ================ USE EFFECT API ================
   useEffect(() => {
@@ -105,31 +104,7 @@ export const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  //=================================
-
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const searchParams = new URLSearchParams();
-    selectedGenreFilters.forEach((filter) => {
-      searchParams.append('genreID', filter.id);
-    });
-
-    selectedProviderFilters.map((filter) => {
-      searchParams.append('providerID', filter.provider_id);
-    });
-
-    selectedDecadeFilters.map((filter: string) => {
-      searchParams.append('decade', filter);
-    });
-
-    navigate(`/films?${searchParams.toString()}`);
-  };
-
-  //======== USEWINDOWSIZE
-
-
+// ================ USEWINDOWSIZE ================
 
   useEffect(() => {
     function handleResize() {
@@ -158,36 +133,65 @@ export const Home: React.FC = () => {
   }, []);
 
   // ================ HANDLERS ================
+
+  // handler pour le submit du formulaire lors du clic sur 'Valider mon choix'
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const searchParams = new URLSearchParams();
+    selectedGenreFilters.forEach((filter) => {
+      searchParams.append('genreID', filter.id);
+    });
+
+    selectedProviderFilters.map((filter) => {
+      searchParams.append('providerID', filter.provider_id);
+    });
+
+    selectedDecadeFilters.map((filter: string) => {
+      searchParams.append('decade', filter);
+    });
+
+    navigate(`/films?${searchParams.toString()}`);
+  };
+
+// handler pour clic sur le backdropfilter afin de fermer les rolls
   function handleClickOut() {
     setShowRollGenre(false)
     setShowRollProvider(false)
     setShowRollDecade(false)
   }
 
+// handler pour clic sur le bouton 'Genre' afin d'ouvrir/fermer le roll
   function handleClickGenre() {
     setShowRollGenre(!showRollGenre)
   }
 
+// handler pour clic sur le bouton 'Provider' afin d'ouvrir/fermer le roll
   function handleClickProvider() {
     setShowRollProvider(!showRollProvider)
   }
 
+// handler pour clic sur le bouton 'Decade' afin d'ouvrir/fermer le roll
   function handleClickDecade() {
     setShowRollDecade(!showRollDecade)
   }
 
+// handler pour supprimer un filtre genre sélectionné
   function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
     removeGenreFilter(event.currentTarget.dataset.id || '');
   }
+
+// handler pour supprimer un filtre provider sélectionné  
   function handleRemoveProvider(event: React.MouseEvent<HTMLDivElement>): void {
     removeProviderFilter(event.currentTarget.dataset.id || '');
   }
 
+// handler pour supprimer un filtre decade sélectionné
   function handleRemoveDecade(): void {
     removeDecadeFilter();
   }
 
-
+// handler pour afficher le message 'Aucun résultat' après 3 secondes
   if (noResult) {
     setTimeout(function () {
       handleNoResult()
@@ -263,7 +267,7 @@ export const Home: React.FC = () => {
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}`}>
           <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}-backdropfilter`} onClick={handleClickOut}>
           </div>
-          <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion} handleClickOut={handleClickOut} />
+          <FiltersRoll isLoading={presSelectedFiltersAreLoading} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion} handleClickOut={handleClickOut} />
         </div>
       }
 
@@ -303,7 +307,7 @@ export const Home: React.FC = () => {
 
   )
 
-  // ================ FERMETURE DU COMPOSANT ================
+//* ================ FERMETURE DU COMPOSANT ================
 }
 
 export default Home;

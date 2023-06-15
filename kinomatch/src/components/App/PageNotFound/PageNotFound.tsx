@@ -1,7 +1,8 @@
-import React from 'react'
+// ================ IMPORT SCSS ================
 
 import './PageNotFound.scss';
 
+//* ================ COMPOSANT ================
 
 const PageNotFound: React.FC = () => {
 
@@ -14,6 +15,7 @@ const PageNotFound: React.FC = () => {
       <img src="/images/Yqe.gif" alt="gif de 404 mire" />
       </div>
   )
+//* ================ FERMETURE DU COMPOSANT ================
 }
 
 export default PageNotFound;

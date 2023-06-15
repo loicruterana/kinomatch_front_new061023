@@ -1,4 +1,8 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import { Route, Routes } from 'react-router-dom';
+
+// ================ IMPORT COMPOSANTS ================
 
 import Header from './Header/Header';
 import MoviePage from './MoviePage/MoviePage';
@@ -8,8 +12,11 @@ import Home from './Home/Home';
 // import Login from './Login/Login';
 // import Signup from './Signup/Signup';
 // import Profile from './Profile/Profile';
-import SearchMovies from './SearchMovies/SearchMovies';
+import SearchResults from './SearchResults/SearchResults';
+import PageNotFound from './PageNotFound/PageNotFound';
 
+
+// ================ IMPORT CONTEXTS ================
 
 import { AuthProvider } from '../../contexts/AuthContext';
 import { LoadingProvider } from '../../contexts/LoadingContext';
@@ -19,13 +26,11 @@ import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFilt
 import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 import { NoResultProvider } from '../../contexts/NoResultContext';
 
-
-
-// import { Routes, Route } from 'react-router-dom';		
-
+// ================ IMPORT SCSS ================
 
 import './App.scss';
-import PageNotFound from './PageNotFound/PageNotFound';
+
+//* ================ COMPOSANT ================
 
 function App() {
 
@@ -64,8 +69,8 @@ function App() {
                       element={<PageNotFound />}
                     />
                     <Route
-                      path="/searchmovies"
-                      element={<SearchMovies />}
+                      path="/searchresults"
+                      element={<SearchResults />}
                     />
 
                   </Routes>
@@ -78,6 +83,8 @@ function App() {
     </NoResultProvider>
 
   )
+//* ================ FERMETURE COMPOSANT ================
+
 }
 
 export default App;

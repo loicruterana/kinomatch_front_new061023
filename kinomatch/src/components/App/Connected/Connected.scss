@@ -1,5 +1,7 @@
 @use './../../../styles/vars';
 
+//* ============ VERSION DESKTOP ============
+
 .Connected-container {
   transition: 1s ease-in-out;
   width: 100vw;
@@ -16,6 +18,8 @@
   font-size: 45px;
   text-align: center;
 }
+
+//* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1000px) {
   .Connected-container {

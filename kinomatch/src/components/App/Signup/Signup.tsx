@@ -1,24 +1,46 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import { useContext, useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
+
+// ================ IMPORT CONTEXTS ================
+
+import { AuthContext } from '../../../contexts/AuthContext';
+
+// ================ IMPORT COMPOSANTS ================
+
 import Connected from '../Connected/Connected';
+
+// ================ IMPORT SCSS ================
 
 import './Signup.scss';
 
+//* ================ COMPOSANT ================
+
 const Signup = () => {
+
+// ================ USESTATE ================
+
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
-
   const { userData, addUserData, login } = useContext(AuthContext);
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [message, setMessage] = useState('');
 
+// ================ UTILS ================
 
+if (goToHomePage) {
+  return <Navigate to="/" />;
+}
+
+// ================ HANDLERS ================
+
+// handleChange pour enregistrer les entrées dans les inputs du formulaire
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPostProfil({
@@ -26,7 +48,8 @@ const Signup = () => {
       [event.target.name]: value,
     });
   };
-  
+
+//handleSubmit pour envoyer les données du formulaire au back
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userData = {
@@ -45,6 +68,7 @@ const Signup = () => {
       setTimeout(() => {
       setGoToHomePage(true);
       }, 1500);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
      console.log(error)
   
@@ -57,7 +81,7 @@ const Signup = () => {
         }
 
         if(error.response.status === 500) {
-          //Erreur lors de la connexion de l\'utilisateur
+          //Erreur lors de la connexion de l'utilisateur
           console.log(error.response.data.error);
           setMessage(error.response.data.error)
           return;
@@ -65,9 +89,6 @@ const Signup = () => {
 
   };
 
-  if (goToHomePage) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <div className='Signup-container'>
@@ -117,6 +138,8 @@ const Signup = () => {
       {userData.email && <Connected/>}
     </div>
   );
+  //* ================ FERMETURE DU COMPOSANT ================
+
 };
 
 export default Signup;

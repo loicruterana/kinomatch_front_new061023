@@ -1,29 +1,39 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../../contexts/AuthContext';
-import axios from 'axios';
+// ================ IMPORT BIBLIOTHEQUES ================
+
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
   WatchedListArray,
   WatchedMoviesObject,
   ToWatchListArray,
   toWatchMoviesObject,
   BookmarkedListObject,
-  UserData
+  UserData, 
+  toWatchMoviesEntry
 } from '../../../utils/interfaces';
 
-import {
-  toWatchMoviesEntry
-} from './../../../utils/interfaces'
+// ================ IMPORT CONTEXTS ================
 
-import BookmarkedRoll from './Rolls/BookmarkedRoll';
-
+import { AuthContext } from '../../../contexts/AuthContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 
-import './Profile.scss';
+
+// ================ IMPORT COMPOSANTS ================
+
+import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
 
+// ================ IMPORT SCSS ================
+
+import './Profile.scss';
+
+//* ================ COMPOSANT ================
+
 export const Profile: React.FC = () => {
-  const navigate: (path: string) => void = useNavigate();
+
+
+// ================ USESTATE ================
 
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
   const [showWatchedRoll, setShowWatchedRoll] = useState<boolean>(true);
@@ -36,20 +46,10 @@ export const Profile: React.FC = () => {
     {}
   );
   const [userEvent, setUserEvent] = useState(false);
+
+  // ================ IMPORT PROPS CONTEXTS ================
+
   const { load } = useContext(LoadingContext);
-
-
-  const coucou = watchedList === undefined; // false
-
-  interface BookmarkedItem {
-    createdAt: string;
-    film_id: string;
-    id: number;
-    updatedAt: string;
-    user_id: string;
-  }
-
-
   const {
     userData,
     logout,
@@ -68,36 +68,51 @@ export const Profile: React.FC = () => {
     addBookmarked: (element: { movie: string }) => void;
   };
 
+// ================ UTILS ================
+
+const navigate: (path: string) => void = useNavigate()
+const listsAreLoading = watchedList === undefined; // false
+
+// ================ INTERFACES ================
+  interface BookmarkedItem {
+    createdAt: string;
+    film_id: string;
+    id: number;
+    updatedAt: string;
+    user_id: string;
+  }
+
   // ================ HANDLERS ================
 
+// handler pour supprimer un film ajouté en favoris (coeur)
   function handleRemoveBookmarked(film_id: string) {
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
-    // setBookmarkedItems((prevItems) => prevItems.filter((item) => item !== film_id));
   }
 
+// handler pour ajouter un film ajouté en favoris (coeur)
   function handleAddBookmarked(film_id: string) {
     addBookmarked({ movie: film_id })
     setUserEvent(true);
-
-    // setBookmarkedItems((prevItems) => [...prevItems, film_id]);
-
   }
 
-
+//handler pour ne plus afficher les rolls
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
   }
 
+//handler pour afficher le roll Watched (films vus -> ✓)
   function handleShowWatchedRoll(): void {
     setShowWatchedRoll(true);
   }
 
+//handler pour afficher le roll ToWatch (films à voir)
   function handleShowToWatchRoll(): void {
     setShowToWatchRoll(true);
   }
 
+//handler pour supprimer profil
   function handleDeleteProfile(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -118,6 +133,7 @@ export const Profile: React.FC = () => {
     }
   }
 
+//handler pour se déconnecter
   function handleLogout(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -160,9 +176,7 @@ export const Profile: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // =========================== WatchedMovies
-
-  // =========================== WATCHEDLIST
+  // =========================== WATCHEDLIST ===========================
 
   useEffect(() => {
     load();
@@ -182,7 +196,7 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // =========================== MOVIES
+  // =========================== WATCHEDLISTMOVIES ===========================
 
   useEffect(() => {
     const fetchMovieTitles = async () => {
@@ -225,7 +239,7 @@ export const Profile: React.FC = () => {
   }, [watchedList]);
 
 
-  // =========================== BOOKMARKED (COEUR)
+  // =========================== BOOKMARKED (COEUR) ===========================
 
   useEffect(() => {
     const fetchMoviesBookmarked = async () => {
@@ -264,7 +278,7 @@ export const Profile: React.FC = () => {
   }, [userEvent]);
 
 
-  // =========================== TOWATCHLIST
+  // =========================== TOWATCHLIST ===========================
 
   useEffect(() => {
     load();
@@ -284,7 +298,7 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // =========================== TOWATCHLISTWITHNAME
+  // =========================== TOWATCHLISTMOVIES ===========================
 
   useEffect(() => {
     const fetchMovieTitles = async () => {
@@ -322,7 +336,7 @@ export const Profile: React.FC = () => {
   }, [toWatchList]);
 
 
-  //==========
+  //========== JSX ==========
 
   return (
     <div className='Profile-container'>
@@ -382,7 +396,7 @@ export const Profile: React.FC = () => {
               onClick={handleClickOut}
             ></div>
             <BookmarkedRoll
-              isLoading={coucou}
+              isLoading={listsAreLoading}
               mobileVersion={mobileVersion}
               showWatchedRoll={showWatchedRoll}
               // setShowWatchedRoll={setShowWatchedRoll}
@@ -406,7 +420,6 @@ export const Profile: React.FC = () => {
               handleRemoveBookmarked={handleRemoveBookmarked}
               handleAddBookmarked={handleAddBookmarked}
             />
-            {/* <FiltersRoll isLoading={coucou} preselectedGenres={preselectedGenres} preselectedProviders={preselectedProviders} showRollGenre={showRollGenre} showRollProvider={showRollProvider} showRollDecade={showRollDecade} mobileVersion={mobileVersion}/> */}
           </div>
         )}
 
@@ -439,5 +452,7 @@ export const Profile: React.FC = () => {
       }
     </div>
   );
+//* ================ FERMETURE COMPOSANT ================
+
 };
 export default Profile;

@@ -1,4 +1,8 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { createContext, useState, ReactNode } from 'react';
+
+// ================ INTERFACES ================
 
 interface Genre {
   name: string;
@@ -11,12 +15,21 @@ interface SelectedGenreFiltersContextType {
   removeGenreFilter: (name: string) => void;
 }
 
+// ================ CREATECONTEXT ================
+
 export const SelectedGenreFiltersContext = createContext<SelectedGenreFiltersContextType>(
   {} as SelectedGenreFiltersContextType
 );
 
+//* ================ CONTEXT ================
+
 export const SelectedGenreFiltersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+
+// ================ USESTATE ================
+
   const [selectedGenreFilters, setSelectedGenreFilters] = useState<Genre[]>([]);
+
+// ================ FONCTIONS ================
 
   const addGenreFilter = (name: string, genreId: string) => {
     if (selectedGenreFilters.some((f) => f.name === name)) {
@@ -35,6 +48,8 @@ export const SelectedGenreFiltersProvider: React.FC<{ children: ReactNode }> = (
   const removeGenreFilter = (name: string) => {
     setSelectedGenreFilters((state) => state.filter((f) => f.name !== name));
   };
+
+//* ================ CONTEXT : EXPORT DES PROPS ================ 
 
   return (
     <SelectedGenreFiltersContext.Provider value={{ selectedGenreFilters, addGenreFilter, removeGenreFilter }}>

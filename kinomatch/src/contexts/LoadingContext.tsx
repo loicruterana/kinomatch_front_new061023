@@ -1,6 +1,8 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { createContext, useState, ReactNode } from 'react';
 
-// Création du contexte
+// ================ INTERFACES ================
 interface LoadingContextType {
   isLoading: boolean;
   load: () => void;
@@ -8,6 +10,12 @@ interface LoadingContextType {
   error: string | null;
   addError: (error: string) => void;
 }
+
+interface LoadingProviderProps {
+  children: ReactNode;
+}
+
+// ================ CREATECONTEXT ================
 
 export const LoadingContext = createContext<LoadingContextType>({
   isLoading: false,
@@ -19,14 +27,17 @@ export const LoadingContext = createContext<LoadingContextType>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   addError: () => {},
 });
-// Fournisseur de contexte
-interface LoadingProviderProps {
-  children: ReactNode;
-}
+
+//* ================ CONTEXT ================
 
 export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) => {
+
+  // ================ USESTATE ================
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+// ================ FONCTIONS ================
 
   const load = (): void => {
     setIsLoading(true);
@@ -40,13 +51,16 @@ export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) =>
     setError(error);
   };
 
-  const contextValue: LoadingContextType = {
-    isLoading,
-    load,
-    unload,
-    error,
-    addError,
-  };
+
+//* ================ CONTEXT : EXPORT DES PROPS ================ 
+
+const contextValue: LoadingContextType = {
+  isLoading,
+  load,
+  unload,
+  error,
+  addError,
+};
 
   return (
     <LoadingContext.Provider value={contextValue}>

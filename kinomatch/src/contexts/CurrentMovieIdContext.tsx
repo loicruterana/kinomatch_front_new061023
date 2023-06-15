@@ -1,11 +1,19 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { createContext, useState, ReactNode } from 'react';
 
-// Création du contexte
+// ================ INTERFACES ================
+
 export interface CurrentMovieIdContextProps {
   currentMovieId: string;
   setCurrentMovieId: (movieId: string) => void;
   addMovieData: (movieId: string) => void;
 }
+interface CurrentMovieIdProviderProps {
+  children: ReactNode;
+}
+
+// ================ CREATECONTEXT ================
 
 export const CurrentMovieIdContext = createContext<CurrentMovieIdContextProps>({
   currentMovieId: '',
@@ -15,23 +23,27 @@ export const CurrentMovieIdContext = createContext<CurrentMovieIdContextProps>({
   addMovieData: () => {},
 });
 
-// Fournisseur de contexte
-interface CurrentMovieIdProviderProps {
-  children: ReactNode;
-}
+//* ================ CONTEXT ================
 
 export const CurrentMovieIdProvider: React.FC<CurrentMovieIdProviderProps> = ({ children }) => {
+
+// ================ USESTATE ================
+
   const [currentMovieId, setCurrentMovieId] = useState('');
+
+// ================ FONCTIONS ================
 
   const addMovieData = (movieId: string): void => {
     setCurrentMovieId(movieId || '');
   };
 
-  const contextValue: CurrentMovieIdContextProps = {
-    currentMovieId,
-    setCurrentMovieId,
-    addMovieData,
-  };
+//* ================ CONTEXT : EXPORT DES PROPS ================ 
+  
+const contextValue: CurrentMovieIdContextProps = {
+  currentMovieId,
+  setCurrentMovieId,
+  addMovieData,
+};
 
   return (
     <CurrentMovieIdContext.Provider value={contextValue}>

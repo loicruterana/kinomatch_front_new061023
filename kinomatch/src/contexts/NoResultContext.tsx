@@ -1,30 +1,40 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { createContext, useState, ReactNode } from 'react';
 
-// Définition du type NoResultContextType
-interface NoResultContextType {
+// ================ INTERFACES ================
+interface NoResultContext {
   handleNoResult: () => void;
   noResult: boolean;
 }
-
-// Création du contexte
-export const NoResultContext = createContext<NoResultContextType>({} as NoResultContextType);
-
-// Fournisseur de contexte
 interface NoResultProviderProps {
   children: ReactNode;
 }
 
+// ================ CREATECONTEXT ================
+export const NoResultContext = createContext<NoResultContext>({} as NoResultContext);
+
+//* ================ CONTEXT ================
+
 export const NoResultProvider: React.FC<NoResultProviderProps> = ({ children }) => {
+
+// ================ USESTATE ================
+
   const [noResult, setNoResult] = useState(false);
+
+// ================ FONCTIONS ================
 
   const handleNoResult = () => {
     setNoResult(!noResult);
   };
 
-  const contextValue: NoResultContextType = {
-    handleNoResult,
-    noResult,
-  };
+
+//* ================ CONTEXT : EXPORT DES PROPS ================ 
+
+const contextValue: NoResultContext = {
+  handleNoResult,
+  noResult,
+};
 
   return (
     <NoResultContext.Provider value={contextValue}>

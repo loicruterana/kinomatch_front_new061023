@@ -1,5 +1,7 @@
 @use './../../../styles/vars';
 
+//* ============ VERSION DESKTOP ============
+
 .PageNotFound-container {
   transition: 0.3s ease-in-out;
   width: 100vw;
@@ -17,6 +19,8 @@
     margin-bottom: 20px;
   }
 }
+
+//* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1000px) {
   .PageNotFound-container {

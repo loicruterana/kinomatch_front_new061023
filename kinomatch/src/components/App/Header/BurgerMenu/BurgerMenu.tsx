@@ -1,12 +1,20 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+// ================ IMPORT CONTEXTS ================
+
+import { AuthContext } from '../../../../contexts/AuthContext';
+
+// ================ IMPORT COMPOSANTS ================
+
 import Footer from '../../Footer/Footer';
+
+// ================ IMPORT SCSS ================
 
 import './BurgerMenu.scss';
 
+// ================ INTERFACES ================
 interface Props {
   showBurgerMenu: boolean;
   setShowBurgerMenu: (showBurgerMenu: boolean) => void;
@@ -14,7 +22,12 @@ interface Props {
 
 const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Props): JSX.Element => {
   const authContext = useContext(AuthContext);
+
+// ================ UTILS ================
+
   const navigate = useNavigate();
+
+// ================ HANDLERS ================
 
   // const handleClick = (): void => {
   //   setShowBurgerMenu(!showBurgerMenu);

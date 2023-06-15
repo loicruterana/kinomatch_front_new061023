@@ -1,5 +1,7 @@
 @use './../../../styles/vars';
 
+//* ============ VERSION DEKSTOP ============
+
 .Loading-container {
   z-index: 99999;
   position: absolute;
@@ -7,7 +9,7 @@
   height: 100vh;
   background-color: vars.$theme1-primary;
   opacity: 0.8;
-  backdrop-filter: blur(5px);  
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,22 +28,25 @@
   }
 }
 
+//* ============ VERSION MOBILE ============
+
+@media screen and (max-width: 900px) {
+  .Loading-container {
+    &__image {
+      scale: 0.15;
+    }
+  }
+}
+
+//* ============ ANIMATION ============
+
+// ================= KEYFRAMES =================
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .Loading-container {
-    &__image {
-      // position: relative;
-      // width: 100%;
-      // height: 100%;
-      scale: 0.15;
-    }
   }
 }

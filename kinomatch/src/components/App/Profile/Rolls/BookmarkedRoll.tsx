@@ -9,8 +9,6 @@ import {
   BookmarkedListObject,
 } from '../../../../utils/interfaces';
 
-// ================ IMPORT SCSS ================
-
 // ================ IMPORT CONTEXTS ================
 
 interface BookmarkedRollProps {
@@ -33,12 +31,8 @@ interface BookmarkedRollProps {
   handleRemoveBookmarked: (film_id: string) => void;
 }
 
-// interface toWatchMoviesEntry<T> {
-//   [key: number]: T;
-// }
+//* ================ COMPOSANT ================
 
-
-// ================ COMPOSANT ================
 export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   isLoading,
   mobileVersion,
@@ -59,24 +53,15 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   handleRemoveBookmarked
 }) => {
 
-  // const [bookmarkedItems, setBookmarkedItems] = useState([]);
+// =========================== HANDLERS ===========================
 
-
-  // =========================== HANDLERS
-
-  // =========================== HANDLERBOUTON X
-
+// handler pour supprimer un film de la liste des films vus, et par conséquent des films préférés 
   function handleRemoveWatched(film_id : string) {
     deleteBookmarkedAndWatched({ movie: film_id });
     setWatchedList(state => state.filter(element => element.film_id !== film_id));
   }
 
-  // =========================== HANDLERBOUTON COEUR
-
-
-
-
-
+// handler pour supprimer un film de la liste des films à voir 
   function handleRemoveToWatch(film_id : string) {
     const film = { movie: film_id };
     deleteToWatch(film);
@@ -182,7 +167,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
     </>
   )
 
-  // ================ FERMETURE DU COMPOSANT ================
+//* ================ FERMETURE COMPOSANT ================
 }
 
 export default BookmarkedRoll;

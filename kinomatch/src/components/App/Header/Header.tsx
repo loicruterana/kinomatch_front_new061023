@@ -1,8 +1,16 @@
 import { useState, useContext, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
+// ================ IMPORT CONTEXTS ================
+
 import { AuthContext } from '../../../contexts/AuthContext';
 
+// ================ IMPORT COMPOSANTS ================
+
 import BurgerMenu from './BurgerMenu/BurgerMenu';
+
+// ================ IMPORT SCSS ================
+
 import './Header.scss';
 
 function Header() {
@@ -12,6 +20,7 @@ function Header() {
 
   const location = useLocation();
 
+  // useEffect pour gérer l'affichage selon le redimensionnement de la fenêtre
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 900) {
@@ -29,13 +38,12 @@ function Header() {
     // un removeEventListener pour éviter les fuites de mémoire
   }, []);
 
-  // Vérifiez si le contexte est défini
+  // Vérifier si le contexte est défini
   if (!authContext) {
     // Gérer le cas où le contexte est indéfini, par exemple afficher un message d'erreur ou rediriger vers une page d'erreur
     return <div>Erreur: Contexte non défini</div>;
   }
-
-  // const { userData, isLoggedIn } = authContext;
+/* ============================ HANDLERS ============================= */
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
@@ -48,8 +56,6 @@ function Header() {
   const movieArrayReload = () => {
     window.location.reload();
   }
-
-
 
   return (
     <div className='Header'>

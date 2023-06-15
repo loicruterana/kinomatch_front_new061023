@@ -1,5 +1,7 @@
 @use './../../../styles/vars';
 
+//* ============ VERSION DESKTOP ============
+
 .NoResult-container {
   position: absolute;
   transition: 0.3s ease-in-out;
@@ -22,6 +24,8 @@
     height: auto;
   }
 }
+
+//* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1000px) {
   .NoResult-container {

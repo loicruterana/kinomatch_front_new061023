@@ -1,6 +1,9 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
+// ================ INTERFACES ================
 export interface UserData {
   email: string;
   id: string;
@@ -36,13 +39,20 @@ export interface AuthContextProps {
   userDataWatched: UserDataWatched;
 }
 
-export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+// ================ CREATECONTEXT ================
+
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
+
+//* ================ CONTEXT ================
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+
+// ================ USESTATE ================
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
     email: '',
@@ -63,6 +73,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isToWatchModified, setIsToWatchModified] = useState(false);
   const [isWatchedModified, setIsWatchedModified] = useState(false);
 
+  // ================ FONCTIONS ================
+
+  //? ================ FONCTIONS LIÉES A LA CONNEXION ================
+
+
   const login = (): void => {
     setIsLoggedIn(true);
   };
@@ -71,11 +86,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoggedIn(false);
   };
 
+  //? ================  ================
+
   const addUserData = (email: string, userId: string): void => {
     setUserData({ ...userData, email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email, id: userId });
     setUserDataWatched({ ...userDataWatched, email, id: userId });
   };
+
+  //? ================ FONCTIONS LIÉES AUX BOOKMARKS (COEUR) ================
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addBookmarked = async (element: { movie: any }): Promise<void> => {
@@ -130,6 +149,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  //? ================ FONCTIONS LIÉES AUX FILMS À VOIR ================
 
   const addToWatch = async (element: { movie: string }): Promise<void> => {
     setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
@@ -185,6 +205,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataToWatch]);
 
+    //? ================ FONCTIONS LIÉES AUX FILMS DÉJÀ VUS ================
+
+
   const addWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
     setIsWatchedModified(true);
@@ -194,6 +217,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
   };
 
+  // supprimer le film des favoris et des déjà vus
   const deleteBookmarkedAndWatched = async (element: { movie: string }): Promise<void> => {
     setUserData({ ...userData, bookmarked: element.movie || element.toString() });
     setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
@@ -241,6 +265,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDataWatched]);
 
+//* ================ CONTEXT : EXPORT DES PROPS ================
 
   return (
     <AuthContext.Provider

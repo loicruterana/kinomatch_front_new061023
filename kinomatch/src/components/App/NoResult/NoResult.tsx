@@ -1,6 +1,8 @@
+// ================ IMPORT SCSS ================
+
 import './NoResult.scss';
 
-
+//* ================ COMPOSANT ================
 export const NoResult = () => {
 
   return (
@@ -10,8 +12,9 @@ export const NoResult = () => {
       </span>
       <img src='/images/3z9a.gif' alt='gif aucun résultat'></img>
 
-      </div>
+    </div>
   )
+//* ================ FERMETURE DU COMPOSANT ================
 }
 
 export default NoResult;

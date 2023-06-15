@@ -1,6 +1,6 @@
 @use '../../../styles/vars';
 
-//* DESKTOP VERSION =================
+//* ============ VERSION DESKTOP ============
 
 .footer {
   position: absolute;
@@ -35,7 +35,7 @@
   }
 }
 
-  //* MOBILE VERSION =================
+//* ============ MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
   .footer {

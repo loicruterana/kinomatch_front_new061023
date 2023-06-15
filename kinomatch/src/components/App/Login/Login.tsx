@@ -1,35 +1,49 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+
+// ================ IMPORT CONTEXTS ================
+
 import { AuthContext } from '../../../contexts/AuthContext';
+
+// ================ IMPORT COMPOSANTS ================
+
 import Connected from '../Connected/Connected';
 
-
-// import HCaptcha from '@hcaptcha/react-hcaptcha';
+// ================ IMPORT SCSS ================
 
 import './Login.scss';
 
+//* ================ COMPOSANT ================
+
 export const Login = () => {
+
+// ================ IMPORT PROPS CONTEXTS ================
 
   const { userData, addUserData, login} = useContext(AuthContext);
 
+// ================ USESTATE ================
 
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
-
-
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [message, setMessage] = useState('');
 
+// ================ UTILS ================
 
   if (goToHomePage) {
     return <Navigate to="/" />;
   }
+  
+// ================ HANDLERS ================
 
+// handleChange pour enregistrer les entrées dans les inputs du formulaire
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     setPostProfil({
@@ -38,6 +52,7 @@ export const Login = () => {
     });
   };
 
+//handleSubmit pour envoyer les données du formulaire
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const userData: { email: string, password: string } = {
@@ -47,12 +62,6 @@ export const Login = () => {
 
     axios.post('https://deploy-back-kinomatch.herokuapp.com/login', userData)
       .then((response) => {
-
-        // Check if there is an error returned by the back
-
-
-
-
         if(response.status === 200) {
           //Utilisateur connecté
           setMessage(response.data.message)
@@ -138,6 +147,7 @@ export const Login = () => {
 
     </div>
   );
+//* ================ FERMETURE DU COMPOSANT ================
 };
 
 export default Login;

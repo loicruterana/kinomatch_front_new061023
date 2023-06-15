@@ -1,6 +1,6 @@
 @use './../../../styles/vars';
 
-//* DESKTOP VERSION =================
+//* ============ VERSION DESKTOP ============
 
 @media screen and (min-width: 900px) {
   body {
@@ -116,7 +116,8 @@
   }
 }
 
-//* MOBILE VERSION =================
+//* ============ VERSION MOBILE ============
+
 @media screen and (max-width: 900px) {
   body {
     font-size: 32px;
@@ -170,7 +171,8 @@
     }
   }
 
-  // ANIMATION =================
+  //* ============ ANIMATION ============
+
   .menu-icon {
     width: 80px;
     height: vars.$menu-icon-height;
@@ -204,7 +206,6 @@
     }
 
     &:hover {
-
       .line-1,
       .line-2,
       .line-3 {
@@ -236,11 +237,8 @@
   }
 }
 
-// .no-animation {
-// -webkit-animation: none !important;
-//         animation: none !important;
-// }
-// KEYFRAMES =================
+// ================= KEYFRAMES =================
+
 @keyframes animate-line-1 {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
