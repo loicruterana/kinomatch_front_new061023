@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation,  useNavigate } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -17,8 +17,13 @@ function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
   const authContext = useContext(AuthContext);
   const [desktopVersion, setDesktopVersion] = useState(false);
+  const [query, setQuery] = useState('');
+
 
   const location = useLocation();
+
+  const navigate = useNavigate();
+
 
   // useEffect pour gérer l'affichage selon le redimensionnement de la fenêtre
   useEffect(() => {
@@ -44,6 +49,21 @@ function Header() {
     return <div>Erreur: Contexte non défini</div>;
   }
 /* ============================ HANDLERS ============================= */
+
+ // Gestion de la soumission du formulaire de recherche
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (query.length === 0) return;
+
+  const searchParams = new URLSearchParams();
+    searchParams.append('typedName', query);
+setQuery('');
+    navigate(`/searchresults?${searchParams.toString()}`);
+
+};
+
+
+
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
@@ -95,6 +115,21 @@ function Header() {
           </Link>
         </div>
       )} */}
+
+    <div className='Header-search'>
+      <form className='form' 
+      onSubmit={handleSubmit}
+      >
+        <input
+          className='input'
+          type='text'
+          name='query'
+          placeholder='Rechercher'
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </form>
+    </div>
 
       {/* Icône BurgerMenu */}
       <div onClick={handleClick} className={`menu-icon ${showBurgerMenu && 'active'}`}>

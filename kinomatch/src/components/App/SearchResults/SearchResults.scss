@@ -80,7 +80,7 @@
   stroke-dashoffset: 100;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-  animation: big 1s linear forwards;
+  // animation: big 1s linear forwards;
 }
 
 .circle-big .text {
@@ -105,9 +105,4 @@
   to {
     stroke-dashoffset: 100;
   }
-}
-
-:root {
-  --stroke-dashoffset-start: 326.56;
-  --stroke-dashoffset-end: 100;
 }
