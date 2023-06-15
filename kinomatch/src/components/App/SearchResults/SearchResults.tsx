@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSpring, animated } from 'react-spring';
 import MovieCard from './MovieCard/MovieCard';
 
 import './SearchResults.scss';
 import Footer from '../Footer/Footer';
 import Loading from '../Loading/Loading';
+import axios from 'axios';
 
 // Interfaces
-// interface Movie {
-//   id: number;
-//   title: string;
-//   poster_path: string;
-//   overview: string;
-//   vote_average: number;
-//   release_date: string;
-//   vote_count: number;
-// }
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  overview: string;
+  vote_average: number;
+  release_date: string;
+  vote_count: number;
+}
 
 interface Circle {
   id: number;
@@ -36,6 +36,7 @@ const SearchResults = () => {
 
   const moviesAreLoading = movies.length === 0; // true
 
+  const [totalResults, setTotalResults] = useState(0);
 
   // Utilisation de la navigation
   const navigate = useNavigate();
@@ -56,28 +57,34 @@ const SearchResults = () => {
 
   const queryString = window.location.search;
 
-  // Gestion de la soumission du formulaire de recherche
   useEffect(() => {
     const handleSubmit = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/search${window.location.search}&page=1`
         );
-        const data = await response.json();
-        console.log(data)
-        if (data.results.length === 0) { 
+        const data = response.data;
+        console.log(data);
+        if (data.results.length === 0) {
           navigate('/noresult');
         }
         setMovies(data.results);
         setPage(1);
         setHasMore(true);
+        setTotalResults(data.total_results);
+        const searchParams = new URLSearchParams(window.location.search);
+        const typedName = searchParams.get('typedName');
+        setQuery(typedName || '');
+        console.log(typedName); // Affiche "ok" dans la console
       } catch (error) {
         console.error(error);
       }
     };
   
     handleSubmit();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);
+
 
   useEffect(() => {
     const updatedCircles: Circle[] = movies.map((movie) => ({
@@ -107,6 +114,9 @@ const SearchResults = () => {
       </form> */}
       {moviesAreLoading ? <Loading /> :
       <div className='searchresults-container-cardlist'>
+              <div className='searchresults-container-cardlist-query'>{query}</div>
+              <p> : {totalResults} résultats trouvés</p>
+
         <InfiniteScroll
           dataLength={movies.length}
           next={loadMoreData}

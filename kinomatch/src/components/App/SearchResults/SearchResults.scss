@@ -23,6 +23,18 @@
     overflow-y: auto;
     padding-top: 70px;
     padding-bottom: 70px;
+    &-query {
+      font-size: 1.3rem;
+      width: fit-content;
+      height: fit-content;
+      font-weight: bold;
+      margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+      padding: 0.2rem 0.3rem;
+      border: none;
+      border-radius: 6px;
+      color: vars.$theme1-primary;
+      background-color: vars.$theme1-secondary;
+    }
     &-card {
       margin: 20px 10px;
       display: flex;
