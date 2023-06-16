@@ -44,6 +44,7 @@ const SearchResults = () => {
   // Chargement des données supplémentaires pour le défilement infini
   const loadMoreData = async () => {
     try {
+      console.log("loadMoreData")
       const response = await fetch(
         `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${page + 1}`
       );
@@ -94,6 +95,8 @@ const SearchResults = () => {
     setCircles(updatedCircles);
   }, [movies]);
 
+  // console.log()
+
   return (
     <div className='searchresults-container'>
       {/* <form className='form' onSubmit={handleSubmit}>
@@ -117,10 +120,11 @@ const SearchResults = () => {
               <div className='searchresults-container-cardlist-query'>{query}</div>
               <p> : {totalResults} résultats trouvés</p>
 
+
         <InfiniteScroll
           dataLength={movies.length}
           next={loadMoreData}
-          hasMore={hasMore}
+          hasMore={true}
           loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
         >
@@ -133,6 +137,7 @@ const SearchResults = () => {
               }
               return <MovieCard movie={movie} circle={circle} key={movie.id} />;
             })}
+            
         </InfiniteScroll>
       </div>
         }
