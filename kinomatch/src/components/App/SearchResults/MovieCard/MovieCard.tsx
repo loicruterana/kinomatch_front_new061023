@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 interface MovieCardProps {
