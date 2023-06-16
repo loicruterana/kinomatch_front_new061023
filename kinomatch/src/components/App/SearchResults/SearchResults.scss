@@ -14,9 +14,10 @@
   // overflow-x: hidden;
   overflow: hidden;
 
+  padding-top: 70px;
+
   &-cardlist {
     overflow: auto;
-
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -27,7 +28,7 @@
     // padding: 0 50px;
     overflow: hidden;
     overflow-y: auto;
-    padding-top: 70px;
+    padding-top: 175px;
     // padding-bottom: 70px;
     &-queryresult {
       // margin-left: 50px;
