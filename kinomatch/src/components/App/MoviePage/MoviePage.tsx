@@ -196,6 +196,9 @@ function MoviePage() {
   {
     /*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
   }
+
+  console.log(window.location.search);
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -222,7 +225,7 @@ function MoviePage() {
         }
         return axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`
-        );
+        );        
       })
       .then((response) => {
         const data = response?.data;
@@ -291,7 +294,6 @@ function MoviePage() {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
-
 
   if (isLoading) {
     return <Loading />;
