@@ -29,6 +29,7 @@ import { NoResultProvider } from '../../contexts/NoResultContext';
 // ================ IMPORT SCSS ================
 
 import './App.scss';
+import NoResult from './NoResult/NoResult';
 
 //* ================ COMPOSANT ================
 
@@ -65,6 +66,10 @@ function App() {
                       element={<Profile />}
                     /> */}
                     <Route
+                      path="/noresult"
+                      element={<NoResult />}
+                    />
+                    <Route
                       path="*"
                       element={<PageNotFound />}
                     />
@@ -72,6 +77,7 @@ function App() {
                       path="/searchresults"
                       element={<SearchResults />}
                     />
+
 
                   </Routes>
                 </LoadingProvider>

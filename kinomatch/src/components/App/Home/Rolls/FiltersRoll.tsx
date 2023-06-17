@@ -124,6 +124,7 @@ export const RollGenre = ({
                     <button className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedProviderFilters.some(item => item.provider_id.toString() === preselectedProvider.provider_id.toString()) ? '-selected' : ''}`}
                       onClick={handleProviderClick}
                       data-id={preselectedProvider.provider_id}
+                      key={preselectedProvider.provider_id}
                     >
                       {preselectedProvider.provider_name}
                     </button>

@@ -44,12 +44,14 @@ const SearchResults = () => {
   // Chargement des données supplémentaires pour le défilement infini
   const loadMoreData = async () => {
     try {
+      console.log("loadMoreData")
       const response = await fetch(
         `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${page + 1}`
       );
       const newMovies = await response.json();
       setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
       setPage((prevPage) => prevPage + 1);
+      setHasMore(newMovies.results.length > 0); 
     } catch (error) {
       console.error(error);
     }
@@ -59,6 +61,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     const handleSubmit = async () => {
+      
       try {
         const response = await axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/search${window.location.search}&page=1`
@@ -67,6 +70,7 @@ const SearchResults = () => {
         console.log(data);
         if (data.results.length === 0) {
           navigate('/noresult');
+          return
         }
         setMovies(data.results);
         setPage(1);
@@ -94,6 +98,8 @@ const SearchResults = () => {
     setCircles(updatedCircles);
   }, [movies]);
 
+  // console.log()
+
   return (
     <div className='searchresults-container'>
       {/* <form className='form' onSubmit={handleSubmit}>
@@ -114,8 +120,8 @@ const SearchResults = () => {
       </form> */}
       {moviesAreLoading ? <Loading /> :
       <div className='searchresults-container-cardlist'>
-              <div className='searchresults-container-cardlist-query'>{query}</div>
-              <p> : {totalResults} résultats trouvés</p>
+
+
 
         <InfiniteScroll
           dataLength={movies.length}
@@ -123,7 +129,14 @@ const SearchResults = () => {
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
+          height={1080}
+          scrollableTarget="scrollableDiv"
+          scrollThreshold={1}
+          // style={{ overflow: 'hidden', overflowY: 'auto' }}
         >
+<div className='searchresults-container-cardlist-queryresult'>
+              <div className='searchresults-container-cardlist-queryresult-number'>{query}</div>
+              <p> : {totalResults} résultats trouvés</p></div>
           {movies
             .filter((movie) => movie.poster_path)
             .map((movie) => {
@@ -133,6 +146,7 @@ const SearchResults = () => {
               }
               return <MovieCard movie={movie} circle={circle} key={movie.id} />;
             })}
+            
         </InfiniteScroll>
       </div>
         }

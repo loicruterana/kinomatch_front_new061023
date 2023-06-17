@@ -10,33 +10,46 @@
   width: 100vw;
   background-color: vars.$theme1-primary;
   color: vars.$theme1-secondary;
+  // overflow-y: hidden;
+  // overflow-x: hidden;
+  overflow: hidden;
+
+  padding-top: 70px;
+
   &-cardlist {
+    overflow: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: auto;
     // background-color: red;
-    padding: 0 50px;
+    // padding: 0 50px;
     overflow: hidden;
     overflow-y: auto;
-    padding-top: 70px;
-    padding-bottom: 70px;
-    &-query {
-      font-size: 1.3rem;
-      width: fit-content;
-      height: fit-content;
-      font-weight: bold;
-      margin: 0.5rem 0.5rem 0.8rem 0.5rem;
-      padding: 0.2rem 0.3rem;
-      border: none;
-      border-radius: 6px;
-      color: vars.$theme1-primary;
-      background-color: vars.$theme1-secondary;
+    padding-top: 175px;
+    // padding-bottom: 70px;
+    &-queryresult {
+      // margin-left: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &-number {
+        font-size: 1.3rem;
+        width: fit-content;
+        height: fit-content;
+        font-weight: bold;
+        margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+        padding: 0.2rem 0.3rem;
+        border: none;
+        border-radius: 6px;
+        color: vars.$theme1-primary;
+        background-color: vars.$theme1-secondary;
+      }
     }
     &-card {
-      margin: 20px 10px;
+      margin: 20px 5%;
       display: flex;
 
       &__image {
@@ -117,4 +130,9 @@
   to {
     stroke-dashoffset: 100;
   }
+}
+
+.infinite-scroll-component {
+  width: 100%;
+  overflow: hidden;
 }

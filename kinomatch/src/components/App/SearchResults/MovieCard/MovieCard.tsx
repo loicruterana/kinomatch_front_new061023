@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
+
 interface MovieCardProps {
   movie: {
     id: number;
@@ -17,7 +18,25 @@ interface MovieCardProps {
   };
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, circle
+  // , movies, setMovies, page, setPage 
+}) => {
+
+  // const [hasMore, setHasMore] = useState(true);
+
+  // const loadMoreData = async () => {
+  //   try {
+  //     console.log("loadMoreData")
+  //     const response = await fetch(
+  //       `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${page + 1}`
+  //     );
+  //     const newMovies = await response.json();
+  //     setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
+  //     setPage((prevPage) => prevPage + 1);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   {
     /* CONVERSION DATE */
@@ -37,6 +56,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
   });
 
   return (
+    
     <div className='searchresults-container-cardlist-card'>
       <img
         className='searchresults-container-cardlist-card__image'
@@ -46,11 +66,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
       <section className='searchresults-container-cardlist-card__infos'>
         <div className='searchresults-container-cardlist-card__infos__content'>
           <h3 className='searchresults-container-cardlist-card__infos__title'>{movie.title}</h3>
-          <p>
             <div className='searchresults-container-cardlist-card__infos__release'>
-              Date de sortie : {formatDate(movie.release_date)}
+              Date de sortie :               {movie.release_date
+                ? formatDate(movie.release_date)
+                : 'Non précisée'}
             </div>
-          </p>
           <div className='circle-big'>
             <div className='text'>
               {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
