@@ -243,6 +243,7 @@
 
       &__containers {
         height: 60%;
+        margin: 10px 0;
         &__filters-container {
           display: flex;
           overflow: hidden;
@@ -416,9 +417,9 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-items: center;
-        margin: 300px 0;
+        margin: 130px 0;
 
         &__button {
           z-index: 4;
@@ -427,7 +428,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 35px;
           margin-top: 10px;
           color: vars.$theme1-primary;
           background-color: vars.$theme1-secondary;
