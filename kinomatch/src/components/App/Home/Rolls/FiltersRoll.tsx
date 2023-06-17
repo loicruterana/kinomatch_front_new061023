@@ -35,13 +35,13 @@ export const RollGenre = ({
   handleClickOut
 }: RollGenreProps) => {
 
-// ================ UTILS ================
+  // ================ UTILS ================
 
-const decades = [];
+  const decades = [];
 
-for (let i = 2020; i >= 1890; i -= 10) {
-  decades.push(i);
-}
+  for (let i = 2020; i >= 1890; i -= 10) {
+    decades.push(i);
+  }
 
   // ================ IMPORT PROPS CONTEXTS ================
 
@@ -59,7 +59,7 @@ for (let i = 2020; i >= 1890; i -= 10) {
       addGenreFilter(name, genreId);
     }
   }
-  
+
   function handleProviderClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
@@ -68,7 +68,7 @@ for (let i = 2020; i >= 1890; i -= 10) {
       addProviderFilter(name, providerId);
     }
   }
-  
+
   function handleDecadeClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const target = event.target as HTMLButtonElement;
     const filter = target.textContent;
@@ -80,7 +80,13 @@ for (let i = 2020; i >= 1890; i -= 10) {
   // ================ JSX ================
   return (
     <>
-
+    {/* {
+      showRollGenre || showRollProvider ? */}
+      <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__validation`}>
+        <button onClick={handleClickOut}>Valider</button>
+      </div> 
+      {/* : null} */}
+      
       <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__filterRoll`}>
 
         {/* // ================ JSX : ROLL GENRE ================ */}
@@ -91,14 +97,14 @@ for (let i = 2020; i >= 1890; i -= 10) {
                 <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item-category`}>GENRE</div>
                 {
                   isLoading ? "Chargement en cours" : preselectedGenres.map((preselectedGenre) => (
-                  <button
-                  className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedGenreFilters.some(item => item.id.toString() === preselectedGenre.id.toString()) ? '-selected' : ''}`}
-                  key={preselectedGenre.id}
-                    onClick={handleGenreClick}
-                    data-id={preselectedGenre.id}
-                  >
-                    {preselectedGenre.name}
-                  </button>
+                    <button
+                      className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container__item${selectedGenreFilters.some(item => item.id.toString() === preselectedGenre.id.toString()) ? '-selected' : ''}`}
+                      key={preselectedGenre.id}
+                      onClick={handleGenreClick}
+                      data-id={preselectedGenre.id}
+                    >
+                      {preselectedGenre.name}
+                    </button>
 
                   ))
                 }
@@ -129,7 +135,7 @@ for (let i = 2020; i >= 1890; i -= 10) {
         </div>
         {/* // ================ JSX : ROLL DECENNIES ================ */}
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-backgroundContainer`}>
-          <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-background`}  onClick={handleClickOut}>
+          <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-background`} onClick={handleClickOut}>
             {((showRollDecade && mobileVersion) || !mobileVersion) &&
 
               <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-container`}>

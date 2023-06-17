@@ -124,7 +124,7 @@ setQuery('');
           className='input'
           type='text'
           name='query'
-          placeholder='Rechercher'
+          placeholder='Rechercher un film'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
