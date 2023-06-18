@@ -52,14 +52,18 @@ function DetailsModal(props: DetailsModalProps) {
         <h3 className='detailsModal__container-originalTitle'>Titre original</h3>
         <p className='detailsModal__container-originalTitleName'>{movie.original_title}</p>
         <div className='detailsModal__container-image--container'>
+          {/* Afficher l'image du film si il y en a une, sinon une affiche par défaut*/}
           <img className='detailsModal__container-image--container--movie' src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/images/SamplePoster1.png'} alt="Affiche du film" />
+          {/* Afficher la apge officielle du film si il y en a une, sinon rien */}
           {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
         </div>
       </div>
       <div className='detailsModal__container-details'>
         <div className='detailsModal__container-details--principal'>
+          {/* Adapte le mot "réalisateur" suivant la pluralité */}
           <h3 className='detailsModal__container-director'>{directingCrewMembers.length > 1 ? 'Réalisateurs' : 'Réalisateur'}</h3>
           <ul className='detailsModal__container-directorList'>
+            {/* Si il n'y a pas de réalisateur, afficher un tiret, sinon afficher la liste des réalisateurs */}
             {
               directingCrewMembers.length === 0 ? '-' :
                 directingCrewMembers.map((director: { id: Key | null | undefined; name: string }) => (
@@ -70,6 +74,8 @@ function DetailsModal(props: DetailsModalProps) {
           </ul>
           <h3 className='detailsModal__container-screenwriter'>Scénariste</h3>
           <ul className='detailsModal__container-screenwriterList'>
+            {/* Si il n'y a pas de scénariste, afficher un tiret, sinon afficher la liste des scénaristes */}
+
             {
               writingCrewMembers.length === 0 ? '-' :
                 writingCrewMembers.map((writer: { id: Key | null | undefined; name: string }) => (
@@ -78,10 +84,10 @@ function DetailsModal(props: DetailsModalProps) {
                 ))
             }
           </ul>
-          {/* <p className='detailsModal__container-screenwriterName'>James Gunn</p> */}
           <h3 className='detailsModal__container-producers'>Sociétés de production</h3>
           <ul className='detailsModal__container-producers-list'>
-            {/* Affichage de la liste des sociétés de production */}
+            {/* Si il n'y a pas de société de production, afficher un tiret, sinon afficher la liste des sociétés de production */}
+
             {
               movie.production_companies.length === 0 ? '-' :
                 movie.production_companies.map((production_company: { key: Key | number | undefined; name: string }) => (
@@ -89,11 +95,9 @@ function DetailsModal(props: DetailsModalProps) {
                 ))
             }
           </ul>
-          {/* <h3 className='detailsModal__container-distributionCompany'>Sociétés de distribution</h3>
-          <p className='detailsModal__container-distributionCompanyName'>###Walt Disney Studios Motion Pictures###</p> */}
           <h3 className='detailsModal__container-productionCountry'>Pays de production</h3>
           <ul className='detailsModal__container-productionCountry-list'>
-            {/* Affichage de la liste des pays de production */}
+            {/* Si il n'y a pas de pays de production, afficher un tiret, sinon afficher la liste des pays de production */}
             {
               movie.production_countries.length === 0 ? '-' :
                 movie.production_countries.map((production_country: { iso_3166_1: Key | null | undefined; name: string }) => (
@@ -102,20 +106,25 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-budget'>Budget</h3>
+          {/* Si il n'y a pas de budget, afficher un tiret, sinon afficher le budget */}
           <p className='detailsModal__container-budgetAmount'>{movie.budget !== 0 ? `${movie.budget} $` : 'Budget non précisé'} </p>
 
           <h3 className='detailsModal__container-revenue'>Recettes</h3>
+          {/* Si il n'y a pas de recettes, afficher un tiret, sinon afficher les recettes */}
           <p className='detailsModal__container-revenueAmount'>{movie.revenue !== 0 ? `${movie.revenue} $` : 'Recettes non précisées'} </p>
 
           <h3 className='detailsModal__container-duration'>Durée</h3>
+          {/* Affiche la durée du film convertie en heures et minutes */}
           <p className='detailsModal__container-durationTime'>{convertMinutesInHours(movie.runtime)}</p>
 
           <h3 className='detailsModal__container-date'>Date de sortie</h3>
+          {/* Affiche la date de sortie du film au format jj/mm/aaaa */}
           <p className='detailsModal__container-dateName'>{formatDate(movie.release_date)}</p>
         </div>
         <div className='detailsModal__container-details--secondary'>
 
           <h3 className='detailsModal__container-composer'>Musique</h3>
+          {/* Si il n'y a pas de compositeur, afficher un tiret, sinon afficher la liste des compositeurs */}
           <ul className='detailsModal__container-composerList'>
             {
               musicCrewMembers.length === 0 ? '-' :
@@ -125,6 +134,7 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-artisticDirection'>Direction artistique</h3>
+          {/* Si il n'y a pas de directeur artistique, afficher un tiret, sinon afficher la liste des directeurs artistiques */}
           <ul className='detailsModal__container-artistsList'>
             {
               artCrewMembers.length === 0 ? '-' :
@@ -134,6 +144,7 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-productionDesigner'>Décors</h3>
+          {/* Si il n'y a pas de décorateur, afficher un tiret, sinon afficher la liste des décorateurs */}
           <ul className='detailsModal__container-productionDesignerList'>
             {
               designerCrewMembers.length === 0 ? '-' :
@@ -143,6 +154,7 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-costuming'>Costumes</h3>
+          {/* Si il n'y a pas de costumier, afficher un tiret, sinon afficher la liste des costumiers */}
           <ul className='detailsModal__container-costumingList'>
             {
               costumeCrewMembers.length === 0 ? '-' :
@@ -152,6 +164,7 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
           <h3 className='detailsModal__container-photography'>Photographie</h3>
+          {/* Si il n'y a pas de photographe, afficher un tiret, sinon afficher la liste des photographes */}
           <ul className='detailsModal__container-photographyList'>
             {
               photographyCrewMembers.length === 0 ? '-' :
@@ -162,6 +175,7 @@ function DetailsModal(props: DetailsModalProps) {
           </ul>
 
           <h3 className='detailsModal__container-genreTitle'>Genres</h3>
+          {/* Si il n'y a pas de genre, afficher un tiret, sinon afficher la liste des genres */}
           <ul className='detailsModal__container-genreList'>
             {
               movie.genres.length === 0 ? '-' :
@@ -172,11 +186,14 @@ function DetailsModal(props: DetailsModalProps) {
           </ul>
         </div>
       </div>
+
+      {/* Si il n'y a pas de casting, ne rien afficher, sinon afficher la liste des acteurs */}
       {
         credits.cast.length === 0 ? '' :
           <div className='detailsModal__container-distributionList'>
             <div className='detailsModal__container-distribution'>
               <h3 className='detailsModal__container-distribution-title'>Distribution</h3>
+              {/* Affiche la liste des acteurs avec leur nom, leur photo et leur rôle */}
               <ul className='detailsModal__container-actorsList'>
                 {
                   credits.cast.map((actor: { id: Key | null | undefined; name: string; profile_path: string; character: string }) => (
@@ -193,7 +210,9 @@ function DetailsModal(props: DetailsModalProps) {
       }
 
       <div className='detailsModal__container-button'>
+        {/* Bouton pour fermer la modal */}
         <button className='detailsModal__container-button--btn' onClick={handleDetailsModel}>Retour</button>
+        {/* Si il n'y a pas de page du film , ne rien afficher, sinon afficher le lien vers la page du film dans un nouvel onglet */}
         {movie.homepage ? (<a className='detailsModal__container-button--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
       </div>
     </div>

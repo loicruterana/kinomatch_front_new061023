@@ -225,10 +225,11 @@ function MoviePage() {
         }
         return axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`
-        );        
+        );
       })
       .then((response) => {
         const data = response?.data;
+
         if (data) {
           const selectRandomID =
             data.results[Math.floor(Math.random() * data.results.length)].id;
@@ -397,7 +398,7 @@ function MoviePage() {
           </div>
           <div className='movieFound__essentiel-body'>
             <div className='movieFound__essentiel-body--note'>
-            <h4>Les utilisateurs de TMDB ont noté ce film</h4>
+              <h4>Les utilisateurs de TMDB ont noté ce film</h4>
 
               <p className='movieFound__essentiel-body--note---noteNumber'>
                 {Math.floor(movie.vote_average * 10) === movie.vote_average * 10

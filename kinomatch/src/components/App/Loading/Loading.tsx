@@ -1,6 +1,6 @@
 import './Loading.scss';
 
-
+{/* Function Loading permettant d'afficher le logo de chargement */}
 const Loading: React.FC = () => {
   
     return (
