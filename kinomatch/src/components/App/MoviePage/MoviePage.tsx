@@ -24,6 +24,9 @@ import Loading from '../Loading/Loading';
 // ================ IMPORT SCSS ================
 import './style.scss';
 
+// ================ INTERFACES ================
+
+/* Interface Movie permettant de typer les données du film */
 interface Movie {
   title: string;
   id: string;
@@ -37,12 +40,14 @@ interface Movie {
   release_date: string;
 }
 
+/* Interface Credits permettant de typer les données du casting */
 interface Credits {
   cast: [];
   crew: [];
   id: number;
 }
 
+/* Interface Providers permettant de typer les données des plateformes */
 interface Providers {
   results: {
     FR: {
@@ -56,52 +61,51 @@ interface Providers {
   };
 }
 
-
+/* Fonction MoviePage permettant d'afficher la page d'un film */
 function MoviePage() {
+
   const navigate = useNavigate();
 
-  {
-    /* ================= MODALE DETAILS ============================ */
-  }
 
+  /* ================= MODALE DETAILS ============================ */
+
+/* Fonction permettant de manipuler la modale "showDetailsModal". Au click ==> passe de true à false et inversement */
   const handleDetailsModal = () => {
     setShowDetailsModal(!showDetailsModal);
   };
 
+  /* Fonction permettant de manipuler la modale "showImageModal". Au click ==> passe de true à false et inversement */
   const handleImageModal = () => {
     setShowImageModal(!showImageModal);
   };
 
-  {
-    /* MODALE AUTRES RÉSULTATS */
-  }
-
+/* Fonction permettant de manipuler la modale "showOtherResults". Au click ==> passe de true à false et inversement */
   const handleOtherResults = () => {
     setShowOtherResults(!showOtherResults);
   };
 
-  {
-    /* ================ USESTATES ================================= */
-  }
 
-  {
-    /* UseState Modale "Résultats" */
-  }
+  /* ================ USESTATES ================================= */
+
+
+
+  /* UseState Modale "Résultats" */
+
   const [showOtherResults, setShowOtherResults] = useState(false);
 
-  {
-    /* UseState Modale "Détails" */
-  }
+
+  /* UseState Modale "Détails" */
+
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
-  {
-    /* UseState Modale "Image" */
-  }
+
+  /* UseState Modale "Image" */
+
   const [showImageModal, setShowImageModal] = useState(false);
 
-  {
-    /* UseState route "Detail" */
-  }
+
+  /* UseState route "Detail" */
+
   const [movie, setMovie] = useState<Movie>({
     title: '',
     id: '',
@@ -196,8 +200,6 @@ function MoviePage() {
   {
     /*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
   }
-
-  console.log(window.location.search);
 
   useEffect(() => {
     setIsLoading(true);

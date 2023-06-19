@@ -95,7 +95,7 @@ setQuery('');
         <button className='Header--OtherResultsBtn' type='button' onClick={movieArrayReload} > Relancer une recherche </button>)}
 
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
-      {/* Au clic sera affichée une modale BurgerMenu */}
+      {/* Au click sera affichée une modale BurgerMenu */}
       {/* {!isLoggedIn && (
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
