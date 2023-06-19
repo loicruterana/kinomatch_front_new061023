@@ -58,18 +58,24 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle
   return (
     
     <div className='searchresults-container-cardlist-card'>
+      <div className='searchresults-container-cardlist-card__imagecontainer'> 
       <img
-        className='searchresults-container-cardlist-card__image'
+        className='searchresults-container-cardlist-card__imagecontainer__image'
         src={movie.poster_path ? `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}` : '/images/testsample.jpg'}
         alt={movie.title + ' affiche'}
       />
+      </div>
       <section className='searchresults-container-cardlist-card__infos'>
         <div className='searchresults-container-cardlist-card__infos__content'>
+          <div className='searchresults-container-cardlist-card__infos__titlereleasecircle'>
+          <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
+
           <h3 className='searchresults-container-cardlist-card__infos__title'>{movie.title}</h3>
             <div className='searchresults-container-cardlist-card__infos__release'>
               Date de sortie :               {movie.release_date
                 ? formatDate(movie.release_date)
                 : 'Non précisée'}
+            </div>
             </div>
           <div className='circle-big'>
             <div className='text'>
@@ -89,10 +95,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle
               />
             </svg>
           </div>
+          </div>
           <p className='searchresults-container-cardlist-card__infos__desc'>{movie.overview}</p>
         </div>
       </section>
+      <hr/>
+
     </div>
+
   );
 };
 

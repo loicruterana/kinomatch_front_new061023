@@ -9,6 +9,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 // ================ IMPORT COMPOSANTS ================
 
 import Footer from '../../Footer/Footer';
+import { SearchBar } from '../SearchBar/SearchBar';
 
 // ================ IMPORT SCSS ================
 
@@ -18,9 +19,12 @@ import './BurgerMenu.scss';
 interface Props {
   showBurgerMenu: boolean;
   setShowBurgerMenu: (showBurgerMenu: boolean) => void;
+  query: string;
+  setQuery: (query: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
 }
 
-const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Props): JSX.Element => {
+const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query, setQuery, handleSubmit }: Props): JSX.Element => {
   const authContext = useContext(AuthContext);
 
 // ================ UTILS ================
@@ -96,6 +100,7 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu }: Prop
               <Link key='home' to='/' className='BurgerMenu__container__button--home' onClick={handleCloseClick}>
                 <button className="BurgerMenu__container__button">Accueil</button>
               </Link>
+              <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
               {/* <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter

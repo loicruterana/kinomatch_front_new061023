@@ -1,5 +1,6 @@
 import { Key, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 import React from 'react';
 import axios from 'axios';
 
@@ -61,6 +62,8 @@ interface Providers {
   };
 }
 
+
+
 /* Fonction MoviePage permettant d'afficher la page d'un film */
 function MoviePage() {
 
@@ -69,7 +72,7 @@ function MoviePage() {
 
   /* ================= MODALE DETAILS ============================ */
 
-/* Fonction permettant de manipuler la modale "showDetailsModal". Au click ==> passe de true à false et inversement */
+  /* Fonction permettant de manipuler la modale "showDetailsModal". Au click ==> passe de true à false et inversement */
   const handleDetailsModal = () => {
     setShowDetailsModal(!showDetailsModal);
   };
@@ -79,7 +82,7 @@ function MoviePage() {
     setShowImageModal(!showImageModal);
   };
 
-/* Fonction permettant de manipuler la modale "showOtherResults". Au click ==> passe de true à false et inversement */
+  /* Fonction permettant de manipuler la modale "showOtherResults". Au click ==> passe de true à false et inversement */
   const handleOtherResults = () => {
     setShowOtherResults(!showOtherResults);
   };
@@ -87,7 +90,26 @@ function MoviePage() {
 
   /* ================ USESTATES ================================= */
 
+  /* UseState qu définit l'id et le "fillValue" du film */
+  const [circle, setCircle] = useState<{ id: number; fillValue: number }>({
+    id: 0,
+    fillValue: 0,
+  });
 
+
+  /* UseState chargement de page */
+
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  /* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */
+
+  const [movieArray, setMovieArray] = useState([]);
+
+
+  /* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */
+
+  const [desktopVersion, setDesktopVersion] = useState(false);
 
   /* UseState Modale "Résultats" */
 
@@ -144,28 +166,13 @@ function MoviePage() {
     },
   });
 
-  {
-    /* UseState chargement de page */
-  }
-  const [isLoading, setIsLoading] = useState(true);
 
-  {
-    /* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */
-  }
-  const [movieArray, setMovieArray] = useState([]);
+  /* ================ USECONTEXT ================================= */
 
-  {
-    /* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */
-  }
-  const [desktopVersion, setDesktopVersion] = useState(false);
 
-  {
-    /* ================ USECONTEXT ================================= */
-  }
 
-  {
-    /* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */
-  }
+  /* UseContext récupérant l'id courant du film sélectionné dans "autres résultats"  */
+
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
@@ -173,13 +180,18 @@ function MoviePage() {
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
-  {
-    /* =============================================================== */
-  }
 
-  {
-    /* UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre  */
-  }
+  /* ==================== USESPRING =============================== */
+
+  /* UseSpring permettant l'animation du cercle de chargement */
+  const circleAnimation = useSpring({
+    from: { strokeDashoffset: 326.56 },
+    to: { strokeDashoffset: 326.56 - (326.56 * circle.fillValue) / 100 },
+  });
+
+
+  /* UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre  */
+
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 900) {
@@ -197,9 +209,9 @@ function MoviePage() {
     // un removeEventListener pour éviter les fuites de mémoire
   }, []);
 
-  {
-    /*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
-  }
+
+  /*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -288,6 +300,7 @@ function MoviePage() {
             setMovie(movieData.data);
             setCredits(creditsData.data);
             setProviders(providersData.data);
+            setCircle({ id: movieData.data.id, fillValue: movieData.data.vote_average * 10 })
           }
         }
       })
@@ -402,7 +415,26 @@ function MoviePage() {
             <div className='movieFound__essentiel-body--note'>
               <h4>Les utilisateurs de TMDB ont noté ce film</h4>
 
-              <p className='movieFound__essentiel-body--note---noteNumber'>
+              <div className='circle-big'>
+                <div className='text'>
+                  {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
+                    ? movie.vote_average * 10
+                    : (movie.vote_average * 10).toFixed(1)}
+                  %<div className='small'>{movie.vote_count} votes </div>
+                </div>
+                <svg>
+                  <circle className='bg' cx='57' cy='57' r='52' />
+                  <animated.circle
+                    className='progress'
+                    cx='57'
+                    cy='57'
+                    r='52'
+                    style={circleAnimation}
+                  />
+                </svg>
+              </div>
+
+              {/* <p className='movieFound__essentiel-body--note---noteNumber'>
                 {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
                   ? movie.vote_average * 10
                   : (movie.vote_average * 10).toFixed(1)}
@@ -410,7 +442,7 @@ function MoviePage() {
               </p>
               <p className='movieFound__essentiel-body--note---opinion'>
                 {movie.vote_count} votes
-              </p>
+              </p> */}
               {/* <a className='movieFound__essentiel-body--note---noteNumber' href='#movieDetails__comments'>{(Math.floor(movie.vote_average * 10) === movie.vote_average * 10) ? movie.vote_average * 10 : (movie.vote_average * 10).toFixed(1)}%</a>
               <a className='movieFound__essentiel-body--note---opinion' href='#movieDetails__comments'>{movie.vote_count} votes</a> */}
             </div>

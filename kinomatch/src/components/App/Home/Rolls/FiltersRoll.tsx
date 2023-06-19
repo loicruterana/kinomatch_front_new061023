@@ -80,14 +80,19 @@ export const RollGenre = ({
   // ================ JSX ================
   return (
     <>
-    {/* {
+      {/* {
       showRollGenre || showRollProvider ? */}
       <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__validation`}>
         <button onClick={handleClickOut}>Valider</button>
-      </div> 
+      </div>
       {/* : null} */}
-      
-      <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__filterRoll`}>
+
+      <div
+        className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__filterRoll`}
+        style={
+          selectedGenreFilters.length > 0 || selectedProviderFilters.length > 0 || selectedDecadeFilters.length > 0 ? { paddingBottom: '170px' } : { paddingBottom: '120px' }
+        }
+      >
 
         {/* // ================ JSX : ROLL GENRE ================ */}
         <div className={`Home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__roll-backgroundContainer`}>

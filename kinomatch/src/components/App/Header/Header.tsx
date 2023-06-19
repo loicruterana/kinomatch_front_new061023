@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation,  useNavigate } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
@@ -8,10 +8,13 @@ import { AuthContext } from '../../../contexts/AuthContext';
 // ================ IMPORT COMPOSANTS ================
 
 import BurgerMenu from './BurgerMenu/BurgerMenu';
+import { SearchBar } from './SearchBar/SearchBar';
 
 // ================ IMPORT SCSS ================
 
 import './Header.scss';
+
+
 
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -51,7 +54,7 @@ function Header() {
 /* ============================ HANDLERS ============================= */
 
  // Gestion de la soumission du formulaire de recherche
- const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+ const handleSubmit = async (e: FormEvent<Element>) => {
   e.preventDefault();
   if (query.length === 0) return;
 
@@ -59,6 +62,7 @@ function Header() {
     searchParams.append('typedName', query);
 setQuery('');
     navigate(`/searchresults?${searchParams.toString()}`);
+    setShowBurgerMenu(false);
 
 };
 
@@ -95,7 +99,7 @@ setQuery('');
         <button className='Header--OtherResultsBtn' type='button' onClick={movieArrayReload} > Relancer une recherche </button>)}
 
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
-      {/* Au click sera affichée une modale BurgerMenu */}
+      {/* Au clic sera affichée une modale BurgerMenu */}
       {/* {!isLoggedIn && (
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
@@ -116,20 +120,9 @@ setQuery('');
         </div>
       )} */}
 
-    <div className='Header-search'>
-      <form className='form' 
-      onSubmit={handleSubmit}
-      >
-        <input
-          className='input'
-          type='text'
-          name='query'
-          placeholder='Rechercher un film'
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </form>
-    </div>
+{desktopVersion && (
+  <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+    )}
 
       {/* Icône BurgerMenu */}
       <div onClick={handleClick} className={`menu-icon ${showBurgerMenu && 'active'}`}>
@@ -138,7 +131,11 @@ setQuery('');
         <div className='line-3'></div>
       </div>
       {/* Pour activer la modale selon le state showBurgerMenu */}
-      {showBurgerMenu && <BurgerMenu showBurgerMenu={showBurgerMenu} setShowBurgerMenu={setShowBurgerMenu} />}
+      {showBurgerMenu && <BurgerMenu showBurgerMenu={showBurgerMenu} setShowBurgerMenu={setShowBurgerMenu} 
+      query={query}
+      setQuery={setQuery}
+      handleSubmit={handleSubmit}
+      />}
     </div>
   );
 }

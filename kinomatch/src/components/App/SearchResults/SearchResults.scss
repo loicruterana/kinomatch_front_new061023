@@ -2,73 +2,83 @@
 
 //* ============ VERSION DESKTOP ============
 
-.searchresults-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: vars.$theme1-primary;
-  color: vars.$theme1-secondary;
-  // overflow-y: hidden;
-  // overflow-x: hidden;
-  overflow: hidden;
-
-  padding-top: 70px;
-
-  &-cardlist {
-    overflow: auto;
+@media screen and (min-width: 900px) {
+  .searchresults-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: auto;
-    // background-color: red;
-    // padding: 0 50px;
+    height: 100vh;
+    width: 100vw;
+    background-color: vars.$theme1-primary;
+    color: vars.$theme1-secondary;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
     overflow: hidden;
-    overflow-y: auto;
-    padding-top: 175px;
-    // padding-bottom: 70px;
-    &-queryresult {
-      // margin-left: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &-number {
-        font-size: 1.3rem;
-        width: fit-content;
-        height: fit-content;
-        font-weight: bold;
-        margin: 0.5rem 0.5rem 0.8rem 0.5rem;
-        padding: 0.2rem 0.3rem;
-        border: none;
-        border-radius: 6px;
-        color: vars.$theme1-primary;
-        background-color: vars.$theme1-secondary;
-      }
-    }
-    &-card {
-      margin: 20px 5%;
-      display: flex;
 
-      &__image {
-        border: solid 4px vars.$theme1-secondary;
-        border-radius: 6px;
-        scale: 0.8;
-      }
-      &__infos {
-        margin-top: 40px;
-        margin-left: 20px;
-        &__title {
-          font-weight: 700;
-          margin-bottom: 15px;
+    padding-top: 70px;
+
+    &-cardlist {
+      overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: auto;
+      // background-color: red;
+      // padding: 0 50px;
+      overflow: hidden;
+      overflow-y: auto;
+      padding-top: 300px;
+      // padding-bottom: 70px;
+      &-queryresult {
+        // margin-left: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-number {
+          font-size: 1.3rem;
+          width: fit-content;
+          height: fit-content;
+          font-weight: bold;
+          margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+          padding: 0.2rem 0.3rem;
+          border: none;
+          border-radius: 6px;
+          color: vars.$theme1-primary;
+          background-color: vars.$theme1-secondary;
         }
-        // &__release {
-        //   margin-bottom: 10px;
-        // }
-        &__rate {
-          margin-bottom: 10px;
+      }
+      &-card {
+        margin: 20px 5%;
+        display: flex;
+        hr {
+          display: none;
+        }
+        &__imagecontainer {
+          &__image {
+            border: solid 4px vars.$theme1-secondary;
+            border-radius: 6px;
+            width: 200px; /* ajustez la valeur en fonction de vos besoins */
+            height: 300px;
+            object-fit: contain;
+            background-color: black;
+          }
+        }
+
+        &__infos {
+          margin-top: 40px;
+          margin-left: 20px;
+          &__title {
+            font-weight: 700;
+            margin-bottom: 15px;
+          }
+          // &__release {
+          //   margin-bottom: 10px;
+          // }
+          &__rate {
+            margin-bottom: 10px;
+          }
         }
       }
     }
@@ -135,4 +145,96 @@
 .infinite-scroll-component {
   width: 100%;
   overflow: hidden;
+}
+
+//* ============ VERSION MOBILE ============
+
+@media screen and (max-width: 900px) {
+  .searchresults-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: vars.$theme1-primary;
+    color: vars.$theme1-secondary;
+    // overflow-y: auto;
+    // overflow-x: hidden;
+    overflow: hidden;
+    padding-top: 600px;
+
+    &-cardlist {
+      &-queryresult {
+        // margin-left: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-number {
+          font-size: 1.3rem;
+          width: fit-content;
+          height: fit-content;
+          font-weight: bold;
+          margin: 0.5rem 0.5rem 0.8rem 0.5rem;
+          padding: 0.2rem 0.3rem;
+          border: none;
+          border-radius: 6px;
+          color: vars.$theme1-primary;
+          background-color: vars.$theme1-secondary;
+        }
+      }
+      &-card {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        hr {
+          color: vars.$theme1-secondary;
+          background-color: vars.$theme1-secondary;
+          height: 1px;
+          width: 80%;
+          border: none;
+          margin-bottom: 50px;
+        }
+        &__imagecontainer {
+          display: flex;
+          justify-content: center;
+          &__image {
+            border: solid 4px vars.$theme1-secondary;
+            border-radius: 6px;
+            width: 200px; /* ajustez la valeur en fonction de vos besoins */
+            height: 300px;
+            object-fit: contain;
+            background-color: black;
+          }
+        }
+
+        &__infos {
+          // margin-top: 40px;
+          text-align: center;
+          margin: 0 20px 30px;
+          // &__content {
+          //   // margin-top: 5;
+          // }
+          &__titlereleasecircle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &__titlerelease {
+              text-align: left;
+            }
+          }
+          &__title {
+            font-weight: 700;
+            margin-bottom: 15px;
+          }
+          &__desc {
+            text-align: left;
+            margin: 0 10px;
+          }
+        }
+      }
+    }
+  }
+  .circle-big {
+    order: -1;
+  }
 }
