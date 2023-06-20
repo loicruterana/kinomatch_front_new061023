@@ -23,7 +23,6 @@ function Header() {
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
 
-
   // ================  UTILS ================
 
   const location = useLocation();
@@ -67,7 +66,6 @@ function Header() {
     setQuery('');
     navigate(`/searchresults?${searchParams.toString()}`);
     setShowBurgerMenu(false);
-
   };
 
   function handleClick() {
@@ -80,24 +78,49 @@ function Header() {
 
   const movieArrayReload = () => {
     window.location.reload();
-  }
-
+  };
+  // ================ JSX ================
   return (
     <div className='Header'>
       {/* Logo du Header, logo différent on est en version mobile */}
-      {
-        location.pathname === '/films' && !desktopVersion ?
-          <Link key='refresh' to='#' className='Header-logo' onClick={movieArrayReload}>
-            <img className='Header-logo__image--refresh' src='./images/RelancerLogo.png' alt='logo' />
-          </Link>
-          :
-          <Link key='home' to='/' className='Header-logo' onClick={handleCloseClick}>
-            <img className='Header-logo__image' src='./images/kino_match_logo.png' alt='logo' />
-          </Link>
-      }
+      {location.pathname === '/films' && !desktopVersion ? (
+        <Link
+          key='refresh'
+          to='#'
+          className='Header-logo'
+          onClick={movieArrayReload}
+        >
+          <img
+            className='Header-logo__image--refresh'
+            src='./images/RelancerLogo.png'
+            alt='logo'
+          />
+        </Link>
+      ) : (
+        <Link
+          key='home'
+          to='/'
+          className='Header-logo'
+          onClick={handleCloseClick}
+        >
+          <img
+            className='Header-logo__image'
+            src='./images/kino_match_logo.png'
+            alt='logo'
+          />
+        </Link>
+      )}
 
       {location.pathname === '/films' && desktopVersion && (
-        <button className='Header--OtherResultsBtn' type='button' onClick={movieArrayReload} > Relancer une recherche </button>)}
+        <button
+          className='Header--OtherResultsBtn'
+          type='button'
+          onClick={movieArrayReload}
+        >
+          {' '}
+          Relancer une recherche{' '}
+        </button>
+      )}
 
       {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
       {/* Au clic sera affichée une modale BurgerMenu */}
@@ -124,23 +147,35 @@ function Header() {
       {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
 
       {desktopVersion && (
-        <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          handleSubmit={handleSubmit}
+        />
       )}
 
       {/* Icône BurgerMenu, uniquement affiché en version mobile */}
-      <div onClick={handleClick} className={`menu-icon ${showBurgerMenu && 'active'}`}>
+      <div
+        onClick={handleClick}
+        className={`menu-icon ${showBurgerMenu && 'active'}`}
+      >
         <div className='line-1'></div>
         <div className='line-2'></div>
         <div className='line-3'></div>
       </div>
       {/* Pour activer la modale selon le state showBurgerMenu */}
-      {showBurgerMenu && <BurgerMenu showBurgerMenu={showBurgerMenu} setShowBurgerMenu={setShowBurgerMenu}
-        query={query}
-        setQuery={setQuery}
-        handleSubmit={handleSubmit}
-      />}
+      {showBurgerMenu && (
+        <BurgerMenu
+          showBurgerMenu={showBurgerMenu}
+          setShowBurgerMenu={setShowBurgerMenu}
+          query={query}
+          setQuery={setQuery}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </div>
   );
+  //* ================  FERMETURE COMPOSANT ================
 }
 
 export default Header;

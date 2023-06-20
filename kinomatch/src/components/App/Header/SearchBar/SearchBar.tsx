@@ -2,13 +2,22 @@
 
 import './SearchBar.scss';
 
+// ================ INTERFACES ================
+
 interface SearchBarProps {
   query: string;
   setQuery: (query: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ query, setQuery, handleSubmit }) => {
+//* ================ COMPOSANT ================
+
+export const SearchBar: React.FC<SearchBarProps> = ({
+  query,
+  setQuery,
+  handleSubmit,
+}) => {
+  // ================ JSX ================
   return (
     <div className='SearchBar'>
       <form className='form' onSubmit={handleSubmit}>

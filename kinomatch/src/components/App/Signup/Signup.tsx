@@ -20,8 +20,7 @@ import './Signup.scss';
 //* ================ COMPOSANT ================
 
 const Signup = () => {
-
-// ================ USESTATE ================
+  // ================ USESTATE ================
 
   const [postProfil, setPostProfil] = useState({
     email: '',
@@ -32,15 +31,15 @@ const Signup = () => {
   const [goToHomePage, setGoToHomePage] = useState(false);
   const [message, setMessage] = useState('');
 
-// ================ UTILS ================
+  // ================ UTILS ================
 
-if (goToHomePage) {
-  return <Navigate to="/" />;
-}
+  if (goToHomePage) {
+    return <Navigate to='/' />;
+  }
 
-// ================ HANDLERS ================
+  // ================ HANDLERS ================
 
-// handleChange pour enregistrer les entrées dans les inputs du formulaire
+  // handleChange pour enregistrer les entrées dans les inputs du formulaire
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPostProfil({
@@ -49,7 +48,7 @@ if (goToHomePage) {
     });
   };
 
-//handleSubmit pour envoyer les données du formulaire au back
+  //handleSubmit pour envoyer les données du formulaire au back
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userData = {
@@ -59,36 +58,39 @@ if (goToHomePage) {
     };
 
     try {
-      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
+      const response = await axios.post(
+        'https://deploy-back-kinomatch.herokuapp.com/signup',
+        userData
+      );
       login();
-      setMessage(response.data.message)
-      addUserData(response.data.user.email, response.data.user.id)
-
+      setMessage(response.data.message);
+      addUserData(response.data.user.email, response.data.user.id);
 
       setTimeout(() => {
-      setGoToHomePage(true);
+        setGoToHomePage(true);
       }, 1500);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-     console.log(error)
-  
-        if(error.response.status === 400) {
-          //Email et mot de passe obligatoires
-          //Email ou mot de passe invalide
-          console.log(error.response.data.error);
-          setMessage(error.response.data.error)
-          return;
-        }
+      console.log(error);
 
-        if(error.response.status === 500) {
-          //Erreur lors de la connexion de l'utilisateur
-          console.log(error.response.data.error);
-          setMessage(error.response.data.error)
-          return;
-        }     }
+      if (error.response.status === 400) {
+        //Email et mot de passe obligatoires
+        //Email ou mot de passe invalide
+        console.log(error.response.data.error);
+        setMessage(error.response.data.error);
+        return;
+      }
 
+      if (error.response.status === 500) {
+        //Erreur lors de la connexion de l'utilisateur
+        console.log(error.response.data.error);
+        setMessage(error.response.data.error);
+        return;
+      }
+    }
   };
 
+  // ============ JSX ============
 
   return (
     <div className='Signup-container'>
@@ -132,14 +134,12 @@ if (goToHomePage) {
 
         <button type='submit'>Créer compte</button>
         <p className='Login-container__message'>{message}</p>
-
       </form>
-      
-      {userData.email && <Connected/>}
+
+      {userData.email && <Connected />}
     </div>
   );
   //* ================ FERMETURE DU COMPOSANT ================
-
 };
 
 export default Signup;

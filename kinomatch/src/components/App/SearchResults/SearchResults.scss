@@ -85,7 +85,7 @@
   }
 }
 
-// Animation
+//* ============ ANIMATION ============
 
 .circle-big {
   // position: relative;
@@ -133,6 +133,8 @@
   color: vars.$theme1-secondary;
 }
 
+// ============ KEYFRAMES ============
+
 @keyframes big {
   from {
     stroke-dashoffset: 326.56;
@@ -141,6 +143,8 @@
     stroke-dashoffset: 100;
   }
 }
+
+// ============ INFINTE SCROLL COMPONENT ============
 
 .infinite-scroll-component {
   width: 100%;

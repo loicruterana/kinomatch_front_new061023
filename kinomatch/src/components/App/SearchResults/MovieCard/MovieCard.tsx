@@ -1,7 +1,9 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
-
+// ================ INTERFACES================
 interface MovieCardProps {
   movie: {
     id: number;
@@ -17,11 +19,13 @@ interface MovieCardProps {
     fillValue: number;
   };
 }
+//* ================ COMPOSANT ================
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, circle
-  // , movies, setMovies, page, setPage 
+const MovieCard: React.FC<MovieCardProps> = ({
+  movie,
+  circle,
+  // , movies, setMovies, page, setPage
 }) => {
-
   // const [hasMore, setHasMore] = useState(true);
 
   // const loadMoreData = async () => {
@@ -38,72 +42,84 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle
   //   }
   // };
 
-  {
-    /* CONVERSION DATE */
-  }
+  // ================ UTILS ================
+
+  // CONVERSION DATE
 
   function formatDate(dateString: string | number | Date) {
     const date = new Date(dateString);
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
-      }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${
+      month < 10 ? '0' + month : month
+    }/${year}`;
   }
+
+  // FONCTION DE REMPLISSAGE ANIMATION
+
   const circleAnimation = useSpring({
     from: { strokeDashoffset: 326.56 },
     to: { strokeDashoffset: 326.56 - (326.56 * circle.fillValue) / 100 },
   });
 
+  // ================ JSX ================
+
   return (
-    
     <div className='searchresults-container-cardlist-card'>
-      <div className='searchresults-container-cardlist-card__imagecontainer'> 
-      <img
-        className='searchresults-container-cardlist-card__imagecontainer__image'
-        src={movie.poster_path ? `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}` : '/images/testsample.jpg'}
-        alt={movie.title + ' affiche'}
-      />
+      <div className='searchresults-container-cardlist-card__imagecontainer'>
+        <img
+          className='searchresults-container-cardlist-card__imagecontainer__image'
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`
+              : '/images/testsample.jpg'
+          }
+          alt={movie.title + ' affiche'}
+        />
       </div>
       <section className='searchresults-container-cardlist-card__infos'>
         <div className='searchresults-container-cardlist-card__infos__content'>
           <div className='searchresults-container-cardlist-card__infos__titlereleasecircle'>
-          <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
-
-          <h3 className='searchresults-container-cardlist-card__infos__title'>{movie.title}</h3>
-            <div className='searchresults-container-cardlist-card__infos__release'>
-              Date de sortie :               {movie.release_date
-                ? formatDate(movie.release_date)
-                : 'Non précisée'}
+            <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
+              <h3 className='searchresults-container-cardlist-card__infos__title'>
+                {movie.title}
+              </h3>
+              <div className='searchresults-container-cardlist-card__infos__release'>
+                Date de sortie :{' '}
+                {movie.release_date
+                  ? formatDate(movie.release_date)
+                  : 'Non précisée'}
+              </div>
             </div>
+            <div className='circle-big'>
+              <div className='text'>
+                {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
+                  ? movie.vote_average * 10
+                  : (movie.vote_average * 10).toFixed(1)}
+                %<div className='small'>{movie.vote_count} votes </div>
+              </div>
+              <svg>
+                <circle className='bg' cx='57' cy='57' r='52' />
+                <animated.circle
+                  className='progress'
+                  cx='57'
+                  cy='57'
+                  r='52'
+                  style={circleAnimation}
+                />
+              </svg>
             </div>
-          <div className='circle-big'>
-            <div className='text'>
-              {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
-                ? movie.vote_average * 10
-                : (movie.vote_average * 10).toFixed(1)}
-              %<div className='small'>{movie.vote_count} votes </div>
-            </div>
-            <svg>
-              <circle className='bg' cx='57' cy='57' r='52' />
-              <animated.circle
-                className='progress'
-                cx='57'
-                cy='57'
-                r='52'
-                style={circleAnimation}
-              />
-            </svg>
           </div>
-          </div>
-          <p className='searchresults-container-cardlist-card__infos__desc'>{movie.overview}</p>
+          <p className='searchresults-container-cardlist-card__infos__desc'>
+            {movie.overview}
+          </p>
         </div>
       </section>
-      <hr/>
-
+      <hr />
     </div>
-
   );
+  //* ================ FERMTURE COMPOSANT ================
 };
 
 export default MovieCard;

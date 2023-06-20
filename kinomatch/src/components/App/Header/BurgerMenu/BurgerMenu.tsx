@@ -1,3 +1,5 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -24,14 +26,22 @@ interface Props {
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query, setQuery, handleSubmit }: Props): JSX.Element => {
+//* ================ COMPOSANT ================
+
+const BurgerMenu: React.FC<Props> = ({
+  showBurgerMenu,
+  setShowBurgerMenu,
+  query,
+  setQuery,
+  handleSubmit,
+}: Props): JSX.Element => {
   const authContext = useContext(AuthContext);
 
-// ================ UTILS ================
+  // ================ UTILS ================
 
   const navigate = useNavigate();
 
-// ================ HANDLERS ================
+  // ================ HANDLERS ================
 
   // const handleClick = (): void => {
   //   setShowBurgerMenu(!showBurgerMenu);
@@ -70,26 +80,37 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
     }
   };
 
+  // ================ JSX ================
+
   return (
-    <div className="BurgerMenu">
-      <div className="BurgerMenu__container">
-        <div className="BurgerMenu__container__items">
+    <div className='BurgerMenu'>
+      <div className='BurgerMenu__container'>
+        <div className='BurgerMenu__container__items'>
           {authContext?.isLoggedIn && (
             <>
               {/* Nom de l'utilisateur */}
-              <div className="BurgerMenu__container__items__text">
+              <div className='BurgerMenu__container__items__text'>
                 <div>Bonjour</div>
                 <div>{authContext?.userData.email}</div>
               </div>
               {/* Les boutons lorsque l'utilisateur est connecté */}
-              <button className="BurgerMenu__container__items__button" onClick={handleProfile}>
+              <button
+                className='BurgerMenu__container__items__button'
+                onClick={handleProfile}
+              >
                 Mon profil
               </button>
 
-              <button className="BurgerMenu__container__items__button" onClick={handleDeleteProfile}>
+              <button
+                className='BurgerMenu__container__items__button'
+                onClick={handleDeleteProfile}
+              >
                 Supprimer compte
               </button>
-              <button className="BurgerMenu__container__items__button" onClick={handleLogout}>
+              <button
+                className='BurgerMenu__container__items__button'
+                onClick={handleLogout}
+              >
                 Se déconnecter
               </button>
             </>
@@ -97,10 +118,21 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
           {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
           {!authContext?.isLoggedIn && (
             <>
-              <Link key='home' to='/' className='BurgerMenu__container__button--home' onClick={handleCloseClick}>
-                <button className="BurgerMenu__container__button">Accueil</button>
+              <Link
+                key='home'
+                to='/'
+                className='BurgerMenu__container__button--home'
+                onClick={handleCloseClick}
+              >
+                <button className='BurgerMenu__container__button'>
+                  Accueil
+                </button>
               </Link>
-              <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+              <SearchBar
+                query={query}
+                setQuery={setQuery}
+                handleSubmit={handleSubmit}
+              />
               {/* <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter
@@ -118,6 +150,7 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
       </div>
     </div>
   );
+  //* ================ FERMETURE COMPOSANT ================
 };
 
 export default BurgerMenu;

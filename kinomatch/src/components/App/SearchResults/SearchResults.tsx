@@ -1,14 +1,21 @@
+// ============ IMPORT BIBLIOTHEQUES ============
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import MovieCard from './MovieCard/MovieCard';
-
-import './SearchResults.scss';
-import Footer from '../Footer/Footer';
-import Loading from '../Loading/Loading';
 import axios from 'axios';
 
-// Interfaces
+// ============ IMPORT COMPOSANTS ============
+
+import MovieCard from './MovieCard/MovieCard';
+import Loading from '../Loading/Loading';
+
+// ============ IMPORT SCSS ============
+
+import './SearchResults.scss';
+// import Footer from '../Footer/Footer';
+
+// ============ INTERFACES ============
 interface Movie {
   id: number;
   title: string;
@@ -24,44 +31,48 @@ interface Circle {
   fillValue: number;
 }
 
+//* ============ COMPOSANT ============
+
 const SearchResults = () => {
-
-
-  // State
+  // ============ USESTATE ============
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [circles, setCircles] = useState<Circle[]>([]);
-
-  const moviesAreLoading = movies.length === 0; // true
-
   const [totalResults, setTotalResults] = useState(0);
 
+  // ============ UTILS ============
+
+  const moviesAreLoading = movies.length === 0; // true
   // Utilisation de la navigation
   const navigate = useNavigate();
+  const queryString = window.location.search;
+
+  // ============ FONCTION POUR INFINITE SCROLL ============
 
   // Chargement des données supplémentaires pour le défilement infini
   const loadMoreData = async () => {
     try {
-      console.log("loadMoreData")
+      console.log('loadMoreData');
       const response = await fetch(
-        `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${page + 1}`
+        `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${
+          page + 1
+        }`
       );
       const newMovies = await response.json();
       setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
       setPage((prevPage) => prevPage + 1);
-      setHasMore(newMovies.results.length > 0); 
+      setHasMore(newMovies.results.length > 0);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const queryString = window.location.search;
+  // ============ USEEFFECT POUR HANDLESUBMIT ============
 
   useEffect(() => {
     const handleSubmit = async () => {
-      
       try {
         const response = await axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/search${window.location.search}&page=1`
@@ -70,7 +81,7 @@ const SearchResults = () => {
         console.log(data);
         if (data.results.length === 0) {
           navigate('/noresult');
-          return
+          return;
         }
         setMovies(data.results);
         setPage(1);
@@ -84,11 +95,12 @@ const SearchResults = () => {
         console.error(error);
       }
     };
-  
+
     handleSubmit();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);
 
+  // ============ USEEFFECT POUR DONNÉES ANIMATION ============
 
   useEffect(() => {
     const updatedCircles: Circle[] = movies.map((movie) => ({
@@ -99,6 +111,8 @@ const SearchResults = () => {
   }, [movies]);
 
   // console.log()
+
+  // ============ JSX ============
 
   return (
     <div className='searchresults-container'>
@@ -118,43 +132,45 @@ const SearchResults = () => {
           Rechercher
         </button>
       </form> */}
-      {moviesAreLoading ? <Loading /> :
-      <div className='searchresults-container-cardlist'>
-
-
-
-        <InfiniteScroll
-          dataLength={movies.length}
-          next={loadMoreData}
-          hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
-          endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
-          height={1080}
-          scrollableTarget="scrollableDiv"
-          scrollThreshold={1}
-          // style={{ overflow: 'hidden', overflowY: 'auto' }}
-        >
-<div className='searchresults-container-cardlist-queryresult'>
-              <div className='searchresults-container-cardlist-queryresult-number'>{query}</div>
-              <p> : {totalResults} résultats trouvés</p></div>
-          {movies
-            .filter((movie) => movie.poster_path)
-            .map((movie) => {
-              const circle = circles.find((circle) => circle.id === movie.id);
-              if (!circle) {
-                return null;
-              }
-              return <MovieCard movie={movie} circle={circle} key={movie.id} />;
-            })}
-            
-        </InfiniteScroll>
-      </div>
-        }
+      {moviesAreLoading ? (
+        <Loading />
+      ) : (
+        <div className='searchresults-container-cardlist'>
+          <InfiniteScroll
+            dataLength={movies.length}
+            next={loadMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
+            height={1080}
+            scrollableTarget='scrollableDiv'
+            scrollThreshold={1}
+            // style={{ overflow: 'hidden', overflowY: 'auto' }}
+          >
+            <div className='searchresults-container-cardlist-queryresult'>
+              <div className='searchresults-container-cardlist-queryresult-number'>
+                {query}
+              </div>
+              <p> : {totalResults} résultats trouvés</p>
+            </div>
+            {movies
+              .filter((movie) => movie.poster_path)
+              .map((movie) => {
+                const circle = circles.find((circle) => circle.id === movie.id);
+                if (!circle) {
+                  return null;
+                }
+                return (
+                  <MovieCard movie={movie} circle={circle} key={movie.id} />
+                );
+              })}
+          </InfiniteScroll>
+        </div>
+      )}
       {/* <Footer /> */}
-      
     </div>
-
   );
+  //* ============ FERMETURE COMPOSANT ============
 };
 
 export default SearchResults;
