@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -9,15 +9,14 @@ import {
   ToWatchListArray,
   toWatchMoviesObject,
   BookmarkedListObject,
-  UserData, 
-  toWatchMoviesEntry
+  UserData,
+  toWatchMoviesEntry,
 } from '../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
 
 import { AuthContext } from '../../../contexts/AuthContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
-
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -31,20 +30,27 @@ import './Profile.scss';
 //* ================ COMPOSANT ================
 
 export const Profile: React.FC = () => {
+  // ================ USESTATE ================
 
-
-// ================ USESTATE ================
-
+  // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
+  // pour afficher ou masquer WatchedRoll (films vus -> ✓)
   const [showWatchedRoll, setShowWatchedRoll] = useState<boolean>(true);
+  // pour afficher ou masquer ToWatchRoll (films à voir)
   const [showToWatchRoll, setShowToWatchRoll] = useState<boolean>(true);
+  // pour stocker les id issues du back concernant les films vus
   const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
+  // pour stocker les noms concernant les films vus
   const [watchedMovies, setWatchedMovies] = useState<WatchedMoviesObject>({});
+  // pour stocker les id issues du back concernant les films à voir
   const [toWatchList, setToWatchList] = useState<ToWatchListArray>([]);
+  // pour stocker les noms concernant les films à voir
   const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
+  // pour stocker les id issues du back concernant les films préférés
   const [bookmarkedList, setBookmarkedList] = useState<BookmarkedListObject>(
     {}
   );
+  // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
@@ -68,12 +74,14 @@ export const Profile: React.FC = () => {
     addBookmarked: (element: { movie: string }) => void;
   };
 
-// ================ UTILS ================
+  // ================ UTILS ================
+  // fonction pour naviguer entre les pages
+  const navigate: (path: string) => void = useNavigate();
+  // fonction pour savoir si les listes sont en train de charger
+  const listsAreLoading =
+    (watchedList || toWatchList || bookmarkedList) === undefined; // false
 
-const navigate: (path: string) => void = useNavigate()
-const listsAreLoading = watchedList === undefined; // false
-
-// ================ INTERFACES ================
+  // ================ INTERFACES ================
   interface BookmarkedItem {
     createdAt: string;
     film_id: string;
@@ -84,35 +92,35 @@ const listsAreLoading = watchedList === undefined; // false
 
   // ================ HANDLERS ================
 
-// handler pour supprimer un film ajouté en favoris (coeur)
+  // handler pour supprimer un film ajouté en favoris (coeur)
   function handleRemoveBookmarked(film_id: string) {
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
   }
 
-// handler pour ajouter un film ajouté en favoris (coeur)
+  // handler pour ajouter un film ajouté en favoris (coeur)
   function handleAddBookmarked(film_id: string) {
-    addBookmarked({ movie: film_id })
+    addBookmarked({ movie: film_id });
     setUserEvent(true);
   }
 
-//handler pour ne plus afficher les rolls
+  //handler pour ne plus afficher les rolls
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
   }
 
-//handler pour afficher le roll Watched (films vus -> ✓)
+  //handler pour afficher le roll Watched (films vus -> ✓)
   function handleShowWatchedRoll(): void {
     setShowWatchedRoll(true);
   }
 
-//handler pour afficher le roll ToWatch (films à voir)
+  //handler pour afficher le roll ToWatch (films à voir)
   function handleShowToWatchRoll(): void {
     setShowToWatchRoll(true);
   }
 
-//handler pour supprimer profil
+  //handler pour supprimer profil
   function handleDeleteProfile(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -133,7 +141,7 @@ const listsAreLoading = watchedList === undefined; // false
     }
   }
 
-//handler pour se déconnecter
+  //handler pour se déconnecter
   function handleLogout(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -217,7 +225,10 @@ const listsAreLoading = watchedList === undefined; // false
             }));
 
             // Utiliser un objet pour stocker les films uniques
-            const uniqueMovies: Record<string, { name: string; movie_id?: string }> = {};
+            const uniqueMovies: Record<
+              string,
+              { name: string; movie_id?: string }
+            > = {};
 
             // Parcourir la liste des films à ajouter
             moviesToAdd.forEach((movie) => {
@@ -237,7 +248,6 @@ const listsAreLoading = watchedList === undefined; // false
 
     fetchMovieTitles();
   }, [watchedList]);
-
 
   // =========================== BOOKMARKED (COEUR) ===========================
 
@@ -276,7 +286,6 @@ const listsAreLoading = watchedList === undefined; // false
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
-
 
   // =========================== TOWATCHLIST ===========================
 
@@ -322,7 +331,6 @@ const listsAreLoading = watchedList === undefined; // false
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
             setToWatchMovies(uniqueMovies);
-
           })
           .catch((error) => {
             console.error(error);
@@ -334,7 +342,6 @@ const listsAreLoading = watchedList === undefined; // false
 
     fetchMovieTitles();
   }, [toWatchList]);
-
 
   //========== JSX ==========
 
@@ -386,42 +393,44 @@ const listsAreLoading = watchedList === undefined; // false
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
+        <div
+          className={`Profile-container__roll-modale-${
+            mobileVersion ? 'mobile-version' : 'desktop-version'
+          }`}
+        >
           <div
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-              }`}
-          >
-            <div
-              className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                }-backdropfilter`}
-              onClick={handleClickOut}
-            ></div>
-            <BookmarkedRoll
-              isLoading={listsAreLoading}
-              mobileVersion={mobileVersion}
-              showWatchedRoll={showWatchedRoll}
-              // setShowWatchedRoll={setShowWatchedRoll}
-              showToWatchRoll={showToWatchRoll}
-              // setShowToWatchRoll={setShowToWatchRoll}
-              watchedList={watchedList}
-              setWatchedList={setWatchedList}
-              watchedMovies={watchedMovies}
-              // setWatchedMovies={setWatchedMovies}
-              // deleteWatched={deleteWatched}
-              toWatchList={toWatchList}
-              setToWatchList={setToWatchList}
-              toWatchMovies={toWatchMovies}
-              // setToWatchMovies={setToWatchMovies}
-              deleteToWatch={deleteToWatch}
-              deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
-              bookmarkedList={bookmarkedList}
-              // deleteBookmarked={deleteBookmarked}
-              // addBookmarked={addBookmarked}
+            className={`Profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }-backdropfilter`}
+            onClick={handleClickOut}
+          ></div>
+          <BookmarkedRoll
+            isLoading={listsAreLoading}
+            mobileVersion={mobileVersion}
+            showWatchedRoll={showWatchedRoll}
+            // setShowWatchedRoll={setShowWatchedRoll}
+            showToWatchRoll={showToWatchRoll}
+            // setShowToWatchRoll={setShowToWatchRoll}
+            watchedList={watchedList}
+            setWatchedList={setWatchedList}
+            watchedMovies={watchedMovies}
+            // setWatchedMovies={setWatchedMovies}
+            // deleteWatched={deleteWatched}
+            toWatchList={toWatchList}
+            setToWatchList={setToWatchList}
+            toWatchMovies={toWatchMovies}
+            // setToWatchMovies={setToWatchMovies}
+            deleteToWatch={deleteToWatch}
+            deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
+            bookmarkedList={bookmarkedList}
+            // deleteBookmarked={deleteBookmarked}
+            // addBookmarked={addBookmarked}
 
-              handleRemoveBookmarked={handleRemoveBookmarked}
-              handleAddBookmarked={handleAddBookmarked}
-            />
-          </div>
-        )}
+            handleRemoveBookmarked={handleRemoveBookmarked}
+            handleAddBookmarked={handleAddBookmarked}
+          />
+        </div>
+      )}
 
       {/* BOUTONS */}
 
@@ -445,14 +454,9 @@ const listsAreLoading = watchedList === undefined; // false
           </div>
         </div>
       )}
-      {
-        !mobileVersion &&
-        <Footer />
-
-      }
+      {!mobileVersion && <Footer />}
     </div>
   );
-//* ================ FERMETURE COMPOSANT ================
-
+  //* ================ FERMETURE COMPOSANT ================
 };
 export default Profile;

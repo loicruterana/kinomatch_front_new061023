@@ -26,16 +26,19 @@ export const Login = () => {
 
   // ================ USESTATE ================
 
+  // state qui va recevoir les données du formulaire
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
+  // state pour la redirection vers la page d'accueil
   const [goToHomePage, setGoToHomePage] = useState(false);
+  // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
   // ================ UTILS ================
-
+  // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
     return <Navigate to='/' />;
   }
@@ -51,7 +54,7 @@ export const Login = () => {
     });
   };
 
-  //handleSubmit pour envoyer les données du formulaire
+  //handleSubmit pour envoyer les données du formulaire pour se loger
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const userData: { email: string; password: string } = {
@@ -60,6 +63,7 @@ export const Login = () => {
     };
 
     axios
+      // envoi des données au back
       .post('https://deploy-back-kinomatch.herokuapp.com/login', userData)
       .then((response) => {
         if (response.status === 200) {
@@ -97,12 +101,8 @@ export const Login = () => {
   // ================ JSX ================
   return (
     <div className='Login-container'>
-      <form
-        className='Login-container-form'
-        onSubmit={handleSubmit}
-        // action="http://localhost:4000/signup" //à modifier
-        // method="POST"
-      >
+      {/* formulaire de connexion */}
+      <form className='Login-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}

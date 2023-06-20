@@ -22,17 +22,24 @@ import './Signup.scss';
 const Signup = () => {
   // ================ USESTATE ================
 
+  // state qui va recevoir les données du formulaire
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
-  const { userData, addUserData, login } = useContext(AuthContext);
+  // state pour la redirection vers la page d'accueil
   const [goToHomePage, setGoToHomePage] = useState(false);
+  // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
+
+  // ================ IMPORT PROPS CONTEXT ================
+
+  const { userData, addUserData, login } = useContext(AuthContext);
 
   // ================ UTILS ================
 
+  // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
     return <Navigate to='/' />;
   }
@@ -62,8 +69,11 @@ const Signup = () => {
         'https://deploy-back-kinomatch.herokuapp.com/signup',
         userData
       );
+      // login(), va permettre de stocker dans AuhthContext = true;
       login();
+      // setMessage pour afficher le message d'erreur
       setMessage(response.data.message);
+      // addUserData pour stocker dans AuthContext les données de l'utilisateur
       addUserData(response.data.user.email, response.data.user.id);
 
       setTimeout(() => {
@@ -94,6 +104,7 @@ const Signup = () => {
 
   return (
     <div className='Signup-container'>
+      z{/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
@@ -135,11 +146,10 @@ const Signup = () => {
         <button type='submit'>Créer compte</button>
         <p className='Login-container__message'>{message}</p>
       </form>
-
       {userData.email && <Connected />}
     </div>
   );
-  //* ================ FERMETURE DU COMPOSANT ================
+  //* ================ FERMETURE COMPOSANT ================
 };
 
 export default Signup;

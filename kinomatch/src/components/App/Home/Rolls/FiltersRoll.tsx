@@ -53,6 +53,7 @@ export const RollGenre = ({
 
   // ================ HANDLERS ================
 
+  // handler pour envoyer les choix de filtres à la fonction addGenreFilter du contexte SelectedGenreFiltersContext et donc stocker les filtres genre dans le state
   function handleGenreClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -63,7 +64,7 @@ export const RollGenre = ({
       addGenreFilter(name, genreId);
     }
   }
-
+  // handleProviderClick pour envoyer les choix de filtres à la fonction addProviderFilter du contexte SelectedProviderFiltersContext et donc stocker les filtres provider dans le state
   function handleProviderClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -75,6 +76,7 @@ export const RollGenre = ({
     }
   }
 
+  // handleDecadeClick pour envoyer les choix de filtres à la fonction addDecadeFilter du contexte SelectedDecadeFiltersContext et donc stocker le filtre decade dans le state
   function handleDecadeClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -88,8 +90,7 @@ export const RollGenre = ({
   // ================ JSX ================
   return (
     <>
-      {/* {
-      showRollGenre || showRollProvider ? */}
+      {/* pour la version mobile, on affiche le bouton de validation en bas de la modale */}
       <div
         className={`Home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -97,8 +98,8 @@ export const RollGenre = ({
       >
         <button onClick={handleClickOut}>Valider</button>
       </div>
-      {/* : null} */}
 
+      {/* affichage des rolls, ceux-ci ont un affichage différent (padding-bottom) si un filtre est sélectionné */}
       <div
         className={`Home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'

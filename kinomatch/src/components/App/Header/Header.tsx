@@ -26,7 +26,6 @@ function Header() {
   // ================  UTILS ================
 
   const location = useLocation();
-
   const navigate = useNavigate();
 
   // ================  USEEFFECT ================
@@ -68,14 +67,17 @@ function Header() {
     setShowBurgerMenu(false);
   };
 
+  // pour afficher ou masquer le menu burger
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
   }
 
+  // pour fermer le menu burger
   function handleCloseClick() {
     setShowBurgerMenu(false);
   }
 
+  // pour recharger la page films
   const movieArrayReload = () => {
     window.location.reload();
   };
@@ -111,6 +113,7 @@ function Header() {
         </Link>
       )}
 
+      {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
       {location.pathname === '/films' && desktopVersion && (
         <button
           className='Header--OtherResultsBtn'
@@ -145,7 +148,6 @@ function Header() {
       )} */}
 
       {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
-
       {desktopVersion && (
         <SearchBar
           query={query}

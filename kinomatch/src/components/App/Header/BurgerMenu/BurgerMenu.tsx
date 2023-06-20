@@ -39,6 +39,7 @@ const BurgerMenu: React.FC<Props> = ({
 
   // ================ UTILS ================
 
+  // pour naviguer vers une autre page
   const navigate = useNavigate();
 
   // ================ HANDLERS ================

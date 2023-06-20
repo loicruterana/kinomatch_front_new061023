@@ -25,7 +25,7 @@ import { NoResultContext } from '../../../contexts/NoResultContext';
 export const Home: React.FC = () => {
   const navigate = useNavigate();
 
-  // ================ USESTATE ================
+  // ================ INTERFACES ================
 
   interface ProviderFromAPI {
     display_priorities: {
@@ -37,14 +37,21 @@ export const Home: React.FC = () => {
     provider_name: string;
   }
 
-  const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
+  // ================ USESTATE ================
 
+  // liste des genres préselectionnés lors du fetch
+  const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
+  // liste des providers préselectionnés lors du fetch
   const [preselectedProviders, setPreselectedProviders] = useState<Provider[]>(
     []
   );
+  // usestate pour afficher ou masquer RollGenre
   const [showRollGenre, setShowRollGenre] = useState(false);
+  // usestate pour afficher ou masquer RollProvider
   const [showRollProvider, setShowRollProvider] = useState(false);
+  // usestate pour afficher ou masquer les décennies
   const [showRollDecade, setShowRollDecade] = useState(false);
+  // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
@@ -61,22 +68,39 @@ export const Home: React.FC = () => {
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
 
+  // ================ UTILS ================
+
+  // fonction utilitaire qui permet de faire un affichage temporaire en attendant le chargement des données (chargement des genres et des providers via TMDB)
   const preseletedFiltersAreLoading =
     (preselectedProviders || preselectedGenres) === undefined; // false
 
+  // fonction qui renvoie vers la page NoResult si pas de de résultat
+  if (noResult) {
+    setTimeout(function () {
+      handleNoResult();
+    }, 5000);
+  }
+
   // ================ USE EFFECT API ================
   useEffect(() => {
+    // pour activer le loader
     load();
+    // pour réinitialiser le film enregistré pour la MoviePage
     setCurrentMovieId('');
     axios
+      // pour récupérer les genres
       .get('https://deploy-back-kinomatch.herokuapp.com/genres')
+      // les genres sont stockés dans le state preselectedGenres
       .then(({ data }) => setPreselectedGenres(data.genres))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => console.error(error))
       .finally(() => unload());
 
     axios
+      // pour récupérer les providers
       .get('https://deploy-back-kinomatch.herokuapp.com/providers')
       .then(({ data }) => {
+        // pour filtrer les providers
         const filteredProviders: Provider[] = data.results.reduce(
           (validProviders: Provider[], currentProvider: ProviderFromAPI) => {
             if (
@@ -96,13 +120,14 @@ export const Home: React.FC = () => {
           },
           []
         );
-
+        // pour stocker les providers dans le state preselectedProviders
         setPreselectedProviders(
           Array.isArray(filteredProviders)
             ? filteredProviders
             : [filteredProviders]
         ); // array
       })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
         console.error(error);
       })
@@ -111,29 +136,9 @@ export const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //=================================
-
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const searchParams = new URLSearchParams();
-    selectedGenreFilters.forEach((filter: { id: string }) => {
-      searchParams.append('genreID', filter.id);
-    });
-
-    selectedProviderFilters.map((filter: { provider_id: string }) => {
-      searchParams.append('providerID', filter.provider_id);
-    });
-
-    selectedDecadeFilters.map((filter: string) => {
-      searchParams.append('decade', filter);
-    });
-
-    navigate(`/films?${searchParams.toString()}`);
-  };
-
   //======== USEWINDOWSIZE
 
+  // la taille de l'écran définit l'affichage des filtres
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 900) {
@@ -152,76 +157,98 @@ export const Home: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
     // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
-    // et actualiser le state windowSize
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
     // un removeEventListener pour éviter les fuites de mémoire
   }, []);
 
   // ================ HANDLERS ================
+
+  // handler pour enbvoyer les informations de filtres sélectionnés à la MoviePage
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const searchParams = new URLSearchParams();
+    selectedGenreFilters.forEach((filter: { id: string }) => {
+      searchParams.append('genreID', filter.id);
+    });
+
+    selectedProviderFilters.map((filter: { provider_id: string }) => {
+      searchParams.append('providerID', filter.provider_id);
+    });
+
+    selectedDecadeFilters.map((filter: string) => {
+      searchParams.append('decade', filter);
+    });
+    // pour naviguer vers la page films avec les filtres sélectionnés
+    navigate(`/films?${searchParams.toString()}`);
+  };
+
+  // handler pour masquer les filtres
   function handleClickOut() {
     setShowRollGenre(false);
     setShowRollProvider(false);
     setShowRollDecade(false);
   }
 
+  // handler pour toggler la modale de filtres genres
   function handleClickGenre() {
     setShowRollGenre(!showRollGenre);
   }
-
+  // handler pour toggler la modale de filtres providers
   function handleClickProvider() {
     setShowRollProvider(!showRollProvider);
   }
-
+  // handler pour toggler la modale de filtres décennies
   function handleClickDecade() {
     setShowRollDecade(!showRollDecade);
   }
-
+  // handler pour supprimer un filtre parmis les filtres genre sélectionnés
   function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
     removeGenreFilter(event.currentTarget.dataset.id || '');
   }
+
+  // handler pour supprimer un filtre parmis les filtres provider sélectionnés
   function handleRemoveProvider(event: React.MouseEvent<HTMLDivElement>): void {
     removeProviderFilter(event.currentTarget.dataset.id || '');
   }
 
+  // handler pour supprimer la décennie selectionnée
   function handleRemoveDecade(): void {
     removeDecadeFilter();
-  }
-
-  if (noResult) {
-    setTimeout(function () {
-      handleNoResult();
-    }, 5000);
   }
 
   // ================ JSX ================
   return (
     <div className='Home-container'>
-      {/* // ================ JSX : FILTERS SELECTOR ================ */}
       <div className='Home__filters-selector'>
         <div className='Home__filters-selector__containers'>
           <div className='Home__filters-selector__containers__filters-container'>
             {/* // affichage des filtres sélectionnés */}
-            {selectedGenreFilters.map((filter: { id: any; name: any }) => (
-              <div
-                key={filter.id}
-                className='Home__filters-selector__containers__filters-container__filter'
-              >
-                {filter.name}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {selectedGenreFilters.map(
+              (filter: { id: string; name: string }) => (
                 <div
-                  className='Home__filters-selector__containers__filters-container__filter__cross'
-                  onClick={handleRemoveGenre}
-                  data-id={filter.name}
+                  key={filter.id}
+                  className='Home__filters-selector__containers__filters-container__filter'
                 >
-                  <i
-                    className='fa-solid fa-xmark'
-                    data-id={filter.name}
+                  {filter.name}
+                  <div
+                    className='Home__filters-selector__containers__filters-container__filter__cross'
                     onClick={handleRemoveGenre}
-                  ></i>{' '}
+                    data-id={filter.name}
+                  >
+                    <i
+                      className='fa-solid fa-xmark'
+                      data-id={filter.name}
+                      onClick={handleRemoveGenre}
+                    ></i>{' '}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
             {selectedProviderFilters.map(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (filter: { provider_id: any; provider_name: any }) => (
                 <div
                   key={filter.provider_id}
@@ -282,7 +309,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* // ================ JSX : VERSION MOBILE ================ */}
-      {/* // affichage des rolls en version mobile */}
+      {/* // affichage condionnel des rolls en fonction de si on se trouve en version mobile ( si l'un des rolls est activé) ou en version desktop */}
       {((showRollGenre && mobileVersion) ||
         (showRollProvider && mobileVersion) ||
         (showRollDecade && mobileVersion) ||
@@ -298,6 +325,7 @@ export const Home: React.FC = () => {
             }-backdropfilter`}
             onClick={handleClickOut}
           ></div>
+          {/* composant Filters Rolls */}
           <FiltersRoll
             isLoading={preseletedFiltersAreLoading}
             preselectedGenres={preselectedGenres}
@@ -311,7 +339,7 @@ export const Home: React.FC = () => {
         </div>
       )}
 
-      {/* // boutons en version mobile */}
+      {/* affichage des boutons en version mobile */}
       {mobileVersion && (
         <div className='Home-container__buttons'>
           <div
@@ -336,10 +364,11 @@ export const Home: React.FC = () => {
           </div>
         </div>
       )}
-
+      {/* affichage du loader si la requête est en cours */}
       {isLoading && <Loading />}
+      {/* affichage du composant NoResult */}
       {noResult && <NoResult />}
-
+      {/* affichage du composant Footer selon la taille du device */}
       {!mobileVersion && <Footer />}
     </div>
   );

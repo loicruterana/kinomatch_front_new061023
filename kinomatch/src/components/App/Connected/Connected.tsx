@@ -22,7 +22,7 @@ const Connected: React.FC = () => {
 
   // Vérifier si les données utilisateur sont disponibles
   if (!userData) {
-    return null; // Ou affichez un message d'erreur approprié
+    return null;
   }
 
   // ================ JSX ================
