@@ -163,7 +163,7 @@ export const Profile: React.FC = () => {
   }
 
   // ================ USEWINDOWSIZE ================
-
+  // pour afficher ou masquer les rolls en fonction de la taille de l'écran
   useEffect(() => {
     function handleResize(): void {
       if (window.innerWidth >= 900) {
@@ -177,25 +177,27 @@ export const Profile: React.FC = () => {
         setShowToWatchRoll(false);
       }
     }
-
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
     window.addEventListener('resize', handleResize);
     handleResize();
-
+    // un removeEventListener pour éviter les fuites de mémoire
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // =========================== WATCHEDLIST ===========================
 
   useEffect(() => {
+    // pour activer le loader
     load();
-
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
     axios
+      // envoie la requête au back pour récupérer les films vus
       .get(
         `https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`
       )
       .then(({ data }) => {
+        // stocke les données dans le state watchedList
         setWatchedList(data);
       })
       .catch((error) => {
@@ -224,7 +226,7 @@ export const Profile: React.FC = () => {
               movie_id: data.id,
             }));
 
-            // Utiliser un objet pour stocker les films uniques
+            // Utilise un objet pour stocker les films uniques
             const uniqueMovies: Record<
               string,
               { name: string; movie_id?: string }

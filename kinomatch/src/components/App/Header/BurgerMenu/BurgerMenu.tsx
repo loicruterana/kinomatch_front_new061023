@@ -44,19 +44,23 @@ const BurgerMenu: React.FC<Props> = ({
 
   // ================ HANDLERS ================
 
+  // pour afficher ou masquer le menu burger
   // const handleClick = (): void => {
   //   setShowBurgerMenu(!showBurgerMenu);
   // };
 
+  // pour naviguer vers la page de profil
   const handleProfile = (): void => {
     navigate(`/profile`);
     setShowBurgerMenu(!showBurgerMenu);
   };
 
+  // pour fermer le menu burger
   function handleCloseClick() {
     setShowBurgerMenu(false);
   }
 
+  // pour supprimer le profil
   const handleDeleteProfile = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
@@ -68,6 +72,7 @@ const BurgerMenu: React.FC<Props> = ({
     }
   };
 
+  // pour se déconnecter
   const handleLogout = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
