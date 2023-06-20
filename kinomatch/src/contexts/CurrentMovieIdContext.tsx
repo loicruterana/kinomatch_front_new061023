@@ -52,12 +52,10 @@ export const CurrentMovieIdProvider: React.FC<CurrentMovieIdProviderProps> = ({ 
     addMovieData,
   };
 
-  // On retourne le contexte avec ses propriétés.
+  // On retourne  le contexte avec les propriétés.
   return (
     <CurrentMovieIdContext.Provider value={contextValue}>
       {children}
     </CurrentMovieIdContext.Provider>
   );
 };
-
-export default CurrentMovieIdProvider;

@@ -35,7 +35,6 @@ function DetailsModal(props: DetailsModalProps) {
     return number;
   }
 
-
   // Fonctions permettant de trouver des personnes suivant leur job 
 
   const writingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Writer" || person.job === 'Screenplay');
