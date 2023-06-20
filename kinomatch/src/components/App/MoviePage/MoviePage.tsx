@@ -104,23 +104,18 @@ function MoviePage() {
   const [movieArray, setMovieArray] = useState<any[]>([]);
 
   // UseState qui permet l'affichage de certains components suivant la largeur de fenêtre
-
   const [desktopVersion, setDesktopVersion] = useState(false);
 
   // UseState Modale "Résultats"
-
   const [showOtherResults, setShowOtherResults] = useState(false);
 
   // UseState Modale "Détails"
-
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   // UseState Modale "Image"
-
   const [showImageModal, setShowImageModal] = useState(false);
 
   // UseState route "Detail"
-
   const [movie, setMovie] = useState<Movie>({
     title: '',
     id: '',
@@ -136,7 +131,6 @@ function MoviePage() {
 
 
   // UseState route "credits"
-
   const [credits, setCredits] = useState<Credits>({
     cast: [],
     crew: [],
@@ -145,7 +139,6 @@ function MoviePage() {
 
 
   // UseState route "providers"
-
   const [providers, setProviders] = useState<Providers>({
     results: {
       FR: {
@@ -161,9 +154,6 @@ function MoviePage() {
 
 
   // ================ USECONTEXT =================================
-
-
-  // UseContext récupérant l'id courant du film sélectionné dans "autres résultats" 
 
   const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
@@ -383,9 +373,9 @@ function MoviePage() {
 
   return (
     <div className='moviePage'>
-      {/* MODALS*/}
 
       {/* Modale Image*/}
+      {/* Si le state showImageModal est true, on affiche la modale ImageModal */}
       {showImageModal && (
         <ImageModal
           showImageModal={showImageModal}
@@ -395,6 +385,7 @@ function MoviePage() {
       )}
 
       {/* Modale Details*/}
+      {/* Si le state showDetailsModal est true, on affiche la modale DetailsModal */}
       {showDetailsModal && (
         <DetailsModal
           showDetailsModal={showDetailsModal}

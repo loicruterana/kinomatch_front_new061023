@@ -1,9 +1,9 @@
 import "./Providers.scss";
 
-/* Fonction Providers permettant d'afficher les plateformes de visionnage */
+// Fonction Providers permettant d'afficher les plateformes de visionnage 
 function Providers(providers: { providers: { results: { FR: { flatrate: any[]; rent: any[]; buy: any[]; free: any[]; ads: any[]; link: string }; }; }; }) {
 
-    /* Fonction handleClick permettant d'ouvrir le lien de redirection vers justWatch */
+    // Fonction handleClick permettant d'ouvrir le lien de redirection vers justWatch 
     function handleClick() {
         const justWatchLink = providers.providers.results.FR && providers.providers.results.FR.link;
         window.open(justWatchLink, '_blank');

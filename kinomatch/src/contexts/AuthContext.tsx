@@ -4,6 +4,8 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
 // ================ INTERFACES ================
+
+// Interface définissant les propriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "bookmarked"
 export interface UserData {
   email: string;
   id: string;
