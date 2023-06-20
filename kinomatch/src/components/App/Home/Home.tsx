@@ -61,7 +61,8 @@ export const Home: React.FC = () => {
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
 
-  const coucou = preselectedProviders === undefined; // false
+  const preseletedFiltersAreLoading =
+    (preselectedProviders || preselectedGenres) === undefined; // false
 
   // ================ USE EFFECT API ================
   useEffect(() => {
@@ -298,7 +299,7 @@ export const Home: React.FC = () => {
             onClick={handleClickOut}
           ></div>
           <FiltersRoll
-            isLoading={coucou}
+            isLoading={preseletedFiltersAreLoading}
             preselectedGenres={preselectedGenres}
             preselectedProviders={preselectedProviders}
             showRollGenre={showRollGenre}
