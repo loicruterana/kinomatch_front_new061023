@@ -1,23 +1,66 @@
-import { Key, useContext } from 'react';
+import { Key, useContext, useState } from 'react';
 import { CurrentMovieIdContext, CurrentMovieIdContextProps } from '../../../../contexts/CurrentMovieIdContext';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 import './OtherResults.scss';
 
 /* Interface OtherResultsModalProps permettant de typer les props du composant OtherResults */
 interface OtherResultsModalProps {
-  movieArray: any[] | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  movieArray: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setMovieArray: (movieArray: any) => void;
   showOtherResults: boolean;
   setShowOtherResults: (showOtherResults: boolean) => void;
 }
 
+interface PrevMovies{
+  adult: string;
+  backdrop_path: string;
+  genre_ids: [];
+  id: number;
+  original_language: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [Symbol.iterator]() : IterableIterator<[string, any]>;
+}
+
 /* Function OtherResults permettant d'afficher les autres résultats de la recherche */
 function OtherResults(props: OtherResultsModalProps): JSX.Element {
-  const { movieArray, showOtherResults, setShowOtherResults } = props;
+  
+  const { movieArray, setMovieArray, showOtherResults, setShowOtherResults } = props;
 
-  /* Variable addMovieData permettant d'ajouter les données du film sélectionné dans le contexte */
+  /* UseContext "addMovieData" permettant d'ajouter les données du film sélectionné dans le contexte */
   const { addMovieData } = useContext(CurrentMovieIdContext) as CurrentMovieIdContextProps;
 
+  // UseState "page" permettant de gérer la pagination
+  const [page, setPage] = useState(1);
+  
+  // UseState "hasMore" permettant de gérer la pagination
+  const [hasMore, setHasMore] = useState(true);
+
+  // Fonction loadMoreData permettant de charger plus de films
+  const loadMoreData = async () => {
+    try {
+      console.log("loadMoreData")
+      const response = await fetch(
+        `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&randomPage=${page}`
+      );
+      const newMovies = await response.json();
+      setMovieArray((prevMovies: PrevMovies[]) => {
+        const updatedMovies: PrevMovies[] = [...prevMovies, ...newMovies.results];
+        return updatedMovies;
+      });
+            console.log(movieArray)
+      setPage((prevPage) => prevPage + 1);
+      setHasMore(newMovies.results.length > 0); 
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   /* Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (event: { preventDefault: () => void; currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
@@ -29,10 +72,23 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
+console.log(movieArray);
 
   return (
     <aside className='otherResults-container'>
       <div className='otherResults-container--pellicule'>
+
+      <InfiniteScroll
+          dataLength={movieArray.length}
+          next={loadMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
+          height={1080}
+          scrollableTarget="scrollableDiv"
+          scrollThreshold={1}
+          // style={{ overflow: 'hidden' }}
+        >
         <div className='otherResults-container--scrollList'>
           {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
           {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
@@ -56,6 +112,8 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
             </button>
           ))}
         </div>
+        </InfiniteScroll>
+
       </div>
     </aside>
   )

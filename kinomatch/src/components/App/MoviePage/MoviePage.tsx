@@ -104,7 +104,8 @@ function MoviePage() {
 
   /* UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand  */
 
-  const [movieArray, setMovieArray] = useState([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [movieArray, setMovieArray] = useState<any[]>([]);
 
 
   /* UseState qui permet l'affichage de certains components suivant la largeur de fenêtre */
@@ -210,7 +211,7 @@ function MoviePage() {
   }, []);
 
 
-  /*UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
+  /* UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher */
 
 
   useEffect(() => {
@@ -225,6 +226,8 @@ function MoviePage() {
           navigate(`/`);
           return;
         }
+        console.log(data);
+
         const numberOfPages = data.total_pages;
         let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
         if (chosenPage > 500) {
@@ -623,6 +626,7 @@ function MoviePage() {
         {desktopVersion ? (
           <OtherResults
             movieArray={movieArray}
+            setMovieArray={setMovieArray}
             showOtherResults={showOtherResults}
             setShowOtherResults={setShowOtherResults}
           />
@@ -630,6 +634,7 @@ function MoviePage() {
           showOtherResults && (
             <OtherResults
               movieArray={movieArray}
+              setMovieArray={setMovieArray}
               showOtherResults={showOtherResults}
               setShowOtherResults={setShowOtherResults}
             />

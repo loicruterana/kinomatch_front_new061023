@@ -1,5 +1,6 @@
+// ================ IMPORT BIBLIOTHEQUES ================
 import { useState, useContext, useEffect, FormEvent } from 'react';
-import { Link, useLocation,  useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -14,7 +15,7 @@ import { SearchBar } from './SearchBar/SearchBar';
 
 import './Header.scss';
 
-
+//* ================  COMPOSANT ================
 
 function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -23,10 +24,13 @@ function Header() {
   const [query, setQuery] = useState('');
 
 
+  // ================  UTILS ================
+
   const location = useLocation();
 
   const navigate = useNavigate();
 
+  // ================  USEEFFECT ================
 
   // useEffect pour gérer l'affichage selon le redimensionnement de la fenêtre
   useEffect(() => {
@@ -39,8 +43,8 @@ function Header() {
       }
     }
     window.addEventListener('resize', handleResize);
-    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
-    // et actualiser le state windowSize
+    /* ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+     et actualiser le state windowSize */
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
     // un removeEventListener pour éviter les fuites de mémoire
@@ -51,23 +55,20 @@ function Header() {
     // Gérer le cas où le contexte est indéfini, par exemple afficher un message d'erreur ou rediriger vers une page d'erreur
     return <div>Erreur: Contexte non défini</div>;
   }
-/* ============================ HANDLERS ============================= */
+  /* ============================ HANDLERS ============================= */
 
- // Gestion de la soumission du formulaire de recherche
- const handleSubmit = async (e: FormEvent<Element>) => {
-  e.preventDefault();
-  if (query.length === 0) return;
+  // Gestion de la soumission du formulaire de recherche
+  const handleSubmit = async (e: FormEvent<Element>) => {
+    e.preventDefault();
+    if (query.length === 0) return;
 
-  const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams();
     searchParams.append('typedName', query);
-setQuery('');
+    setQuery('');
     navigate(`/searchresults?${searchParams.toString()}`);
     setShowBurgerMenu(false);
 
-};
-
-
-
+  };
 
   function handleClick() {
     setShowBurgerMenu(!showBurgerMenu);
@@ -83,7 +84,7 @@ setQuery('');
 
   return (
     <div className='Header'>
-      {/* Logo du Header */}
+      {/* Logo du Header, logo différent on est en version mobile */}
       {
         location.pathname === '/films' && !desktopVersion ?
           <Link key='refresh' to='#' className='Header-logo' onClick={movieArrayReload}>
@@ -120,21 +121,23 @@ setQuery('');
         </div>
       )} */}
 
-{desktopVersion && (
-  <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
-    )}
+      {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
 
-      {/* Icône BurgerMenu */}
+      {desktopVersion && (
+        <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+      )}
+
+      {/* Icône BurgerMenu, uniquement affiché en version mobile */}
       <div onClick={handleClick} className={`menu-icon ${showBurgerMenu && 'active'}`}>
         <div className='line-1'></div>
         <div className='line-2'></div>
         <div className='line-3'></div>
       </div>
       {/* Pour activer la modale selon le state showBurgerMenu */}
-      {showBurgerMenu && <BurgerMenu showBurgerMenu={showBurgerMenu} setShowBurgerMenu={setShowBurgerMenu} 
-      query={query}
-      setQuery={setQuery}
-      handleSubmit={handleSubmit}
+      {showBurgerMenu && <BurgerMenu showBurgerMenu={showBurgerMenu} setShowBurgerMenu={setShowBurgerMenu}
+        query={query}
+        setQuery={setQuery}
+        handleSubmit={handleSubmit}
       />}
     </div>
   );

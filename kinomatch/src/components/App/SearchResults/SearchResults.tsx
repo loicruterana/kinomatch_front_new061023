@@ -150,7 +150,7 @@ const SearchResults = () => {
         </InfiniteScroll>
       </div>
         }
-      <Footer />
+      {/* <Footer /> */}
       
     </div>
 

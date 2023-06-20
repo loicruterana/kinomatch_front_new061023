@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
@@ -29,7 +29,6 @@
       // padding: 0 50px;
       overflow: hidden;
       overflow-y: auto;
-      padding-top: 300px;
       // padding-bottom: 70px;
       &-queryresult {
         // margin-left: 50px;
@@ -60,16 +59,17 @@
             border: solid 4px vars.$theme1-secondary;
             border-radius: 6px;
             width: 200px; /* ajustez la valeur en fonction de vos besoins */
-            height: 300px;
+            height: auto;
             object-fit: contain;
             background-color: black;
           }
         }
 
         &__infos {
-          margin-top: 40px;
+          margin-top: 10px;
           margin-left: 20px;
           &__title {
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 15px;
           }
@@ -85,7 +85,7 @@
   }
 }
 
-// naimation
+// Animation
 
 .circle-big {
   // position: relative;
@@ -154,14 +154,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     // overflow-y: auto;
     // overflow-x: hidden;
     overflow: hidden;
-    padding-top: 600px;
+    padding-top: 70px;
 
     &-cardlist {
       &-queryresult {
@@ -201,7 +201,7 @@
             border: solid 4px vars.$theme1-secondary;
             border-radius: 6px;
             width: 200px; /* ajustez la valeur en fonction de vos besoins */
-            height: 300px;
+            height: auto;
             object-fit: contain;
             background-color: black;
           }
