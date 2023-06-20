@@ -1,16 +1,16 @@
 import './LegalModal.scss';
 
-{/* Interface LegalModalProps permettant de typer les props du composant LegalModal */}
+// Interface LegalModalProps permettant de typer les props du composant LegalModal 
 interface LegalModalProps {
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
 }
 
-{/* Fonction permettant de cacher la modal LegalModal */ }
+// Fonction permettant de cacher la modal LegalModal 
 function LegalModal(props: LegalModalProps) {
   const { showModal, setShowModal } = props;
 
-  {/* Fonction permettant de manipuler la modal. Au clique ==> passe de true à false et inversement */ }
+  // Fonction permettant de manipuler la modal. Au clic ==> passe de true à false et inversement 
   const handleModal = () => {
     setShowModal(!showModal);
   }
@@ -43,7 +43,7 @@ function LegalModal(props: LegalModalProps) {
 
       </div>
       <div className='container__legalModal__button--container'>
-        {/* Au clique ==> passe de true à false et inversement */}
+        {/* Au clic ==> passe de true à false et inversement */}
         <button className='container__legalModal__button--container---btn' onClick={handleModal}>Retour</button>
       </div>
     </div>

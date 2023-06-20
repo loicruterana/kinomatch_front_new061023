@@ -1,7 +1,7 @@
 import { Key, ReactNode } from 'react';
 import './DetailsModal.scss';
 
-/* Création de l'interface pour Typescript */ 
+// Création de l'interface pour Typescript 
 interface DetailsModalProps {
   showDetailsModal: boolean;
   setShowDetailsModal: (showDetailsModal: boolean) => void;
@@ -17,16 +17,16 @@ interface DetailsModalProps {
   convertMinutesInHours: (showDetailsModal: any) => ReactNode;
 }
 
-/* Fonction permettant de cacher la modale DetailsModal */ 
+// Fonction permettant de cacher la modale DetailsModal 
 function DetailsModal(props: DetailsModalProps) {
   const { showDetailsModal, setShowDetailsModal, movie, credits, directingCrewMembers, formatDate, convertMinutesInHours } = props;
 
-  /* Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement */ 
+  // Fonction permettant de manipuler la modale. Au clique ==> passe de true à false et inversement 
   const handleDetailsModel = () => {
     setShowDetailsModal(!showDetailsModal);
   }
 
-  /* Fonction permettant de générer un nombre aléatoire pour les key unique des Sociétés de production */ 
+  // Fonction permettant de générer un nombre aléatoire pour les key unique des Sociétés de production 
   function getRandomNumber() {
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const index = Math.floor(Math.random() * numbers.length);
@@ -36,7 +36,7 @@ function DetailsModal(props: DetailsModalProps) {
   }
 
 
-  /* Fonctions permettant de trouver des personnes suivant leur job */ 
+  // Fonctions permettant de trouver des personnes suivant leur job 
 
   const writingCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Writer" || person.job === 'Screenplay');
   const musicCrewMembers = credits.crew.filter((person: { job: string; }) => person.job === "Music" || person.job === 'Original Music Composer');

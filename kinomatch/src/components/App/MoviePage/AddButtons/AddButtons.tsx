@@ -6,7 +6,7 @@ import './AddButton.scss';
 /* Fonction AddButton permettant d'afficher les boutons d'ajout aux listes */
 function AddButton(movieId: { movie: string; }) {
 
-  //* ========================== USECONTEXT =============================== 
+  // ========================== USECONTEXT =============================== 
 
   const {
     userData,
@@ -21,7 +21,7 @@ function AddButton(movieId: { movie: string; }) {
     userDataWatched,
   } = useContext(AuthContext);
 
-  //* ========================== USESTATE =============================== 
+  // ========================== USESTATE =============================== 
 
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -31,17 +31,18 @@ function AddButton(movieId: { movie: string; }) {
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
 
-  //* ============================ HANDLERS ============================= 
+  // ============================ HANDLERS ============================= 
 
-  //? ============= COEUR =================== 
 
-  /* Fonction handleHeartClick permettant de gérer le clic sur le coeur */
+  // ============= COEUR =================== 
+
+  // Fonction handleHeartClick permettant de gérer le clic sur le coeur
   const handleHeartClick = () => {
 
-    /* Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle. */
+    // Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle.
     setHeartIsClicked(!heartIsClicked);
 
-    /* Si le coeur n'est pas remplit/clické alors ajoute l'id du film au favoris sinon il le supprime */
+    // Si le coeur n'est pas remplit/clické alors ajoute l'id du film au favoris sinon il le supprime
     if (!heartIsClicked) {
       addBookmarked(movieId);
       addWatched(movieId);
@@ -51,25 +52,25 @@ function AddButton(movieId: { movie: string; }) {
     }
   };
 
-  //? ============= Bookmarked ==================
+  // ============= Bookmarked ==================
 
-  /* Fonction handleBookMarkClick permettant de gérer le clic sur le marque page */
+  // Fonction handleBookMarkClick permettant de gérer le clic sur le marque page
   const handleBookMarkClick = () => {
 
-    /* Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle. */
+    // Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle.
     setBookmarkIsClicked(!bookmartIsClicked);
 
-    /* Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime */
+    // Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime
     bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
-  //? ============= CHECKED =================== 
+  // ============= CHECKED =================== 
 
-  /* Fonction handleCheckClick permettant de gérer le clic sur le check */
+  // Fonction handleCheckClick permettant de gérer le clic sur le check
   const handleCheckClick = () => {
     setCheckIsClicked(!checkIsClicked);
 
-/* Si le check n'est pas remplit/clické alors ajoute l'id du film "vu" sinon il le supprime de "vu", de "bookmarked" et passe "HeartIsClicked" à false */
+    // Si le check n'est pas remplit/clické alors ajoute l'id du film "vu" sinon il le supprime de "vu", de "bookmarked" et passe "HeartIsClicked" à false
     if (!checkIsClicked) {
       addWatched(movieId);
     } else {
@@ -80,9 +81,9 @@ function AddButton(movieId: { movie: string; }) {
   };
 
 
-  //* ======================================= COEUR ====================================================== 
+  // ======================================= COEUR ====================================================== 
 
-  /* Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge */
+  // Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge
   useEffect(() => {
     const getUserBookmarked = () => {
       axios
@@ -101,16 +102,16 @@ function AddButton(movieId: { movie: string; }) {
 
         });
     };
-    /* Condition qui éxecute getUserBookmarked uniquement si un user est connecté */
+    // Condition qui éxecute getUserBookmarked uniquement si un user est connecté
     {
       isLoggedIn && getUserBookmarked();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* ======================================= TO WATCH ====================================================== */
+  // ======================================= TO WATCH ======================================================
 
-  /* Fonction qui récupère le tableau d'ids des films "à voir" du user et qui recherche si le film est déjà dans les "à voir" afin de colorer le bouton marque page en jaune */
+  // Fonction qui récupère le tableau d'ids des films "à voir" du user et qui recherche si le film est déjà dans les "à voir" afin de colorer le bouton marque page en jaune
   useEffect(() => {
     const getUserToWatch = () => {
       axios
@@ -128,7 +129,7 @@ function AddButton(movieId: { movie: string; }) {
           console.log(bookmartIsClicked);
         });
     };
-    /* Condition qui éxecute "getUserToWatch" uniquement si un user est connecté */
+    // Condition qui éxecute "getUserToWatch" uniquement si un user est connecté
     {
       isLoggedIn && getUserToWatch();
     }
@@ -136,9 +137,9 @@ function AddButton(movieId: { movie: string; }) {
   }, []);
 
 
-  /* ======================================= WATCHED ====================================================== */
+  // ======================================= WATCHED ======================================================
 
-  /* Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton check en vert */
+  // Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton check en vert
   useEffect(() => {
     const getUserWatched = () => {
       axios
@@ -158,14 +159,14 @@ function AddButton(movieId: { movie: string; }) {
         });
     };
 
-    /* Condition qui éxecute "getUserWatched" uniquement si un user est connecté */
+    // Condition qui éxecute "getUserWatched" uniquement si un user est connecté
     {
       isLoggedIn && getUserWatched();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* =================================================================== */
+  // ===================================================================
 
   return (
     <div className='movieFound__essentiel-btn--container'>
