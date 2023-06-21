@@ -46,8 +46,8 @@ function DetailsModal(props: DetailsModalProps) {
 
 
   return (
-    <div className='detailsModal__container'>
-      <div className='detailsModal__container-image'>
+    <article className='detailsModal__container'>
+      <section className='detailsModal__container-image'>
         <h3 className='detailsModal__container-originalTitle'>Titre original</h3>
         <p className='detailsModal__container-originalTitleName'>{movie.original_title}</p>
         <div className='detailsModal__container-image--container'>
@@ -56,8 +56,8 @@ function DetailsModal(props: DetailsModalProps) {
           {/* Afficher la apge officielle du film si il y en a une, sinon rien */}
           {movie.homepage ? (<a className='detailsModal__container-image--container--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
         </div>
-      </div>
-      <div className='detailsModal__container-details'>
+      </section>
+      <section className='detailsModal__container-details'>
         <div className='detailsModal__container-details--principal'>
           {/* Adapte le mot "réalisateur" suivant la pluralité */}
           <h3 className='detailsModal__container-director'>{directingCrewMembers.length > 1 ? 'Réalisateurs' : 'Réalisateur'}</h3>
@@ -184,12 +184,12 @@ function DetailsModal(props: DetailsModalProps) {
             }
           </ul>
         </div>
-      </div>
+      </section>
 
       {/* Si il n'y a pas de casting, ne rien afficher, sinon afficher la liste des acteurs */}
       {
         credits.cast.length === 0 ? '' :
-          <div className='detailsModal__container-distributionList'>
+          <section className='detailsModal__container-distributionList'>
             <div className='detailsModal__container-distribution'>
               <h3 className='detailsModal__container-distribution-title'>Distribution</h3>
               {/* Affiche la liste des acteurs avec leur nom, leur photo et leur rôle */}
@@ -205,7 +205,7 @@ function DetailsModal(props: DetailsModalProps) {
                 }
               </ul>
             </div>
-          </div>
+          </section>
       }
 
       <div className='detailsModal__container-button'>
@@ -214,7 +214,7 @@ function DetailsModal(props: DetailsModalProps) {
         {/* Si il n'y a pas de page du film , ne rien afficher, sinon afficher le lien vers la page du film dans un nouvel onglet */}
         {movie.homepage ? (<a className='detailsModal__container-button--link' href={movie.homepage} target='_blank'>Page du film</a>) : null}
       </div>
-    </div>
+    </article>
   )
 }
 

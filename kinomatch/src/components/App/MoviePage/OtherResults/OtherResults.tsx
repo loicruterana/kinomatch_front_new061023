@@ -15,19 +15,19 @@ interface OtherResultsModalProps {
   setShowOtherResults: (showOtherResults: boolean) => void;
 }
 
-interface PrevMovies{
+interface PrevMovies {
   adult: string;
   backdrop_path: string;
   genre_ids: [];
   id: number;
   original_language: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [Symbol.iterator]() : IterableIterator<[string, any]>;
+  [Symbol.iterator](): IterableIterator<[string, any]>;
 }
 
 // Function OtherResults permettant d'afficher les autres résultats de la recherche
 function OtherResults(props: OtherResultsModalProps): JSX.Element {
-  
+
   const { movieArray, setMovieArray, showOtherResults, setShowOtherResults } = props;
 
   // UseContext "addMovieData" permettant d'ajouter les données du film sélectionné dans le contexte
@@ -35,7 +35,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
   // UseState "page" permettant de gérer la pagination
   const [page, setPage] = useState(1);
-  
+
   // UseState "hasMore" permettant de gérer la pagination
   const [hasMore, setHasMore] = useState(true);
 
@@ -53,7 +53,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
       });
 
       setPage((prevPage) => prevPage + 1);
-      setHasMore(newMovies.results.length > 0); 
+      setHasMore(newMovies.results.length > 0);
     } catch (error) {
       console.error(error);
     }
@@ -75,9 +75,9 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
   return (
     <aside className='otherResults-container'>
-      <div className='otherResults-container--pellicule'>
-    {/* Configuration de la pagination pour le InfinitScroll */}
-      <InfiniteScroll
+      <section className='otherResults-container--pellicule'>
+        {/* Configuration de la pagination pour le InfinitScroll */}
+        <InfiniteScroll
           dataLength={movieArray.length}
           next={loadMoreData}
           hasMore={hasMore}
@@ -87,32 +87,32 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           scrollableTarget="scrollableDiv"
           scrollThreshold={1}
         >
-        <div className='otherResults-container--scrollList'>
-          {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
-          {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
-            <button
-              key={movieElem.id}
-              data-id={movieElem.id}
-              onClick={handleClick}
-            >
-              {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
-              <img
-                className='otherResults-container--scrollList---images'
-                src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '/images/SamplePoster1.png'}
-                alt={`Affiche du film ${movieElem.title}`}
-              />
-              {/* Afficher le titre du film s'il y en a une, sinon rien */}
-              {
-                movieElem.poster_path === null ?
-                  <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
-                  : null
-              }
-            </button>
-          ))}
-        </div>
+          <div className='otherResults-container--scrollList'>
+            {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
+            {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
+              <button
+                key={movieElem.id}
+                data-id={movieElem.id}
+                onClick={handleClick}
+              >
+                {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
+                <img
+                  className='otherResults-container--scrollList---images'
+                  src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '/images/SamplePoster1.png'}
+                  alt={`Affiche du film ${movieElem.title}`}
+                />
+                {/* Afficher le titre du film s'il y en a une, sinon rien */}
+                {
+                  movieElem.poster_path === null ?
+                    <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
+                    : null
+                }
+              </button>
+            ))}
+          </div>
         </InfiniteScroll>
 
-      </div>
+      </section>
     </aside>
   )
 }

@@ -372,7 +372,7 @@ function MoviePage() {
   
 
   return (
-    <div className='moviePage'>
+    <article className='moviePage'>
 
       {/* Modale Image*/}
       {/* Si le state showImageModal est true, on affiche la modale ImageModal */}
@@ -405,7 +405,7 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'>
             {' '}
-            <cite className='movieFound__essentiel-title'>{movie.title}</cite>
+            <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
             {isLoggedIn && <AddButton movie={movie.id} />}
           </div>
           <div className='movieFound__essentiel-imageFrame'>
@@ -662,7 +662,7 @@ function MoviePage() {
         desktopVersion &&
         <Footer />
       }
-    </div>
+    </article>
   );
 }
 

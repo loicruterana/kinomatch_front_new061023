@@ -9,7 +9,7 @@ const PageNotFound: React.FC = () => {
   return (
     <div className="PageNotFound-container">
       <span className="PageNotFound-container-text">
-        La page que vous recherchez semble introuvable
+        <h1>La page que vous recherchez semble introuvable</h1>
       </span>
 
       <img src="/images/Yqe.gif" alt="gif de 404 mire" />

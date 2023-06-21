@@ -25,8 +25,16 @@
       align-items: center;
       flex-direction: column;
       background-image: url('/images/pelloche.png');
-      background-size: contain;
+      background-size: cover;
       background-position: center;
+    }
+
+    .infinite-scroll-component__outerdiv {
+      
+    }
+
+    .infinite-scroll-component  {
+
     }
 
     &--scrollList {

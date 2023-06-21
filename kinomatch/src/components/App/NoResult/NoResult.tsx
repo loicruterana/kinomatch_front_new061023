@@ -8,16 +8,12 @@ import './NoResult.scss';
 export const NoResult = () => {
 
   return (      
-    <>
-{/* <Header  /> */}
     <div className="NoResult-container">
-      <span>Aucun résultat trouvé
+      <span><h1>Aucun résultat trouvé</h1>
       </span>
       <img src='/images/3z9a.gif' alt='gif aucun résultat'></img>
 
     </div>
-    {/* <Footer/> */}
-    </>    
   )
 //* ================ FERMETURE DU COMPOSANT ================
 }
