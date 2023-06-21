@@ -33,6 +33,7 @@
       padding: 0 20px;
       transition: transform 0.2s ease-in-out;
 
+
       &:hover {
         transform: scale(1.03);
         cursor: pointer;
@@ -141,7 +142,7 @@
         justify-content: center;
         width: 100%;
         height: fit-content;
-        background-image: url('/images/pelloche.png');
+        // background-image: url('/images/pelloche.png');
         background-size: cover;
         background-position: center;
       }
@@ -173,8 +174,8 @@
           background-color: vars.$theme1-primary;
           width: 315px;
           height: 137px;
-          padding: 20px 0;
-          margin: 5px;
+          padding: 0;
+          margin: 0px;
           transition: transform 0.2s ease-in-out;
           border: none;
 
@@ -196,11 +197,6 @@
             transition: transform 0.2s ease-in-out;
           }
 
-          &:hover {
-            transform: scale(1.03);
-            cursor: pointer;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-          }
 
           &-category {
             position: sticky;
@@ -212,16 +208,145 @@
             align-items: center;
             color: vars.$theme1-primary;
             background-color: vars.$theme1-secondary;
-            width: 200px;
+            background-position: center;
+            width: 427px;
             padding: 10px;
-            margin: 5px;
+          }
+
+          // &:hover {
+          //   transform: scale(1.03);
+          //   cursor: pointer;
+          //   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+          // }
+
+          &-genre {
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: vars.$theme1-secondary;
+            background-color: vars.$theme1-primary;
+            background-image: url('/images/bglogogenre.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 467px;
+            height: 215px;
+            padding: 20px 0;
+            margin: 0px;
+            transition: transform 0.2s ease-in-out;
+            border: none;
+
+            &--image {
+              pointer-events: none;
+            }
+
+            &-selected {
+              font-size: 1.5rem;
+              font-weight: 700;
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              color: vars.$theme1-primary;
+              background-color: vars.$theme1-primary;
+              background-image: url('/images/bglogogenreselected.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              border: vars.$theme1-primary 0px solid;
+              width: 467px;
+              height: 215px;
+              padding: 20px 0;
+              transition: transform 0.2s ease-in-out;
+            }
+          }
+
+          &-provider {
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: vars.$theme1-secondary;
+            background-color: vars.$theme1-primary;
+            width: 450px;
+            height: 118px;
+            background-image: url('/images/pellochebghome.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: -3px;
+            transition: transform 0.2s ease-in-out;
+            border: none;
+
+            &-selected {
+              font-size: 1.5rem;
+              font-weight: 700;
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-primary;
+              background-color: vars.$theme1-primary;
+              width: 450px;
+              height: 118px;
+              background-image: url('/images/pellochebghomeblue.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              margin: -3px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+            }
+          }
+
+          &-decade {
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: vars.$theme1-secondary;
+            background-color: vars.$theme1-primary;
+            width: 450px;
+            height: 118px;
+            background-image: url('/images/pellochebghome.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 0px;
+            margin: 0px;
+            transition: transform 0.2s ease-in-out;
+            border: none;
+
+            &-selected {
+              font-size: 1.5rem;
+              font-weight: 700;
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-primary;
+              background-color: vars.$theme1-primary;
+              width: 450px;
+              height: 118px;
+              background-image: url('/images/pellochebghomeblue.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              padding: 0px;
+              margin: 0px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+            }
+          }
+
+          &__buttons {
+            display: none;
           }
         }
       }
-    }
-
-    &__buttons {
-      display: none;
     }
   }
 }
@@ -245,6 +370,7 @@
       &__containers {
         height: 60%;
         margin: 10px 0;
+
         &__filters-container {
           display: flex;
           overflow: hidden;
@@ -320,7 +446,7 @@
           justify-content: center;
           width: 95%;
           height: fit-content;
-          background-image: url('/images/pelloche.png');
+          // background-image: url('/images/pelloche.png');
           background-size: cover;
           background-position: center;
         }
@@ -336,13 +462,12 @@
           background-color: vars.$theme1-secondary;
 
           &__item {
-            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: vars.$theme1-secondary;
             background-color: vars.$theme1-primary;
-            width: 170px;
+            width: 232px;
             height: 70px;
             padding: 20px 0;
             margin: 5px;
@@ -350,7 +475,6 @@
             border: none;
 
             &-selected {
-              border-radius: 10px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -368,6 +492,7 @@
               transition: transform 0.2s ease-in-out;
             }
 
+
             &-category {
               font-weight: 700;
               display: flex;
@@ -375,9 +500,130 @@
               align-items: center;
               color: vars.$theme1-primary;
               background-color: vars.$theme1-secondary;
-              width: 200px;
+              width: 238px;
               padding: 10px;
-              margin: 5px;
+              margin: 0px;
+            }
+
+            &-genre {
+              font-size: 0.9rem;
+              font-weight: 700;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 240px;
+              height: 126px;
+              background-image: url('/images/bglogogenremobile.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+
+              img {
+                width: 84px;
+                margin: 0 0 6px;
+              }
+
+              &-selected {
+                font-size: 1.9rem;
+                font-weight: 700;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-primary;
+                width: 450px;
+                height: 118px;
+                background-image: url('/images/bglogogenreselectedmobile.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 0px;
+                margin: 0px;
+                transition: transform 0.2s ease-in-out;
+                border: none;
+              }
+            }
+
+            &-provider {
+              font-size: 0.9rem;
+              font-weight: 700;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 240px;
+              height: 64px;
+              background-image: url('/images/pellochebghomeyellowmobile.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              padding: 0px;
+              margin: 0px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+
+              &-selected {
+                font-size: 0.9rem;
+                font-weight: 700;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-primary;
+                width: 450px;
+                height: 64px;
+                background-image: url('/images/pellochebghomebluemobile.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 0px;
+                margin: 0px;
+                transition: transform 0.2s ease-in-out;
+                border: none;
+              }
+            }
+
+            &-decade {
+              font-size: 0.9rem;
+              font-weight: 700;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 240px;
+              height: 64px;
+              background-image: url('/images/pellochebghomeyellowmobile.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              padding: 0px;
+              margin: 0px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+
+              &-selected {
+                font-size: 0.9rem;
+                font-weight: 700;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-primary;
+                width: 450px;
+                height: 64px;
+                background-image: url('/images/pellochebghomebluemobile.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 0px;
+                margin: 0px;
+                transition: transform 0.2s ease-in-out;
+                border: none;
+              }
             }
           }
         }
@@ -422,9 +668,9 @@
         align-items: center;
         margin: 130px 0;
 
-        &__button {
+        &__button__genre {
           z-index: 4;
-          width: 60vw;
+          width: 80vw;
           height: 8vh;
           display: flex;
           justify-content: center;
@@ -432,9 +678,13 @@
           margin-bottom: 35px;
           margin-top: 10px;
           color: vars.$theme1-primary;
-          background-color: vars.$theme1-secondary;
-          border-radius: 15px;
-          border: vars.$theme1-secondary;
+          // background-color: vars.$theme1-secondary;
+          // background-size: cover;
+          // border-radius: 15px;
+          // border: vars.$theme1-secondary;
+          background-image: url('/images/tetepellochegenre.png');
+          background-position: center;
+          background-repeat: no-repeat;
           font-size: 32px;
           padding: 0 6px;
 
@@ -442,6 +692,57 @@
             cursor: pointer;
           }
         }
+
+        &__button__plateform {
+          z-index: 4;
+          width: 80vw;
+          height: 8vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 35px;
+          margin-top: 10px;
+          color: vars.$theme1-primary;
+          // background-color: vars.$theme1-secondary;
+          // background-size: cover;
+          // border-radius: 15px;
+          // border: vars.$theme1-secondary;
+          background-image: url('/images/tetepellocheplateform.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          font-size: 32px;
+          padding: 0 6px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &__button__decade {
+          z-index: 4;
+          width: 80vw;
+          height: 8vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 35px;
+          margin-top: 10px;
+          color: vars.$theme1-primary;
+          // background-color: vars.$theme1-secondary;
+          // background-size: cover;
+          // border-radius: 15px;
+          // border: vars.$theme1-secondary;
+          background-image: url('/images/tetepellochedecade.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          font-size: 32px;
+          padding: 0 6px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
       }
     }
   }

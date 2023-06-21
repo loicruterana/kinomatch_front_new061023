@@ -14,6 +14,7 @@
     height: 100%;
     margin-top: 20px;
 
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -24,23 +25,26 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-image: url('/images/pelloche.png');
-      background-size: cover;
-      background-position: center;
+      background-color: vars.$theme1-secondary;
+      // background-image: url('/images/pelloche.png');
+      // background-size: contain;
+      // background-position: center;
     }
 
     .infinite-scroll-component__outerdiv {
-      
+      width: 100%;
     }
 
-    .infinite-scroll-component  {
-
+    .infinite-scroll-component {
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     &--scrollList {
       display: flex;
       background-color: vars.$theme1-secondary;
-      width: 71%;
+      width: 100%;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
@@ -48,14 +52,19 @@
 
       button {
         border: none;
-        background: none;
+        background-color: vars.$theme1-primary;
+        background-image: url('/images/pellochebgaffiche.png');
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100%;
       }
 
       &---images {
         display: block;
-        margin: 1rem auto 0.3rem auto;
+        margin: 0 auto 0.3rem auto;
         border-radius: 10px;
-        width: 100%;
+        width: 70%;
         max-width: 220px;
         transition: transform 0.2s ease-in-out;
 
@@ -86,34 +95,37 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin: 1rem auto;
+    margin: 66px auto 100px auto;
+    padding-bottom: 80px;
     width: 100%;
     height: auto;
     z-index: 5;
 
     &--pellicule {
       display: flex;
+      width: 100%;
       justify-content: center;
+      align-items: center;
+      flex-direction: column;
       background-color: vars.$theme1-secondary;
     }
 
     &--scrollList {
       display: flex;
-      flex-direction: column;
-      padding-bottom: 70px;
-      padding-top: 48px;
       background-color: vars.$theme1-secondary;
-      background-image: url('/images/pellochebleuenew.png');
-      background-size: contain;
-      background-position: center;
-      align-items: center;
       width: 100%;
-      max-width: 400px;
-      height: auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 7px 0 40px 0;
 
       button {
         border: none;
-        background: none;
+        background-color: vars.$theme1-primary;
+        background-image: url('/images/pellochebgaffiche.png');
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
         width: 100%;
       }
 
@@ -123,7 +135,7 @@
 
       &---images {
         display: block;
-        margin: 1rem auto;
+        margin: 0 auto 0.3rem auto;
         border-radius: 10px;
         width: 100%;
         max-width: 260px;

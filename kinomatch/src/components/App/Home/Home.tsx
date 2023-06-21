@@ -267,29 +267,30 @@ export const Home: React.FC = () => {
       }
 
       {/* // boutons en version mobile */}
-      {mobileVersion &&
+      {mobileVersion && (
         <div className="Home-container__buttons">
-
-          <div className='Home-container__buttons__button'
+          <div
+            className="Home-container__buttons__button__genre"
             onClick={handleClickGenre}
           >
-            Genre
+            {/* Genre */}
           </div>
 
-          <div className='Home-container__buttons__button'
+          <div
+            className="Home-container__buttons__button__plateform"
             onClick={handleClickProvider}
           >
-            Plateforme
+            {/* Plateforme */}
           </div>
 
-          <div className='Home-container__buttons__button'
+          <div
+            className="Home-container__buttons__button__decade"
             onClick={handleClickDecade}
           >
-            Année
+            {/* Année */}
           </div>
         </div>
-      }
-
+      )}
       {isLoading && <Loading />}
       {noResult && <NoResult />}
 
