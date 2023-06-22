@@ -4,7 +4,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCard from './MovieCard/MovieCard';
 
 import './SearchResults.scss';
-import Footer from '../Footer/Footer';
 import Loading from '../Loading/Loading';
 import axios from 'axios';
 
