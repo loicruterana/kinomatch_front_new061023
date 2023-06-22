@@ -52,6 +52,7 @@ export const RollGenre = ({
   );
 
   console.log("selectedGenreFilters", selectedGenreFilters);
+  console.log("selected", preselectedGenres);
   // ================ HANDLERS ================
 
   function handleGenreClick(
@@ -149,14 +150,16 @@ export const RollGenre = ({
                     >
 
                       <img className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"}__roll-container__item-genre--image${selectedGenreFilters.some(
-                          (item) =>
-                            item.id.toString() ===
-                            preselectedGenre.id.toString()
-                        )
-                          ? "-selected"
-                          : ""
+                        (item) =>
+                          item.id.toString() ===
+                          preselectedGenre.id.toString()
+                      )
+                        ? "-selected"
+                        : ""
                         }`}
-                        src={preselectedGenres.includes(preselectedGenre.id) ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png` : `images/moodlogosnopelloche/${preselectedGenre.id}b.png`}
+                        src={
+                          selectedGenreFilters.find((item) => item.id.toString() === preselectedGenre.id.toString())
+                           ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png` : `images/moodlogosnopelloche/${preselectedGenre.id}.png`}
                       ></img>
                       {preselectedGenre.name}
                     </button>

@@ -241,7 +241,13 @@
 
             &--image {
               pointer-events: none;
+
+              &-selected {
+                pointer-events: none;
+              }
             }
+
+
 
             &-selected {
               font-size: 1.5rem;
@@ -278,7 +284,7 @@
             background-image: url('/images/pellochebghome.png');
             background-repeat: no-repeat;
             background-position: center;
-            margin: -3px;
+            margin: -4px;
             transition: transform 0.2s ease-in-out;
             border: none;
 
@@ -296,7 +302,7 @@
               background-image: url('/images/pellochebghomeblue.png');
               background-repeat: no-repeat;
               background-position: center;
-              margin: -3px;
+              margin: -2px;
               transition: transform 0.2s ease-in-out;
               border: none;
             }
@@ -317,7 +323,7 @@
             background-repeat: no-repeat;
             background-position: center;
             padding: 0px;
-            margin: 0px;
+            margin: -4px;
             transition: transform 0.2s ease-in-out;
             border: none;
 
@@ -336,7 +342,7 @@
               background-repeat: no-repeat;
               background-position: center;
               padding: 0px;
-              margin: 0px;
+              margin: -2px;
               transition: transform 0.2s ease-in-out;
               border: none;
             }
@@ -527,24 +533,35 @@
                 margin: 0 0 6px;
               }
 
+              &--image {
+                pointer-events: none;
+  
+                &-selected {
+                  pointer-events: none;
+                }
+              }
+
               &-selected {
-                font-size: 1.9rem;
+                font-size: 0.9rem;
                 font-weight: 700;
-                border-radius: 10px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                flex-direction: column;
                 color: vars.$theme1-primary;
                 background-color: vars.$theme1-primary;
-                width: 450px;
-                height: 118px;
+                width: 240px;
+                height: 126px;
                 background-image: url('/images/bglogogenreselectedmobile.png');
                 background-repeat: no-repeat;
                 background-position: center;
-                padding: 0px;
-                margin: 0px;
                 transition: transform 0.2s ease-in-out;
                 border: none;
+
+                img {
+                  width: 84px;
+                  margin: 0 0 6px;
+                }
               }
             }
 
@@ -569,13 +586,12 @@
               &-selected {
                 font-size: 0.9rem;
                 font-weight: 700;
-                border-radius: 10px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: vars.$theme1-primary;
                 background-color: vars.$theme1-primary;
-                width: 450px;
+                width: 240px;
                 height: 64px;
                 background-image: url('/images/pellochebghomebluemobile.png');
                 background-repeat: no-repeat;
@@ -608,13 +624,12 @@
               &-selected {
                 font-size: 0.9rem;
                 font-weight: 700;
-                border-radius: 10px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: vars.$theme1-primary;
                 background-color: vars.$theme1-primary;
-                width: 450px;
+                width: 240px;
                 height: 64px;
                 background-image: url('/images/pellochebghomebluemobile.png');
                 background-repeat: no-repeat;
