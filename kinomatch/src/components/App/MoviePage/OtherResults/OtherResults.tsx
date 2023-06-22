@@ -1,4 +1,4 @@
-import { Key, useContext, useState } from 'react';
+import { Key, useContext, useEffect, useState } from 'react';
 import { CurrentMovieIdContext, CurrentMovieIdContextProps } from '../../../../contexts/CurrentMovieIdContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
@@ -39,6 +39,8 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // UseState "hasMore" permettant de gérer la pagination
   const [hasMore, setHasMore] = useState(true);
 
+  const [hauteurEcran, setHauteurEcran] = useState(window.innerHeight);
+
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
     try {
@@ -58,6 +60,16 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
       console.error(error);
     }
   };
+
+
+useEffect(() => {
+  function handleResize() {
+  setHauteurEcran(window.innerHeight);
+  }
+  
+  window.addEventListener('resize',handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+  }, [hauteurEcran]);
 
   // Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,7 +95,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
-          height={1080}
+          height={hauteurEcran}
           scrollableTarget="scrollableDiv"
           scrollThreshold={1}
         >
