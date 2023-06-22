@@ -9,7 +9,7 @@ const Disconnected: React.FC = () => {
 
   return (
     <div className='Disconnected-container'>
-      <span>Vous êtes déconnecté</span>
+      <h1>Vous êtes déconnecté</h1>
     </div>
   );
   //* ================ FERMETURE COMPOSANT ================

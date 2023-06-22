@@ -29,7 +29,7 @@ const Connected: React.FC = () => {
 
   return (
     <div className='Connected-container'>
-      Vous êtes connecté avec l'adresse {userData.email}
+      <h1>Vous êtes connecté avec l'adresse {userData.email}</h1>
     </div>
   );
   //* ================ FERMTURE COMPOSANT ================

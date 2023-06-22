@@ -33,7 +33,6 @@
       padding: 0 20px;
       transition: transform 0.2s ease-in-out;
 
-
       &:hover {
         transform: scale(1.03);
         cursor: pointer;
@@ -197,7 +196,6 @@
             transition: transform 0.2s ease-in-out;
           }
 
-
           &-category {
             position: sticky;
             top: 0;
@@ -246,8 +244,6 @@
                 pointer-events: none;
               }
             }
-
-
 
             &-selected {
               font-size: 1.5rem;
@@ -498,7 +494,6 @@
               transition: transform 0.2s ease-in-out;
             }
 
-
             &-category {
               font-weight: 700;
               display: flex;
@@ -683,7 +678,7 @@
         align-items: center;
         margin: 130px 0;
 
-        &__button__genre {
+        &__button {
           z-index: 4;
           width: 80vw;
           height: 8vh;
@@ -697,67 +692,70 @@
           // background-size: cover;
           // border-radius: 15px;
           // border: vars.$theme1-secondary;
-          background-image: url('/images/tetepellochegenre.png');
-          background-position: center;
-          background-repeat: no-repeat;
+          // background-image: url('/images/tetepellochegenre.png');
+          // background-position: center;
+          // background-repeat: no-repeat;
           font-size: 32px;
           padding: 0 6px;
+          background-color: transparent;
+          border: none;
+          width: 241px;
+          height: 53px;
 
           &:hover {
             cursor: pointer;
           }
         }
 
-        &__button__plateform {
-          z-index: 4;
-          width: 80vw;
-          height: 8vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 35px;
-          margin-top: 10px;
-          color: vars.$theme1-primary;
-          // background-color: vars.$theme1-secondary;
-          // background-size: cover;
-          // border-radius: 15px;
-          // border: vars.$theme1-secondary;
-          background-image: url('/images/tetepellocheplateform.png');
-          background-position: center;
-          background-repeat: no-repeat;
-          font-size: 32px;
-          padding: 0 6px;
+        // &__button__plateform {
+        //   z-index: 4;
+        //   width: 80vw;
+        //   height: 8vh;
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items: center;
+        //   margin-bottom: 35px;
+        //   margin-top: 10px;
+        //   color: vars.$theme1-primary;
+        //   // background-color: vars.$theme1-secondary;
+        //   // background-size: cover;
+        //   // border-radius: 15px;
+        //   // border: vars.$theme1-secondary;
+        //   // background-image: url('/images/tetepellocheplateform.png');
+        //   // background-position: center;
+        //   // background-repeat: no-repeat;
+        //   font-size: 32px;
+        //   padding: 0 6px;
 
-          &:hover {
-            cursor: pointer;
-          }
-        }
+        //   &:hover {
+        //     cursor: pointer;
+        //   }
+        // }
 
-        &__button__decade {
-          z-index: 4;
-          width: 80vw;
-          height: 8vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 35px;
-          margin-top: 10px;
-          color: vars.$theme1-primary;
-          // background-color: vars.$theme1-secondary;
-          // background-size: cover;
-          // border-radius: 15px;
-          // border: vars.$theme1-secondary;
-          background-image: url('/images/tetepellochedecade.png');
-          background-position: center;
-          background-repeat: no-repeat;
-          font-size: 32px;
-          padding: 0 6px;
+        // &__button__decade {
+        //   z-index: 4;
+        //   width: 80vw;
+        //   height: 8vh;
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items: center;
+        //   margin-bottom: 35px;
+        //   margin-top: 10px;
+        //   color: vars.$theme1-primary;
+        //   // background-color: vars.$theme1-secondary;
+        //   // background-size: cover;
+        //   // border-radius: 15px;
+        //   // border: vars.$theme1-secondary;
+        //   background-image: url('/images/tetepellochedecade.png');
+        //   background-position: center;
+        //   background-repeat: no-repeat;
+        //   font-size: 32px;
+        //   padding: 0 6px;
 
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
+        //   &:hover {
+        //     cursor: pointer;
+        //   }
+        // }
       }
     }
   }

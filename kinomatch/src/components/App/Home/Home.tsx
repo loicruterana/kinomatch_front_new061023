@@ -273,7 +273,7 @@ export const Home: React.FC = () => {
                 key={filter}
                 className='Home__filters-selector__containers__filters-container__filter'
               >
-                {filter}
+                <span>{filter}</span>
                 <div
                   className='Home__filters-selector__containers__filters-container__filter__cross'
                   onClick={handleRemoveDecade}
@@ -341,26 +341,44 @@ export const Home: React.FC = () => {
       {/* affichage des boutons en version mobile */}
       {mobileVersion && (
         <div className='Home-container__buttons'>
-          <div
-            className='Home-container__buttons__button__genre'
+          <button
+            className='Home-container__buttons__button'
             onClick={handleClickGenre}
           >
+            <div className='Home-container__buttons__button__image-container'>
+              <img
+                src='/images/tetepellochegenre.png'
+                alt="Description de l'image"
+              />
+            </div>
             {/* Genre */}
-          </div>
+          </button>
 
-          <div
-            className='Home-container__buttons__button__plateform'
+          <button
+            className='Home-container__buttons__button'
             onClick={handleClickProvider}
           >
-            {/* Plateforme */}
-          </div>
+            <div className='Home-container__buttons__button__image-container'>
+              <img
+                src='/images/tetepellocheplateform.png'
+                alt="Description de l'image"
+              />
+            </div>
+            {/* Genre */}
+          </button>
 
-          <div
-            className='Home-container__buttons__button__decade'
+          <button
+            className='Home-container__buttons__button'
             onClick={handleClickDecade}
           >
             {/* Année */}
-          </div>
+            <div className='Home-container__buttons__button__image-container'>
+              <img
+                src='/images/tetepellochedecade.png'
+                alt="Description de l'image"
+              />
+            </div>
+          </button>
         </div>
       )}
       {/* affichage du loader si la requête est en cours */}

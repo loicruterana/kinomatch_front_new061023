@@ -1,5 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
@@ -68,22 +69,26 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <div className='searchresults-container-cardlist-card'>
       <div className='searchresults-container-cardlist-card__imagecontainer'>
-        <img
-          className='searchresults-container-cardlist-card__imagecontainer__image'
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`
-              : '/images/testsample.jpg'
-          }
-          alt={movie.title + ' affiche'}
-        />
+        <Link to={`/parametizedmoviepage/filmID=${movie.id}`}>
+          <img
+            className='searchresults-container-cardlist-card__imagecontainer__image'
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`
+                : '/images/testsample.jpg'
+            }
+            alt={movie.title + ' affiche'}
+          />
+        </Link>
       </div>
       <section className='searchresults-container-cardlist-card__infos'>
         <div className='searchresults-container-cardlist-card__infos__content'>
           <div className='searchresults-container-cardlist-card__infos__titlereleasecircle'>
             <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
               <h3 className='searchresults-container-cardlist-card__infos__title'>
-                {movie.title}
+                <Link to={`/parametizedmoviepage/filmID=${movie.id}`}>
+                  {movie.title}
+                </Link>
               </h3>
               <div className='searchresults-container-cardlist-card__infos__release'>
                 Date de sortie :{' '}

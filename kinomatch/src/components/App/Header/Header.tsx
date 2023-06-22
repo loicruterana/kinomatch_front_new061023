@@ -83,51 +83,52 @@ function Header() {
   };
   // ================ JSX ================
   return (
-    <div className='Header'>
-      {/* Logo du Header, logo différent on est en version mobile */}
-      {location.pathname === '/films' && !desktopVersion ? (
-        <Link
-          key='refresh'
-          to='#'
-          className='Header-logo'
-          onClick={movieArrayReload}
-        >
-          <img
-            className='Header-logo__image--refresh'
-            src='./images/RelancerLogo.png'
-            alt='logo'
-          />
-        </Link>
-      ) : (
-        <Link
-          key='home'
-          to='/'
-          className='Header-logo'
-          onClick={handleCloseClick}
-        >
-          <img
-            className='Header-logo__image'
-            src='./images/kino_match_logo.png'
-            alt='logo'
-          />
-        </Link>
-      )}
+    <>
+      <div className='Header'>
+        {/* Logo du Header, logo différent on est en version mobile */}
+        {location.pathname === '/films' && !desktopVersion ? (
+          <Link
+            key='refresh'
+            to='#'
+            className='Header-logo'
+            onClick={movieArrayReload}
+          >
+            <img
+              className='Header-logo__image--refresh'
+              src='./images/RelancerLogo.png'
+              alt='logo'
+            />
+          </Link>
+        ) : (
+          <Link
+            key='home'
+            to='/'
+            className='Header-logo'
+            onClick={handleCloseClick}
+          >
+            <img
+              className='Header-logo__image'
+              src='./images/kino_match_logo.png'
+              alt='logo'
+            />
+          </Link>
+        )}
 
-      {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
-      {location.pathname === '/films' && desktopVersion && (
-        <button
-          className='Header--OtherResultsBtn'
-          type='button'
-          onClick={movieArrayReload}
-        >
-          {' '}
-          Relancer une recherche{' '}
-        </button>
-      )}
+        {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
+        {location.pathname === '/films' && desktopVersion && (
+          <button
+            className='Header--OtherResultsBtn'
+            type='button'
+            onClick={movieArrayReload}
+          >
+            {' '}
+            Relancer une recherche{' '}
+          </button>
+        )}
 
-      {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
-      {/* Au clic sera affichée une modale BurgerMenu */}
-      {/* {!isLoggedIn && (
+        {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
+        {/* Au clic sera affichée une modale BurgerMenu */}
+        {/* {!isLoggedIn && (
         <div className='Header-buttons'>
           <button className='Header-buttons-button'>
             <Link key='login' to='/login'>
@@ -137,8 +138,8 @@ function Header() {
         </div>
       )} */}
 
-      {/* Profil de l'utilisateur connecté */}
-      {/* {isLoggedIn && (
+        {/* Profil de l'utilisateur connecté */}
+        {/* {isLoggedIn && (
         <div className='Header-profile'>
           <img src='images/SamplePic.png' alt='profile' />
           <Link to='/profile'>
@@ -147,23 +148,24 @@ function Header() {
         </div>
       )} */}
 
-      {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
-      {desktopVersion && (
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          handleSubmit={handleSubmit}
-        />
-      )}
+        {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
+        {desktopVersion && (
+          <SearchBar
+            query={query}
+            setQuery={setQuery}
+            handleSubmit={handleSubmit}
+          />
+        )}
 
-      {/* Icône BurgerMenu, uniquement affiché en version mobile */}
-      <div
-        onClick={handleClick}
-        className={`menu-icon ${showBurgerMenu && 'active'}`}
-      >
-        <div className='line-1'></div>
-        <div className='line-2'></div>
-        <div className='line-3'></div>
+        {/* Icône BurgerMenu, uniquement affiché en version mobile */}
+        <div
+          onClick={handleClick}
+          className={`menu-icon ${showBurgerMenu && 'active'}`}
+        >
+          <div className='line-1'></div>
+          <div className='line-2'></div>
+          <div className='line-3'></div>
+        </div>
       </div>
       {/* Pour activer la modale selon le state showBurgerMenu */}
       {showBurgerMenu && (
@@ -175,7 +177,7 @@ function Header() {
           handleSubmit={handleSubmit}
         />
       )}
-    </div>
+    </>
   );
   //* ================  FERMETURE COMPOSANT ================
 }

@@ -89,64 +89,67 @@ const BurgerMenu: React.FC<Props> = ({
   // ================ JSX ================
 
   return (
-    <div className='BurgerMenu'>
-      <nav className='BurgerMenu__container'>
-        <div className='BurgerMenu__container__items'>
-          {authContext?.isLoggedIn && (
-            <>
-              {/* Nom de l'utilisateur */}
-              <div className='BurgerMenu__container__items__text'>
-                <div>Bonjour</div>
-                <div>{authContext?.userData.email}</div>
-              </div>
-              {/* Les boutons lorsque l'utilisateur est connecté */}
-              <ul>
-                <li>
-                  <button
-                    className='BurgerMenu__container__items__button'
-                    onClick={handleProfile}
-                  >
-                    Mon profil
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className='BurgerMenu__container__items__button'
-                    onClick={handleDeleteProfile}
-                  >
-                    Supprimer compte
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className='BurgerMenu__container__items__button'
-                    onClick={handleLogout}
-                  >
-                    Se déconnecter
-                  </button>
-                </li>
-              </ul>
-            </>
-          )}
-          {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
-          {!authContext?.isLoggedIn && (
-            <>
-              <Link
-                key='home'
-                to='/'
-                className='BurgerMenu__container__button--home'
-                onClick={handleCloseClick}
-              >
+    <>
+      <div className='BurgerMenu'>
+        <nav className='BurgerMenu__container'>
+          <div className='BurgerMenu__container__items'>
+            <li className='BurgerMenu__container__button--home'>
+              <Link key='home' to='/' onClick={handleCloseClick}>
                 <button className='BurgerMenu__container__button'>
                   Accueil
                 </button>
               </Link>
-              <SearchBar
-                query={query}
-                setQuery={setQuery}
-                handleSubmit={handleSubmit}
-              />
-              {/* <Link to="login" key="login">
+            </li>
+            {authContext?.isLoggedIn && (
+              <>
+                {/* Nom de l'utilisateur */}
+                <div className='BurgerMenu__container__items__text'>
+                  <h2>
+                    Bonjour
+                    <br />
+                    {authContext?.userData.email}
+                  </h2>
+                </div>
+                {/* Les boutons lorsque l'utilisateur est connecté */}
+                <ul>
+                  <li>
+                    <button
+                      className='BurgerMenu__container__items__button'
+                      onClick={handleProfile}
+                    >
+                      Mon profil
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className='BurgerMenu__container__items__button'
+                      onClick={handleDeleteProfile}
+                    >
+                      Supprimer compte
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className='BurgerMenu__container__items__button'
+                      onClick={handleLogout}
+                    >
+                      Se déconnecter
+                    </button>
+                  </li>
+                </ul>
+              </>
+            )}
+            {/* Les boutons lorsque l'utilisateur n'est pas connecté
+                  {!authContext?.isLoggedIn && ( */}
+
+            {/* )} */}
+
+            <SearchBar
+              query={query}
+              setQuery={setQuery}
+              handleSubmit={handleSubmit}
+            />
+            {/* <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter
                 </button>
@@ -156,12 +159,13 @@ const BurgerMenu: React.FC<Props> = ({
                   Créer un compte
                 </button>
               </Link> */}
-            </>
-          )}
-        </div>
+          </div>
+        </nav>
+      </div>
+      <footer className='BurgerMenu-footer'>
         <Footer />
-      </nav>
-    </div>
+      </footer>
+    </>
   );
   //* ================ FERMETURE COMPOSANT ================
 };
