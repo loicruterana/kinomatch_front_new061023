@@ -1,11 +1,11 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useContext } from "react";
-import { Genre, Provider } from "../../../../utils/interfaces";
+import React, { useContext } from 'react';
+import { Genre, Provider } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
-import { SelectedGenreFiltersContext } from "../../../../contexts/SelectedGenreFiltersContext";
-import { SelectedProviderFiltersContext } from "../../../../contexts/SelectedProviderFiltersContext";
-import { SelectedDecadeFiltersContext } from "../../../../contexts/SelectedDecadeFiltersContext";
+import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreFiltersContext';
+import { SelectedProviderFiltersContext } from '../../../../contexts/SelectedProviderFiltersContext';
+import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecadeFiltersContext';
 
 // ================ INTERFACES ================
 interface RollGenreProps {
@@ -51,10 +51,11 @@ export const RollGenre = ({
     SelectedDecadeFiltersContext
   );
 
-  console.log("selectedGenreFilters", selectedGenreFilters);
-  console.log("selected", preselectedGenres);
+  console.log('selectedGenreFilters', selectedGenreFilters);
+  console.log('selected', preselectedGenres);
   // ================ HANDLERS ================
 
+  // handler pour envoyer les choix de filtres à la fonction addGenreFilter du contexte SelectedGenreFiltersContext et donc stocker les filtres genre dans le state
   function handleGenreClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -65,7 +66,7 @@ export const RollGenre = ({
       addGenreFilter(name, genreId);
     }
   }
-
+  // handleProviderClick pour envoyer les choix de filtres à la fonction addProviderFilter du contexte SelectedProviderFiltersContext et donc stocker les filtres provider dans le state
   function handleProviderClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -77,6 +78,7 @@ export const RollGenre = ({
     }
   }
 
+  // handleDecadeClick pour envoyer les choix de filtres à la fonction addDecadeFilter du contexte SelectedDecadeFiltersContext et donc stocker le filtre decade dans le state
   function handleDecadeClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
@@ -90,149 +92,174 @@ export const RollGenre = ({
   // ================ JSX ================
   return (
     <>
-      {/* {
-      showRollGenre || showRollProvider ? */}
+      {/* pour la version mobile, on affiche le bouton de validation en bas de la modale */}
       <div
-        className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-          }__validation`}
+        className={`Home-container__roll-modale-${
+          mobileVersion ? 'mobile-version' : 'desktop-version'
+        }__validation`}
       >
         <button onClick={handleClickOut}>Valider</button>
       </div>
-      {/* : null} */}
 
+      {/* affichage des rolls, ceux-ci ont un affichage différent (padding-bottom) si un filtre est sélectionné */}
       <div
-        className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-          }__filterRoll`}
+        className={`Home-container__roll-modale-${
+          mobileVersion ? 'mobile-version' : 'desktop-version'
+        }__filterRoll`}
         style={
           !mobileVersion
-            ? (selectedGenreFilters.length > 0 ||
+            ? selectedGenreFilters.length > 0 ||
               selectedProviderFilters.length > 0 ||
               selectedDecadeFilters.length > 0
-              ? { paddingBottom: "170px" }
-              : { paddingBottom: "120px" })
-            : { paddingBottom: "0px" }
+              ? { paddingBottom: '170px' }
+              : { paddingBottom: '120px' }
+            : { paddingBottom: '0px' }
         }
-
       >
         {/* // ================ JSX : ROLL GENRE ================ */}
         <div
-          className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-            }__roll-backgroundContainer`}
+          className={`Home-container__roll-modale-${
+            mobileVersion ? 'mobile-version' : 'desktop-version'
+          }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-              }__roll-background`}
+            className={`Home-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-background`}
           >
             {((showRollGenre && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                  }__roll-container`}
+                className={`Home-container__roll-modale-${
+                  mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                    }__roll-container__item-category`}
+                  className={`Home-container__roll-modale-${
+                    mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
                 >
                   GENRE
                 </div>
                 {isLoading
-                  ? "Chargement en cours"
+                  ? 'Chargement en cours'
                   : preselectedGenres.map((preselectedGenre) => (
-                    <button
-                      className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                        }__roll-container__item-genre${selectedGenreFilters.some(
-                          (item) =>
-                            item.id.toString() ===
-                            preselectedGenre.id.toString()
-                        )
-                          ? "-selected"
-                          : ""
+                      <button
+                        className={`Home-container__roll-modale-${
+                          mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-genre${
+                          selectedGenreFilters.some(
+                            (item) =>
+                              item.id.toString() ===
+                              preselectedGenre.id.toString()
+                          )
+                            ? '-selected'
+                            : ''
                         }`}
-                      key={preselectedGenre.id}
-                      onClick={handleGenreClick}
-                      data-id={preselectedGenre.id}
-                    >
-
-                      <img className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"}__roll-container__item-genre--image${selectedGenreFilters.some(
-                        (item) =>
-                          item.id.toString() ===
-                          preselectedGenre.id.toString()
-                      )
-                        ? "-selected"
-                        : ""
-                        }`}
-                        src={
-                          selectedGenreFilters.find((item) => item.id.toString() === preselectedGenre.id.toString())
-                            ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png` : `images/moodlogosnopelloche/${preselectedGenre.id}.png`}
-                      ></img>
-                      {preselectedGenre.name}
-                    </button>
-                  ))}
+                        key={preselectedGenre.id}
+                        onClick={handleGenreClick}
+                        data-id={preselectedGenre.id}
+                      >
+                        <img
+                          className={`Home-container__roll-modale-${
+                            mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-genre--image${
+                            selectedGenreFilters.some(
+                              (item) =>
+                                item.id.toString() ===
+                                preselectedGenre.id.toString()
+                            )
+                              ? '-selected'
+                              : ''
+                          }`}
+                          src={
+                            selectedGenreFilters.find(
+                              (item) =>
+                                item.id.toString() ===
+                                preselectedGenre.id.toString()
+                            )
+                              ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png`
+                              : `images/moodlogosnopelloche/${preselectedGenre.id}.png`
+                          }
+                        ></img>
+                        {preselectedGenre.name}
+                      </button>
+                    ))}
               </div>
             )}
           </div>
         </div>
         {/* // ================ JSX : ROLL PROVIDERS ================ */}
         <div
-          className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-            }__roll-backgroundContainer`}
+          className={`Home-container__roll-modale-${
+            mobileVersion ? 'mobile-version' : 'desktop-version'
+          }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-              }__roll-background`}
+            className={`Home-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-background`}
           >
             {((showRollProvider && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                  }__roll-container`}
+                className={`Home-container__roll-modale-${
+                  mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                    }__roll-container__item-category`}
+                  className={`Home-container__roll-modale-${
+                    mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
                 >
                   PLATEFORME
                 </div>
                 {isLoading
-                  ? "Chargement en cours"
+                  ? 'Chargement en cours'
                   : preselectedProviders.map((preselectedProvider) => (
-                    <button
-                      className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                        }__roll-container__item-provider${selectedProviderFilters.some(
-                          (item) =>
-                            item.provider_id.toString() ===
-                            preselectedProvider.provider_id.toString()
-                        )
-                          ? "-selected"
-                          : ""
+                      <button
+                        className={`Home-container__roll-modale-${
+                          mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-provider${
+                          selectedProviderFilters.some(
+                            (item) =>
+                              item.provider_id.toString() ===
+                              preselectedProvider.provider_id.toString()
+                          )
+                            ? '-selected'
+                            : ''
                         }`}
-                      onClick={handleProviderClick}
-                      data-id={preselectedProvider.provider_id}
-                      key={preselectedProvider.provider_id}
-                    >
-                      {preselectedProvider.provider_name}
-                    </button>
-                  ))}
+                        onClick={handleProviderClick}
+                        data-id={preselectedProvider.provider_id}
+                        key={preselectedProvider.provider_id}
+                      >
+                        {preselectedProvider.provider_name}
+                      </button>
+                    ))}
               </div>
             )}
           </div>
         </div>
         {/* // ================ JSX : ROLL DECENNIES ================ */}
         <div
-          className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-            }__roll-backgroundContainer`}
+          className={`Home-container__roll-modale-${
+            mobileVersion ? 'mobile-version' : 'desktop-version'
+          }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-              }__roll-background`}
+            className={`Home-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-background`}
             onClick={handleClickOut}
           >
             {((showRollDecade && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                  }__roll-container`}
+                className={`Home-container__roll-modale-${
+                  mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                    }__roll-container__item-category`}
+                  className={`Home-container__roll-modale-${
+                    mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
                 >
                   DÉCENNIE
                 </div>
@@ -240,13 +267,15 @@ export const RollGenre = ({
                 {decades.map((decade, index) => (
                   <button
                     key={index}
-                    className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                      }__roll-container__item-decade${selectedDecadeFilters.some(
+                    className={`Home-container__roll-modale-${
+                      mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-decade${
+                      selectedDecadeFilters.some(
                         (item) => item.toString() === decade.toString()
                       )
-                        ? "-selected"
-                        : ""
-                      }`}
+                        ? '-selected'
+                        : ''
+                    }`}
                     onClick={handleDecadeClick}
                   >
                     {decade}

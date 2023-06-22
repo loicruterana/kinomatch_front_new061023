@@ -20,48 +20,54 @@ interface SelectedGenreFiltersContextType {
 // ================ CREATECONTEXT ================
 
 // Définition du contexte et de ses types.
-export const SelectedGenreFiltersContext = createContext<SelectedGenreFiltersContextType>(
-  {} as SelectedGenreFiltersContextType
-);
+export const SelectedGenreFiltersContext =
+  createContext<SelectedGenreFiltersContextType>(
+    {} as SelectedGenreFiltersContextType
+  );
 
 // ================ CONTEXT ================
 
 // Export de la fonction SelectedGenreFiltersProvider qui prend en argument les enfants du composant.
-export const SelectedGenreFiltersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const SelectedGenreFiltersProvider: React.FC<{
+  children: ReactNode;
+}> = ({ children }) => {
+  // ================ USESTATE ================
 
-// ================ USESTATE ================
-
-// UseState pour les filtres par genre.
+  // UseState pour les filtres par genre.
   const [selectedGenreFilters, setSelectedGenreFilters] = useState<Genre[]>([]);
 
-// ================ FONCTIONS ================
+  // ================ FONCTIONS ================
 
-// Fonction pour ajouter un filtre par genre. Si le filtre est déjà présent, on le supprime.
+  // Fonction pour ajouter un filtre par genre. Si le filtre est déjà présent, on le supprime.
   const addGenreFilter = (name: string, genreId: string) => {
+    // vérifie si le genre est déjà présent dans le state
     if (selectedGenreFilters.some((f) => f.name === name)) {
       removeGenreFilter(name);
       return;
     }
-    // On ajoute le filtre au tableau.
+    // On ajoute le filtre genre au tableau (state).
     setSelectedGenreFilters((state) => [
       ...state,
       {
         name: name,
         id: genreId,
-      }
+      },
     ]);
   };
 
   // Fonction pour supprimer les filtres par genre. Si le filtre est déjà présent, on le supprime.
   const removeGenreFilter = (name: string) => {
+    // supprime le genre du state
     setSelectedGenreFilters((state) => state.filter((f) => f.name !== name));
   };
 
-// ================ CONTEXT : EXPORT DES PROPS ================ 
+  // ================ CONTEXT : EXPORT DES PROPS ================
 
-// export des propriétés du contexte.
+  // export des propriétés du contexte.
   return (
-    <SelectedGenreFiltersContext.Provider value={{ selectedGenreFilters, addGenreFilter, removeGenreFilter }}>
+    <SelectedGenreFiltersContext.Provider
+      value={{ selectedGenreFilters, addGenreFilter, removeGenreFilter }}
+    >
       {children}
     </SelectedGenreFiltersContext.Provider>
   );

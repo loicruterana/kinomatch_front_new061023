@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -9,15 +9,14 @@ import {
   ToWatchListArray,
   toWatchMoviesObject,
   BookmarkedListObject,
-  UserData, 
-  toWatchMoviesEntry
+  UserData,
+  toWatchMoviesEntry,
 } from '../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
 
 import { AuthContext } from '../../../contexts/AuthContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
-
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -31,20 +30,27 @@ import './Profile.scss';
 //* ================ COMPOSANT ================
 
 export const Profile: React.FC = () => {
+  // ================ USESTATE ================
 
-
-// ================ USESTATE ================
-
+  // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
+  // pour afficher ou masquer WatchedRoll (films vus -> ✓)
   const [showWatchedRoll, setShowWatchedRoll] = useState<boolean>(true);
+  // pour afficher ou masquer ToWatchRoll (films à voir)
   const [showToWatchRoll, setShowToWatchRoll] = useState<boolean>(true);
+  // pour stocker les id issues du back concernant les films vus
   const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
+  // pour stocker les noms concernant les films vus
   const [watchedMovies, setWatchedMovies] = useState<WatchedMoviesObject>({});
+  // pour stocker les id issues du back concernant les films à voir
   const [toWatchList, setToWatchList] = useState<ToWatchListArray>([]);
+  // pour stocker les noms concernant les films à voir
   const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
+  // pour stocker les id issues du back concernant les films préférés
   const [bookmarkedList, setBookmarkedList] = useState<BookmarkedListObject>(
     {}
   );
+  // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
@@ -68,12 +74,14 @@ export const Profile: React.FC = () => {
     addBookmarked: (element: { movie: string }) => void;
   };
 
-// ================ UTILS ================
+  // ================ UTILS ================
+  // fonction pour naviguer entre les pages
+  const navigate: (path: string) => void = useNavigate();
+  // fonction pour savoir si les listes sont en train de charger
+  const listsAreLoading =
+    (watchedList || toWatchList || bookmarkedList) === undefined; // false
 
-const navigate: (path: string) => void = useNavigate()
-const listsAreLoading = watchedList === undefined; // false
-
-// ================ INTERFACES ================
+  // ================ INTERFACES ================
   interface BookmarkedItem {
     createdAt: string;
     film_id: string;
@@ -84,35 +92,35 @@ const listsAreLoading = watchedList === undefined; // false
 
   // ================ HANDLERS ================
 
-// handler pour supprimer un film ajouté en favoris (coeur)
+  // handler pour supprimer un film ajouté en favoris (coeur)
   function handleRemoveBookmarked(film_id: string) {
     deleteBookmarked({ movie: film_id });
     setUserEvent(true);
   }
 
-// handler pour ajouter un film ajouté en favoris (coeur)
+  // handler pour ajouter un film ajouté en favoris (coeur)
   function handleAddBookmarked(film_id: string) {
-    addBookmarked({ movie: film_id })
+    addBookmarked({ movie: film_id });
     setUserEvent(true);
   }
 
-//handler pour ne plus afficher les rolls
+  //handler pour ne plus afficher les rolls
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
   }
 
-//handler pour afficher le roll Watched (films vus -> ✓)
+  //handler pour afficher le roll Watched (films vus -> ✓)
   function handleShowWatchedRoll(): void {
     setShowWatchedRoll(true);
   }
 
-//handler pour afficher le roll ToWatch (films à voir)
+  //handler pour afficher le roll ToWatch (films à voir)
   function handleShowToWatchRoll(): void {
     setShowToWatchRoll(true);
   }
 
-//handler pour supprimer profil
+  //handler pour supprimer profil
   function handleDeleteProfile(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -133,7 +141,7 @@ const listsAreLoading = watchedList === undefined; // false
     }
   }
 
-//handler pour se déconnecter
+  //handler pour se déconnecter
   function handleLogout(): void {
     try {
       const searchParams = new URLSearchParams();
@@ -155,7 +163,7 @@ const listsAreLoading = watchedList === undefined; // false
   }
 
   // ================ USEWINDOWSIZE ================
-
+  // pour afficher ou masquer les rolls en fonction de la taille de l'écran
   useEffect(() => {
     function handleResize(): void {
       if (window.innerWidth >= 900) {
@@ -169,25 +177,28 @@ const listsAreLoading = watchedList === undefined; // false
         setShowToWatchRoll(false);
       }
     }
-
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
     window.addEventListener('resize', handleResize);
     handleResize();
-
+    // un removeEventListener pour éviter les fuites de mémoire
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // =========================== WATCHEDLIST ===========================
 
+  //useEffect pour récupérer les id des films vus
   useEffect(() => {
+    // pour activer le loader
     load();
-
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
     axios
+      // envoie la requête au back pour récupérer les films vus
       .get(
         `https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`
       )
       .then(({ data }) => {
+        // stocke les données dans le state watchedList
         setWatchedList(data);
       })
       .catch((error) => {
@@ -198,6 +209,7 @@ const listsAreLoading = watchedList === undefined; // false
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
+  //useEffect pour récupérer les titres des films vus
   useEffect(() => {
     const fetchMovieTitles = async () => {
       try {
@@ -216,15 +228,18 @@ const listsAreLoading = watchedList === undefined; // false
               movie_id: data.id,
             }));
 
-            // Utiliser un objet pour stocker les films uniques
-            const uniqueMovies: Record<string, { name: string; movie_id?: string }> = {};
+            // Utilise un objet pour stocker les films uniques
+            const uniqueMovies: Record<
+              string,
+              { name: string; movie_id?: string }
+            > = {};
 
             // Parcourir la liste des films à ajouter
             moviesToAdd.forEach((movie) => {
               // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
-
+            // on stocke les noms des films dans le state watchedMovies
             setWatchedMovies(uniqueMovies as WatchedMoviesObject);
           })
           .catch((error) => {
@@ -237,10 +252,11 @@ const listsAreLoading = watchedList === undefined; // false
 
     fetchMovieTitles();
   }, [watchedList]);
-
+  // on exécute le useEffect à chaque fois que watchedList (la liste des id) change
 
   // =========================== BOOKMARKED (COEUR) ===========================
 
+  //useEffect pour récupérer les id des films ajoutés en favoris
   useEffect(() => {
     const fetchMoviesBookmarked = async () => {
       try {
@@ -251,7 +267,7 @@ const listsAreLoading = watchedList === undefined; // false
             `https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`
           )
           .then(({ data }) => {
-            // Utiliser un objet pour stocker les films uniques
+            // Utiliser un objet pour stocker les id des films favoris
             const bookmarked: BookmarkedListObject = {};
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.forEach((element: any) => {
@@ -276,10 +292,11 @@ const listsAreLoading = watchedList === undefined; // false
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
-
+  // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
 
+  // récupère les id des films à voir
   useEffect(() => {
     load();
 
@@ -300,6 +317,7 @@ const listsAreLoading = watchedList === undefined; // false
 
   // =========================== TOWATCHLISTMOVIES ===========================
 
+  // récupère les titres des films à voir
   useEffect(() => {
     const fetchMovieTitles = async () => {
       try {
@@ -322,7 +340,6 @@ const listsAreLoading = watchedList === undefined; // false
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
             setToWatchMovies(uniqueMovies);
-
           })
           .catch((error) => {
             console.error(error);
@@ -334,7 +351,7 @@ const listsAreLoading = watchedList === undefined; // false
 
     fetchMovieTitles();
   }, [toWatchList]);
-
+  // s'exécute à chaque fois que toWatchList change
 
   //========== JSX ==========
 
@@ -361,16 +378,19 @@ const listsAreLoading = watchedList === undefined; // false
               </div>
             </div>
           </div>
+          {/* affichage conditionnel des boutons en fonction du device*/}
           {!mobileVersion && (
             <div className='Profile-container-buttons'>
               <button
                 className='Profile-container-buttons-button'
+                // va déconnecter l'utilisateur
                 onClick={handleLogout}
               >
                 Se déconnecter
               </button>
               <button
                 className='Profile-container-buttons-button'
+                // va supprimer le profil
                 onClick={handleDeleteProfile}
               >
                 Supprimer profil
@@ -382,49 +402,49 @@ const listsAreLoading = watchedList === undefined; // false
       {/* <div className="Profile-container__favoritefilters">
           <h3 className="Profile-container__favoritefilters__title">Filtres favoris </h3>
         </div> */}
-
+      {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
+        <div
+          className={`Profile-container__roll-modale-${
+            mobileVersion ? 'mobile-version' : 'desktop-version'
+          }`}
+        >
           <div
-            className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-              }`}
-          >
-            <div
-              className={`Profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                }-backdropfilter`}
-              onClick={handleClickOut}
-            ></div>
-            <BookmarkedRoll
-              isLoading={listsAreLoading}
-              mobileVersion={mobileVersion}
-              showWatchedRoll={showWatchedRoll}
-              // setShowWatchedRoll={setShowWatchedRoll}
-              showToWatchRoll={showToWatchRoll}
-              // setShowToWatchRoll={setShowToWatchRoll}
-              watchedList={watchedList}
-              setWatchedList={setWatchedList}
-              watchedMovies={watchedMovies}
-              // setWatchedMovies={setWatchedMovies}
-              // deleteWatched={deleteWatched}
-              toWatchList={toWatchList}
-              setToWatchList={setToWatchList}
-              toWatchMovies={toWatchMovies}
-              // setToWatchMovies={setToWatchMovies}
-              deleteToWatch={deleteToWatch}
-              deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
-              bookmarkedList={bookmarkedList}
-              // deleteBookmarked={deleteBookmarked}
-              // addBookmarked={addBookmarked}
+            className={`Profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }-backdropfilter`}
+            onClick={handleClickOut}
+          ></div>
+          <BookmarkedRoll
+            isLoading={listsAreLoading}
+            mobileVersion={mobileVersion}
+            showWatchedRoll={showWatchedRoll}
+            // setShowWatchedRoll={setShowWatchedRoll}
+            showToWatchRoll={showToWatchRoll}
+            // setShowToWatchRoll={setShowToWatchRoll}
+            watchedList={watchedList}
+            setWatchedList={setWatchedList}
+            watchedMovies={watchedMovies}
+            // setWatchedMovies={setWatchedMovies}
+            // deleteWatched={deleteWatched}
+            toWatchList={toWatchList}
+            setToWatchList={setToWatchList}
+            toWatchMovies={toWatchMovies}
+            // setToWatchMovies={setToWatchMovies}
+            deleteToWatch={deleteToWatch}
+            deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
+            bookmarkedList={bookmarkedList}
+            // deleteBookmarked={deleteBookmarked}
+            // addBookmarked={addBookmarked}
 
-              handleRemoveBookmarked={handleRemoveBookmarked}
-              handleAddBookmarked={handleAddBookmarked}
-            />
-          </div>
-        )}
-
+            handleRemoveBookmarked={handleRemoveBookmarked}
+            handleAddBookmarked={handleAddBookmarked}
+          />
+        </div>
+      )}
       {/* BOUTONS */}
-
       {mobileVersion && (
         <div className='Profile-container__rollbuttons'>
           <div
@@ -445,14 +465,10 @@ const listsAreLoading = watchedList === undefined; // false
           </div>
         </div>
       )}
-      {
-        !mobileVersion &&
-        <Footer />
-
-      }
+      {/* affichage conditionnel du Footer en fonction du device */}
+      {!mobileVersion && <Footer />}
     </div>
   );
-//* ================ FERMETURE COMPOSANT ================
-
+  //* ================ FERMETURE COMPOSANT ================
 };
 export default Profile;

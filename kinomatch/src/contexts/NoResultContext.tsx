@@ -18,13 +18,16 @@ interface NoResultProviderProps {
 // ================ CREATECONTEXT ================
 
 // Définition du contexte et de ses types.
-export const NoResultContext = createContext<NoResultContext>({} as NoResultContext);
+export const NoResultContext = createContext<NoResultContext>(
+  {} as NoResultContext
+);
 
 // ================ CONTEXT ================
 
 // export de la fonction NoResultProvider qui prend en argument les enfants du composant.
-export const NoResultProvider: React.FC<NoResultProviderProps> = ({ children }) => {
-
+export const NoResultProvider: React.FC<NoResultProviderProps> = ({
+  children,
+}) => {
   // ================ USESTATE ================
 
   // UseState pour savoir si le noResult est actif.
@@ -32,13 +35,15 @@ export const NoResultProvider: React.FC<NoResultProviderProps> = ({ children }) 
 
   // ================ FONCTIONS ================
 
-  // Fonction pour gérer le noResult.
+  // fonction qui permet de changer la valeur de noResult
   const handleNoResult = () => {
+    // change la valeur de noResult
     setNoResult(!noResult);
   };
 
+  //* ================ CONTEXT : EXPORT DES PROPS ================
 
-  // ================ CONTEXT : EXPORT DES PROPS ================ 
+  // ================ CONTEXT : EXPORT DES PROPS ================
 
   // export des propriétés du contexte.
   const contextValue: NoResultContext = {

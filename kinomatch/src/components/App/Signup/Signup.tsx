@@ -20,27 +20,33 @@ import './Signup.scss';
 //* ================ COMPOSANT ================
 
 const Signup = () => {
+  // ================ USESTATE ================
 
-// ================ USESTATE ================
-
+  // state qui va recevoir les données du formulaire
   const [postProfil, setPostProfil] = useState({
     email: '',
     password: '',
     passwordConfirm: '',
   });
-  const { userData, addUserData, login } = useContext(AuthContext);
+  // state pour la redirection vers la page d'accueil
   const [goToHomePage, setGoToHomePage] = useState(false);
+  // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
-// ================ UTILS ================
+  // ================ IMPORT PROPS CONTEXT ================
 
-if (goToHomePage) {
-  return <Navigate to="/" />;
-}
+  const { userData, addUserData, login } = useContext(AuthContext);
 
-// ================ HANDLERS ================
+  // ================ UTILS ================
 
-// handleChange pour enregistrer les entrées dans les inputs du formulaire
+  // fonction qui va permettre de rediriger vers la page d'accueil
+  if (goToHomePage) {
+    return <Navigate to='/' />;
+  }
+
+  // ================ HANDLERS ================
+
+  // handleChange pour enregistrer les entrées dans les inputs du formulaire
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setPostProfil({
@@ -49,7 +55,7 @@ if (goToHomePage) {
     });
   };
 
-//handleSubmit pour envoyer les données du formulaire au back
+  //handleSubmit pour envoyer les données du formulaire au back
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userData = {
@@ -59,39 +65,46 @@ if (goToHomePage) {
     };
 
     try {
-      const response = await axios.post('https://deploy-back-kinomatch.herokuapp.com/signup', userData);
+      const response = await axios.post(
+        'https://deploy-back-kinomatch.herokuapp.com/signup',
+        userData
+      );
+      // login(), va permettre de stocker dans AuhthContext = true;
       login();
-      setMessage(response.data.message)
-      addUserData(response.data.user.email, response.data.user.id)
-
+      // setMessage pour afficher le message d'erreur
+      setMessage(response.data.message);
+      // addUserData pour stocker dans AuthContext les données de l'utilisateur
+      addUserData(response.data.user.email, response.data.user.id);
 
       setTimeout(() => {
-      setGoToHomePage(true);
+        setGoToHomePage(true);
       }, 1500);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-     console.log(error)
-  
-        if(error.response.status === 400) {
-          //Email et mot de passe obligatoires
-          //Email ou mot de passe invalide
-          console.log(error.response.data.error);
-          setMessage(error.response.data.error)
-          return;
-        }
+      console.log(error);
 
-        if(error.response.status === 500) {
-          //Erreur lors de la connexion de l'utilisateur
-          console.log(error.response.data.error);
-          setMessage(error.response.data.error)
-          return;
-        }     }
+      if (error.response.status === 400) {
+        //Email et mot de passe obligatoires
+        //Email ou mot de passe invalide
+        console.log(error.response.data.error);
+        setMessage(error.response.data.error);
+        return;
+      }
 
+      if (error.response.status === 500) {
+        //Erreur lors de la connexion de l'utilisateur
+        console.log(error.response.data.error);
+        setMessage(error.response.data.error);
+        return;
+      }
+    }
   };
 
+  // ============ JSX ============
 
   return (
     <div className='Signup-container'>
+      z{/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
@@ -132,14 +145,11 @@ if (goToHomePage) {
 
         <button type='submit'>Créer compte</button>
         <p className='Login-container__message'>{message}</p>
-
       </form>
-      
-      {userData.email && <Connected/>}
+      {userData.email && <Connected />}
     </div>
   );
-  //* ================ FERMETURE DU COMPOSANT ================
-
+  //* ================ FERMETURE COMPOSANT ================
 };
 
 export default Signup;

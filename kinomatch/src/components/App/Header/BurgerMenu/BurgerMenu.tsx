@@ -1,3 +1,5 @@
+// ================ IMPORT BIBLIOTHEQUES ================
+
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -24,28 +26,41 @@ interface Props {
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query, setQuery, handleSubmit }: Props): JSX.Element => {
+//* ================ COMPOSANT ================
+
+const BurgerMenu: React.FC<Props> = ({
+  showBurgerMenu,
+  setShowBurgerMenu,
+  query,
+  setQuery,
+  handleSubmit,
+}: Props): JSX.Element => {
   const authContext = useContext(AuthContext);
 
-// ================ UTILS ================
+  // ================ UTILS ================
 
+  // pour naviguer vers une autre page
   const navigate = useNavigate();
 
-// ================ HANDLERS ================
+  // ================ HANDLERS ================
 
+  // pour afficher ou masquer le menu burger
   // const handleClick = (): void => {
   //   setShowBurgerMenu(!showBurgerMenu);
   // };
 
+  // pour naviguer vers la page de profil
   const handleProfile = (): void => {
     navigate(`/profile`);
     setShowBurgerMenu(!showBurgerMenu);
   };
 
+  // pour fermer le menu burger
   function handleCloseClick() {
     setShowBurgerMenu(false);
   }
 
+  // pour supprimer le profil
   const handleDeleteProfile = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
@@ -57,6 +72,7 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
     }
   };
 
+  // pour se déconnecter
   const handleLogout = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
@@ -70,37 +86,66 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
     }
   };
 
+  // ================ JSX ================
+
   return (
-    <div className="BurgerMenu">
-      <div className="BurgerMenu__container">
-        <div className="BurgerMenu__container__items">
+    <div className='BurgerMenu'>
+      <nav className='BurgerMenu__container'>
+        <div className='BurgerMenu__container__items'>
           {authContext?.isLoggedIn && (
             <>
               {/* Nom de l'utilisateur */}
-              <div className="BurgerMenu__container__items__text">
+              <div className='BurgerMenu__container__items__text'>
                 <div>Bonjour</div>
                 <div>{authContext?.userData.email}</div>
               </div>
               {/* Les boutons lorsque l'utilisateur est connecté */}
-              <button className="BurgerMenu__container__items__button" onClick={handleProfile}>
-                Mon profil
-              </button>
-
-              <button className="BurgerMenu__container__items__button" onClick={handleDeleteProfile}>
-                Supprimer compte
-              </button>
-              <button className="BurgerMenu__container__items__button" onClick={handleLogout}>
-                Se déconnecter
-              </button>
+              <ul>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleProfile}
+                  >
+                    Mon profil
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleDeleteProfile}
+                  >
+                    Supprimer compte
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleLogout}
+                  >
+                    Se déconnecter
+                  </button>
+                </li>
+              </ul>
             </>
           )}
           {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
           {!authContext?.isLoggedIn && (
             <>
-              <Link key='home' to='/' className='BurgerMenu__container__button--home' onClick={handleCloseClick}>
-                <button className="BurgerMenu__container__button">Accueil</button>
+              <Link
+                key='home'
+                to='/'
+                className='BurgerMenu__container__button--home'
+                onClick={handleCloseClick}
+              >
+                <button className='BurgerMenu__container__button'>
+                  Accueil
+                </button>
               </Link>
-              <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+              <SearchBar
+                query={query}
+                setQuery={setQuery}
+                handleSubmit={handleSubmit}
+              />
               {/* <Link to="login" key="login">
                 <button className="BurgerMenu__container__button" onClick={handleClick}>
                   Se connecter
@@ -115,9 +160,10 @@ const BurgerMenu: React.FC<Props> = ({ showBurgerMenu, setShowBurgerMenu, query,
           )}
         </div>
         <Footer />
-      </div>
+      </nav>
     </div>
   );
+  //* ================ FERMETURE COMPOSANT ================
 };
 
 export default BurgerMenu;
