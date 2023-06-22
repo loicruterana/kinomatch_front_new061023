@@ -95,7 +95,7 @@ useEffect(() => {
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
-          height={hauteurEcran}
+          height={'100vh'}
           scrollableTarget="scrollableDiv"
           scrollThreshold={1}
         >
