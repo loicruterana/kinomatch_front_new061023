@@ -85,7 +85,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
           height={2160}
           scrollableTarget="scrollableDiv"
-          scrollThreshold={1}
+          scrollThreshold={0.8}
         >
           <div className='otherResults-container--scrollList'>
             {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
