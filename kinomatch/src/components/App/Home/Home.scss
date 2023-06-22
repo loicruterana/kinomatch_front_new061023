@@ -284,7 +284,7 @@
             background-image: url('/images/pellochebghome.png');
             background-repeat: no-repeat;
             background-position: center;
-            margin: -4px;
+            margin: -2px;
             transition: transform 0.2s ease-in-out;
             border: none;
 
@@ -323,7 +323,7 @@
             background-repeat: no-repeat;
             background-position: center;
             padding: 0px;
-            margin: -4px;
+            margin: -2px;
             transition: transform 0.2s ease-in-out;
             border: none;
 
@@ -535,7 +535,7 @@
 
               &--image {
                 pointer-events: none;
-  
+
                 &-selected {
                   pointer-events: none;
                 }
