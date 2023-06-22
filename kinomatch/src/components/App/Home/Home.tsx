@@ -225,7 +225,6 @@ export const Home: React.FC = () => {
         <div className='Home__filters-selector__containers'>
           <div className='Home__filters-selector__containers__filters-container'>
             {/* // affichage des filtres sélectionnés */}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             {selectedGenreFilters.map(
               (filter: { id: string; name: string }) => (
                 <div

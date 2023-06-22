@@ -90,7 +90,7 @@ const BurgerMenu: React.FC<Props> = ({
 
   return (
     <div className='BurgerMenu'>
-      <div className='BurgerMenu__container'>
+      <nav className='BurgerMenu__container'>
         <div className='BurgerMenu__container__items'>
           {authContext?.isLoggedIn && (
             <>
@@ -100,25 +100,32 @@ const BurgerMenu: React.FC<Props> = ({
                 <div>{authContext?.userData.email}</div>
               </div>
               {/* Les boutons lorsque l'utilisateur est connecté */}
-              <button
-                className='BurgerMenu__container__items__button'
-                onClick={handleProfile}
-              >
-                Mon profil
-              </button>
-
-              <button
-                className='BurgerMenu__container__items__button'
-                onClick={handleDeleteProfile}
-              >
-                Supprimer compte
-              </button>
-              <button
-                className='BurgerMenu__container__items__button'
-                onClick={handleLogout}
-              >
-                Se déconnecter
-              </button>
+              <ul>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleProfile}
+                  >
+                    Mon profil
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleDeleteProfile}
+                  >
+                    Supprimer compte
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='BurgerMenu__container__items__button'
+                    onClick={handleLogout}
+                  >
+                    Se déconnecter
+                  </button>
+                </li>
+              </ul>
             </>
           )}
           {/* Les boutons lorsque l'utilisateur n'est pas connecté */}
@@ -153,7 +160,7 @@ const BurgerMenu: React.FC<Props> = ({
           )}
         </div>
         <Footer />
-      </div>
+      </nav>
     </div>
   );
   //* ================ FERMETURE COMPOSANT ================
