@@ -35,18 +35,25 @@ interface Circle {
 
 const SearchResults = () => {
   // ============ USESTATE ============
+  // pour stocker les données de l'URL, données issues de SearchBar
   const [query, setQuery] = useState('');
+  // pour stocker les données de l'API
   const [movies, setMovies] = useState<Movie[]>([]);
+  // pour gérer le défilement infini, on commence à la page 1
   const [page, setPage] = useState(1);
+  // pour gérer le défilement infini, on commence avec hasMore à true
   const [hasMore, setHasMore] = useState(true);
+  // pour stocker les données des cercles
   const [circles, setCircles] = useState<Circle[]>([]);
+  // pour stocker le nombre total de résultats
   const [totalResults, setTotalResults] = useState(0);
 
   // ============ UTILS ============
-
+  // pour gérer l'affichage du loader
   const moviesAreLoading = movies.length === 0; // true
   // Utilisation de la navigation
   const navigate = useNavigate();
+  // pour stocker la fin de URL de la page
   const queryString = window.location.search;
 
   // ============ FONCTION POUR INFINITE SCROLL ============
@@ -61,8 +68,11 @@ const SearchResults = () => {
         }`
       );
       const newMovies = await response.json();
+      // mise à jour du state movies
       setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
+      // mise à jour du state page
       setPage((prevPage) => prevPage + 1);
+      // mise à jour du state hasMore
       setHasMore(newMovies.results.length > 0);
     } catch (error) {
       console.error(error);
@@ -71,6 +81,7 @@ const SearchResults = () => {
 
   // ============ USEEFFECT POUR HANDLESUBMIT ============
 
+  // useEffect pour gérer l'envoi des données du formulaire au back
   useEffect(() => {
     const handleSubmit = async () => {
       try {
@@ -83,12 +94,17 @@ const SearchResults = () => {
           navigate('/noresult');
           return;
         }
+        // mise à jour du state movies
         setMovies(data.results);
+        // mise à jour du state page
         setPage(1);
+        // mise à jour du state hasMore
         setHasMore(true);
+        // mise à jour du state totalResults
         setTotalResults(data.total_results);
         const searchParams = new URLSearchParams(window.location.search);
         const typedName = searchParams.get('typedName');
+        // mise à jour du state query
         setQuery(typedName || '');
         console.log(typedName); // Affiche "ok" dans la console
       } catch (error) {
@@ -99,43 +115,31 @@ const SearchResults = () => {
     handleSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);
+  // ce useEffect s'exécute à chaque fois que queryString et donc que l'URL change
 
   // ============ USEEFFECT POUR DONNÉES ANIMATION ============
 
+  // useEffect pour gérer les données de l'animation circle
   useEffect(() => {
     const updatedCircles: Circle[] = movies.map((movie) => ({
       id: movie.id,
       fillValue: movie.vote_average * 10,
     }));
+    // on met à jour le state circles
     setCircles(updatedCircles);
   }, [movies]);
-
-  // console.log()
+  // ce useEffect s'exécute à chaque fois que movies (data reçu de l'API) change
 
   // ============ JSX ============
 
   return (
     <div className='searchresults-container'>
-      {/* <form className='form' onSubmit={handleSubmit}>
-        <label className='label' htmlFor='query'>
-          Nom du film
-        </label>
-        <input
-          className='input'
-          type='text'
-          name='query'
-          placeholder='Ex: Jurassic Park'
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button className='button' type='submit'>
-          Rechercher
-        </button>
-      </form> */}
+      {/* affichage conditionnel du loader */}
       {moviesAreLoading ? (
         <Loading />
       ) : (
         <div className='searchresults-container-cardlist'>
+          {/* composant infinite scroll de la bibliothèque react-infinite-scroll-component */}
           <InfiniteScroll
             dataLength={movies.length}
             next={loadMoreData}
@@ -148,6 +152,7 @@ const SearchResults = () => {
             // style={{ overflow: 'hidden', overflowY: 'auto' }}
           >
             <div className='searchresults-container-cardlist-queryresult'>
+              {/* affichage du nombre de résultats pour la recherche effectuée */}
               <div className='searchresults-container-cardlist-queryresult-number'>
                 {query}
               </div>
@@ -155,12 +160,15 @@ const SearchResults = () => {
             </div>
             {movies
               .filter((movie) => movie.poster_path)
+              // affichage des cercles
+              // vérification de la présence du cercle dans le state circles
               .map((movie) => {
                 const circle = circles.find((circle) => circle.id === movie.id);
                 if (!circle) {
                   return null;
                 }
                 return (
+                  // affichage des cartes
                   <MovieCard movie={movie} circle={circle} key={movie.id} />
                 );
               })}

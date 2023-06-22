@@ -186,6 +186,7 @@ export const Profile: React.FC = () => {
 
   // =========================== WATCHEDLIST ===========================
 
+  //useEffect pour récupérer les id des films vus
   useEffect(() => {
     // pour activer le loader
     load();
@@ -208,6 +209,7 @@ export const Profile: React.FC = () => {
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
+  //useEffect pour récupérer les titres des films vus
   useEffect(() => {
     const fetchMovieTitles = async () => {
       try {
@@ -237,7 +239,7 @@ export const Profile: React.FC = () => {
               // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
               uniqueMovies[movie.movie_id?.toString()] = movie;
             });
-
+            // on stocke les noms des films dans le state watchedMovies
             setWatchedMovies(uniqueMovies as WatchedMoviesObject);
           })
           .catch((error) => {
@@ -250,9 +252,11 @@ export const Profile: React.FC = () => {
 
     fetchMovieTitles();
   }, [watchedList]);
+  // on exécute le useEffect à chaque fois que watchedList (la liste des id) change
 
   // =========================== BOOKMARKED (COEUR) ===========================
 
+  //useEffect pour récupérer les id des films ajoutés en favoris
   useEffect(() => {
     const fetchMoviesBookmarked = async () => {
       try {
@@ -263,7 +267,7 @@ export const Profile: React.FC = () => {
             `https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`
           )
           .then(({ data }) => {
-            // Utiliser un objet pour stocker les films uniques
+            // Utiliser un objet pour stocker les id des films favoris
             const bookmarked: BookmarkedListObject = {};
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.forEach((element: any) => {
@@ -288,9 +292,11 @@ export const Profile: React.FC = () => {
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent]);
+  // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
 
+  // récupère les id des films à voir
   useEffect(() => {
     load();
 
@@ -311,6 +317,7 @@ export const Profile: React.FC = () => {
 
   // =========================== TOWATCHLISTMOVIES ===========================
 
+  // récupère les titres des films à voir
   useEffect(() => {
     const fetchMovieTitles = async () => {
       try {
@@ -344,6 +351,7 @@ export const Profile: React.FC = () => {
 
     fetchMovieTitles();
   }, [toWatchList]);
+  // s'exécute à chaque fois que toWatchList change
 
   //========== JSX ==========
 
@@ -370,16 +378,19 @@ export const Profile: React.FC = () => {
               </div>
             </div>
           </div>
+          {/* affichage conditionnel des boutons en fonction du device*/}
           {!mobileVersion && (
             <div className='Profile-container-buttons'>
               <button
                 className='Profile-container-buttons-button'
+                // va déconnecter l'utilisateur
                 onClick={handleLogout}
               >
                 Se déconnecter
               </button>
               <button
                 className='Profile-container-buttons-button'
+                // va supprimer le profil
                 onClick={handleDeleteProfile}
               >
                 Supprimer profil
@@ -391,7 +402,7 @@ export const Profile: React.FC = () => {
       {/* <div className="Profile-container__favoritefilters">
           <h3 className="Profile-container__favoritefilters__title">Filtres favoris </h3>
         </div> */}
-
+      {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
@@ -433,9 +444,7 @@ export const Profile: React.FC = () => {
           />
         </div>
       )}
-
       {/* BOUTONS */}
-
       {mobileVersion && (
         <div className='Profile-container__rollbuttons'>
           <div
@@ -456,6 +465,7 @@ export const Profile: React.FC = () => {
           </div>
         </div>
       )}
+      {/* affichage conditionnel du Footer en fonction du device */}
       {!mobileVersion && <Footer />}
     </div>
   );
