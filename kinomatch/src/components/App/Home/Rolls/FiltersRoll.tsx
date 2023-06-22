@@ -104,12 +104,15 @@ export const RollGenre = ({
         className={`Home-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
           }__filterRoll`}
         style={
-          selectedGenreFilters.length > 0 ||
-            selectedProviderFilters.length > 0 ||
-            selectedDecadeFilters.length > 0
-            ? { paddingBottom: "170px" }
-            : { paddingBottom: "120px" }
+          !mobileVersion
+            ? (selectedGenreFilters.length > 0 ||
+              selectedProviderFilters.length > 0 ||
+              selectedDecadeFilters.length > 0
+              ? { paddingBottom: "170px" }
+              : { paddingBottom: "120px" })
+            : { paddingBottom: "0px" }
         }
+
       >
         {/* // ================ JSX : ROLL GENRE ================ */}
         <div
@@ -159,7 +162,7 @@ export const RollGenre = ({
                         }`}
                         src={
                           selectedGenreFilters.find((item) => item.id.toString() === preselectedGenre.id.toString())
-                           ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png` : `images/moodlogosnopelloche/${preselectedGenre.id}.png`}
+                            ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png` : `images/moodlogosnopelloche/${preselectedGenre.id}.png`}
                       ></img>
                       {preselectedGenre.name}
                     </button>

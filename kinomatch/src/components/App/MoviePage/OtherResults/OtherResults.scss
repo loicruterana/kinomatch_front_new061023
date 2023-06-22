@@ -58,6 +58,7 @@
         background-size: contain;
         // background-repeat: no-repeat;
         width: 100%;
+        position: relative;
       }
 
       &---images {
@@ -68,6 +69,8 @@
         max-width: 220px;
         transition: transform 0.2s ease-in-out;
 
+
+
         &:hover {
           transform: scale(1.03);
           cursor: pointer;
@@ -76,11 +79,16 @@
       }
 
       &---movieTitle {
-        color: vars.$theme1-primary;
+        color: vars.$theme1-secondary;
         text-align: center;
         font-size: 1.1rem;
         font-weight: bold;
         padding: 0 0.2rem;
+        position: absolute;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
       }
     }
   }
