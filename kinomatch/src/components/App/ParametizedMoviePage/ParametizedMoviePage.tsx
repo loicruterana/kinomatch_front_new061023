@@ -5,12 +5,12 @@ import React from 'react';
 import axios from 'axios';
 
 // ================ IMPORT COMPOSANTS ================
-import ImageModal from './ImageModal/ImageModal';
-import DetailsModal from './DetailsModal/DetailsModal';
+import ImageModal from '../MoviePage/ImageModal/ImageModal';
+import DetailsModal from '../MoviePage/DetailsModal/DetailsModal';
 // import CommentPost from './CommentPost/CommentPost';
-import AddButton from './AddButtons/AddButtons';
-import Providers from './Providers/Providers';
-import OtherResults from './OtherResults/OtherResults';
+import AddButton from '../MoviePage/AddButtons/AddButtons';
+import Providers from '../MoviePage/Providers/Providers';
+// import OtherResults from '../MoviePage/OtherResults/OtherResults';
 import Footer from '../Footer/Footer';
 
 // ================ IMPORT CONTEXTS ================
@@ -63,7 +63,7 @@ interface Providers {
 }
 
 // Fonction MoviePage permettant d'afficher la page d'un film
-function MoviePage() {
+function ParametizedMoviePage() {
   const navigate = useNavigate();
 
   // ================= MODALE DETAILS ============================
@@ -147,9 +147,7 @@ function MoviePage() {
 
   // ================ USECONTEXT =================================
 
-  const { currentMovieId, setCurrentMovieId } = useContext(
-    CurrentMovieIdContext
-  );
+  const { currentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
@@ -194,18 +192,18 @@ function MoviePage() {
 
   // RECUPERATION DES RÉALISATEURS
 
-  const directingCrewMembers = credits?.crew?.filter(
+  const directingCrewMembers = credits.crew.filter(
     (person: { job: string }) => person.job === 'Director'
   );
-  const mappedDirectingCrewMembers = directingCrewMembers?.slice(0, 3);
+  const mappedDirectingCrewMembers = directingCrewMembers.slice(0, 3);
 
   // RÉCUPÉRATION DES ACTEURS
 
-  const actorCastMembers = credits?.cast?.filter(
+  const actorCastMembers = credits.cast.filter(
     (person: { known_for_department: string }) =>
       person.known_for_department === 'Acting'
   );
-  const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
+  const mappedActorCastMembers = actorCastMembers.slice(0, 3);
 
   // ==================== USEEFFECT ===============================
 
@@ -242,73 +240,6 @@ function MoviePage() {
 
       // Si la requête ne renvoie aucun résultat, on affiche la page d'accueil et on affiche une modale "aucun résultat"
       .then(({ data }) => {
-        //test
-        if (window.location.search.includes('filmID')) {
-          const filmID = window.location.search.split('=')[1];
-          console.log(filmID);
-          setCurrentMovieId(filmID);
-          console.log(typeof currentMovieId);
-          console.log(currentMovieId);
-
-          const searchParams = new URLSearchParams();
-          searchParams.append('movieID', currentMovieId);
-
-          // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
-          const requests = [
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-            ),
-          ];
-          console.log(
-            `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-          );
-          console.log(requests);
-          Promise.all(requests)
-            .then((responses) => {
-              const [detailResponse, creditsResponse, providerResponse] =
-                responses;
-
-              const movieData = detailResponse.data;
-              const creditsData = creditsResponse.data;
-              const providersData = providerResponse.data;
-
-              setMovie(movieData);
-              console.log(movieData);
-              console.log(movie);
-
-              setCredits(creditsData);
-              console.log(creditsData);
-              console.log(credits);
-              setProviders(providersData);
-              console.log(providersData);
-              // Réglez isLoading sur false pour indiquer que le chargement est terminé
-              console.log('fin de la requête');
-              setMovieArray(movieData);
-              console.log(movieArray);
-
-              // setIsLoading(false);
-            })
-            .catch((error) => {
-              // La fonction de rappel catch est appelée si l'une des requêtes a échoué
-              console.error(
-                "Une erreur s'est produite lors de la récupération des données :",
-                error
-              );
-              // setIsLoading(false);
-
-              // Gérer l'erreur ici en affichant un message d'erreur ou en effectuant d'autres actions nécessaires
-            });
-
-          // return;
-          console.log(movie);
-        }
-
         if (data.results.length === 0) {
           handleNoResult();
           navigate(`/`);
@@ -327,12 +258,7 @@ function MoviePage() {
         searchParams1.append('randomPage', chosenPage.toString());
 
         // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-        if (
-          !window.location.search.includes('filmID') &&
-          !window.location.search.includes('genreID') &&
-          !window.location.search.includes('providerID') &&
-          !window.location.search.includes('decade')
-        ) {
+        if (window.location.search === '') {
           return axios.get(
             `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
           );
@@ -357,15 +283,10 @@ function MoviePage() {
           const filteredResults = data.results.filter(
             (result: { id: string }) => result.id !== selectRandomID
           );
-          console.log('ici');
-          console.log(data);
-          console.log(window.location.search);
-          // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
-          if (movieArray.length === 0 && window.location.search === '') {
-            setMovieArray(filteredResults);
-            console.log(filteredResults);
 
-            console.log('on passe ici');
+          // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
+          if (movieArray.length === 0) {
+            setMovieArray(filteredResults);
 
             const searchParams = new URLSearchParams();
             searchParams.append('movieID', selectRandomID);
@@ -385,7 +306,7 @@ function MoviePage() {
             return Promise.all(requests);
 
             // Sinon on affiche le film sélectionné par le User parmi les autres résultats filtrés
-          } else if (window.location.search.includes('filmID')) {
+          } else {
             const searchParams = new URLSearchParams();
             searchParams.append('movieID', currentMovieId);
 
@@ -408,13 +329,9 @@ function MoviePage() {
 
       // Puis on met à jour les states avec les données récupérées
       .then((responses) => {
-        console.log('test');
-        console.log(movieArray);
-        console.log(responses);
-
         if (Array.isArray(responses)) {
           const [movieData, creditsData, providersData] = responses;
-          console.log(movieData, creditsData, providersData);
+
           // Si les données sont récupérées, on met à jour les states
           if (movieData.data && creditsData.data && providersData.data) {
             setMovie(movieData.data);
@@ -443,10 +360,8 @@ function MoviePage() {
     return <Loading />;
   }
 
-  console.log('putain', credits);
-
   return (
-    <article className='moviePage'>
+    <article className='parametizedMoviePage'>
       {/* Modale Image*/}
       {/* Si le state showImageModal est true, on affiche la modale ImageModal */}
       {showImageModal && (
@@ -478,7 +393,7 @@ function MoviePage() {
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'>
             {' '}
-            <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+            <h1 className='movieFound__essentiel-title'>{movie.title}HOHO</h1>
             {isLoggedIn && <AddButton movie={movie.id} />}
           </div>
           <div className='movieFound__essentiel-imageFrame'>
@@ -584,7 +499,7 @@ function MoviePage() {
 
             {/* Affichage des réalisateurs concernant le film affiché */}
             <ul className='movieDetails__description-directorsList'>
-              {mappedDirectingCrewMembers?.map(
+              {mappedDirectingCrewMembers.map(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (director: any, index: number) => (
                   <li
@@ -604,7 +519,7 @@ function MoviePage() {
             </ul>
             {/* Affichage des acteurs concernant le film affiché */}
             <ul className='movieDetails__description-actorsList'>
-              {mappedActorCastMembers?.map(
+              {mappedActorCastMembers.map(
                 (actor: { name: string; credit_id: string }, index: number) => (
                   <li
                     key={actor.credit_id}
@@ -623,7 +538,7 @@ function MoviePage() {
             </ul>
             <ul className='movieDetails__description-genresList'>
               {/* Affichage des filtres concernant le film affiché */}
-              {movie?.genres?.map(
+              {movie.genres.map(
                 (
                   genre: { id: Key | null | undefined; name: string },
                   index: number
@@ -742,4 +657,4 @@ function MoviePage() {
   );
 }
 
-export default MoviePage;
+export default ParametizedMoviePage;

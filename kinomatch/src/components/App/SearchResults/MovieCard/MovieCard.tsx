@@ -69,7 +69,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <div className='searchresults-container-cardlist-card'>
       <div className='searchresults-container-cardlist-card__imagecontainer'>
-        <Link to={`/parametizedmoviepage/filmID=${movie.id}`}>
+        <Link to={`/films?filmID=${movie.id}`}>
           <img
             className='searchresults-container-cardlist-card__imagecontainer__image'
             src={
@@ -86,9 +86,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
           <div className='searchresults-container-cardlist-card__infos__titlereleasecircle'>
             <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
               <h3 className='searchresults-container-cardlist-card__infos__title'>
-                <Link to={`/parametizedmoviepage/filmID=${movie.id}`}>
-                  {movie.title}
-                </Link>
+                <Link to={`/films?filmID=${movie.id}`}>{movie.title}</Link>
               </h3>
               <div className='searchresults-container-cardlist-card__infos__release'>
                 Date de sortie :{' '}

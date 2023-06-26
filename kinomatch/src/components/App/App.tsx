@@ -14,7 +14,7 @@ import Home from './Home/Home';
 // import Profile from './Profile/Profile';
 import SearchResults from './SearchResults/SearchResults';
 import PageNotFound from './PageNotFound/PageNotFound';
-
+import ParametizedMoviePage from './ParametizedMoviePage/ParametizedMoviePage';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -34,7 +34,6 @@ import NoResult from './NoResult/NoResult';
 //* ================ COMPOSANT ================
 
 function App() {
-
   return (
     <NoResultProvider>
       <CurrentMovieIdProvider>
@@ -45,14 +44,8 @@ function App() {
                 <LoadingProvider>
                   <Header />
                   <Routes>
-                    <Route
-                      path="/"
-                      element={<Home />}
-                    />
-                    <Route
-                      path="/films"
-                      element={<MoviePage />}
-                    />
+                    <Route path='/' element={<Home />} />
+                    <Route path='/films' element={<MoviePage />} />
                     {/* <Route
                       path="/signup"
                       element={<Signup />}
@@ -65,20 +58,13 @@ function App() {
                       path="/profile"
                       element={<Profile />}
                     /> */}
+                    <Route path='/noresult' element={<NoResult />} />
+                    <Route path='*' element={<PageNotFound />} />
+                    <Route path='/searchresults' element={<SearchResults />} />
                     <Route
-                      path="/noresult"
-                      element={<NoResult />}
+                      path='/films/:id'
+                      element={<ParametizedMoviePage />}
                     />
-                    <Route
-                      path="*"
-                      element={<PageNotFound />}
-                    />
-                    <Route
-                      path="/searchresults"
-                      element={<SearchResults />}
-                    />
-
-
                   </Routes>
                 </LoadingProvider>
               </AuthProvider>
@@ -87,10 +73,8 @@ function App() {
         </SelectedDecadeFiltersProvider>
       </CurrentMovieIdProvider>
     </NoResultProvider>
-
-  )
-//* ================ FERMETURE COMPOSANT ================
-
+  );
+  //* ================ FERMETURE COMPOSANT ================
 }
 
 export default App;

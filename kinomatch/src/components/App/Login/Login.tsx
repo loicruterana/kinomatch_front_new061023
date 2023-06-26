@@ -130,9 +130,9 @@ export const Login = () => {
         />         */}
 
         <Link key='signup' to='/signup'>
-          <aside className='new-account'>
+          <span className='new-account'>
             Vous n'avez pas encore de compte ?
-          </aside>
+          </span>
         </Link>
 
         <button type='submit'>Connexion</button>

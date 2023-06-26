@@ -104,7 +104,7 @@ const Signup = () => {
 
   return (
     <div className='Signup-container'>
-      z{/* formulaire d'inscription */}
+      {/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
@@ -140,7 +140,7 @@ const Signup = () => {
         />
 
         <Link key='login' to='/login'>
-          <aside className='new-account'>Vous avez déjà un compte ?</aside>
+          <span className='new-account'>Vous avez déjà un compte ?</span>
         </Link>
 
         <button type='submit'>Créer compte</button>
