@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './Providers.scss';
 
 // Fonction Providers permettant d'afficher les plateformes de visionnage

@@ -234,207 +234,192 @@ function MoviePage() {
   useEffect(() => {
     setIsLoading(true);
 
-    // Requête axios permettant de récupérer les données des films filtrés
-    axios
-      .get(
-        `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
-      )
+    if (window.location.search.includes('filmID')) {
+      // Traiter le cas spécifique ici
+      const filmID = window.location.search.split('=')[1];
+      console.log(filmID);
+      setCurrentMovieId(filmID);
+      console.log(typeof currentMovieId);
+      console.log(currentMovieId);
 
-      // Si la requête ne renvoie aucun résultat, on affiche la page d'accueil et on affiche une modale "aucun résultat"
-      .then(({ data }) => {
-        //test
-        if (window.location.search.includes('filmID')) {
-          const filmID = window.location.search.split('=')[1];
-          console.log(filmID);
-          setCurrentMovieId(filmID);
-          console.log(typeof currentMovieId);
-          console.log(currentMovieId);
+      const searchParams = new URLSearchParams();
+      searchParams.append('movieID', currentMovieId);
+      if (!currentMovieId) {
+        return; // Sortir du useEffect si currentMovieId n'est pas défini
+      }
+      // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
+      const requests = [
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+        ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+        ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+        ),
+      ];
 
-          const searchParams = new URLSearchParams();
-          searchParams.append('movieID', currentMovieId);
+      Promise.all(requests)
+        .then((responses) => {
+          const [detailResponse, creditsResponse, providerResponse] = responses;
 
-          // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
-          const requests = [
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-            ),
-            axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-            ),
-          ];
-          console.log(
-            `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-          );
-          console.log(requests);
-          Promise.all(requests)
-            .then((responses) => {
-              const [detailResponse, creditsResponse, providerResponse] =
-                responses;
+          const movieData = detailResponse.data;
+          const creditsData = creditsResponse.data;
+          const providersData = providerResponse.data;
 
-              const movieData = detailResponse.data;
-              const creditsData = creditsResponse.data;
-              const providersData = providerResponse.data;
-
-              setMovie(movieData);
-              console.log(movieData);
-              console.log(movie);
-
-              setCredits(creditsData);
-              console.log(creditsData);
-              console.log(credits);
-              setProviders(providersData);
-              console.log(providersData);
-              // Réglez isLoading sur false pour indiquer que le chargement est terminé
-              console.log('fin de la requête');
-              setMovieArray(movieData);
-              console.log(movieArray);
-
-              // setIsLoading(false);
-            })
-            .catch((error) => {
-              // La fonction de rappel catch est appelée si l'une des requêtes a échoué
-              console.error(
-                "Une erreur s'est produite lors de la récupération des données :",
-                error
-              );
-              // setIsLoading(false);
-
-              // Gérer l'erreur ici en affichant un message d'erreur ou en effectuant d'autres actions nécessaires
-            });
-
-          // return;
+          setMovie(movieData);
+          console.log(movieData);
           console.log(movie);
-        }
 
-        if (data.results.length === 0) {
-          handleNoResult();
-          navigate(`/`);
-          return;
-        }
+          setCredits(creditsData);
+          console.log(creditsData);
+          console.log(credits);
+          setProviders(providersData);
+          console.log(providersData);
+          console.log('fin de la requête');
+          setMovieArray(movieData);
+          console.log(movieArray);
 
-        // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
-        const numberOfPages = data.total_pages;
-        let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
-        if (chosenPage > 500) {
-          chosenPage = Math.floor(Math.random() * 500) + 1;
-        }
+          setCircle({
+            id: movieData.id,
+            fillValue: movieData.vote_average * 10,
+          });
+        })
+        .catch((error) => {
+          // Gérer l'erreur ici
+          console.error(
+            "Une erreur s'est produite lors de la récupération des données :",
+            error
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
 
-        // On récupère les données de la page sélectionnée
-        const searchParams1 = new URLSearchParams();
-        searchParams1.append('randomPage', chosenPage.toString());
+      // Sortir du useEffect pour éviter l'exécution du reste du code
+      return;
+    } else if (!window.location.search.includes('filmID')) {
+      console.log('normal');
+      // Requête axios permettant de récupérer les données des films filtrés
+      axios
+        .get(
+          `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
+        )
+        .then(({ data }) => {
+          // Le reste du code pour les autres cas
 
-        // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-        if (
-          !window.location.search.includes('filmID') &&
-          !window.location.search.includes('genreID') &&
-          !window.location.search.includes('providerID') &&
-          !window.location.search.includes('decade')
-        ) {
+          if (data.results.length === 0) {
+            handleNoResult();
+            navigate(`/`);
+            return;
+          }
+
+          // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
+          const numberOfPages = data.total_pages;
+          let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
+          if (chosenPage > 500) {
+            chosenPage = Math.floor(Math.random() * 500) + 1;
+          }
+
+          console.log(chosenPage);
+
+          // On récupère les données de la page sélectionnée
+          const searchParams1 = new URLSearchParams();
+          searchParams1.append('randomPage', chosenPage.toString());
+
+          // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+          if (window.location.search === '') {
+            return axios.get(
+              `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
+            );
+          }
           return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
+            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
+              window.location.search
+            }&${searchParams1.toString()}`
           );
-        }
-        return axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
-            window.location.search
-          }&${searchParams1.toString()}`
-        );
-      })
+        })
+        .then((response) => {
+          const data = response?.data;
+          console.log('data');
 
-      // Si la promesse est résolue, on récupère les données de la page sélectionnée
-      .then((response) => {
-        const data = response?.data;
-
-        // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
-        if (data) {
-          const selectRandomID =
-            data.results[Math.floor(Math.random() * data.results.length)].id;
-
-          // On évite d'afficher le même film que celui qui est déjà affiché
-          const filteredResults = data.results.filter(
-            (result: { id: string }) => result.id !== selectRandomID
-          );
-          console.log('ici');
-          console.log(data);
-          console.log(window.location.search);
-          // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
-          if (movieArray.length === 0 && window.location.search === '') {
-            setMovieArray(filteredResults);
+          // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
+          if (data) {
+            const selectRandomID =
+              data.results[Math.floor(Math.random() * data.results.length)].id;
+            console.log(selectRandomID);
+            // On évite d'afficher le même film que celui qui est déjà affiché
+            const filteredResults = data.results.filter(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (result: { id: any }) => result.id !== selectRandomID
+            );
             console.log(filteredResults);
 
-            console.log('on passe ici');
+            // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
+            if (movieArray.length === 0) {
+              setMovieArray(filteredResults);
+              console.log(filteredResults);
 
-            const searchParams = new URLSearchParams();
-            searchParams.append('movieID', selectRandomID);
+              console.log('on passe ici');
 
-            // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
-            const requests = [
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-              ),
-            ];
-            return Promise.all(requests);
+              const searchParams = new URLSearchParams();
+              searchParams.append('movieID', selectRandomID);
 
-            // Sinon on affiche le film sélectionné par le User parmi les autres résultats filtrés
-          } else if (window.location.search.includes('filmID')) {
-            const searchParams = new URLSearchParams();
-            searchParams.append('movieID', currentMovieId);
+              // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
+              const requests = [
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+                ),
+              ];
+              return Promise.all(requests);
+            } else if (window.location.search.includes('filmID')) {
+              const searchParams = new URLSearchParams();
+              searchParams.append('movieID', currentMovieId);
 
-            // On récupère les données du film sélectionné par le User sur les routes "detail", "credits" et "providers"
-            const requests = [
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-              ),
-            ];
-            return Promise.all(requests);
+              // On récupère les données du film sélectionné par le User sur les routes "detail", "credits" et "providers"
+              const requests = [
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+                ),
+              ];
+              return Promise.all(requests);
+            }
           }
-        }
-      })
-
-      // Puis on met à jour les states avec les données récupérées
-      .then((responses) => {
-        console.log('test');
-        console.log(movieArray);
-        console.log(responses);
-
-        if (Array.isArray(responses)) {
-          const [movieData, creditsData, providersData] = responses;
-          console.log(movieData, creditsData, providersData);
-          // Si les données sont récupérées, on met à jour les states
-          if (movieData.data && creditsData.data && providersData.data) {
-            setMovie(movieData.data);
-            setCredits(creditsData.data);
-            setProviders(providersData.data);
-
-            // On met à jour le state du cercle de notation afin d'afficher la note du film
-            setCircle({
-              id: movieData.data.id,
-              fillValue: movieData.data.vote_average * 10,
-            });
+        })
+        .then((responses) => {
+          if (Array.isArray(responses)) {
+            const [movieData, creditsData, providersData] = responses;
+            if (movieData.data && creditsData.data && providersData.data) {
+              setMovie(movieData.data);
+              setCredits(creditsData.data);
+              setProviders(providersData.data);
+              setCircle({
+                id: movieData.data.id,
+                fillValue: movieData.data.vote_average * 10,
+              });
+            }
           }
-        }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    // On fait en sorte que le useEffect ne se lance que si le state currentMovieId change
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
 
@@ -718,7 +703,7 @@ function MoviePage() {
         </section>
         {/* Si la version desktop est affichée, on affiche le composant "OtherResults". 
         Si c'est la version mobile et que la modal "showOtherResults" est activée alors on affiche le composant "OtherResults" */}
-        {/* {desktopVersion ? (
+        {desktopVersion && !window.location.search.includes('filmID') ? (
           <OtherResults
             movieArray={movieArray}
             setMovieArray={setMovieArray}
@@ -734,7 +719,7 @@ function MoviePage() {
               setShowOtherResults={setShowOtherResults}
             />
           )
-        )} */}
+        )}
       </section>
       {/* Si la version desktop est affichée, on affiche le composant "Footer" sinon on en l'affiche pas */}
       {desktopVersion && <Footer />}

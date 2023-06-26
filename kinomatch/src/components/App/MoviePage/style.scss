@@ -1,8 +1,8 @@
-@use '../../../styles/vars';
+@use './../../../styles/vars';
 
 //* STYLES COMMUNS AUX VERSIONS =================
 
-.parametizedMoviePage {
+.moviePage {
   color: vars.$theme1-secondary;
   width: 100%;
   background-color: vars.$theme1-primary;
