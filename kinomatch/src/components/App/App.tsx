@@ -14,7 +14,6 @@ import Home from './Home/Home';
 // import Profile from './Profile/Profile';
 import SearchResults from './SearchResults/SearchResults';
 import PageNotFound from './PageNotFound/PageNotFound';
-import ParametizedMoviePage from './ParametizedMoviePage/ParametizedMoviePage';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -61,10 +60,6 @@ function App() {
                     <Route path='/noresult' element={<NoResult />} />
                     <Route path='*' element={<PageNotFound />} />
                     <Route path='/searchresults' element={<SearchResults />} />
-                    <Route
-                      path='/films/:id'
-                      element={<ParametizedMoviePage />}
-                    />
                   </Routes>
                 </LoadingProvider>
               </AuthProvider>

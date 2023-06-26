@@ -31,8 +31,8 @@ function Providers(providers: {
       <section className='movieFound__essentiel-disponibility'>
         <div className='movieFound__essentiel-flatrate'>
           {/* Si le film est disponible sur une plateforme de streaming alors affiche le titre "Plateforme" */}
-          {providers?.providers?.results?.FR &&
-            providers?.providers?.results?.FR?.flatrate && (
+          {providers.providers.results.FR &&
+            providers.providers.results.FR.flatrate && (
               <h3 className='movieFound__essentiel-flatrate--title'>
                 Plateforme
               </h3>
