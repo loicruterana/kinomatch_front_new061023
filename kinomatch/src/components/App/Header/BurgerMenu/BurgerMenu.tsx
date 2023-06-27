@@ -55,10 +55,10 @@ const BurgerMenu: React.FC<Props> = ({
     setShowBurgerMenu(!showBurgerMenu);
   };
 
-  // pour fermer le menu burger
-  function handleCloseClick() {
-    setShowBurgerMenu(false);
-  }
+  // // pour fermer le menu burger
+  // function handleCloseClick() {
+  //   setShowBurgerMenu(false);
+  // }
 
   // pour supprimer le profil
   const handleDeleteProfile = async (): Promise<void> => {
