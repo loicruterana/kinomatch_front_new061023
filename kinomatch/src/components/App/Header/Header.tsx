@@ -84,35 +84,30 @@ function Header() {
   // ================ JSX ================
   return (
     <>
-      <header className='Header'>
+      <div className='Header'>
+        <Link
+          key='home'
+          to='/'
+          className='Header-logo'
+          onClick={handleCloseClick}
+        >
+          <img
+            className='Header-logo__image'
+            src='./images/kino_match_logo.png'
+            alt='logo'
+          />
+        </Link>
         {/* Logo du Header, logo différent on est en version mobile */}
         {location.pathname === '/films' && !desktopVersion ? (
           <Link
             key='refresh'
             to='#'
-            className='Header-logo'
+            className='Header-logo--refresh'
             onClick={movieArrayReload}
           >
-            <img
-              className='Header-logo__image--refresh'
-              src='./images/RelancerLogo.png'
-              alt='logo'
-            />
+            <i className='fa-solid fa-arrows-rotate'></i>
           </Link>
-        ) : (
-          <Link
-            key='home'
-            to='/'
-            className='Header-logo'
-            onClick={handleCloseClick}
-          >
-            <img
-              className='Header-logo__image'
-              src='./images/kino_match_logo.png'
-              alt='logo'
-            />
-          </Link>
-        )}
+        ) : null}
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
         {location.pathname === '/films' && desktopVersion && (
@@ -166,7 +161,7 @@ function Header() {
           <div className='line-2'></div>
           <div className='line-3'></div>
         </div>
-      </header>
+      </div>
       {/* Pour activer la modale selon le state showBurgerMenu */}
       {showBurgerMenu && (
         <BurgerMenu

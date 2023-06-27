@@ -93,13 +93,13 @@ const BurgerMenu: React.FC<Props> = ({
       <div className='BurgerMenu'>
         <nav className='BurgerMenu__container'>
           <div className='BurgerMenu__container__items'>
-            <li className='BurgerMenu__container__button--home'>
+            {/* <li className='BurgerMenu__container__button--home'>
               <Link key='home' to='/' onClick={handleCloseClick}>
                 <button className='BurgerMenu__container__button'>
                   Accueil
                 </button>
               </Link>
-            </li>
+            </li> */}
             {authContext?.isLoggedIn && (
               <>
                 {/* Nom de l'utilisateur */}

@@ -147,7 +147,7 @@ function MoviePage() {
 
   // ================ USECONTEXT =================================
 
-  const { currentMovieId, setCurrentMovieId } = useContext(
+  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(
     CurrentMovieIdContext
   );
   const { isLoggedIn } = useContext(AuthContext);
@@ -244,7 +244,7 @@ function MoviePage() {
 
       const searchParams = new URLSearchParams();
       searchParams.append('movieID', currentMovieId);
-      if (!currentMovieId) {
+      if (currentMovieId !== filmID) {
         return; // Sortir du useEffect si currentMovieId n'est pas défini
       }
       // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
@@ -334,6 +334,7 @@ function MoviePage() {
               `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
             );
           }
+          // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
           return axios.get(
             `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
               window.location.search
@@ -379,7 +380,7 @@ function MoviePage() {
                 ),
               ];
               return Promise.all(requests);
-            } else if (window.location.search.includes('filmID')) {
+            } else {
               const searchParams = new URLSearchParams();
               searchParams.append('movieID', currentMovieId);
 
@@ -462,9 +463,8 @@ function MoviePage() {
         <section className='movieFound__essentiel'>
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'>
-            {' '}
-            <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
-            {isLoggedIn && <AddButton movie={movie.id} />}
+            {/* <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+            {isLoggedIn && <AddButton movie={movie.id} />} */}
           </div>
           <div className='movieFound__essentiel-imageFrame'>
             {/* Si le film n'a pas d'image, on affiche une image par défaut sinon on affiche l'image récupérée*/}
@@ -551,7 +551,8 @@ function MoviePage() {
               </li>
             </ul>
           </div>
-
+          <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+          {isLoggedIn && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
             {/* Affichage de la tag line */}
             <blockquote className='movieDetails__description-blockquote'>
