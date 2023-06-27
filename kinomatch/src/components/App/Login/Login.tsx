@@ -100,7 +100,7 @@ export const Login = () => {
   };
   // ================ JSX ================
   return (
-    <div className='Login-container'>
+    <main className='Login-container'>
       {/* formulaire de connexion */}
       <form className='Login-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
@@ -130,16 +130,16 @@ export const Login = () => {
         />         */}
 
         <Link key='signup' to='/signup'>
-          <aside className='new-account'>
+          <span className='new-account'>
             Vous n'avez pas encore de compte ?
-          </aside>
+          </span>
         </Link>
 
         <button type='submit'>Connexion</button>
         <p className='Login-container__message'>{message}</p>
       </form>
       {userData.email && <Connected />}
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

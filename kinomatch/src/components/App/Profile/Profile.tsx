@@ -356,8 +356,8 @@ export const Profile: React.FC = () => {
   //========== JSX ==========
 
   return (
-    <div className='Profile-container'>
-      <div className='Profile-container__personnal'>
+    <main className='Profile-container'>
+      <section className='Profile-container__personnal'>
         <div className='Profile-container__personnal__infos'>
           {/* <h2 className='Profile-container__personnal__infos__title'>Profil</h2> */}
           <div className='Profile-container__personnal__infos__pictureemailpassword'>
@@ -398,7 +398,7 @@ export const Profile: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </section>
       {/* <div className="Profile-container__favoritefilters">
           <h3 className="Profile-container__favoritefilters__title">Filtres favoris </h3>
         </div> */}
@@ -406,7 +406,7 @@ export const Profile: React.FC = () => {
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
-        <div
+        <section
           className={`Profile-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }`}
@@ -442,7 +442,7 @@ export const Profile: React.FC = () => {
             handleRemoveBookmarked={handleRemoveBookmarked}
             handleAddBookmarked={handleAddBookmarked}
           />
-        </div>
+        </section>
       )}
       {/* BOUTONS */}
       {mobileVersion && (
@@ -467,7 +467,7 @@ export const Profile: React.FC = () => {
       )}
       {/* affichage conditionnel du Footer en fonction du device */}
       {!mobileVersion && <Footer />}
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

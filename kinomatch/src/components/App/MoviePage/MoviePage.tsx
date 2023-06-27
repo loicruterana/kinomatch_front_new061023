@@ -62,15 +62,11 @@ interface Providers {
   };
 }
 
-
-
-// Fonction MoviePage permettant d'afficher la page d'un film 
+// Fonction MoviePage permettant d'afficher la page d'un film
 function MoviePage() {
-
   const navigate = useNavigate();
 
-
-  // ================= MODALE DETAILS ============================ 
+  // ================= MODALE DETAILS ============================
 
   // Fonction permettant de manipuler la modale "showDetailsModal". Au click ==> passe de true à false et inversement
   const handleDetailsModal = () => {
@@ -87,8 +83,7 @@ function MoviePage() {
     setShowOtherResults(!showOtherResults);
   };
 
-
-  // ================ USESTATES ================================= 
+  // ================ USESTATES =================================
 
   // UseState qu définit l'id et le "fillValue" du film
   const [circle, setCircle] = useState<{ id: number; fillValue: number }>({
@@ -96,10 +91,10 @@ function MoviePage() {
     fillValue: 0,
   });
 
-  // UseState chargement de page 
+  // UseState chargement de page
   const [isLoading, setIsLoading] = useState(true);
 
-  // UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand 
+  // UseState qui récupère un tableau de films filtrés sans l'id du film affiché en grand
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [movieArray, setMovieArray] = useState<any[]>([]);
 
@@ -129,14 +124,12 @@ function MoviePage() {
     release_date: '',
   });
 
-
   // UseState route "credits"
   const [credits, setCredits] = useState<Credits>({
     cast: [],
     crew: [],
     id: 0,
   });
-
 
   // UseState route "providers"
   const [providers, setProviders] = useState<Providers>({
@@ -152,16 +145,18 @@ function MoviePage() {
     },
   });
 
-
   // ================ USECONTEXT =================================
 
-  const { currentMovieId } = useContext(CurrentMovieIdContext);
+  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(
+    CurrentMovieIdContext
+  );
   const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
+  const { selectedProviderFilters } = useContext(
+    SelectedProviderFiltersContext
+  );
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
-
 
   // ==================== USESPRING ===============================
 
@@ -185,7 +180,6 @@ function MoviePage() {
     }
   }
 
-
   // CONVERSION DATE
 
   function formatDate(dateString: string | number | Date) {
@@ -193,31 +187,29 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
-      }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${
+      month < 10 ? '0' + month : month
+    }/${year}`;
   }
-
 
   // RECUPERATION DES RÉALISATEURS
 
-  const directingCrewMembers = credits.crew.filter(
+  const directingCrewMembers = credits?.crew?.filter(
     (person: { job: string }) => person.job === 'Director'
   );
-  const mappedDirectingCrewMembers = directingCrewMembers.slice(0, 3);
-
+  const mappedDirectingCrewMembers = directingCrewMembers?.slice(0, 3);
 
   // RÉCUPÉRATION DES ACTEURS
 
-  const actorCastMembers = credits.cast.filter(
+  const actorCastMembers = credits?.cast?.filter(
     (person: { known_for_department: string }) =>
       person.known_for_department === 'Acting'
   );
-  const mappedActorCastMembers = actorCastMembers.slice(0, 3);
-
+  const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
 
   // ==================== USEEFFECT ===============================
 
-  // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre 
+  // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 900) {
@@ -238,129 +230,197 @@ function MoviePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   // UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher
   useEffect(() => {
     setIsLoading(true);
 
-    // Requête axios permettant de récupérer les données des films filtrés
-    axios
-      .get(
-        `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
-      )
+    if (window.location.search.includes('filmID')) {
+      // Traiter le cas spécifique ici
+      const filmID = window.location.search.split('=')[1];
+      console.log(filmID);
+      setCurrentMovieId(filmID);
+      console.log(typeof currentMovieId);
+      console.log(currentMovieId);
 
-      // Si la requête ne renvoie aucun résultat, on affiche la page d'accueil et on affiche une modale "aucun résultat"
-      .then(({ data }) => {
-        if (data.results.length === 0) {
-          handleNoResult();
-          navigate(`/`);
-          return;
-        }
+      const searchParams = new URLSearchParams();
+      searchParams.append('movieID', currentMovieId);
+      if (currentMovieId !== filmID) {
+        return; // Sortir du useEffect si currentMovieId n'est pas défini
+      }
+      // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
+      const requests = [
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+        ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+        ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+        ),
+      ];
 
-        // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
-        const numberOfPages = data.total_pages;
-        let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
-        if (chosenPage > 500) {
-          chosenPage = Math.floor(Math.random() * 500) + 1;
-        }
+      Promise.all(requests)
+        .then((responses) => {
+          const [detailResponse, creditsResponse, providerResponse] = responses;
 
-        // On récupère les données de la page sélectionnée
-        const searchParams1 = new URLSearchParams();
-        searchParams1.append('randomPage', chosenPage.toString());
+          const movieData = detailResponse.data;
+          const creditsData = creditsResponse.data;
+          const providersData = providerResponse.data;
 
-        // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-        if (window.location.search === '') {
-          return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
+          setMovie(movieData);
+          console.log(movieData);
+          console.log(movie);
+
+          setCredits(creditsData);
+          console.log(creditsData);
+          console.log(credits);
+          setProviders(providersData);
+          console.log(providersData);
+          console.log('fin de la requête');
+          setMovieArray(movieData);
+          console.log(movieArray);
+
+          setCircle({
+            id: movieData.id,
+            fillValue: movieData.vote_average * 10,
+          });
+        })
+        .catch((error) => {
+          // Gérer l'erreur ici
+          console.error(
+            "Une erreur s'est produite lors de la récupération des données :",
+            error
           );
-        }
-        return axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&${searchParams1.toString()}`
-        );
-      })
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
 
-      // Si la promesse est résolue, on récupère les données de la page sélectionnée
-      .then((response) => {
-        const data = response?.data;
+      // Sortir du useEffect pour éviter l'exécution du reste du code
+      return;
+    } else if (!window.location.search.includes('filmID')) {
+      console.log('normal');
+      // Requête axios permettant de récupérer les données des films filtrés
+      axios
+        .get(
+          `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
+        )
+        .then(({ data }) => {
+          // Le reste du code pour les autres cas
 
-        // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
-        if (data) {
-          const selectRandomID =
-            data.results[Math.floor(Math.random() * data.results.length)].id;
-
-          // On évite d'afficher le même film que celui qui est déjà affiché
-          const filteredResults = data.results.filter(
-            (result: { id: string }) => result.id !== selectRandomID);
-
-          // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
-          if (movieArray.length === 0) {
-            setMovieArray(filteredResults);
-
-            const searchParams = new URLSearchParams();
-            searchParams.append('movieID', selectRandomID);
-
-            // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
-            const requests = [
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-              ),
-            ];
-            return Promise.all(requests);
-
-            // Sinon on affiche le film sélectionné par le User parmi les autres résultats filtrés
-          } else {
-            const searchParams = new URLSearchParams();
-            searchParams.append('movieID', currentMovieId);
-
-            // On récupère les données du film sélectionné par le User sur les routes "detail", "credits" et "providers"
-            const requests = [
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-              ),
-            ];
-            return Promise.all(requests);
+          if (data.results.length === 0) {
+            handleNoResult();
+            navigate(`/`);
+            return;
           }
-        }
-      })
 
-      // Puis on met à jour les states avec les données récupérées
-      .then((responses) => {
-        if (Array.isArray(responses)) {
-          const [movieData, creditsData, providersData] = responses;
-
-          // Si les données sont récupérées, on met à jour les states
-          if (
-            movieData.data &&
-            creditsData.data &&
-            providersData.data
-          ) {
-            setMovie(movieData.data);
-            setCredits(creditsData.data);
-            setProviders(providersData.data);
-
-            // On met à jour le state du cercle de notation afin d'afficher la note du film
-            setCircle({ id: movieData.data.id, fillValue: movieData.data.vote_average * 10 })
+          // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
+          const numberOfPages = data.total_pages;
+          let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
+          if (chosenPage > 500) {
+            chosenPage = Math.floor(Math.random() * 500) + 1;
           }
-        }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setIsLoading(false);
-      });
 
-    // On fait en sorte que le useEffect ne se lance que si le state currentMovieId change
+          console.log(chosenPage);
+
+          // On récupère les données de la page sélectionnée
+          const searchParams1 = new URLSearchParams();
+          searchParams1.append('randomPage', chosenPage.toString());
+
+          // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+          if (window.location.search === '') {
+            return axios.get(
+              `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
+            );
+          }
+          // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
+          return axios.get(
+            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
+              window.location.search
+            }&${searchParams1.toString()}`
+          );
+        })
+        .then((response) => {
+          const data = response?.data;
+          console.log('data');
+
+          // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
+          if (data) {
+            const selectRandomID =
+              data.results[Math.floor(Math.random() * data.results.length)].id;
+            console.log(selectRandomID);
+            // On évite d'afficher le même film que celui qui est déjà affiché
+            const filteredResults = data.results.filter(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (result: { id: any }) => result.id !== selectRandomID
+            );
+            console.log(filteredResults);
+
+            // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
+            if (movieArray.length === 0) {
+              setMovieArray(filteredResults);
+              console.log(filteredResults);
+
+              console.log('on passe ici');
+
+              const searchParams = new URLSearchParams();
+              searchParams.append('movieID', selectRandomID);
+
+              // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
+              const requests = [
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+                ),
+              ];
+              return Promise.all(requests);
+            } else {
+              const searchParams = new URLSearchParams();
+              searchParams.append('movieID', currentMovieId);
+
+              // On récupère les données du film sélectionné par le User sur les routes "detail", "credits" et "providers"
+              const requests = [
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+                ),
+                axios.get(
+                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+                ),
+              ];
+              return Promise.all(requests);
+            }
+          }
+        })
+        .then((responses) => {
+          if (Array.isArray(responses)) {
+            const [movieData, creditsData, providersData] = responses;
+            if (movieData.data && creditsData.data && providersData.data) {
+              setMovie(movieData.data);
+              setCredits(creditsData.data);
+              setProviders(providersData.data);
+              setCircle({
+                id: movieData.data.id,
+                fillValue: movieData.data.vote_average * 10,
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
 
@@ -369,11 +429,10 @@ function MoviePage() {
     return <Loading />;
   }
 
-  
+  console.log('putain', credits);
 
   return (
     <article className='moviePage'>
-
       {/* Modale Image*/}
       {/* Si le state showImageModal est true, on affiche la modale ImageModal */}
       {showImageModal && (
@@ -404,9 +463,8 @@ function MoviePage() {
         <section className='movieFound__essentiel'>
           {/* Div contenant le titre et les icons */}
           <div className='movieFound__essentiel-head'>
-            {' '}
-            <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
-            {isLoggedIn && <AddButton movie={movie.id} />}
+            {/* <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+            {isLoggedIn && <AddButton movie={movie.id} />} */}
           </div>
           <div className='movieFound__essentiel-imageFrame'>
             {/* Si le film n'a pas d'image, on affiche une image par défaut sinon on affiche l'image récupérée*/}
@@ -428,10 +486,11 @@ function MoviePage() {
               <div className='circle-big'>
                 <div className='text'>
                   {/* Si la note est un nombre entier, on affiche le nombre sinon on affiche le nombre avec une décimale */}
-                  {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
+                  {Math.floor(movie.vote_average * 10) ===
+                  movie.vote_average * 10
                     ? movie.vote_average * 10
-                    : (movie.vote_average * 10).toFixed(1)}%
-                  <div className='small'>{movie.vote_count} votes </div>
+                    : (movie.vote_average * 10).toFixed(1)}
+                  %<div className='small'>{movie.vote_count} votes </div>
                 </div>
                 {/* On affiche le cercle de notation */}
                 <svg>
@@ -450,7 +509,6 @@ function MoviePage() {
 
           {/* On affiche le composant Providers qui contient les plateformes de streaming */}
           <Providers providers={providers} />
-
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
@@ -493,7 +551,8 @@ function MoviePage() {
               </li>
             </ul>
           </div>
-
+          <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+          {isLoggedIn && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
             {/* Affichage de la tag line */}
             <blockquote className='movieDetails__description-blockquote'>
@@ -511,7 +570,7 @@ function MoviePage() {
 
             {/* Affichage des réalisateurs concernant le film affiché */}
             <ul className='movieDetails__description-directorsList'>
-              {mappedDirectingCrewMembers.map(
+              {mappedDirectingCrewMembers?.map(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (director: any, index: number) => (
                   <li
@@ -531,23 +590,26 @@ function MoviePage() {
             </ul>
             {/* Affichage des acteurs concernant le film affiché */}
             <ul className='movieDetails__description-actorsList'>
-              {mappedActorCastMembers.map((actor: { name: string; credit_id: string }, index: number) => (
-                <li
-                  key={actor.credit_id}
-                  className='movieDetails__description-actorsList--actors'
-                >
-                  {/* Si l'index est égal à 0, on affiche "Avec" sinon on affiche rien */}
-                  {/* Si l'index est différent de 0, on affiche une virgule sinon rien */}
-                  {/* On affiche le nom de l'acteur */}
-                  {/* Si l'index est égal à la longueur du tableau des acteurs, on affiche "..." sinon on affiche rien */}
-                  {index === 0 ? 'Avec ' : ''} {index !== 0 && ','} {actor.name}
-                  {index === mappedActorCastMembers.length - 1 && '...'}
-                </li>
-              ))}
+              {mappedActorCastMembers?.map(
+                (actor: { name: string; credit_id: string }, index: number) => (
+                  <li
+                    key={actor.credit_id}
+                    className='movieDetails__description-actorsList--actors'
+                  >
+                    {/* Si l'index est égal à 0, on affiche "Avec" sinon on affiche rien */}
+                    {/* Si l'index est différent de 0, on affiche une virgule sinon rien */}
+                    {/* On affiche le nom de l'acteur */}
+                    {/* Si l'index est égal à la longueur du tableau des acteurs, on affiche "..." sinon on affiche rien */}
+                    {index === 0 ? 'Avec ' : ''} {index !== 0 && ','}{' '}
+                    {actor.name}
+                    {index === mappedActorCastMembers.length - 1 && '...'}
+                  </li>
+                )
+              )}
             </ul>
             <ul className='movieDetails__description-genresList'>
               {/* Affichage des filtres concernant le film affiché */}
-              {movie.genres.map(
+              {movie?.genres?.map(
                 (
                   genre: { id: Key | null | undefined; name: string },
                   index: number
@@ -598,7 +660,10 @@ function MoviePage() {
                     <li>
                       {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
                       {selectedGenreFilters.map(
-                        (genre: { id: Key | null | undefined; name: string }) => (
+                        (genre: {
+                          id: Key | null | undefined;
+                          name: string;
+                        }) => (
                           <p
                             key={genre.id}
                             className='movieDetails__filters-mobile--filterElem'
@@ -639,7 +704,7 @@ function MoviePage() {
         </section>
         {/* Si la version desktop est affichée, on affiche le composant "OtherResults". 
         Si c'est la version mobile et que la modal "showOtherResults" est activée alors on affiche le composant "OtherResults" */}
-        {desktopVersion ? (
+        {desktopVersion && !window.location.search.includes('filmID') ? (
           <OtherResults
             movieArray={movieArray}
             setMovieArray={setMovieArray}
@@ -658,10 +723,7 @@ function MoviePage() {
         )}
       </section>
       {/* Si la version desktop est affichée, on affiche le composant "Footer" sinon on en l'affiche pas */}
-      {
-        desktopVersion &&
-        <Footer />
-      }
+      {desktopVersion && <Footer />}
     </article>
   );
 }

@@ -7,12 +7,12 @@ export const NoResult = () => {
   // ================ JSX ================
 
   return (
-    <div className='NoResult-container'>
+    <main className='NoResult-container'>
       <span>
         <h1>Aucun résultat trouvé</h1>
       </span>
       <img src='/images/3z9a.gif' alt='gif aucun résultat'></img>
-    </div>
+    </main>
   );
   //* ================ FERMETURE DU COMPOSANT ================
 };

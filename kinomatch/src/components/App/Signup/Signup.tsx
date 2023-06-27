@@ -103,8 +103,8 @@ const Signup = () => {
   // ============ JSX ============
 
   return (
-    <div className='Signup-container'>
-      z{/* formulaire d'inscription */}
+    <main className='Signup-container'>
+      {/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
@@ -140,14 +140,14 @@ const Signup = () => {
         />
 
         <Link key='login' to='/login'>
-          <aside className='new-account'>Vous avez déjà un compte ?</aside>
+          <span className='new-account'>Vous avez déjà un compte ?</span>
         </Link>
 
         <button type='submit'>Créer compte</button>
         <p className='Login-container__message'>{message}</p>
       </form>
       {userData.email && <Connected />}
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

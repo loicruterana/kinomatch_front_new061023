@@ -23,12 +23,13 @@
       overflow-y: auto;
       display: flex;
       flex-wrap: wrap;
+      align-content: flex-start;
       justify-content: center;
       // align-content: center;
       width: 24%;
       max-width: 500px;
       height: 98%;
-      padding-top: 1.5rem;
+      padding-top: 10px;
 
       &::-webkit-scrollbar {
         display: none;
@@ -45,7 +46,7 @@
 
       // Titre
       &-title {
-        font-size: 1.6rem;
+        font-size: 1.9rem;
         font-weight: bold;
         // margin-right: auto;
         text-align: start;
@@ -197,7 +198,7 @@
 
     // Titre du synopsis
     &-resumeTitle {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       padding-bottom: 1rem;
     }
 

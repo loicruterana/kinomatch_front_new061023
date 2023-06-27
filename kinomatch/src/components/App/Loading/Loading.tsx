@@ -11,7 +11,7 @@ const Loading: React.FC = () => {
   // ================ JSX ================
 
   return (
-    <div className='Loading-container'>
+    <main className='Loading-container'>
       <div className='Loading-container__image'>
         <img
           className='Loading-container__image__name'
@@ -22,7 +22,7 @@ const Loading: React.FC = () => {
           src='images/KinoMatchLogo-roll.png'
         ></img>
       </div>
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

@@ -220,7 +220,7 @@ export const Home: React.FC = () => {
 
   // ================ JSX ================
   return (
-    <div className='Home-container'>
+    <main className='Home-container'>
       <div className='Home__filters-selector'>
         <div className='Home__filters-selector__containers'>
           <div className='Home__filters-selector__containers__filters-container'>
@@ -313,7 +313,7 @@ export const Home: React.FC = () => {
         (showRollProvider && mobileVersion) ||
         (showRollDecade && mobileVersion) ||
         !mobileVersion) && (
-        <div
+        <section
           className={`Home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }`}
@@ -335,7 +335,7 @@ export const Home: React.FC = () => {
             mobileVersion={mobileVersion}
             handleClickOut={handleClickOut}
           />
-        </div>
+        </section>
       )}
 
       {/* affichage des boutons en version mobile */}
@@ -387,7 +387,7 @@ export const Home: React.FC = () => {
       {noResult && <NoResult />}
       {/* affichage du composant Footer selon la taille du device */}
       {!mobileVersion && <Footer />}
-    </div>
+    </main>
   );
 
   //* ================ FERMETURE DU COMPOSANT ================
