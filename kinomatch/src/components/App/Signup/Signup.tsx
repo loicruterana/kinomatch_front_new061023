@@ -103,7 +103,7 @@ const Signup = () => {
   // ============ JSX ============
 
   return (
-    <div className='Signup-container'>
+    <main className='Signup-container'>
       {/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
@@ -147,7 +147,7 @@ const Signup = () => {
         <p className='Login-container__message'>{message}</p>
       </form>
       {userData.email && <Connected />}
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

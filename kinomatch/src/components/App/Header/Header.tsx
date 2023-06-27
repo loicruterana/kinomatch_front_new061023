@@ -84,7 +84,7 @@ function Header() {
   // ================ JSX ================
   return (
     <>
-      <div className='Header'>
+      <header className='Header'>
         {/* Logo du Header, logo différent on est en version mobile */}
         {location.pathname === '/films' && !desktopVersion ? (
           <Link
@@ -166,7 +166,7 @@ function Header() {
           <div className='line-2'></div>
           <div className='line-3'></div>
         </div>
-      </div>
+      </header>
       {/* Pour activer la modale selon le state showBurgerMenu */}
       {showBurgerMenu && (
         <BurgerMenu

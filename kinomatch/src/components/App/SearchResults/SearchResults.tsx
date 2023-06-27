@@ -133,7 +133,7 @@ const SearchResults = () => {
   // ============ JSX ============
 
   return (
-    <div className='searchresults-container'>
+    <main className='searchresults-container'>
       {/* affichage conditionnel du loader */}
       {moviesAreLoading ? (
         <Loading />
@@ -176,7 +176,7 @@ const SearchResults = () => {
         </div>
       )}
       {/* <Footer /> */}
-    </div>
+    </main>
   );
   //* ============ FERMETURE COMPOSANT ============
 };

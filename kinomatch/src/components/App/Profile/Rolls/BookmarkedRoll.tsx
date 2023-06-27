@@ -110,7 +110,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
               ) : (
                 watchedList.map((watchedListItem: WatchedListEntry) => {
                   return (
-                    <div
+                    <button
                       className={`Profile-container__roll-modale-${
                         mobileVersion ? 'mobile-version' : 'desktop-version'
                       }__roll-container__item`}
@@ -153,7 +153,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>
-                    </div>
+                    </button>
                   );
                 })
               )}

@@ -8,9 +8,9 @@ const Disconnected: React.FC = () => {
   // ================ JSX ================
 
   return (
-    <div className='Disconnected-container'>
+    <main className='Disconnected-container'>
       <h1>Vous êtes déconnecté</h1>
-    </div>
+    </main>
   );
   //* ================ FERMETURE COMPOSANT ================
 };
