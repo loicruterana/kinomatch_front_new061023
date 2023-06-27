@@ -64,6 +64,8 @@ export const Profile: React.FC = () => {
     deleteBookmarkedAndWatched,
     // deleteWatched,
     addBookmarked,
+    addUserData,
+    login,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
@@ -72,6 +74,8 @@ export const Profile: React.FC = () => {
     deleteBookmarkedAndWatched: (element: { movie: string }) => void;
     deleteWatched: (element: { movie: string }) => void;
     addBookmarked: (element: { movie: string }) => void;
+    addUserData: (email: string, id: string) => void;
+    login: () => void;
   };
 
   // ================ UTILS ================
@@ -352,6 +356,17 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [toWatchList]);
   // s'exécute à chaque fois que toWatchList change
+
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
+
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+    }
+  }, []);
 
   //========== JSX ==========
 

@@ -20,6 +20,7 @@ import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFi
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 //* ================ COMPOSANT ================
 export const Home: React.FC = () => {
@@ -67,6 +68,7 @@ export const Home: React.FC = () => {
   const { load, unload, isLoading } = useContext(LoadingContext);
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
+  const { addUserData, login } = useContext(AuthContext);
 
   // ================ UTILS ================
 
@@ -134,6 +136,17 @@ export const Home: React.FC = () => {
       .finally(() => unload());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
+
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+    }
   }, []);
 
   //======== USEWINDOWSIZE

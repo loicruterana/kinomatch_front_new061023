@@ -92,21 +92,25 @@
         }
       }
     }
-
-    &-profile {
+    &-elements {
       display: flex;
-      align-items: center;
+      flex-direction: row;
+      &-profile {
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
 
-      &-username {
-        font-size: 20px;
-      }
+        &-username {
+          font-size: 20px;
+        }
 
-      img {
-        border-radius: 50px;
-        border: 3px solid vars.$theme1-secondary;
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
+        img {
+          border-radius: 50px;
+          border: 3px solid vars.$theme1-secondary;
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -136,17 +140,17 @@
     background-color: vars.$theme1-primary;
     color: vars.$theme1-secondary;
     z-index: 1000;
-
-    &-profile {
-      display: none;
-    }
-
-    &-buttons {
-      &-button {
+    &-elements {
+      &-profile {
         display: none;
       }
-    }
 
+      &-buttons {
+        &-button {
+          display: none;
+        }
+      }
+    }
     &-random-button {
       display: none;
     }
@@ -154,10 +158,6 @@
     &-logo {
       margin-left: 20px;
       z-index: 1000;
-
-      &--refresh {
-        margin-right: 90px;
-      }
 
       &__image {
         width: 220px;

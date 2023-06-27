@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -37,7 +37,23 @@ export const Login = () => {
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
+
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+      setGoToHomePage(true);
+    }
+  }, []);
+
   // ================ UTILS ================
+
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
+
   // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
     return <Navigate to='/' />;
@@ -70,6 +86,9 @@ export const Login = () => {
           //Utilisateur connecté
           setMessage(response.data.message);
           addUserData(response.data.user.email, response.data.user.id);
+
+          localStorage.setItem('userEmail', response.data.user.email);
+          localStorage.setItem('userId', response.data.user.id);
 
           login();
           setTimeout(() => {
@@ -112,6 +131,7 @@ export const Login = () => {
           name='email'
           required
           placeholder='votre@email.com'
+          ref={email}
         />
         <label htmlFor='password'>Votre mot de passe</label>
         <input
@@ -122,6 +142,7 @@ export const Login = () => {
           name='password'
           required
           placeholder='v0tr3MdP1c1'
+          ref={password}
         />
 
         {/* <HCaptcha

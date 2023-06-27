@@ -1,6 +1,13 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import { useContext, useState, ChangeEvent, FormEvent } from 'react';
+import {
+  useContext,
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+} from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -37,7 +44,22 @@ const Signup = () => {
 
   const { userData, addUserData, login } = useContext(AuthContext);
 
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
+
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+      setGoToHomePage(true);
+    }
+  }, []);
+
   // ================ UTILS ================
+
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
 
   // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
@@ -115,6 +137,7 @@ const Signup = () => {
           name='email'
           required
           placeholder='votre@email.com'
+          ref={email}
         />
 
         <label htmlFor='password'>Votre mot de passe</label>
@@ -126,6 +149,7 @@ const Signup = () => {
           name='password'
           required
           placeholder='v0tr3MdP1c1'
+          ref={password}
         />
 
         <label htmlFor='passwordConfirm'>Confirmez votre mot de passe</label>
