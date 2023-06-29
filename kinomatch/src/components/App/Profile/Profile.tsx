@@ -66,6 +66,7 @@ export const Profile: React.FC = () => {
     addBookmarked,
     addUserData,
     login,
+    clearUserData,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
@@ -76,6 +77,7 @@ export const Profile: React.FC = () => {
     addBookmarked: (element: { movie: string }) => void;
     addUserData: (email: string, id: string) => void;
     login: () => void;
+    clearUserData: () => void;
   };
 
   // ================ UTILS ================
@@ -155,7 +157,10 @@ export const Profile: React.FC = () => {
           `https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`
         )
         .then(() => {
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('userId');
           logout();
+          clearUserData();
           navigate(`/`);
         })
         .catch((error) => {
@@ -209,7 +214,7 @@ export const Profile: React.FC = () => {
         console.error(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userData]);
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
@@ -295,7 +300,7 @@ export const Profile: React.FC = () => {
     fetchMoviesBookmarked();
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEvent]);
+  }, [userEvent, userData]);
   // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
@@ -317,7 +322,7 @@ export const Profile: React.FC = () => {
         console.error(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userData]);
 
   // =========================== TOWATCHLISTMOVIES ===========================
 
@@ -366,6 +371,7 @@ export const Profile: React.FC = () => {
       addUserData(userEmail, userId);
       login();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //========== JSX ==========

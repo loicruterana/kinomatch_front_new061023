@@ -39,6 +39,7 @@ export interface AuthContextProps {
   addWatched: (element: { movie: string }) => void;
   deleteWatched: (element: { movie: string }) => void;
   deleteBookmarkedAndWatched: (element: { movie: string }) => void;
+  clearUserData: () => void;
   userData: UserData;
   userDataToWatch: UserDataToWatch;
   userDataWatched: UserDataWatched;
@@ -106,6 +107,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserData({ ...userData, email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email, id: userId });
     setUserDataWatched({ ...userDataWatched, email, id: userId });
+  };
+
+  const clearUserData = (): void => {
+    setUserData({ ...userData, email: '', id: '' });
   };
 
   // ================ FONCTIONS LIÉES AUX BOOKMARKS (COEUR) ================
@@ -339,6 +344,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         userDataToWatch,
         userDataWatched,
         deleteBookmarkedAndWatched,
+        clearUserData,
       }}
     >
       {children}

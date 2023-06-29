@@ -70,28 +70,6 @@
       transition: transform 0.2s ease-in-out;
     }
 
-    &-buttons {
-      display: flex;
-      flex-direction: column;
-
-      &-button {
-        height: 25px;
-        width: 200px;
-        border-radius: 15px;
-        background-color: vars.$theme1-secondary;
-        border: vars.$theme1-secondary;
-        color: vars.$theme1-primary;
-        font-family: 'Creato Display';
-        border: none;
-        font-size: 20px;
-        padding: 0 1%;
-        margin: 5px 0;
-
-        i {
-          padding-right: 5px;
-        }
-      }
-    }
     &-elements {
       display: flex;
       flex-direction: row;
@@ -110,6 +88,51 @@
           width: 40px;
           height: 40px;
           margin-right: 10px;
+        }
+      }
+      &-buttons {
+        display: flex;
+        flex-direction: column;
+
+        &-button {
+          height: 25px;
+          width: 200px;
+          border-radius: 15px;
+          background-color: vars.$theme1-secondary;
+          border: vars.$theme1-secondary;
+          color: vars.$theme1-primary;
+          font-family: 'Creato Display';
+          border: none;
+          font-size: 20px;
+          padding: 0 1%;
+          margin: 5px 0;
+
+          i {
+            padding-right: 5px;
+          }
+        }
+      }
+      &-buttons {
+        display: flex;
+        flex-direction: column;
+
+        &-button {
+          // margin
+          height: 25px;
+          width: 200px;
+          border-radius: 15px;
+          background-color: vars.$theme1-secondary;
+          border: vars.$theme1-secondary;
+          color: vars.$theme1-primary;
+          font-family: 'Creato Display';
+          border: none;
+          font-size: 20px;
+          padding: 0 1%;
+          margin: 10px 10px 0 10px;
+
+          i {
+            padding-right: 5px;
+          }
         }
       }
     }
