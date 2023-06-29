@@ -76,6 +76,7 @@
         margin-top: 70px;
 
         &__item {
+          border: none;
           font-size: 20px;
           border-radius: 10px;
           display: flex;
@@ -289,6 +290,7 @@
           }
 
           &__item {
+            // border: none;
             border-radius: 10px;
             display: flex;
             justify-content: center;
