@@ -45,6 +45,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     try {
       let url = `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&randomPage=${page}`;
 
+      // Si l'URL contient "filmID", on modifie l'URL pour la requête axios
       if (window.location.search.includes('filmID')) {
 
         url = `https://deploy-back-kinomatch.herokuapp.com/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
@@ -52,16 +53,27 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
       const response = await axios.get(url);
       const newMovies = response.data;
-      if (JSON.stringify(newMovies.results) === JSON.stringify(movieArray)) {
-        // Arrêter le scroll
-        return;
-        }
+      
+      /* Fonction setMovieArray permettant de mettre à jour le state movieArray
+       Si le film n'est pas déjà présent dans le tableau movieArray, on l'ajoute */
       setMovieArray((prevMovies: PrevMovies[]) => {
-        const updatedMovies: PrevMovies[] = [...prevMovies, ...newMovies.results];
+        const updatedMovies: PrevMovies[] = [
+          // On garde les films déjà présents dans le tableau movieArray
+          ...prevMovies,
+          // On filtre les films pour ne pas avoir de doublons
+          ...newMovies.results.filter((newMovie: { id: number; }) => {
+            // On retourne true si le film n'est pas déjà présent dans le tableau movieArray
+            return !prevMovies.some((prevMovie) => prevMovie.id === newMovie.id);
+          }),
+        ];
+        // On retourne le tableau de films mis à jour
         return updatedMovies;
       });
 
+      // On incrémente la page de 1 et on met à jour le state hasMore
       setPage((prevPage) => prevPage + 1);
+      
+      // Si le nombre de films est supérieur à 0, on met à jour le state hasMore
       setHasMore(newMovies.results.length > 0);
     } catch (error) {
       console.error(error);

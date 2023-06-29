@@ -210,17 +210,17 @@ function MoviePage() {
 
   // localstorage : récupération du localStorage id et email de l'utilisateur, afin qu'il reste connecté
 
-  useEffect(() => {
-    // Vérifier si les données de connexion existent dans le localStorage
-    const userEmail = localStorage.getItem('userEmail');
-    const userId = localStorage.getItem('userId');
+  // useEffect(() => {
+  //   // Vérifier si les données de connexion existent dans le localStorage
+  //   const userEmail = localStorage.getItem('userEmail');
+  //   const userId = localStorage.getItem('userId');
 
-    if (userEmail && userId) {
-      addUserData(userEmail, userId);
-      login();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   if (userEmail && userId) {
+  //     addUserData(userEmail, userId);
+  //     login();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
 
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
@@ -251,10 +251,8 @@ function MoviePage() {
     if (window.location.search.includes('filmID')) {
       // Traiter le cas spécifique ici
       const filmID = window.location.search.split('=')[1];
-      console.log(filmID);
+
       setCurrentMovieId(filmID);
-      console.log(typeof currentMovieId);
-      console.log(currentMovieId);
 
       const searchParams = new URLSearchParams();
       searchParams.append('movieID', currentMovieId);
@@ -279,23 +277,20 @@ function MoviePage() {
 
       Promise.all(requests)
         .then((responses) => {
+          // On déstructure les réponses pour les récupérer dans l'ordre
           const [detailResponse, creditsResponse, providerResponse, movieArrayResponse] = responses;
 
+          // On récupère les données des films pour les stocker dans des variables
           const movieData = detailResponse.data;
           const creditsData = creditsResponse.data;
           const providersData = providerResponse.data;
           const movieArrayData = movieArrayResponse.data;
 
+          // On stocke les données dans le state
           setMovie(movieData);
-
           setCredits(creditsData);
-
           setProviders(providersData);
-
-          setMovieArray(movieData);
-
           setMovieArray(movieArrayData.results);
-          console.log(movieArrayData.results);
           setCircle({
             id: movieData.id,
             fillValue: movieData.vote_average * 10,
@@ -359,61 +354,35 @@ function MoviePage() {
         })
         .then((response) => {
           const data = response?.data;
-          console.log('data');
 
           // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
           if (data) {
-            const selectRandomID =
-              data.results[Math.floor(Math.random() * data.results.length)].id;
-            console.log(selectRandomID);
+            const selectRandomID = data.results[Math.floor(Math.random() * data.results.length)].id;
             // On évite d'afficher le même film que celui qui est déjà affiché
             const filteredResults = data.results.filter(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (result: { id: any }) => result.id !== selectRandomID
-            );
-            console.log(filteredResults);
+              (result: { id: any }) => result.id !== selectRandomID);
+            console.log(selectRandomID);
 
-            // Si aucun film n'est affiché, on affiche le film sélectionné aléatoirement
-            if (movieArray.length === 0) {
-              setMovieArray(filteredResults);
-              console.log(filteredResults);
+            setMovieArray(filteredResults);
 
-              console.log('on passe ici');
+            const searchParams = new URLSearchParams();
+            // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+            searchParams.append('movieID', movieArray.length === 0 ? selectRandomID : currentMovieId);
 
-              const searchParams = new URLSearchParams();
-              searchParams.append('movieID', selectRandomID);
-
-              // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
-              const requests = [
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-                ),
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-                ),
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-                ),
-              ];
-              return Promise.all(requests);
-            } else {
-              const searchParams = new URLSearchParams();
-              searchParams.append('movieID', currentMovieId);
-
-              // On récupère les données du film sélectionné par le User sur les routes "detail", "credits" et "providers"
-              const requests = [
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-                ),
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-                ),
-                axios.get(
-                  `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-                ),
-              ];
-              return Promise.all(requests);
-            }
+            // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
+            const requests = [
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
+              ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
+              ),
+            ];
+            return Promise.all(requests);
           }
         })
         .then((responses) => {

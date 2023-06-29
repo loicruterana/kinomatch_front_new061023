@@ -22,10 +22,9 @@
     &__essentiel {
       overflow-y: auto;
       display: flex;
+      justify-content: space-evenly;
       flex-wrap: wrap;
-      align-content: flex-start;
-      justify-content: center;
-      // align-content: center;
+      align-content: center;
       width: 24%;
       max-width: 500px;
       height: 98%;
@@ -120,8 +119,8 @@
   .movieDetails {
     overflow: auto;
     width: 60%;
-    height: 100%;
-    padding: 40px 2rem 0 2rem;
+    height: 98%;
+    padding: 50px 2rem 0 2rem;
 
     &::-webkit-scrollbar {
       display: none;

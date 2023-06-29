@@ -162,6 +162,8 @@
         &-details {
             overflow: auto;
             align-items: flex-start;
+            flex-direction: wrap;
+            flex-wrap: wrap;
             justify-content: space-around;
             display: flex;
             width: 50%;

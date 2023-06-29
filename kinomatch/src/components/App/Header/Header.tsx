@@ -110,7 +110,7 @@ function Header() {
         ) : null}
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
-        {location.pathname === '/films' && desktopVersion && (
+        {location.pathname === '/films' && desktopVersion && !window.location.search.includes('filmID') && (
           <button
             className='Header--OtherResultsBtn'
             type='button'
