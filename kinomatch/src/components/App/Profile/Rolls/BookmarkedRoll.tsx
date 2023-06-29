@@ -203,6 +203,11 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       }__roll-container__item`}
                       key={toWatchListItem.id}
                     >
+                      <i
+                        className={`Profile-container__roll-modale-${
+                          mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-c fa-sharp fa-solid fa-check `}
+                      ></i>
                       {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
                       {/* bouton de bookmark croix */}
                       <i
