@@ -147,10 +147,10 @@ function MoviePage() {
 
   // ================ USECONTEXT =================================
 
-  const { currentMovieId, setCurrentMovieId, addMovieData } = useContext(
+  const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, login, addUserData } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
     SelectedProviderFiltersContext
@@ -187,9 +187,8 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${
-      month < 10 ? '0' + month : month
-    }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
+      }/${year}`;
   }
 
   // RECUPERATION DES RÉALISATEURS
@@ -208,6 +207,21 @@ function MoviePage() {
   const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
 
   // ==================== USEEFFECT ===============================
+
+  // localstorage : récupération du localStorage id et email de l'utilisateur, afin qu'il reste connecté
+
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
+
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
   useEffect(() => {
@@ -258,34 +272,37 @@ function MoviePage() {
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
         ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/recommendedMovies?${searchParams.toString()}`
+        ),
       ];
 
       Promise.all(requests)
         .then((responses) => {
-          const [detailResponse, creditsResponse, providerResponse] = responses;
+          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse] = responses;
 
           const movieData = detailResponse.data;
           const creditsData = creditsResponse.data;
           const providersData = providerResponse.data;
+          const movieArrayData = movieArrayResponse.data;
 
           setMovie(movieData);
-          console.log(movieData);
-          console.log(movie);
 
           setCredits(creditsData);
-          console.log(creditsData);
-          console.log(credits);
-          setProviders(providersData);
-          console.log(providersData);
-          console.log('fin de la requête');
-          setMovieArray(movieData);
-          console.log(movieArray);
 
+          setProviders(providersData);
+
+          setMovieArray(movieData);
+
+          setMovieArray(movieArrayData.results);
+          console.log(movieArrayData.results);
           setCircle({
             id: movieData.id,
             fillValue: movieData.vote_average * 10,
           });
         })
+
+
         .catch((error) => {
           // Gérer l'erreur ici
           console.error(
@@ -336,8 +353,7 @@ function MoviePage() {
           }
           // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
           return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
-              window.location.search
+            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search
             }&${searchParams1.toString()}`
           );
         })
@@ -425,6 +441,8 @@ function MoviePage() {
   }, [currentMovieId]);
 
   // Si le chargement est en cours, on affiche le composant Loading
+  console.log(movieArray);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -487,7 +505,7 @@ function MoviePage() {
                 <div className='text'>
                   {/* Si la note est un nombre entier, on affiche le nombre sinon on affiche le nombre avec une décimale */}
                   {Math.floor(movie.vote_average * 10) ===
-                  movie.vote_average * 10
+                    movie.vote_average * 10
                     ? movie.vote_average * 10
                     : (movie.vote_average * 10).toFixed(1)}
                   %<div className='small'>{movie.vote_count} votes </div>
@@ -704,7 +722,7 @@ function MoviePage() {
         </section>
         {/* Si la version desktop est affichée, on affiche le composant "OtherResults". 
         Si c'est la version mobile et que la modal "showOtherResults" est activée alors on affiche le composant "OtherResults" */}
-        {desktopVersion && !window.location.search.includes('filmID') ? (
+        {desktopVersion ? (
           <OtherResults
             movieArray={movieArray}
             setMovieArray={setMovieArray}

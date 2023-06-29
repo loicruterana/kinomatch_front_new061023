@@ -41,12 +41,21 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
-    try {
-      const response = await axios.get(
-        `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&randomPage=${page}`
-      );
 
+    try {
+      let url = `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&randomPage=${page}`;
+
+      if (window.location.search.includes('filmID')) {
+
+        url = `https://deploy-back-kinomatch.herokuapp.com/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
+      }
+
+      const response = await axios.get(url);
       const newMovies = response.data;
+      if (JSON.stringify(newMovies.results) === JSON.stringify(movieArray)) {
+        // Arrêter le scroll
+        return;
+        }
       setMovieArray((prevMovies: PrevMovies[]) => {
         const updatedMovies: PrevMovies[] = [...prevMovies, ...newMovies.results];
         return updatedMovies;
@@ -58,19 +67,33 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
       console.error(error);
     }
   };
+  console.log(movieArray);
 
   // Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (event: { preventDefault: () => void; currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-    event.preventDefault();
-    const id = event.currentTarget.getAttribute('data-id');
-    addMovieData(id || '');
-    setShowOtherResults(!showOtherResults);
+
+    // Si l'utilisateur est sur la page d'un film, le rediriger vers la page du film sélectionné
+    if (window.location.search.includes('filmID')) {
+      const filmID = event.currentTarget.getAttribute('data-id');
+
+      // encodeURIComponent permet de gérer les caractères spéciaux dans l'URL en convertissant le code en chaîne de caractères
+      const encodedFilmID = encodeURIComponent(filmID);
+      window.location.href = `/films?filmID=${encodedFilmID}`;
+
+      // Si on se trouve sur la page des films filtrés alors on ajouter les données du film sélectionné dans le contexte et afficher la page du film
+    } else {
+      event.preventDefault();
+      const id = event.currentTarget.getAttribute('data-id');
+      addMovieData(id || '');
+      setShowOtherResults(!showOtherResults);
+    }
 
     // Condition permettant de remonter en haut de la page si l'utilisateur a scrollé
     if (window.pageYOffset > 100) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
   }
 
   return (
