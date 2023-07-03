@@ -667,7 +667,7 @@ function MoviePage() {
               bandeAnnonceVideo?.key ? (
                 <div className='movieDetails__videos'>
 
-                  <iframe width="560" height="315"
+                  <iframe className="responsive-iframe"
                     src={`https://www.youtube.com/embed/${bandeAnnonceVideo.key}`}
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -678,7 +678,7 @@ function MoviePage() {
               ) : otherVideos?.key ? (
                 <div className='movieDetails__videos'>
 
-                  <iframe width="560" height="315"
+                  <iframe className="responsive-iframe"
                     src={`https://www.youtube.com/embed/${otherVideos[0].key}`}
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
