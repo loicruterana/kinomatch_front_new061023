@@ -62,6 +62,7 @@ interface Providers {
   };
 }
 
+
 // Fonction MoviePage permettant d'afficher la page d'un film
 function MoviePage() {
   const navigate = useNavigate();
@@ -110,6 +111,12 @@ function MoviePage() {
   // UseState Modale "Image"
   const [showImageModal, setShowImageModal] = useState(false);
 
+  // UseState "screenshots"
+  // const [screenshots, setScreenshots] = useState<string[]>([]);
+
+  // UseState "videos"
+  const [videos, setVideos] = useState<string[]>([]);
+
   // UseState route "Detail"
   const [movie, setMovie] = useState<Movie>({
     title: '',
@@ -150,7 +157,7 @@ function MoviePage() {
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
-  const { isLoggedIn, login, addUserData } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
     SelectedProviderFiltersContext
@@ -205,6 +212,10 @@ function MoviePage() {
       person.known_for_department === 'Acting'
   );
   const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
+
+  // RÉCUPÉRATION DES TRAILERS
+  const bandeAnnonceVideo = videos.find(video => video.type.includes("Trailer"));
+  const otherVideos = videos.filter(video => !video.type.includes("Trailer"));
 
   // ==================== USEEFFECT ===============================
 
@@ -273,24 +284,34 @@ function MoviePage() {
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/recommendedMovies?${searchParams.toString()}`
         ),
+        axios.get(
+          `https://deploy-back-kinomatch.herokuapp.com/videos?${searchParams.toString()}`
+        ),
+        // axios.get(
+        //   `https://deploy-back-kinomatch.herokuapp.com/images?${searchParams.toString()}`
+        // ),
       ];
 
       Promise.all(requests)
         .then((responses) => {
           // On déstructure les réponses pour les récupérer dans l'ordre
-          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse] = responses;
+          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse, videosMovie, screenshotsMovie] = responses;
 
           // On récupère les données des films pour les stocker dans des variables
           const movieData = detailResponse.data;
           const creditsData = creditsResponse.data;
           const providersData = providerResponse.data;
           const movieArrayData = movieArrayResponse.data;
+          const videosMovieData = videosMovie.data;
+          // const screenshotsMovieData = screenshotsMovie.data;
 
           // On stocke les données dans le state
           setMovie(movieData);
           setCredits(creditsData);
           setProviders(providersData);
           setMovieArray(movieArrayData.results);
+          setVideos(videosMovieData.results);
+          // setScreenshots(screenshotsMovieData.backdrops);
           setCircle({
             id: movieData.id,
             fillValue: movieData.vote_average * 10,
@@ -381,17 +402,21 @@ function MoviePage() {
               axios.get(
                 `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
               ),
+              axios.get(
+                `https://deploy-back-kinomatch.herokuapp.com/videos?${searchParams.toString()}`
+              ),
             ];
             return Promise.all(requests);
           }
         })
         .then((responses) => {
           if (Array.isArray(responses)) {
-            const [movieData, creditsData, providersData] = responses;
+            const [movieData, creditsData, providersData, videosMovie] = responses;
             if (movieData.data && creditsData.data && providersData.data) {
               setMovie(movieData.data);
               setCredits(creditsData.data);
               setProviders(providersData.data);
+              setVideos(videosMovie.data.results);
               setCircle({
                 id: movieData.data.id,
                 fillValue: movieData.data.vote_average * 10,
@@ -411,7 +436,8 @@ function MoviePage() {
 
   // Si le chargement est en cours, on affiche le composant Loading
   console.log(movieArray);
-
+  console.log(videos)
+  console.log(bandeAnnonceVideo)
   if (isLoading) {
     return <Loading />;
   }
@@ -499,45 +525,50 @@ function MoviePage() {
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
-          <div className='movieDetails__filters-desktop'>
-            <ul className='movieDetails__filters-desktop--filterElemList'>
-              {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
-              <li>
-                {selectedGenreFilters.map(
-                  (genre: { id: Key | null | undefined; name: string }) => (
-                    <p
-                      key={genre.id}
-                      className='movieDetails__filters-desktop--filterElem'
-                    >
-                      {genre.name}
-                    </p>
-                  )
-                )}
-              </li>
-              {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
-              <li>
-                {selectedProviderFilters.map((provider) => (
-                  <p
-                    key={provider.id}
-                    className='movieDetails__filters-desktop--filterElem'
-                  >
-                    {provider.provider_name}
-                  </p>
-                ))}
-              </li>
-              {/* Pour chaque filtre de "décennie", on affiche les noms de décennies */}
-              <li>
-                {selectedDecadeFilters.map((decade) => (
-                  <p
-                    key={decade}
-                    className='movieDetails__filters-desktop--filterElem'
-                  >
-                    {decade}
-                  </p>
-                ))}
-              </li>
-            </ul>
-          </div>
+          {
+            !window.location.search.includes('filmID')
+              ? <div className='movieDetails__filters-desktop'>
+                <ul className='movieDetails__filters-desktop--filterElemList'>
+                  {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
+                  <li>
+                    {selectedGenreFilters.map(
+                      (genre: { id: Key | null | undefined; name: string }) => (
+                        <p
+                          key={genre.id}
+                          className='movieDetails__filters-desktop--filterElem'
+                        >
+                          {genre.name}
+                        </p>
+                      )
+                    )}
+                  </li>
+                  {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
+                  <li>
+                    {selectedProviderFilters.map((provider) => (
+                      <p
+                        key={provider.id}
+                        className='movieDetails__filters-desktop--filterElem'
+                      >
+                        {provider.provider_name}
+                      </p>
+                    ))}
+                  </li>
+                  {/* Pour chaque filtre de "décennie", on affiche les noms de décennies */}
+                  <li>
+                    {selectedDecadeFilters.map((decade) => (
+                      <p
+                        key={decade}
+                        className='movieDetails__filters-desktop--filterElem'
+                      >
+                        {decade}
+                      </p>
+                    ))}
+                  </li>
+                </ul>
+              </div>
+              : null
+          }
+
           <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
           {isLoggedIn && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
@@ -631,6 +662,46 @@ function MoviePage() {
             >
               + de détails
             </button>
+
+            {
+              bandeAnnonceVideo?.key ? (
+                <div className='movieDetails__videos'>
+
+                  <iframe width="560" height="315"
+                    src={`https://www.youtube.com/embed/${bandeAnnonceVideo.key}`}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  >
+                  </iframe>
+                </div>
+
+              ) : otherVideos?.key ? (
+                <div className='movieDetails__videos'>
+
+                  <iframe width="560" height="315"
+                    src={`https://www.youtube.com/embed/${otherVideos[0].key}`}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  >
+                  </iframe>
+                </div>
+              ) : null
+            }
+
+
+            {/* 
+                  <ul className='movieDetails__screenshotsMovies-list'>
+                    <li>
+                      {screenshots?.map((screenshot: { file_path: string }) => (
+                        <img
+                          key={screenshot.file_path}
+                          className='movieDetails__screenshotsMovies-list--image'
+                          src={`https://image.tmdb.org/t/p/w220_and_h330_face/${screenshot.file_path}`}
+                          alt='screenshot'
+                        />
+                      ))}
+                    </li>
+                  </ul> */}
             <div className='movieDetails__filters'>
               {/* Si ce n'est pas la version deskTop, on affiche les filtres */}
               {!desktopVersion && (
