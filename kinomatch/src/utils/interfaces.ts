@@ -72,7 +72,7 @@ export interface Genre {
   name: string;
 }
 
-export interface Provider {
+export interface ProviderHome {
   provider_id: number;
   provider_name: string;
 }

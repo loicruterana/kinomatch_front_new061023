@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Genre, Provider } from '../../../utils/interfaces';
+import { Genre, ProviderHome } from '../../../utils/interfaces';
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
@@ -42,7 +42,7 @@ export const Home: React.FC = () => {
   // liste des genres préselectionnés lors du fetch
   const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
   // liste des providers préselectionnés lors du fetch
-  const [preselectedProviders, setPreselectedProviders] = useState<Provider[]>(
+  const [preselectedProviders, setPreselectedProviders] = useState<ProviderHome[]>(
     []
   );
   // usestate pour afficher ou masquer RollGenre
@@ -101,8 +101,8 @@ export const Home: React.FC = () => {
       .get('https://deploy-back-kinomatch.herokuapp.com/providers')
       .then(({ data }) => {
         // pour filtrer les providers
-        const filteredProviders: Provider[] = data.results.reduce(
-          (validProviders: Provider[], currentProvider: ProviderFromAPI) => {
+        const filteredProviders: ProviderHome[] = data.results.reduce(
+          (validProviders: ProviderHome[], currentProvider: ProviderFromAPI) => {
             if (
               //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
               Object.prototype.hasOwnProperty.call(

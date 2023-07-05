@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import React, { useContext } from 'react';
-import { Genre, Provider } from '../../../../utils/interfaces';
+import { Genre, ProviderHome } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
 import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreFiltersContext';
@@ -10,7 +10,7 @@ import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecad
 // ================ INTERFACES ================
 interface RollGenreProps {
   preselectedGenres: Genre[];
-  preselectedProviders: Provider[];
+  preselectedProviders: ProviderHome[];
   mobileVersion: boolean;
   showRollGenre: boolean;
   showRollProvider: boolean;
