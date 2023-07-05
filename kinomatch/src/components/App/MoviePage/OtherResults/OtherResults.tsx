@@ -39,6 +39,8 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // UseState "hasMore" permettant de gérer la pagination
   const [hasMore, setHasMore] = useState(true);
 
+  console.log(movieArray);
+
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
 
@@ -53,7 +55,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
       const response = await axios.get(url);
       const newMovies = response.data;
-      
+
       /* Fonction setMovieArray permettant de mettre à jour le state movieArray
        Si le film n'est pas déjà présent dans le tableau movieArray, on l'ajoute */
       setMovieArray((prevMovies: PrevMovies[]) => {
@@ -65,9 +67,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
             // On retourne true si le film n'est pas déjà présent dans le tableau movieArray
             return !prevMovies.some((prevMovie) => prevMovie.id === newMovie.id);
           }),
-        ];
-        // On retourne le tableau de films mis à jour
-        return updatedMovies;
+        ]; return updatedMovies;
       });
 
       // On incrémente la page de 1 et on met à jour le state hasMore
@@ -80,6 +80,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   };
   console.log(movieArray);
+  console.log(hasMore);
 
   // Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

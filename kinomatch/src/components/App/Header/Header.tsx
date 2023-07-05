@@ -98,7 +98,7 @@ function Header() {
           />
         </Link>
         {/* Logo du Header, logo différent on est en version mobile */}
-        {location.pathname === '/films' && !desktopVersion ? (
+        {location.pathname === '/films' && !window.location.search.includes('filmID') && !desktopVersion ? (
           <Link
             key='refresh'
             to='#'

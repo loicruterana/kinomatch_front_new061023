@@ -76,3 +76,43 @@ export interface Provider {
   provider_id: number;
   provider_name: string;
 }
+
+//===========MOVIEPAGE
+
+
+/* Interface Movie permettant de typer les données du film */
+export interface Movie {
+  title: string;
+  id: string;
+  poster_path: string;
+  vote_average: number;
+  vote_count: string;
+  tagline: string;
+  overview: string;
+  genres: [];
+  runtime: number;
+  release_date: string;
+}
+
+/* Interface Credits permettant de typer les données du casting */
+export interface Credits {
+  cast: [];
+  crew: [];
+  id: number;
+}
+
+/* Interface Providers permettant de typer les données des plateformes */
+export interface Provider {
+  results: {
+    FR: {
+      flatrate: [];
+      rent: [];
+      buy: [];
+      free: [];
+      ads: [];
+      link: string;
+      provider_id: number;
+      provider_name: string;
+    };
+  };
+}

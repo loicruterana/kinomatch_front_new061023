@@ -182,7 +182,7 @@
   // SYNOPSIS, DURÉE, DATE DE SORTIE, BOUTON "PLUS DE DÉTAILS"
   .movieDetails__description {
     font-weight: bold;
-    margin-top: 1rem;
+    margin: 16px auto 30px auto;
 
     // Slogan
     &-blockquote {
@@ -270,6 +270,28 @@
         transform: scale(1.05);
         cursor: pointer;
       }
+    }
+
+
+
+    .responsive-iframe {
+      width: 75%;
+      height: 300px;
+      border: vars.$theme1-secondary solid 7px;
+      border-radius: 6px;
+    }
+
+    .movieDetails__screenshotsMovies-list {
+      display: flex;
+      gap: 8px;
+    }
+
+    .movieDetails__screenshotsMovies-list li {
+      list-style: none;
+    }
+
+    .movieDetails__screenshotsMovies-list img {
+      height: 200px;
     }
 
     // Container du bouton scroll vers la zone pour commenter
@@ -465,6 +487,8 @@
   // SYNOPSIS, DURÉE, DATE DE SORTIE, BOUTON "PLUS DE DÉTAILS"
   .movieDetails__description {
     font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 30px;
 
     // Slogan
     &-blockquote {
@@ -537,6 +561,13 @@
       font-size: 1.1rem;
       font-weight: bold;
       margin-bottom: 1.5rem;
+    }
+
+    .responsive-iframe {
+      width: 100%;
+      height: 50%;
+      border: vars.$theme1-secondary solid 7px;
+      border-radius: 6px;
     }
 
     // Container du bouton scroll vers la zone pour commenter
