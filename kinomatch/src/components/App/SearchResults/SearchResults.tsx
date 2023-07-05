@@ -61,7 +61,6 @@ const SearchResults = () => {
   // Chargement des données supplémentaires pour le défilement infini
   const loadMoreData = async () => {
     try {
-      console.log('loadMoreData');
       const response = await fetch(
         `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${
           page + 1
@@ -89,7 +88,6 @@ const SearchResults = () => {
           `https://deploy-back-kinomatch.herokuapp.com/search${window.location.search}&page=1`
         );
         const data = response.data;
-        console.log(data);
         if (data.results.length === 0) {
           navigate('/noresult');
           return;
@@ -106,7 +104,6 @@ const SearchResults = () => {
         const typedName = searchParams.get('typedName');
         // mise à jour du state query
         setQuery(typedName || '');
-        console.log(typedName); // Affiche "ok" dans la console
       } catch (error) {
         console.error(error);
       }

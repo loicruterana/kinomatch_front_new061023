@@ -51,8 +51,6 @@ export const RollGenre = ({
     SelectedDecadeFiltersContext
   );
 
-  console.log('selectedGenreFilters', selectedGenreFilters);
-  console.log('selected', preselectedGenres);
   // ================ HANDLERS ================
 
   // handler pour envoyer les choix de filtres à la fonction addGenreFilter du contexte SelectedGenreFiltersContext et donc stocker les filtres genre dans le state

@@ -320,7 +320,6 @@ function MoviePage() {
       // Sortir du useEffect pour éviter l'exécution du reste du code
       return;
     } else if (!window.location.search.includes('filmID')) {
-      console.log('normal');
       // Requête axios permettant de récupérer les données des films filtrés
       axios
         .get(
@@ -342,7 +341,6 @@ function MoviePage() {
             chosenPage = Math.floor(Math.random() * 500) + 1;
           }
 
-          console.log(chosenPage);
 
           // On récupère les données de la page sélectionnée
           const searchParams1 = new URLSearchParams();
@@ -370,7 +368,6 @@ function MoviePage() {
             const filteredResults = data.results.filter(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (result: { id: any }) => result.id !== selectRandomID);
-            console.log(selectRandomID);
 
             setMovieArray(filteredResults);
 
@@ -423,9 +420,7 @@ function MoviePage() {
   }, [currentMovieId]);
 
   // Si le chargement est en cours, on affiche le composant Loading
-  console.log(movieArray);
-  console.log(videos)
-  console.log(trailer)
+
   if (isLoading) {
     return <Loading />;
   }

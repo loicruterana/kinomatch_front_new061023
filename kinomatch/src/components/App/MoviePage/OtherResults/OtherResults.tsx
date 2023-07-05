@@ -39,7 +39,6 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // UseState "hasMore" permettant de gérer la pagination
   const [hasMore, setHasMore] = useState(true);
 
-  console.log(movieArray);
 
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
@@ -79,8 +78,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
       console.error(error);
     }
   };
-  console.log(movieArray);
-  console.log(hasMore);
+
 
   // Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
