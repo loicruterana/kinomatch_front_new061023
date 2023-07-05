@@ -111,11 +111,14 @@ function MoviePage() {
   // UseState Modale "Image"
   const [showImageModal, setShowImageModal] = useState(false);
 
-  // UseState "screenshots"
-  // const [screenshots, setScreenshots] = useState<string[]>([]);
-
   // UseState "videos"
-  const [videos, setVideos] = useState<string[]>([]);
+  const [videos, setVideos] = useState([
+    {
+      type: "",
+      key: "",
+      name: ""
+    },
+  ]);
 
   // UseState route "Detail"
   const [movie, setMovie] = useState<Movie>({
@@ -214,7 +217,7 @@ function MoviePage() {
   const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
 
   // RÉCUPÉRATION DES TRAILERS
-  const bandeAnnonceVideo = videos.find(video => video.type.includes("Trailer"));
+  const trailer = videos.find(video => video.type.includes("Trailer"));
   const otherVideos = videos.filter(video => !video.type.includes("Trailer"));
 
   // ==================== USEEFFECT ===============================
@@ -295,7 +298,7 @@ function MoviePage() {
       Promise.all(requests)
         .then((responses) => {
           // On déstructure les réponses pour les récupérer dans l'ordre
-          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse, videosMovie, screenshotsMovie] = responses;
+          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse, videosMovie] = responses;
 
           // On récupère les données des films pour les stocker dans des variables
           const movieData = detailResponse.data;
@@ -303,7 +306,6 @@ function MoviePage() {
           const providersData = providerResponse.data;
           const movieArrayData = movieArrayResponse.data;
           const videosMovieData = videosMovie.data;
-          // const screenshotsMovieData = screenshotsMovie.data;
 
           // On stocke les données dans le state
           setMovie(movieData);
@@ -311,7 +313,6 @@ function MoviePage() {
           setProviders(providersData);
           setMovieArray(movieArrayData.results);
           setVideos(videosMovieData.results);
-          // setScreenshots(screenshotsMovieData.backdrops);
           setCircle({
             id: movieData.id,
             fillValue: movieData.vote_average * 10,
@@ -437,7 +438,7 @@ function MoviePage() {
   // Si le chargement est en cours, on affiche le composant Loading
   console.log(movieArray);
   console.log(videos)
-  console.log(bandeAnnonceVideo)
+  console.log(trailer)
   if (isLoading) {
     return <Loading />;
   }
@@ -664,18 +665,18 @@ function MoviePage() {
             </button>
 
             {
-              bandeAnnonceVideo?.key ? (
+              trailer?.key ? (
                 <div className='movieDetails__videos'>
 
                   <iframe className="responsive-iframe"
-                    src={`https://www.youtube.com/embed/${bandeAnnonceVideo.key}`}
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   >
                   </iframe>
                 </div>
 
-              ) : otherVideos?.key ? (
+              ) : otherVideos.length > 0 ? (
                 <div className='movieDetails__videos'>
 
                   <iframe className="responsive-iframe"
@@ -688,20 +689,6 @@ function MoviePage() {
               ) : null
             }
 
-
-            {/* 
-                  <ul className='movieDetails__screenshotsMovies-list'>
-                    <li>
-                      {screenshots?.map((screenshot: { file_path: string }) => (
-                        <img
-                          key={screenshot.file_path}
-                          className='movieDetails__screenshotsMovies-list--image'
-                          src={`https://image.tmdb.org/t/p/w220_and_h330_face/${screenshot.file_path}`}
-                          alt='screenshot'
-                        />
-                      ))}
-                    </li>
-                  </ul> */}
             <div className='movieDetails__filters'>
               {/* Si ce n'est pas la version deskTop, on affiche les filtres */}
               {!desktopVersion && (
