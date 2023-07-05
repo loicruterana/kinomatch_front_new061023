@@ -275,24 +275,26 @@ function MoviePage() {
       }
       // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
       const requests = [
+        // Route pour récupérer les détails du film
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
         ),
+        // Route pour récupérer les crédits du film
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
         ),
+        // Route pour récupérer les providers du film
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
         ),
+        // Route pour récupérer les films recommandés
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/recommendedMovies?${searchParams.toString()}`
         ),
+        // Route pour récupérer les vidéos du film
         axios.get(
           `https://deploy-back-kinomatch.herokuapp.com/videos?${searchParams.toString()}`
         ),
-        // axios.get(
-        //   `https://deploy-back-kinomatch.herokuapp.com/images?${searchParams.toString()}`
-        // ),
       ];
 
       Promise.all(requests)
@@ -410,6 +412,7 @@ function MoviePage() {
             return Promise.all(requests);
           }
         })
+        // Ensuite on récupère les données des films recommandés et on les stocke dans les states
         .then((responses) => {
           if (Array.isArray(responses)) {
             const [movieData, creditsData, providersData, videosMovie] = responses;
@@ -443,7 +446,6 @@ function MoviePage() {
     return <Loading />;
   }
 
-  console.log('putain', credits);
 
   return (
     <article className='moviePage'>
@@ -526,6 +528,7 @@ function MoviePage() {
         </section>
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
+          {/* Si l'URL ne contient pas de paramètre "filmID", on affiche les filtres */}
           {
             !window.location.search.includes('filmID')
               ? <div className='movieDetails__filters-desktop'>
@@ -571,6 +574,7 @@ function MoviePage() {
           }
 
           <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
+          {/* Si l'utilisateur est connecté, on affiche les boutons d'ajouts aux "favoris", "a voir" et "vu" */}
           {isLoggedIn && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
             {/* Affichage de la tag line */}
@@ -663,7 +667,10 @@ function MoviePage() {
             >
               + de détails
             </button>
-
+            {/* Si le tableau "trailer" n'est pas vide, on affiche la vidéo, 
+            si il est vide alors on passe à "otherVideos". 
+            Si "otherVideos" n'est pas vide, alors on affiche une vidéo qui n'est pas un trailer,
+            sinon, on affiche pas de vidéo */}
             {
               trailer?.key ? (
                 <div className='movieDetails__videos'>
