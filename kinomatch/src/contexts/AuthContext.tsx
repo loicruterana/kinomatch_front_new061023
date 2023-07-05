@@ -9,21 +9,21 @@ import axios from 'axios';
 export interface UserData {
   email: string;
   id: string;
-  bookmarked: string
+  bookmarked: string;
 }
 
 // Interface définissant les proriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "toWatch"
 export interface UserDataToWatch {
   email: string;
   id: string;
-  toWatch: string
+  toWatch: string;
 }
 
 // Interface définissant les proriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "watched"
 export interface UserDataWatched {
   email: string;
   id: string;
-  watched: string
+  watched: string;
 }
 
 // Interface définissant les propriétés du contexte. Elle contient l'ensemble des propriétés du contexte.
@@ -39,6 +39,7 @@ export interface AuthContextProps {
   addWatched: (element: { movie: string }) => void;
   deleteWatched: (element: { movie: string }) => void;
   deleteBookmarkedAndWatched: (element: { movie: string }) => void;
+  clearUserData: () => void;
   userData: UserData;
   userDataToWatch: UserDataToWatch;
   userDataWatched: UserDataWatched;
@@ -52,13 +53,14 @@ interface AuthProviderProps {
 // ================ CREATECONTEXT ================
 
 // Définition du contexte et de ses types.
-export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
+export const AuthContext = createContext<AuthContextProps>(
+  {} as AuthContextProps
+);
 
 // ================ CONTEXT ================
 
 // export de la fonction AuthProvider qui prend en argument les enfants du composant.
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-
   // ================ USESTATE ================
 
   const [userData, setUserData] = useState<UserData>({
@@ -86,7 +88,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // ============================ FONCTIONS ======================================
 
-
   // ================ FONCTIONS LIÉES A LA CONNEXION ================
 
   // Fonction permettant de se connecter
@@ -99,7 +100,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoggedIn(false);
   };
 
-
   //  ================ FONCTIONS LIÉES AUX UTILISATEURS ================
 
   // Fonction permettant d'ajouter les données de l'utilisateur
@@ -107,6 +107,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserData({ ...userData, email, id: userId });
     setUserDataToWatch({ ...userDataToWatch, email, id: userId });
     setUserDataWatched({ ...userDataWatched, email, id: userId });
+  };
+
+  const clearUserData = (): void => {
+    setUserData({ ...userData, email: '', id: '' });
   };
 
   // ================ FONCTIONS LIÉES AUX BOOKMARKS (COEUR) ================
@@ -125,15 +129,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // ================================= USEEFFECT ==========================================
-  
+
   // UseEffect permettant de poster les données des "bookmarked" de l'utilisateur
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        // const response = await axios.post(
-        //   'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
-        //   userData
-        // );
+        await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
+          userData
+        );
       } catch (error) {
         console.log(error);
       }
@@ -149,7 +153,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // On écoute les changements de l'état "userData" et "isBookmarkedModified"
   }, [userData, isBookmarkedModified]);
-
 
   // UseEffect permettant de supprimer les données des "bookmarked" de l'utilisateur
   useEffect(() => {
@@ -176,9 +179,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
-
   // ================ FONCTIONS LIÉES AUX FILMS À VOIR ================
-
 
   // Fonction permettant d'ajouter un film à voir
   const addToWatch = async (element: { movie: string }): Promise<void> => {
@@ -189,18 +190,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Fonction permettant de supprimer un film à voir
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deleteToWatch = async (element: { movie: any }): Promise<void> => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie || element });
+    setUserDataToWatch({
+      ...userDataToWatch,
+      toWatch: element.movie || element,
+    });
   };
-
 
   // UseEffect permettant de poster les données des "toWatch" de l'utilisateur
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        // const response = await axios.post(
-        //   'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
-        //   userDataToWatch
-        // );
+        await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
+          userDataToWatch
+        );
       } catch (error) {
         console.log(error);
       }
@@ -216,7 +219,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // On écoute les changements de l'état "userDataToWatch" et "isToWatchModified"
   }, [userDataToWatch, isToWatchModified]);
 
-
   // UseEffect permettant de supprimer les données des "toWatch" de l'utilisateur
   useEffect(() => {
     const deleteData = async (): Promise<void> => {
@@ -228,7 +230,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         axios.delete(
           `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
         );
-
       } catch (error) {
         console.log(error);
       }
@@ -245,7 +246,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // ================ FONCTIONS LIÉES AUX FILMS DÉJÀ VUS ================
 
-
   // Fonction permettant d'ajouter un film déjà vu
   const addWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({ ...userDataWatched, watched: element.movie });
@@ -254,34 +254,45 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Fonction permettant de supprimer un film déjà vu
   const deleteWatched = async (element: { movie: string }): Promise<void> => {
-    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
+    setUserDataWatched({
+      ...userDataWatched,
+      watched: element.movie || element.toString(),
+    });
   };
 
   //! Fonction permettant de supprimer un film des favoris lorsqu'on le supprime des films déjà vus
-  const deleteBookmarkedAndWatched = async (element: { movie: string }): Promise<void> => {
-    setUserData({ ...userData, bookmarked: element.movie || element.toString() });
-    setUserDataWatched({ ...userDataWatched, watched: element.movie || element.toString() });
+  const deleteBookmarkedAndWatched = async (element: {
+    movie: string;
+  }): Promise<void> => {
+    setUserData({
+      ...userData,
+      bookmarked: element.movie || element.toString(),
+    });
+    setUserDataWatched({
+      ...userDataWatched,
+      watched: element.movie || element.toString(),
+    });
   };
 
   // UseEffect permettant de poster les données des "watched" de l'utilisateur
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        // const response = await axios.post(
-        //   'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
-        //   userDataWatched
-        // );
+        await axios.post(
+          'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
+          userDataWatched
+        );
       } catch (error) {
         console.log(error);
       }
     };
 
-    // Si "isWatchedModified" a été modifié et que userDataWatched.watched n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état 
+    // Si "isWatchedModified" a été modifié et que userDataWatched.watched n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
     if (userDataWatched.watched !== '' && isWatchedModified) {
       postData();
       setIsWatchedModified(false);
     } else {
-      setIsWatchedModified(false); 
+      setIsWatchedModified(false);
     }
 
     // On écoute les changements de l'état "userDataWatched" et "isWatchedModified"
@@ -333,6 +344,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         userDataToWatch,
         userDataWatched,
         deleteBookmarkedAndWatched,
+        clearUserData,
       }}
     >
       {children}

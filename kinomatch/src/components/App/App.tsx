@@ -9,9 +9,9 @@ import MoviePage from './MoviePage/MoviePage';
 // import Home from './Home/Home';
 // import CreateProfile from './CreateProfile/CreateProfile';
 import Home from './Home/Home';
-// import Login from './Login/Login';
-// import Signup from './Signup/Signup';
-// import Profile from './Profile/Profile';
+import Login from './Login/Login';
+import Signup from './Signup/Signup';
+import Profile from './Profile/Profile';
 import SearchResults from './SearchResults/SearchResults';
 import PageNotFound from './PageNotFound/PageNotFound';
 
@@ -45,18 +45,9 @@ function App() {
                   <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/films' element={<MoviePage />} />
-                    {/* <Route
-                      path="/signup"
-                      element={<Signup />}
-                    /> */}
-                    {/* <Route
-                      path="/login"
-                      element={<Login />}
-                    /> */}
-                    {/* <Route
-                      path="/profile"
-                      element={<Profile />}
-                    /> */}
+                    <Route path='/signup' element={<Signup />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/profile' element={<Profile />} />
                     <Route path='/noresult' element={<NoResult />} />
                     <Route path='*' element={<PageNotFound />} />
                     <Route path='/searchresults' element={<SearchResults />} />

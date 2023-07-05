@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -45,9 +45,9 @@ const BurgerMenu: React.FC<Props> = ({
   // ================ HANDLERS ================
 
   // pour afficher ou masquer le menu burger
-  // const handleClick = (): void => {
-  //   setShowBurgerMenu(!showBurgerMenu);
-  // };
+  const handleClick = (): void => {
+    setShowBurgerMenu(!showBurgerMenu);
+  };
 
   // pour naviguer vers la page de profil
   const handleProfile = (): void => {
@@ -149,16 +149,22 @@ const BurgerMenu: React.FC<Props> = ({
               setQuery={setQuery}
               handleSubmit={handleSubmit}
             />
-            {/* <Link to="login" key="login">
-                <button className="BurgerMenu__container__button" onClick={handleClick}>
-                  Se connecter
-                </button>
-              </Link>
-              <Link to="signup" key="signup">
-                <button className="BurgerMenu__container__button" onClick={handleClick}>
-                  Créer un compte
-                </button>
-              </Link> */}
+            <Link to='login' key='login'>
+              <button
+                className='BurgerMenu__container__button'
+                onClick={handleClick}
+              >
+                Se connecter
+              </button>
+            </Link>
+            <Link to='signup' key='signup'>
+              <button
+                className='BurgerMenu__container__button'
+                onClick={handleClick}
+              >
+                Créer un compte
+              </button>
+            </Link>
           </div>
         </nav>
       </div>

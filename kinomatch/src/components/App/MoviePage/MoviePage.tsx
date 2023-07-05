@@ -28,7 +28,6 @@ import { Movie, Credits } from '../../../utils/interfaces';
 // ================ IMPORT SCSS ================
 import './style.scss';
 
-
 // Fonction MoviePage permettant d'afficher la page d'un film
 function MoviePage() {
   const navigate = useNavigate();
@@ -80,9 +79,9 @@ function MoviePage() {
   // UseState "videos"
   const [videos, setVideos] = useState([
     {
-      type: "",
-      key: "",
-      name: ""
+      type: '',
+      key: '',
+      name: '',
     },
   ]);
 
@@ -106,7 +105,6 @@ function MoviePage() {
     crew: [],
     id: 0,
   });
-
 
   // UseState route "providers"
   /* Lors de l'utilisation de l'import de l'interface de Provider, le typage n'accepte pas ces données
@@ -144,7 +142,7 @@ function MoviePage() {
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, login, addUserData } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
     SelectedProviderFiltersContext
@@ -181,8 +179,9 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
-      }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${
+      month < 10 ? '0' + month : month
+    }/${year}`;
   }
 
   // RECUPERATION DES RÉALISATEURS
@@ -201,8 +200,8 @@ function MoviePage() {
   const mappedActorCastMembers = actorCastMembers?.slice(0, 3);
 
   // RÉCUPÉRATION DES TRAILERS
-  const trailer = videos.find(video => video.type.includes("Trailer"));
-  const otherVideos = videos.filter(video => !video.type.includes("Trailer"));
+  const trailer = videos.find((video) => video.type.includes('Trailer'));
+  const otherVideos = videos.filter((video) => !video.type.includes('Trailer'));
 
   // ==================== USEEFFECT ===============================
 
@@ -219,7 +218,6 @@ function MoviePage() {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
-
 
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
   useEffect(() => {
@@ -284,7 +282,13 @@ function MoviePage() {
       Promise.all(requests)
         .then((responses) => {
           // On déstructure les réponses pour les récupérer dans l'ordre
-          const [detailResponse, creditsResponse, providerResponse, movieArrayResponse, videosMovie] = responses;
+          const [
+            detailResponse,
+            creditsResponse,
+            providerResponse,
+            movieArrayResponse,
+            videosMovie,
+          ] = responses;
 
           // On récupère les données des films pour les stocker dans des variables
           const movieData = detailResponse.data;
@@ -304,7 +308,6 @@ function MoviePage() {
             fillValue: movieData.vote_average * 10,
           });
         })
-
 
         .catch((error) => {
           // Gérer l'erreur ici
@@ -341,7 +344,6 @@ function MoviePage() {
             chosenPage = Math.floor(Math.random() * 500) + 1;
           }
 
-
           // On récupère les données de la page sélectionnée
           const searchParams1 = new URLSearchParams();
           searchParams1.append('randomPage', chosenPage.toString());
@@ -354,7 +356,8 @@ function MoviePage() {
           }
           // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
           return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search
+            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
+              window.location.search
             }&${searchParams1.toString()}`
           );
         })
@@ -363,17 +366,22 @@ function MoviePage() {
 
           // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
           if (data) {
-            const selectRandomID = data.results[Math.floor(Math.random() * data.results.length)].id;
+            const selectRandomID =
+              data.results[Math.floor(Math.random() * data.results.length)].id;
             // On évite d'afficher le même film que celui qui est déjà affiché
             const filteredResults = data.results.filter(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (result: { id: any }) => result.id !== selectRandomID);
+              (result: { id: any }) => result.id !== selectRandomID
+            );
 
             setMovieArray(filteredResults);
 
             const searchParams = new URLSearchParams();
             // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-            searchParams.append('movieID', movieArray.length === 0 ? selectRandomID : currentMovieId);
+            searchParams.append(
+              'movieID',
+              movieArray.length === 0 ? selectRandomID : currentMovieId
+            );
 
             // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
             const requests = [
@@ -396,7 +404,8 @@ function MoviePage() {
         // Ensuite on récupère les données des films recommandés et on les stocke dans les states
         .then((responses) => {
           if (Array.isArray(responses)) {
-            const [movieData, creditsData, providersData, videosMovie] = responses;
+            const [movieData, creditsData, providersData, videosMovie] =
+              responses;
             if (movieData.data && creditsData.data && providersData.data) {
               setMovie(movieData.data);
               setCredits(creditsData.data);
@@ -424,7 +433,6 @@ function MoviePage() {
   if (isLoading) {
     return <Loading />;
   }
-
 
   return (
     <article className='moviePage'>
@@ -482,7 +490,7 @@ function MoviePage() {
                 <div className='text'>
                   {/* Si la note est un nombre entier, on affiche le nombre sinon on affiche le nombre avec une décimale */}
                   {Math.floor(movie.vote_average * 10) ===
-                    movie.vote_average * 10
+                  movie.vote_average * 10
                     ? movie.vote_average * 10
                     : (movie.vote_average * 10).toFixed(1)}
                   %<div className='small'>{movie.vote_count} votes </div>
@@ -508,49 +516,47 @@ function MoviePage() {
         {/* Section détails du film: filtres, synopsis, réalisateur, acteurs date de sortie ...  */}
         <section className='movieDetails'>
           {/* Si l'URL ne contient pas de paramètre "filmID", on affiche les filtres */}
-          {
-            !window.location.search.includes('filmID')
-              ? <div className='movieDetails__filters-desktop'>
-                <ul className='movieDetails__filters-desktop--filterElemList'>
-                  {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
-                  <li>
-                    {selectedGenreFilters.map(
-                      (genre: { id: Key | null | undefined; name: string }) => (
-                        <p
-                          key={genre.id}
-                          className='movieDetails__filters-desktop--filterElem'
-                        >
-                          {genre.name}
-                        </p>
-                      )
-                    )}
-                  </li>
-                  {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
-                  <li>
-                    {selectedProviderFilters.map((provider) => (
+          {!window.location.search.includes('filmID') ? (
+            <div className='movieDetails__filters-desktop'>
+              <ul className='movieDetails__filters-desktop--filterElemList'>
+                {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
+                <li>
+                  {selectedGenreFilters.map(
+                    (genre: { id: Key | null | undefined; name: string }) => (
                       <p
-                        key={provider.id}
+                        key={genre.id}
                         className='movieDetails__filters-desktop--filterElem'
                       >
-                        {provider.provider_name}
+                        {genre.name}
                       </p>
-                    ))}
-                  </li>
-                  {/* Pour chaque filtre de "décennie", on affiche les noms de décennies */}
-                  <li>
-                    {selectedDecadeFilters.map((decade) => (
-                      <p
-                        key={decade}
-                        className='movieDetails__filters-desktop--filterElem'
-                      >
-                        {decade}
-                      </p>
-                    ))}
-                  </li>
-                </ul>
-              </div>
-              : null
-          }
+                    )
+                  )}
+                </li>
+                {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
+                <li>
+                  {selectedProviderFilters.map((provider) => (
+                    <p
+                      key={provider.id}
+                      className='movieDetails__filters-desktop--filterElem'
+                    >
+                      {provider.provider_name}
+                    </p>
+                  ))}
+                </li>
+                {/* Pour chaque filtre de "décennie", on affiche les noms de décennies */}
+                <li>
+                  {selectedDecadeFilters.map((decade) => (
+                    <p
+                      key={decade}
+                      className='movieDetails__filters-desktop--filterElem'
+                    >
+                      {decade}
+                    </p>
+                  ))}
+                </li>
+              </ul>
+            </div>
+          ) : null}
 
           <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
           {/* Si l'utilisateur est connecté, on affiche les boutons d'ajouts aux "favoris", "a voir" et "vu" */}
@@ -650,30 +656,25 @@ function MoviePage() {
             si il est vide alors on passe à "otherVideos". 
             Si "otherVideos" n'est pas vide, alors on affiche une vidéo qui n'est pas un trailer,
             sinon, on affiche pas de vidéo */}
-            {
-              trailer?.key ? (
-                <div className='movieDetails__videos'>
-
-                  <iframe className="responsive-iframe"
-                    src={`https://www.youtube.com/embed/${trailer.key}`}
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  >
-                  </iframe>
-                </div>
-
-              ) : otherVideos.length > 0 ? (
-                <div className='movieDetails__videos'>
-
-                  <iframe className="responsive-iframe"
-                    src={`https://www.youtube.com/embed/${otherVideos[0].key}`}
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  >
-                  </iframe>
-                </div>
-              ) : null
-            }
+            {trailer?.key ? (
+              <div className='movieDetails__videos'>
+                <iframe
+                  className='responsive-iframe'
+                  src={`https://www.youtube.com/embed/${trailer.key}`}
+                  allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : otherVideos.length > 0 ? (
+              <div className='movieDetails__videos'>
+                <iframe
+                  className='responsive-iframe'
+                  src={`https://www.youtube.com/embed/${otherVideos[0].key}`}
+                  allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : null}
 
             <div className='movieDetails__filters'>
               {/* Si ce n'est pas la version deskTop, on affiche les filtres */}

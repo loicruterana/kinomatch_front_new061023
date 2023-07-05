@@ -20,6 +20,7 @@ import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFi
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
+// import { AuthContext } from '../../../contexts/AuthContext';
 
 //* ================ COMPOSANT ================
 export const Home: React.FC = () => {
@@ -67,6 +68,7 @@ export const Home: React.FC = () => {
   const { load, unload, isLoading } = useContext(LoadingContext);
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
+  // const { addUserData, login } = useContext(AuthContext);
 
   // ================ UTILS ================
 
@@ -136,6 +138,17 @@ export const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   // Vérifier si les données de connexion existent dans le localStorage
+  //   const userEmail = localStorage.getItem('userEmail');
+  //   const userId = localStorage.getItem('userId');
+
+  //   if (userEmail && userId) {
+  //     addUserData(userEmail, userId);
+  //     login();
+  //   }
+  // }, []);
+
   //======== USEWINDOWSIZE
 
   // la taille de l'écran définit l'affichage des filtres
@@ -160,6 +173,7 @@ export const Home: React.FC = () => {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
     // un removeEventListener pour éviter les fuites de mémoire
+    // on risque  d'enregistrer plusieurs écouteurs pour le même événement et créer des fuites mémoires
   }, []);
 
   // ================ HANDLERS ================
@@ -298,6 +312,13 @@ export const Home: React.FC = () => {
             0
               ? 'Films tendances'
               : 'Valider mon choix'}
+            <img
+              src='images/logokinoblue.svg'
+              alt='image'
+              width='50'
+              height='50'
+            />
+
             {/*          
           <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>

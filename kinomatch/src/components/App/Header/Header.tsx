@@ -18,10 +18,13 @@ import './Header.scss';
 //* ================  COMPOSANT ================
 
 function Header() {
+  // ================ USESTATE ================
+
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
-  const authContext = useContext(AuthContext);
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
+
+  const { isLoggedIn, userData } = useContext(AuthContext);
 
   // ================  UTILS ================
 
@@ -49,7 +52,7 @@ function Header() {
   }, []);
 
   // Vérifier si le contexte est défini
-  if (!authContext) {
+  if (!AuthContext) {
     // Gérer le cas où le contexte est indéfini, par exemple afficher un message d'erreur ou rediriger vers une page d'erreur
     return <div>Erreur: Contexte non défini</div>;
   }
@@ -120,37 +123,40 @@ function Header() {
             Relancer une recherche{' '}
           </button>
         )}
+        <div className='Header-elements'>
+          {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
+          {desktopVersion && (
+            <SearchBar
+              query={query}
+              setQuery={setQuery}
+              handleSubmit={handleSubmit}
+            />
+          )}
 
-        {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
-        {/* Au clic sera affichée une modale BurgerMenu */}
-        {/* {!isLoggedIn && (
-        <div className='Header-buttons'>
-          <button className='Header-buttons-button'>
-            <Link key='login' to='/login'>
-              Se connecter
-            </Link>
-          </button>
+          {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
+          {/* Au clic sera affichée une modale BurgerMenu */}
+          {!isLoggedIn && (
+            <div className='Header-elements-buttons'>
+              <button className='Header-elements-buttons-button'>
+                <Link key='login' to='/login'>
+                  Se connecter
+                </Link>
+              </button>
+            </div>
+          )}
+
+          {/* Profil de l'utilisateur connecté */}
+          {isLoggedIn && (
+            <div className='Header-elements-profile'>
+              <img src='images/SamplePic.png' alt='profile' />
+              <Link to='/profile'>
+                <div className='Header-elements-profile-username'>
+                  {userData.email}
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
-      )} */}
-
-        {/* Profil de l'utilisateur connecté */}
-        {/* {isLoggedIn && (
-        <div className='Header-profile'>
-          <img src='images/SamplePic.png' alt='profile' />
-          <Link to='/profile'>
-            <div className='Header-profile-username'>{userData.email}</div>
-          </Link>
-        </div>
-      )} */}
-
-        {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
-        {desktopVersion && (
-          <SearchBar
-            query={query}
-            setQuery={setQuery}
-            handleSubmit={handleSubmit}
-          />
-        )}
 
         {/* Icône BurgerMenu, uniquement affiché en version mobile */}
         <div

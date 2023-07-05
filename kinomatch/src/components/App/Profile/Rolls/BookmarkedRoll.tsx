@@ -1,5 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import {
   WatchedListEntry,
   WatchedListArray,
@@ -140,8 +142,9 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                             : '',
                         }}
                       ></i>
-
-                      {watchedMovies[Number(watchedListItem.film_id)]?.name}
+                      <Link to={`/films?filmID=${watchedListItem.film_id}`}>
+                        {watchedMovies[Number(watchedListItem.film_id)]?.name}
+                      </Link>
 
                       {/* Bouton de suppression (croix) */}
                       <i
@@ -203,7 +206,14 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       }__roll-container__item`}
                       key={toWatchListItem.id}
                     >
-                      {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
+                      <i
+                        className={`Profile-container__roll-modale-${
+                          mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-c fa-sharp fa-solid fa-check `}
+                      ></i>
+                      <Link to={`/films?filmID=${toWatchListItem.film_id}`}>
+                        {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
+                      </Link>
                       {/* bouton de bookmark croix */}
                       <i
                         // pour supprimer le film de la liste des films à voir

@@ -1,17 +1,21 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { useState, useContext } from 'react';
+import React, {
+  useState,
+  // ,
+  // useContext
+} from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
 
-import { AuthContext } from '../../../contexts/AuthContext';
+// import { AuthContext } from '../../../contexts/AuthContext';
 
 // ================ IMPORT COMPOSANTS ================
 
-import Connected from '../Connected/Connected';
+// import Connected from '../Connected/Connected';
 
 // ================ IMPORT SCSS ================
 
@@ -20,9 +24,19 @@ import './Login.scss';
 //* ================ COMPOSANT ================
 
 export const Login = () => {
+  axios.defaults.withCredentials = true;
+
+  // useEffect(() => {
+  //   axios
+  //     .get('https://deploy-back-kinomatch.herokuapp.com/login')
+  //     .then((response) => {
+  //       console.log(response);
+  //     });
+  // }, []);
+
   // ================ IMPORT PROPS CONTEXTS ================
 
-  const { userData, addUserData, login } = useContext(AuthContext);
+  // const { userData, addUserData, login } = useContext(AuthContext);
 
   // ================ USESTATE ================
 
@@ -33,15 +47,32 @@ export const Login = () => {
     passwordConfirm: '',
   });
   // state pour la redirection vers la page d'accueil
-  const [goToHomePage, setGoToHomePage] = useState(false);
+  // const [goToHomePage, setGoToHomePage] = useState(false);
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
+  // useEffect(() => {
+  //   // Vérifier si les données de connexion existent dans le localStorage
+  //   const userEmail = localStorage.getItem('userEmail');
+  //   const userId = localStorage.getItem('userId');
+
+  //   if (userEmail && userId) {
+  //     addUserData(userEmail, userId);
+  //     login();
+  //     setGoToHomePage(true);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   // ================ UTILS ================
+
+  // const email = useRef<HTMLInputElement>(null);
+  // const password = useRef<HTMLInputElement>(null);
+
   // fonction qui va permettre de rediriger vers la page d'accueil
-  if (goToHomePage) {
-    return <Navigate to='/' />;
-  }
+  // if (goToHomePage) {
+  //   return <Navigate to='/' />;
+  // }
 
   // ================ HANDLERS ================
 
@@ -55,29 +86,24 @@ export const Login = () => {
   };
 
   //handleSubmit pour envoyer les données du formulaire pour se loger
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const userData: { email: string; password: string } = {
+    const userData = {
       email: postProfil.email,
       password: postProfil.password,
     };
 
     axios
-      // envoi des données au back
-      .post('https://deploy-back-kinomatch.herokuapp.com/login', userData)
+      .post('https://deploy-back-kinomatch.herokuapp.com/login', userData, {
+        withCredentials: true,
+      })
       .then((response) => {
         if (response.status === 200) {
-          //Utilisateur connecté
           setMessage(response.data.message);
-          addUserData(response.data.user.email, response.data.user.id);
-
-          login();
-          setTimeout(() => {
-            setGoToHomePage(true);
-          }, 1500);
+          // addUserData(response.data.user.email, response.data.user.id);
+          // setGoToHomePage(true);
+          console.log(response);
         }
-
-        // OK
       })
       .catch((error) => {
         console.log(error);
@@ -98,6 +124,7 @@ export const Login = () => {
         }
       });
   };
+
   // ================ JSX ================
   return (
     <main className='Login-container'>
@@ -138,7 +165,7 @@ export const Login = () => {
         <button type='submit'>Connexion</button>
         <p className='Login-container__message'>{message}</p>
       </form>
-      {userData.email && <Connected />}
+      {/* {userData.email && <Connected />} */}
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================
