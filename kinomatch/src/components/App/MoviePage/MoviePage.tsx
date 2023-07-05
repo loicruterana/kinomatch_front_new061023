@@ -7,7 +7,6 @@ import axios from 'axios';
 // ================ IMPORT COMPOSANTS ================
 import ImageModal from './ImageModal/ImageModal';
 import DetailsModal from './DetailsModal/DetailsModal';
-// import CommentPost from './CommentPost/CommentPost';
 import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
@@ -22,45 +21,12 @@ import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFi
 import { NoResultContext } from '../../../contexts/NoResultContext';
 import Loading from '../Loading/Loading';
 
+// ================ IMPORT INTERFACES ================
+
+import { Movie, Credits } from '../../../utils/interfaces';
+
 // ================ IMPORT SCSS ================
 import './style.scss';
-
-// ================ INTERFACES ================
-
-/* Interface Movie permettant de typer les données du film */
-interface Movie {
-  title: string;
-  id: string;
-  poster_path: string;
-  vote_average: number;
-  vote_count: string;
-  tagline: string;
-  overview: string;
-  genres: [];
-  runtime: number;
-  release_date: string;
-}
-
-/* Interface Credits permettant de typer les données du casting */
-interface Credits {
-  cast: [];
-  crew: [];
-  id: number;
-}
-
-/* Interface Providers permettant de typer les données des plateformes */
-interface Providers {
-  results: {
-    FR: {
-      flatrate: [];
-      rent: [];
-      buy: [];
-      free: [];
-      ads: [];
-      link: string;
-    };
-  };
-}
 
 
 // Fonction MoviePage permettant d'afficher la page d'un film
@@ -141,8 +107,24 @@ function MoviePage() {
     id: 0,
   });
 
+
   // UseState route "providers"
-  const [providers, setProviders] = useState<Providers>({
+  /* Lors de l'utilisation de l'import de l'interface de Provider, le typage n'accepte pas ces données
+  Je dois le redécomposer ici */
+  const [providers, setProviders] = useState<{
+    results: {
+      FR: {
+        flatrate: [];
+        rent: [];
+        buy: [];
+        free: [];
+        ads: [];
+        link: string;
+        provider_id: number;
+        provider_name: string;
+      };
+    };
+  }>({
     results: {
       FR: {
         flatrate: [],
@@ -151,6 +133,8 @@ function MoviePage() {
         free: [],
         ads: [],
         link: '',
+        provider_id: 0,
+        provider_name: '',
       },
     },
   });
