@@ -142,7 +142,7 @@ function MoviePage() {
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
-  const { isLoggedIn, login, addUserData } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
     SelectedProviderFiltersContext
