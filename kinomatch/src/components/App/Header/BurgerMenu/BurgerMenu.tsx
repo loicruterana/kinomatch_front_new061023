@@ -104,11 +104,8 @@ const BurgerMenu: React.FC<Props> = ({
               <>
                 {/* Nom de l'utilisateur */}
                 <div className='BurgerMenu__container__items__text'>
-                  <h2>
-                    Bonjour
-                    <br />
-                    {authContext?.userData.email}
-                  </h2>
+                  <h2>Bonjour</h2>
+                  <span>{authContext?.userData.email}</span>
                 </div>
                 {/* Les boutons lorsque l'utilisateur est connecté */}
                 <ul>
@@ -149,22 +146,26 @@ const BurgerMenu: React.FC<Props> = ({
               setQuery={setQuery}
               handleSubmit={handleSubmit}
             />
-            <Link to='login' key='login'>
-              <button
-                className='BurgerMenu__container__button'
-                onClick={handleClick}
-              >
-                Se connecter
-              </button>
-            </Link>
-            <Link to='signup' key='signup'>
-              <button
-                className='BurgerMenu__container__button'
-                onClick={handleClick}
-              >
-                Créer un compte
-              </button>
-            </Link>
+            {!authContext?.isLoggedIn && (
+              <>
+                <Link to='/login' key='login'>
+                  <button
+                    className='BurgerMenu__container__button'
+                    onClick={handleClick}
+                  >
+                    Se connecter
+                  </button>
+                </Link>
+                <Link to='/signup' key='signup'>
+                  <button
+                    className='BurgerMenu__container__button'
+                    onClick={handleClick}
+                  >
+                    Créer un compte
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>
