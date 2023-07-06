@@ -88,6 +88,10 @@ export const Profile: React.FC = () => {
   const listsAreLoading =
     (watchedList || toWatchList || bookmarkedList) === undefined; // false
 
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+
   // ================ INTERFACES ================
   interface BookmarkedItem {
     createdAt: string;
@@ -156,6 +160,7 @@ export const Profile: React.FC = () => {
         .then(() => {
           localStorage.removeItem('userEmail');
           localStorage.removeItem('userId');
+          deleteCookie('monCookie');
           logout();
           clearUserData();
           navigate(`/`);

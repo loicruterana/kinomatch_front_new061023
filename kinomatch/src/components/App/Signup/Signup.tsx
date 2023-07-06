@@ -1,13 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import {
-  useContext,
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-} from 'react';
+import { useContext, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -45,23 +38,54 @@ const Signup = () => {
 
   const { userData, addUserData, login } = useContext(AuthContext);
 
-  useEffect(() => {
-    // Vérifier si les données de connexion existent dans le localStorage
-    const userEmail = localStorage.getItem('userEmail');
-    const userId = localStorage.getItem('userId');
-
-    if (userEmail && userId) {
-      addUserData(userEmail, userId);
-      login();
-      setGoToHomePage(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // ================ UTILS ================
 
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+  function getCookie(name) {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+
+      if (cookie.startsWith(name + '=')) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+
+    return null;
+  }
+
+  useEffect(() => {
+    const monCookie = getCookie('userToken');
+
+    if (monCookie) {
+      console.log('Valeur du cookie :', monCookie);
+
+      // Effectuer une requête asynchrone vers la base de données pour vérifier l'ID de l'utilisateur
+      axios
+        .get(`${API_BASE_URL}/login/${monCookie}`)
+        .then((response) => {
+          const loggedIn = response.data.loggedIn;
+
+          if (loggedIn) {
+            console.log('il est bien loggedIn');
+            // Faites la suite d'instructions ici
+          } else {
+            console.log("L'ID de l'utilisateur n'est pas valide");
+            // Faites une autre action si nécessaire
+          }
+        })
+        .catch((error) => {
+          console.log(
+            "Erreur lors de la vérification de l'ID de l'utilisateur :",
+            error
+          );
+          // Gérez l'erreur de la requête si nécessaire
+        });
+    } else {
+      console.log("Le cookie n'existe pas");
+    }
+  }, []);
 
   // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
@@ -87,9 +111,10 @@ const Signup = () => {
       password: postProfil.password,
       passwordConfirm: postProfil.passwordConfirm,
     };
-
     try {
-      const response = await axios.post(`${API_BASE_URL}/signup`, userData);
+      const response = await axios.post(`${API_BASE_URL}/signup`, userData, {
+        withCredentials: true,
+      });
       // login(), va permettre de stocker dans AuhthContext = true;
       login();
       // setMessage pour afficher le message d'erreur

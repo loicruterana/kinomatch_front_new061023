@@ -101,7 +101,9 @@ function Header() {
           />
         </Link>
         {/* Logo du Header, logo différent on est en version mobile */}
-        {location.pathname === '/films' && !window.location.search.includes('filmID') && !desktopVersion ? (
+        {location.pathname === '/films' &&
+        !window.location.search.includes('filmID') &&
+        !desktopVersion ? (
           <Link
             key='refresh'
             to='#'
@@ -113,16 +115,18 @@ function Header() {
         ) : null}
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
-        {location.pathname === '/films' && desktopVersion && !window.location.search.includes('filmID') && (
-          <button
-            className='Header--OtherResultsBtn'
-            type='button'
-            onClick={movieArrayReload}
-          >
-            {' '}
-            Relancer une recherche{' '}
-          </button>
-        )}
+        {location.pathname === '/films' &&
+          desktopVersion &&
+          !window.location.search.includes('filmID') && (
+            <button
+              className='Header--OtherResultsBtn'
+              type='button'
+              onClick={movieArrayReload}
+            >
+              {' '}
+              Relancer une recherche{' '}
+            </button>
+          )}
         <div className='Header-elements'>
           {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
           {desktopVersion && (

@@ -1,23 +1,18 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, {
-  useState,
-  useEffect,
-  // ,
-  // useContext
-} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-// import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT CONTEXTS ================
 
-// import { AuthContext } from '../../../contexts/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 // ================ IMPORT COMPOSANTS ================
 
-// import Connected from '../Connected/Connected';
+import Connected from '../Connected/Connected';
 
 // ================ IMPORT SCSS ================
 
@@ -28,17 +23,64 @@ import './Login.scss';
 export const Login = () => {
   axios.defaults.withCredentials = true;
 
-  //test
-  useEffect(() => {
-    axios.get(`${API_BASE_URL}/login`).then((response) => {
-      console.log(response);
-    });
-  }, []);
+  // function getCookie(name) {
+  //   const cookieString = document.cookie;
+  //   const cookies = cookieString.split(';');
+
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i].trim();
+
+  //     if (cookie.startsWith(name + '=')) {
+  //       return cookie.substring(name.length + 1);
+  //     }
+  //   }
+
+  //   return null;
+  // }
+
+  // useEffect(() => {
+  //   const monCookie = getCookie('userToken');
+
+  //   if (monCookie) {
+  //     console.log('Valeur du cookie :', monCookie);
+  //     // Faites quelque chose avec la valeur du cookie...
+
+  //     axios
+  //       .get(`${API_BASE_URL}/login/${monCookie}`)
+  //       .then((response) => {
+  //         const data = response.data;
+  //         console.log('Valeurs récupérées du backend :', data);
+
+  //         // Faites quelque chose avec les valeurs récupérées
+  //         // Par exemple, mettez à jour l'état du composant avec les données reçues
+  //         // addUserData(userEmail, userId);
+  //         // login();
+  //         // setGoToHomePage(true);
+  //       })
+  //       .catch((error) => {
+  //         console.log(`${API_BASE_URL}/login/${monCookie}`);
+  //         console.log(
+  //           'Erreur lors de la récupération des valeurs depuis le backend :',
+  //           error
+  //         );
+  //         // Gérez l'erreur de la requête si nécessaire
+  //       });
+  //   } else {
+  //     console.log("Le cookie n'existe pas");
+  //   }
+  // }, []);
+
+  // //test
+  // useEffect(() => {
+  //   axios.get(`${API_BASE_URL}/login`).then((response) => {
+  //     console.log(response);
+  //   });
+  // }, []);
 
   // ================ IMPORT PROPS CONTEXTS ================
 
-  // const { userData, addUserData, login } = useContext(AuthContext);
-
+  const { userData, addUserData, login } = useContext(AuthContext);
+  //
   // ================ USESTATE ================
 
   // state qui va recevoir les données du formulaire
@@ -48,22 +90,22 @@ export const Login = () => {
     passwordConfirm: '',
   });
   // state pour la redirection vers la page d'accueil
-  // const [goToHomePage, setGoToHomePage] = useState(false);
+  const [goToHomePage, setGoToHomePage] = useState(false);
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
-  // useEffect(() => {
-  //   // Vérifier si les données de connexion existent dans le localStorage
-  //   const userEmail = localStorage.getItem('userEmail');
-  //   const userId = localStorage.getItem('userId');
+  useEffect(() => {
+    // Vérifier si les données de connexion existent dans le localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    const userId = localStorage.getItem('userId');
 
-  //   if (userEmail && userId) {
-  //     addUserData(userEmail, userId);
-  //     login();
-  //     setGoToHomePage(true);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    if (userEmail && userId) {
+      addUserData(userEmail, userId);
+      login();
+      setGoToHomePage(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ================ UTILS ================
 
@@ -71,9 +113,9 @@ export const Login = () => {
   // const password = useRef<HTMLInputElement>(null);
 
   // fonction qui va permettre de rediriger vers la page d'accueil
-  // if (goToHomePage) {
-  //   return <Navigate to='/' />;
-  // }
+  if (goToHomePage) {
+    return <Navigate to='/' />;
+  }
 
   // ================ HANDLERS ================
 
@@ -101,9 +143,12 @@ export const Login = () => {
       .then((response) => {
         if (response.status === 200) {
           setMessage(response.data.message);
-          // addUserData(response.data.user.email, response.data.user.id);
-          // setGoToHomePage(true);
-          console.log(response);
+          addUserData(response.data.user.email, response.data.user.id);
+          setGoToHomePage(true);
+          login();
+          setTimeout(() => {
+            setGoToHomePage(true);
+          }, 1500);
         }
       })
       .catch((error) => {
@@ -152,11 +197,6 @@ export const Login = () => {
           placeholder='v0tr3MdP1c1'
         />
 
-        {/* <HCaptcha
-        sitekey="7089290a-26a0-4d4d-8124-cfbe1a2c3b8a"
-        onVerify={(token,ekey) => handleVerificationSuccess(token, ekey)}
-        />         */}
-
         <Link key='signup' to='/signup'>
           <span className='new-account'>
             Vous n'avez pas encore de compte ?
@@ -166,7 +206,7 @@ export const Login = () => {
         <button type='submit'>Connexion</button>
         <p className='Login-container__message'>{message}</p>
       </form>
-      {/* {userData.email && <Connected />} */}
+      {userData.email && <Connected />}
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================
