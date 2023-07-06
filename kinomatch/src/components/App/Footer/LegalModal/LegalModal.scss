@@ -1,17 +1,12 @@
 @use '../../../../styles/vars';
-
 //* DESKTOP VERSION =================
-
 @media screen and (min-width: 900px) {
-
   .container {
     display: flex;
     height: 100vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
-
-
     &__legalModal {
       position: fixed;
       overflow: auto;
@@ -24,11 +19,9 @@
       // padding-bottom: 5rem;
       // padding-top: 70px;
       padding: 70px 7rem;
-
       // &::-webkit-scrollbar {
       //   display: none;
       // }
-
       &__title {
         display: flex;
         flex-direction: column;
@@ -40,20 +33,17 @@
         width: 80%;
         white-space: pre-wrap;
       }
-
       h2 {
         font-size: 2rem;
         font-weight: bold;
         text-align: center;
       }
-
       h3 {
         font-size: 1.3rem;
         font-weight: bold;
         margin-top: 0.6rem;
         text-align: center;
       }
-
       h4 {
         font-size: 1.3rem;
         font-weight: bold;
@@ -64,7 +54,6 @@
         padding: 10px;
         width: 80%;
       }
-
       p {
         font-size: 1.2rem;
         color: vars.$theme1-secondary;
@@ -72,7 +61,6 @@
         margin: 1rem auto;
         text-align: justify;
       }
-
       &__button--container {
         z-index: 3;
         display: flex;
@@ -84,7 +72,6 @@
         bottom: 0;
         background-color: #335c67;
         filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
-
         &---btn {
           font-size: 1.2rem;
           width: 20%;
@@ -95,7 +82,6 @@
           color: vars.$theme1-primary;
           border-radius: 6px;
           font-weight: bold;
-
           &:hover {
             transform: scale(1.03);
             cursor: pointer;
@@ -105,9 +91,7 @@
     }
   }
 }
-
 //* MOBILE VERSION =================
-
 @media screen and (max-width: 900px) {
   .container {
     display: flex;
@@ -115,8 +99,6 @@
     width: 100vw;
     justify-content: center;
     align-items: stretch;
-
-
     &__legalModal {
       display: flex;
       overflow: auto;
@@ -128,7 +110,6 @@
       height: 85%;
       border: none;
       text-align: center;
-
       &__title {
         display: flex;
         flex-direction: column;
@@ -140,20 +121,17 @@
         width: 80%;
         white-space: pre-wrap;
       }
-
       h2 {
         font-size: 1.8rem;
         font-weight: bold;
         text-align: center;
       }
-
       h3 {
         font-size: 1.1rem;
         font-weight: bold;
         margin-top: 0.6rem;
         text-align: center;
       }
-
       h4 {
         font-size: 1.1rem;
         font-weight: bold;
@@ -164,7 +142,6 @@
         padding: 10px;
         width: 80%;
       }
-
       p {
         font-size: 1rem;
         color: vars.$theme1-secondary;
@@ -172,7 +149,6 @@
         margin: 0.6rem auto;
         text-align: center;
       }
-
       &__button--container {
         z-index: 3;
         display: flex;
@@ -184,7 +160,6 @@
         bottom: 0;
         background-color: #335c67;
         filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
-
         &---btn {
           font-size: 1.2rem;
           width: 30%;
@@ -195,7 +170,6 @@
           color: vars.$theme1-primary;
           border-radius: 6px;
           font-weight: bold;
-
           &:hover {
             transform: scale(1.03);
             cursor: pointer;

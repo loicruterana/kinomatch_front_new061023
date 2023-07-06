@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import axios from 'axios';
 import './AddButton.scss';
+import API_BASE_URL from '../../../../utils/config';
 
 /* Fonction AddButton permettant d'afficher les boutons d'ajout aux listes */
-function AddButton(movieId: { movie: string; }) {
-
-  // ========================== USECONTEXT =============================== 
+function AddButton(movieId: { movie: string }) {
+  // ========================== USECONTEXT ===============================
 
   const {
     userData,
@@ -21,7 +21,7 @@ function AddButton(movieId: { movie: string; }) {
     userDataWatched,
   } = useContext(AuthContext);
 
-  // ========================== USESTATE =============================== 
+  // ========================== USESTATE ===============================
 
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
@@ -30,15 +30,12 @@ function AddButton(movieId: { movie: string; }) {
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
+  // ============================ HANDLERS =============================
 
-  // ============================ HANDLERS ============================= 
-
-
-  // ============= COEUR =================== 
+  // ============= COEUR ===================
 
   // Fonction handleHeartClick permettant de gérer le clic sur le coeur
   const handleHeartClick = () => {
-
     // Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle.
     setHeartIsClicked(!heartIsClicked);
 
@@ -56,7 +53,6 @@ function AddButton(movieId: { movie: string; }) {
 
   // Fonction handleBookMarkClick permettant de gérer le clic sur le marque page
   const handleBookMarkClick = () => {
-
     // Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle.
     setBookmarkIsClicked(!bookmartIsClicked);
 
@@ -64,7 +60,7 @@ function AddButton(movieId: { movie: string; }) {
     bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
-  // ============= CHECKED =================== 
+  // ============= CHECKED ===================
 
   // Fonction handleCheckClick permettant de gérer le clic sur le check
   const handleCheckClick = () => {
@@ -80,26 +76,24 @@ function AddButton(movieId: { movie: string; }) {
     }
   };
 
-
-  // ======================================= COEUR ====================================================== 
+  // ======================================= COEUR ======================================================
 
   // Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge
   useEffect(() => {
     const getUserBookmarked = () => {
       axios
-        .get(
-          `https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?userID=${userData.id}`
-        )
+        .get(`${API_BASE_URL}/bookmarkedMovies?userID=${userData.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
+          const filmIds = responseData.map(
+            (item: { film_id: string }) => item.film_id
+          );
 
           if (filmIds.includes(movieId.movie.toString())) {
             setHeartIsClicked(true);
           } else {
             setHeartIsClicked(false);
           }
-
         });
     };
     // Condition qui éxecute getUserBookmarked uniquement si un user est connecté
@@ -115,12 +109,12 @@ function AddButton(movieId: { movie: string; }) {
   useEffect(() => {
     const getUserToWatch = () => {
       axios
-        .get(
-          `https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?userID=${userDataToWatch.id}`
-        )
+        .get(`${API_BASE_URL}/toWatchMovies?userID=${userDataToWatch.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item: { film_id: string }) => item.film_id);
+          const filmIds = responseData.map(
+            (item: { film_id: string }) => item.film_id
+          );
           if (filmIds.includes(movieId.movie.toString())) {
             setBookmarkIsClicked(true);
           } else {
@@ -136,20 +130,18 @@ function AddButton(movieId: { movie: string; }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   // ======================================= WATCHED ======================================================
 
   // Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton check en vert
   useEffect(() => {
     const getUserWatched = () => {
       axios
-        .get(
-          `https://deploy-back-kinomatch.herokuapp.com/watchedMovies?userID=${userDataWatched.id}`
-        )
+        .get(`${API_BASE_URL}/watchedMovies?userID=${userDataWatched.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map((item: { film_id: string; }) => item.film_id);
-
+          const filmIds = responseData.map(
+            (item: { film_id: string }) => item.film_id
+          );
 
           if (filmIds.includes(movieId.movie.toString())) {
             setCheckIsClicked(true);
@@ -177,8 +169,9 @@ function AddButton(movieId: { movie: string; }) {
       >
         {/* Si le coeur est cliqué alors affiche le coeur plein sinon affiche le coeur vide */}
         <i
-          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${heartIsClicked ? 'heartClicked' : ''
-            }`}
+          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${
+            heartIsClicked ? 'heartClicked' : ''
+          }`}
           style={{ color: heartIsClicked ? '#D42121' : '' }}
         ></i>
       </button>
@@ -190,8 +183,9 @@ function AddButton(movieId: { movie: string; }) {
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
-          className={`fa-sharp fa-${bookmartIsClicked ? 'solid' : 'regular'
-            } fa-bookmark ${bookmartIsClicked ? 'bookMarkClicked' : ''}`}
+          className={`fa-sharp fa-${
+            bookmartIsClicked ? 'solid' : 'regular'
+          } fa-bookmark ${bookmartIsClicked ? 'bookMarkClicked' : ''}`}
           style={{ color: bookmartIsClicked ? '#FFF3B0' : '' }}
         ></i>
       </button>
@@ -203,8 +197,9 @@ function AddButton(movieId: { movie: string; }) {
       >
         {/* Si le check est cliqué alors affiche le check plein sinon affiche le check vide */}
         <i
-          className={`fa-sharp fa-solid fa-check ${checkIsClicked ? 'checkClicked' : ''
-            }`}
+          className={`fa-sharp fa-solid fa-check ${
+            checkIsClicked ? 'checkClicked' : ''
+          }`}
           style={{ color: checkIsClicked ? '#7deb00' : '' }}
         ></i>
       </button>

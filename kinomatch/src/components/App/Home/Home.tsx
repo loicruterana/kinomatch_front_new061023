@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre, ProviderHome } from '../../../utils/interfaces';
+import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
@@ -43,9 +44,9 @@ export const Home: React.FC = () => {
   // liste des genres préselectionnés lors du fetch
   const [preselectedGenres, setPreselectedGenres] = useState<Genre[]>([]);
   // liste des providers préselectionnés lors du fetch
-  const [preselectedProviders, setPreselectedProviders] = useState<ProviderHome[]>(
-    []
-  );
+  const [preselectedProviders, setPreselectedProviders] = useState<
+    ProviderHome[]
+  >([]);
   // usestate pour afficher ou masquer RollGenre
   const [showRollGenre, setShowRollGenre] = useState(false);
   // usestate pour afficher ou masquer RollProvider
@@ -91,7 +92,7 @@ export const Home: React.FC = () => {
     setCurrentMovieId('');
     axios
       // pour récupérer les genres
-      .get('https://deploy-back-kinomatch.herokuapp.com/genres')
+      .get(`${API_BASE_URL}/genres`)
       // les genres sont stockés dans le state preselectedGenres
       .then(({ data }) => setPreselectedGenres(data.genres))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,11 +101,14 @@ export const Home: React.FC = () => {
 
     axios
       // pour récupérer les providers
-      .get('https://deploy-back-kinomatch.herokuapp.com/providers')
+      .get(`${API_BASE_URL}/providers`)
       .then(({ data }) => {
         // pour filtrer les providers
         const filteredProviders: ProviderHome[] = data.results.reduce(
-          (validProviders: ProviderHome[], currentProvider: ProviderFromAPI) => {
+          (
+            validProviders: ProviderHome[],
+            currentProvider: ProviderFromAPI
+          ) => {
             if (
               //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
               Object.prototype.hasOwnProperty.call(

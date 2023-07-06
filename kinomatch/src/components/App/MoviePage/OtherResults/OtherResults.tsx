@@ -1,7 +1,11 @@
 import { Key, useContext, useState } from 'react';
-import { CurrentMovieIdContext, CurrentMovieIdContextProps } from '../../../../contexts/CurrentMovieIdContext';
+import {
+  CurrentMovieIdContext,
+  CurrentMovieIdContextProps,
+} from '../../../../contexts/CurrentMovieIdContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
+import API_BASE_URL from '../../../../utils/config';
 
 import './OtherResults.scss';
 
@@ -27,11 +31,13 @@ interface PrevMovies {
 
 // Function OtherResults permettant d'afficher les autres résultats de la recherche
 function OtherResults(props: OtherResultsModalProps): JSX.Element {
-
-  const { movieArray, setMovieArray, showOtherResults, setShowOtherResults } = props;
+  const { movieArray, setMovieArray, showOtherResults, setShowOtherResults } =
+    props;
 
   // UseContext "addMovieData" permettant d'ajouter les données du film sélectionné dans le contexte
-  const { addMovieData } = useContext(CurrentMovieIdContext) as CurrentMovieIdContextProps;
+  const { addMovieData } = useContext(
+    CurrentMovieIdContext
+  ) as CurrentMovieIdContextProps;
 
   // UseState "page" permettant de gérer la pagination
   const [page, setPage] = useState(1);
@@ -39,17 +45,14 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // UseState "hasMore" permettant de gérer la pagination
   const [hasMore, setHasMore] = useState(true);
 
-
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
-
     try {
-      let url = `https://deploy-back-kinomatch.herokuapp.com/randomFilms${window.location.search}&randomPage=${page}`;
+      let url = `${API_BASE_URL}/randomFilms${window.location.search}&randomPage=${page}`;
 
       // Si l'URL contient "filmID", on modifie l'URL pour la requête axios
       if (window.location.search.includes('filmID')) {
-
-        url = `https://deploy-back-kinomatch.herokuapp.com/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
+        url = `${API_BASE_URL}/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
       }
 
       const response = await axios.get(url);
@@ -62,16 +65,19 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           // On garde les films déjà présents dans le tableau movieArray
           ...prevMovies,
           // On filtre les films pour ne pas avoir de doublons
-          ...newMovies.results.filter((newMovie: { id: number; }) => {
+          ...newMovies.results.filter((newMovie: { id: number }) => {
             // On retourne true si le film n'est pas déjà présent dans le tableau movieArray
-            return !prevMovies.some((prevMovie) => prevMovie.id === newMovie.id);
+            return !prevMovies.some(
+              (prevMovie) => prevMovie.id === newMovie.id
+            );
           }),
-        ]; return updatedMovies;
+        ];
+        return updatedMovies;
       });
 
       // On incrémente la page de 1 et on met à jour le state hasMore
       setPage((prevPage) => prevPage + 1);
-      
+
       // Si le nombre de films est supérieur à 0, on met à jour le state hasMore
       setHasMore(newMovies.results.length > 0);
     } catch (error) {
@@ -79,11 +85,12 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   };
 
-
   // Function handleClick permettant de gérer le clic sur un film de la liste des autres résultats
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (event: { preventDefault: () => void; currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-
+  const handleClick = (event: {
+    preventDefault: () => void;
+    currentTarget: { getAttribute: (arg0: string) => any };
+  }) => {
     // Si l'utilisateur est sur la page d'un film, le rediriger vers la page du film sélectionné
     if (window.location.search.includes('filmID')) {
       const filmID = event.currentTarget.getAttribute('data-id');
@@ -102,10 +109,9 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
     // Condition permettant de remonter en haut de la page si l'utilisateur a scrollé
     if (window.pageYOffset > 100) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-  }
+  };
 
   return (
     <aside className='otherResults-container'>
@@ -118,37 +124,42 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
           height={2160}
-          scrollableTarget="scrollableDiv"
+          scrollableTarget='scrollableDiv'
           scrollThreshold={0.8}
         >
           <div className='otherResults-container--scrollList'>
             {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
-            {movieArray?.map((movieElem: { title: string; poster_path: string; id: Key }) => (
-              <button
-                key={movieElem.id}
-                data-id={movieElem.id}
-                onClick={handleClick}
-              >
-                {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
-                <img
-                  className='otherResults-container--scrollList---images'
-                  src={movieElem.poster_path ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}` : '/images/SamplePoster1.png'}
-                  alt={`Affiche du film ${movieElem.title}`}
-                />
-                {/* Afficher le titre du film s'il y en a une, sinon rien */}
-                {
-                  movieElem.poster_path === null ?
-                    <p className='otherResults-container--scrollList---movieTitle'>{movieElem.title}</p>
-                    : null
-                }
-              </button>
-            ))}
+            {movieArray?.map(
+              (movieElem: { title: string; poster_path: string; id: Key }) => (
+                <button
+                  key={movieElem.id}
+                  data-id={movieElem.id}
+                  onClick={handleClick}
+                >
+                  {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
+                  <img
+                    className='otherResults-container--scrollList---images'
+                    src={
+                      movieElem.poster_path
+                        ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`
+                        : '/images/SamplePoster1.png'
+                    }
+                    alt={`Affiche du film ${movieElem.title}`}
+                  />
+                  {/* Afficher le titre du film s'il y en a une, sinon rien */}
+                  {movieElem.poster_path === null ? (
+                    <p className='otherResults-container--scrollList---movieTitle'>
+                      {movieElem.title}
+                    </p>
+                  ) : null}
+                </button>
+              )
+            )}
           </div>
         </InfiniteScroll>
-
       </section>
     </aside>
-  )
+  );
 }
 
 export default OtherResults;

@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -54,6 +55,7 @@ const Signup = () => {
       login();
       setGoToHomePage(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ================ UTILS ================
@@ -87,10 +89,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post(
-        'https://deploy-back-kinomatch.herokuapp.com/signup',
-        userData
-      );
+      const response = await axios.post(`${API_BASE_URL}/signup`, userData);
       // login(), va permettre de stocker dans AuhthContext = true;
       login();
       // setMessage pour afficher le message d'erreur

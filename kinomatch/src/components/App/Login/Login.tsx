@@ -2,12 +2,14 @@
 
 import React, {
   useState,
+  useEffect,
   // ,
   // useContext
 } from 'react';
 import axios from 'axios';
 // import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -27,13 +29,11 @@ export const Login = () => {
   axios.defaults.withCredentials = true;
 
   //test
-  // useEffect(() => {
-  //   axios
-  //     .get('https://deploy-back-kinomatch.herokuapp.com/login')
-  //     .then((response) => {
-  //       console.log(response);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/login`).then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   // ================ IMPORT PROPS CONTEXTS ================
 
@@ -95,7 +95,7 @@ export const Login = () => {
     };
 
     axios
-      .post('https://deploy-back-kinomatch.herokuapp.com/login', userData, {
+      .post(`${API_BASE_URL}/login`, userData, {
         withCredentials: true,
       })
       .then((response) => {

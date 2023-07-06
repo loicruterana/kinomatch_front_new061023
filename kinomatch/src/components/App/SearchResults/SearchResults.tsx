@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
+import API_BASE_URL from '../../../utils/config';
 
 // ============ IMPORT COMPOSANTS ============
 
@@ -62,9 +63,7 @@ const SearchResults = () => {
   const loadMoreData = async () => {
     try {
       const response = await fetch(
-        `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${
-          page + 1
-        }`
+        `${API_BASE_URL}/search?typedName=${query}&page=${page + 1}`
       );
       const newMovies = await response.json();
       // mise à jour du state movies
@@ -85,7 +84,7 @@ const SearchResults = () => {
     const handleSubmit = async () => {
       try {
         const response = await axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/search${window.location.search}&page=1`
+          `${API_BASE_URL}/search${window.location.search}&page=1`
         );
         const data = response.data;
         if (data.results.length === 0) {

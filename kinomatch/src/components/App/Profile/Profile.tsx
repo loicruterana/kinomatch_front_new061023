@@ -12,6 +12,7 @@ import {
   UserData,
   toWatchMoviesEntry,
 } from '../../../utils/interfaces';
+import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -132,9 +133,7 @@ export const Profile: React.FC = () => {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', userData.id);
       axios
-        .delete(
-          `https://deploy-back-kinomatch.herokuapp.com/deleteAccount?${searchParams.toString()}`
-        )
+        .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
         .then(() => {
           logout();
           navigate(`/`);
@@ -153,9 +152,7 @@ export const Profile: React.FC = () => {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', userData.id);
       axios
-        .get(
-          `https://deploy-back-kinomatch.herokuapp.com/logout?${searchParams.toString()}`
-        )
+        .get(`${API_BASE_URL}/logout?${searchParams.toString()}`)
         .then(() => {
           localStorage.removeItem('userEmail');
           localStorage.removeItem('userId');
@@ -203,9 +200,7 @@ export const Profile: React.FC = () => {
     searchParams.append('userID', userData.id);
     axios
       // envoie la requête au back pour récupérer les films vus
-      .get(
-        `https://deploy-back-kinomatch.herokuapp.com/watchedMovies?${searchParams.toString()}`
-      )
+      .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
       .then(({ data }) => {
         // stocke les données dans le state watchedList
         setWatchedList(data);
@@ -225,9 +220,7 @@ export const Profile: React.FC = () => {
         const requests = watchedList.map((watchedListItem) => {
           const searchParams = new URLSearchParams();
           searchParams.append('movieID', watchedListItem?.film_id ?? '');
-          return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-          );
+          return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
         });
 
         Promise.all(requests)
@@ -272,9 +265,7 @@ export const Profile: React.FC = () => {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
         await axios
-          .get(
-            `https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies?${searchParams.toString()}`
-          )
+          .get(`${API_BASE_URL}/bookmarkedMovies?${searchParams.toString()}`)
           .then(({ data }) => {
             // Utiliser un objet pour stocker les id des films favoris
             const bookmarked: BookmarkedListObject = {};
@@ -312,9 +303,7 @@ export const Profile: React.FC = () => {
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
     axios
-      .get(
-        `https://deploy-back-kinomatch.herokuapp.com/toWatchMovies?${searchParams.toString()}`
-      )
+      .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
       .then(({ data }) => {
         setToWatchList(data);
       })
@@ -333,9 +322,7 @@ export const Profile: React.FC = () => {
         const requests = toWatchList.map((toWatchListItem) => {
           const searchParams = new URLSearchParams();
           searchParams.append('movieID', toWatchListItem.film_id);
-          return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-          );
+          return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
         });
 
         Promise.all(requests)

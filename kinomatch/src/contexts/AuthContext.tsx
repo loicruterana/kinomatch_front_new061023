@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../utils/config';
 
 // ================ INTERFACES ================
 
@@ -134,10 +135,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/bookmarkedMovies',
-          userData
-        );
+        await axios.post(`${API_BASE_URL}/bookmarkedMovies`, userData);
       } catch (error) {
         console.log(error);
       }
@@ -163,7 +161,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         searchParams.append('movieID', userData.bookmarked);
 
         axios.delete(
-          `https://deploy-back-kinomatch.herokuapp.com/deletebookmarked?${searchParams.toString()}`
+          `${API_BASE_URL}/deletebookmarked?${searchParams.toString()}`
         );
       } catch (error) {
         console.log(error);
@@ -200,10 +198,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/toWatchMovies',
-          userDataToWatch
-        );
+        await axios.post(`${API_BASE_URL}/toWatchMovies`, userDataToWatch);
       } catch (error) {
         console.log(error);
       }
@@ -228,7 +223,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         searchParams.append('movieID', userDataToWatch.toWatch);
 
         axios.delete(
-          `https://deploy-back-kinomatch.herokuapp.com/deleteToWatchMovie?${searchParams.toString()}`
+          `${API_BASE_URL}/deleteToWatchMovie?${searchParams.toString()}`
         );
       } catch (error) {
         console.log(error);
@@ -278,10 +273,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        await axios.post(
-          'https://deploy-back-kinomatch.herokuapp.com/watchedMovies',
-          userDataWatched
-        );
+        await axios.post(`${API_BASE_URL}/watchedMovies`, userDataWatched);
       } catch (error) {
         console.log(error);
       }
@@ -307,7 +299,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         searchParams.append('movieID', userDataWatched.watched);
 
         axios.delete(
-          `https://deploy-back-kinomatch.herokuapp.com/deleteWatchedMovie?${searchParams.toString()}`
+          `${API_BASE_URL}/deleteWatchedMovie?${searchParams.toString()}`
         );
       } catch (error) {
         console.log(error);

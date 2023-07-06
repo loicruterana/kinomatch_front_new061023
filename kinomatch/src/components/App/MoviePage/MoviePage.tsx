@@ -24,6 +24,7 @@ import Loading from '../Loading/Loading';
 // ================ IMPORT INTERFACES ================
 
 import { Movie, Credits } from '../../../utils/interfaces';
+import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT SCSS ================
 import './style.scss';
@@ -258,25 +259,17 @@ function MoviePage() {
       // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
       const requests = [
         // Route pour récupérer les détails du film
-        axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-        ),
+        axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
         // Route pour récupérer les crédits du film
-        axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-        ),
+        axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
         // Route pour récupérer les providers du film
-        axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-        ),
+        axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
         // Route pour récupérer les films recommandés
         axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/recommendedMovies?${searchParams.toString()}`
+          `${API_BASE_URL}/recommendedMovies?${searchParams.toString()}`
         ),
         // Route pour récupérer les vidéos du film
-        axios.get(
-          `https://deploy-back-kinomatch.herokuapp.com/videos?${searchParams.toString()}`
-        ),
+        axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
       ];
 
       Promise.all(requests)
@@ -325,9 +318,7 @@ function MoviePage() {
     } else if (!window.location.search.includes('filmID')) {
       // Requête axios permettant de récupérer les données des films filtrés
       axios
-        .get(
-          `https://deploy-back-kinomatch.herokuapp.com/films${window.location.search}`
-        )
+        .get(`${API_BASE_URL}/films${window.location.search}`)
         .then(({ data }) => {
           // Le reste du code pour les autres cas
 
@@ -350,13 +341,11 @@ function MoviePage() {
 
           // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
           if (window.location.search === '') {
-            return axios.get(
-              `https://deploy-back-kinomatch.herokuapp.com/randomFilms`
-            );
+            return axios.get(`${API_BASE_URL}/randomFilms`);
           }
           // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
           return axios.get(
-            `https://deploy-back-kinomatch.herokuapp.com/randomFilms${
+            `${API_BASE_URL}/randomFilms${
               window.location.search
             }&${searchParams1.toString()}`
           );
@@ -385,18 +374,10 @@ function MoviePage() {
 
             // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits" et "providers"
             const requests = [
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/detail?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/credits?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/provider?${searchParams.toString()}`
-              ),
-              axios.get(
-                `https://deploy-back-kinomatch.herokuapp.com/videos?${searchParams.toString()}`
-              ),
+              axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
+              axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
+              axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
+              axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
             ];
             return Promise.all(requests);
           }
