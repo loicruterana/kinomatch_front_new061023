@@ -154,20 +154,24 @@ const SearchResults = () => {
               </div>
               <p> : {totalResults} résultats trouvés</p>
             </div>
-            {movies
-              .filter((movie) => movie.poster_path)
-              // affichage des cercles
-              // vérification de la présence du cercle dans le state circles
-              .map((movie) => {
-                const circle = circles.find((circle) => circle.id === movie.id);
-                if (!circle) {
-                  return null;
-                }
-                return (
-                  // affichage des cartes
-                  <MovieCard movie={movie} circle={circle} key={movie.id} />
-                );
-              })}
+            <div className='searchresults-container-cardlist-list'>
+              {movies
+                // .filter((movie) => movie.poster_path)
+                // affichage des cercles
+                // vérification de la présence du cercle dans le state circles
+                .map((movie) => {
+                  const circle = circles.find(
+                    (circle) => circle.id === movie.id
+                  );
+                  if (!circle) {
+                    return null;
+                  }
+                  return (
+                    // affichage des cartes
+                    <MovieCard movie={movie} circle={circle} key={movie.id} />
+                  );
+                })}
+            </div>
           </InfiniteScroll>
         </div>
       )}
