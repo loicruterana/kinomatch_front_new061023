@@ -2,7 +2,7 @@
 
 //* ============ VERSION DESKTOP ============
 
-.NoResult-container {
+.noResult-container {
   position: absolute;
   transition: 0.3s ease-in-out;
   width: 100vw;
@@ -28,7 +28,7 @@
 //* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1000px) {
-  .NoResult-container {
+  .noResult-container {
     z-index: 4;
     font-size: 22px;
     height: 100vh;

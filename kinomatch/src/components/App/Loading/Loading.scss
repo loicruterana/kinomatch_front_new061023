@@ -2,7 +2,7 @@
 
 //* ============ VERSION DEKSTOP ============
 
-.Loading-container {
+.loading-container {
   z-index: 99999;
   position: absolute;
   width: 100vw;
@@ -31,7 +31,7 @@
 //* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 900px) {
-  .Loading-container {
+  .loading-container {
     &__image {
       scale: 0.15;
     }

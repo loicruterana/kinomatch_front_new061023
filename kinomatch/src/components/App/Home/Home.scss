@@ -2,7 +2,7 @@
 
 //* ============ VERSION DESKTOP ============
 
-.Home {
+.home {
   &__filters-selector {
     background-color: vars.$theme1-primary;
     position: absolute;
@@ -163,7 +163,7 @@
         }
 
         &__item {
-          // 
+          //
 
           &-category {
             position: sticky;
@@ -342,7 +342,7 @@
 //* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1100px) {
-  .Home {
+  .home {
     &__filters-selector {
       display: flex;
       border: none;

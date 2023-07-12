@@ -238,20 +238,20 @@ export const Home: React.FC = () => {
 
   // ================ JSX ================
   return (
-    <main className='Home-container'>
-      <div className='Home__filters-selector'>
-        <div className='Home__filters-selector__containers'>
-          <div className='Home__filters-selector__containers__filters-container'>
+    <main className='home-container'>
+      <div className='home__filters-selector'>
+        <div className='home__filters-selector__containers'>
+          <div className='home__filters-selector__containers__filters-container'>
             {/* // affichage des filtres sélectionnés */}
             {selectedGenreFilters.map(
               (filter: { id: string; name: string }) => (
                 <div
                   key={filter.id}
-                  className='Home__filters-selector__containers__filters-container__filter'
+                  className='home__filters-selector__containers__filters-container__filter'
                 >
                   {filter.name}
                   <div
-                    className='Home__filters-selector__containers__filters-container__filter__cross'
+                    className='home__filters-selector__containers__filters-container__filter__cross'
                     onClick={handleRemoveGenre}
                     data-id={filter.name}
                   >
@@ -269,11 +269,11 @@ export const Home: React.FC = () => {
               (filter: { provider_id: any; provider_name: any }) => (
                 <div
                   key={filter.provider_id}
-                  className='Home__filters-selector__containers__filters-container__filter'
+                  className='home__filters-selector__containers__filters-container__filter'
                 >
                   {filter.provider_name}
                   <div
-                    className='Home__filters-selector__containers__filters-container__filter__cross'
+                    className='home__filters-selector__containers__filters-container__filter__cross'
                     onClick={handleRemoveProvider}
                     data-id={filter.provider_name}
                   >
@@ -289,11 +289,11 @@ export const Home: React.FC = () => {
             {selectedDecadeFilters.map((filter: string) => (
               <div
                 key={filter}
-                className='Home__filters-selector__containers__filters-container__filter'
+                className='home__filters-selector__containers__filters-container__filter'
               >
                 <span>{filter}</span>
                 <div
-                  className='Home__filters-selector__containers__filters-container__filter__cross'
+                  className='home__filters-selector__containers__filters-container__filter__cross'
                   onClick={handleRemoveDecade}
                   data-id={filter}
                 >
@@ -327,12 +327,12 @@ export const Home: React.FC = () => {
         (showRollDecade && mobileVersion) ||
         !mobileVersion) && (
         <section
-          className={`Home-container__roll-modale-${
+          className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }`}
         >
           <div
-            className={`Home-container__roll-modale-${
+            className={`home-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
             }-backdropfilter`}
             onClick={handleClickOut}
@@ -353,12 +353,12 @@ export const Home: React.FC = () => {
 
       {/* affichage des boutons en version mobile */}
       {mobileVersion && (
-        <div className='Home-container__buttons'>
+        <div className='home-container__buttons'>
           <button
-            className='Home-container__buttons__button'
+            className='home-container__buttons__button'
             onClick={handleClickGenre}
           >
-            <div className='Home-container__buttons__button__image-container'>
+            <div className='home-container__buttons__button__image-container'>
               <img
                 src='/images/tetepellochegenre.png'
                 alt="Description de l'image"
@@ -368,10 +368,10 @@ export const Home: React.FC = () => {
           </button>
 
           <button
-            className='Home-container__buttons__button'
+            className='home-container__buttons__button'
             onClick={handleClickProvider}
           >
-            <div className='Home-container__buttons__button__image-container'>
+            <div className='home-container__buttons__button__image-container'>
               <img
                 src='/images/tetepellocheplateform.png'
                 alt="Description de l'image"
@@ -381,11 +381,11 @@ export const Home: React.FC = () => {
           </button>
 
           <button
-            className='Home-container__buttons__button'
+            className='home-container__buttons__button'
             onClick={handleClickDecade}
           >
             {/* Année */}
-            <div className='Home-container__buttons__button__image-container'>
+            <div className='home-container__buttons__button__image-container'>
               <img
                 src='/images/tetepellochedecade.png'
                 alt="Description de l'image"

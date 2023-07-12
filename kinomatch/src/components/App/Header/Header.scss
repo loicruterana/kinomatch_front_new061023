@@ -8,7 +8,7 @@
     color: black;
   }
 
-  .Header {
+  .header {
     z-index: 3;
     position: fixed;
     width: 100%;
@@ -151,7 +151,7 @@
     color: red;
   }
 
-  .Header {
+  .header {
     width: 100vw;
     height: 70px;
     position: fixed;
@@ -164,6 +164,10 @@
     color: vars.$theme1-secondary;
     z-index: 1000;
     &-elements {
+      &-logo--refresh {
+        margin-right: 70px;
+      }
+
       &-profile {
         display: none;
       }

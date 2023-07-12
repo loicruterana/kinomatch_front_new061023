@@ -7,7 +7,7 @@ export const NoResult = () => {
   // ================ JSX ================
 
   return (
-    <main className='NoResult-container'>
+    <main className='noResult-container'>
       <span>
         <h1>Aucun résultat trouvé</h1>
       </span>

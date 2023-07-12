@@ -173,13 +173,13 @@ export const Login = () => {
 
   // ================ JSX ================
   return (
-    <main className='Login-container'>
+    <main className='login-container'>
       {/* formulaire de connexion */}
-      <form className='Login-container-form' onSubmit={handleSubmit}>
+      <form className='login-container-form' onSubmit={handleSubmit}>
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
-          className='Login-container-form-input'
+          className='login-container-form-input'
           type='email'
           id='email'
           name='email'
@@ -189,7 +189,7 @@ export const Login = () => {
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
-          className='Login-container-form-input'
+          className='login-container-form-input'
           type='password'
           id='password'
           name='password'
@@ -204,7 +204,7 @@ export const Login = () => {
         </Link>
 
         <button type='submit'>Connexion</button>
-        <p className='Login-container__message'>{message}</p>
+        <p className='login-container__message'>{message}</p>
       </form>
       {userData.email && <Connected />}
     </main>

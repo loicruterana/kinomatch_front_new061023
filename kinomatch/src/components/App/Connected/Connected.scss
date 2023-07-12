@@ -2,7 +2,7 @@
 
 //* ============ VERSION DESKTOP ============
 
-.Connected-container {
+.connected-container {
   transition: 1s ease-in-out;
   width: 100vw;
   height: 100vh;
@@ -22,7 +22,7 @@
 //* ============ VERSION MOBILE ============
 
 @media screen and (max-width: 1000px) {
-  .Connected-container {
+  .connected-container {
     font-size: 22px;
   }
 }

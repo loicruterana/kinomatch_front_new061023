@@ -8,8 +8,8 @@ const PageNotFound: React.FC = () => {
   // ================ JSX ================
 
   return (
-    <main className='PageNotFound-container'>
-      <span className='PageNotFound-container-text'>
+    <main className='pageNotFound-container'>
+      <span className='pageNotFound-container-text'>
         <h1>La page que vous recherchez semble introuvable</h1>
       </span>
 

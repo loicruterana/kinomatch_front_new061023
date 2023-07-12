@@ -369,23 +369,23 @@ export const Profile: React.FC = () => {
   //========== JSX ==========
 
   return (
-    <main className='Profile-container'>
-      <section className='Profile-container__personnal'>
-        <div className='Profile-container__personnal__infos'>
-          {/* <h2 className='Profile-container__personnal__infos__title'>Profil</h2> */}
-          <div className='Profile-container__personnal__infos__pictureemailpassword'>
-            <div className='Profile-container__personnal__circle'>
+    <main className='profile-container'>
+      <section className='profile-container__personnal'>
+        <div className='profile-container__personnal__infos'>
+          {/* <h2 className='profile-container__personnal__infos__title'>Profil</h2> */}
+          <div className='profile-container__personnal__infos__pictureemailpassword'>
+            <div className='profile-container__personnal__circle'>
               <img
                 src='images/SamplePicCircle.png'
                 alt='Image de profil par defaut'
               ></img>
             </div>
-            <div className='Profile-container__personnal__pictureemailpassword__emailpassword'>
-              <div className='Profile-container__personnal__pictureemailpassword__emailpassword__email'>
+            <div className='profile-container__personnal__pictureemailpassword__emailpassword'>
+              <div className='profile-container__personnal__pictureemailpassword__emailpassword__email'>
                 <span>Adresse email</span>
                 <div>{userData.email}</div>
               </div>
-              <div className='Profile-container__personnal__pictureemailpassword__emailpassword__password'>
+              <div className='profile-container__personnal__pictureemailpassword__emailpassword__password'>
                 <span>Mot de passe</span>
                 <div>∗∗∗∗∗∗∗</div>
               </div>
@@ -393,16 +393,16 @@ export const Profile: React.FC = () => {
           </div>
           {/* affichage conditionnel des boutons en fonction du device*/}
           {!mobileVersion && (
-            <div className='Profile-container-buttons'>
+            <div className='profile-container-buttons'>
               <button
-                className='Profile-container-buttons-button'
+                className='profile-container-buttons-button'
                 // va déconnecter l'utilisateur
                 onClick={handleLogout}
               >
                 Se déconnecter
               </button>
               <button
-                className='Profile-container-buttons-button'
+                className='profile-container-buttons-button'
                 // va supprimer le profil
                 onClick={handleDeleteProfile}
               >
@@ -412,20 +412,20 @@ export const Profile: React.FC = () => {
           )}
         </div>
       </section>
-      {/* <div className="Profile-container__favoritefilters">
-          <h3 className="Profile-container__favoritefilters__title">Filtres favoris </h3>
+      {/* <div className="profile-container__favoritefilters">
+          <h3 className="profile-container__favoritefilters__title">Filtres favoris </h3>
         </div> */}
       {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
       {((showWatchedRoll && mobileVersion) ||
         (showToWatchRoll && mobileVersion) ||
         !mobileVersion) && (
         <section
-          className={`Profile-container__roll-modale-${
+          className={`profile-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }`}
         >
           <div
-            className={`Profile-container__roll-modale-${
+            className={`profile-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
             }-backdropfilter`}
             onClick={handleClickOut}
@@ -459,9 +459,9 @@ export const Profile: React.FC = () => {
       )}
       {/* BOUTONS */}
       {mobileVersion && (
-        <div className='Profile-container__rollbuttons'>
+        <div className='profile-container__rollbuttons'>
           <div
-            className='Profile-container__rollbuttons__button'
+            className='profile-container__rollbuttons__button'
             onClick={handleShowWatchedRoll}
           >
             <i className='fa-sharp fa-solid fa-check'></i>
@@ -470,7 +470,7 @@ export const Profile: React.FC = () => {
           </div>
 
           <div
-            className='Profile-container__rollbuttons__button'
+            className='profile-container__rollbuttons__button'
             onClick={handleShowToWatchRoll}
           >
             <i className='fa-solid fa-xmark'></i>À voir

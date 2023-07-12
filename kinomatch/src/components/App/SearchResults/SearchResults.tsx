@@ -143,9 +143,7 @@ const SearchResults = () => {
             loader={<h4>Loading...</h4>}
             endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
             height={1080}
-            scrollableTarget='scrollableDiv'
             scrollThreshold={1}
-            // style={{ overflow: 'hidden', overflowY: 'auto' }}
           >
             <div className='searchresults-container-cardlist-queryresult'>
               {/* affichage du nombre de résultats pour la recherche effectuée */}
@@ -156,7 +154,6 @@ const SearchResults = () => {
             </div>
             <div className='searchresults-container-cardlist-list'>
               {movies
-                // .filter((movie) => movie.poster_path)
                 // affichage des cercles
                 // vérification de la présence du cercle dans le state circles
                 .map((movie) => {

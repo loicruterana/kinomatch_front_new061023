@@ -90,9 +90,9 @@ const BurgerMenu: React.FC<Props> = ({
 
   return (
     <>
-      <div className='BurgerMenu'>
-        <nav className='BurgerMenu__container'>
-          <div className='BurgerMenu__container__items'>
+      <div className='burgerMenu'>
+        <nav className='burgerMenu__container'>
+          <div className='burgerMenu__container__items'>
             {/* <li className='BurgerMenu__container__button--home'>
               <Link key='home' to='/' onClick={handleCloseClick}>
                 <button className='BurgerMenu__container__button'>
@@ -103,7 +103,7 @@ const BurgerMenu: React.FC<Props> = ({
             {authContext?.isLoggedIn && (
               <>
                 {/* Nom de l'utilisateur */}
-                <div className='BurgerMenu__container__items__text'>
+                <div className='burgerMenu__container__items__text'>
                   <h2>Bonjour</h2>
                   <span>{authContext?.userData.email}</span>
                 </div>
@@ -111,7 +111,7 @@ const BurgerMenu: React.FC<Props> = ({
                 <ul>
                   <li>
                     <button
-                      className='BurgerMenu__container__items__button'
+                      className='burgerMenu__container__items__button'
                       onClick={handleProfile}
                     >
                       Mon profil
@@ -119,7 +119,7 @@ const BurgerMenu: React.FC<Props> = ({
                   </li>
                   <li>
                     <button
-                      className='BurgerMenu__container__items__button'
+                      className='burgerMenu__container__items__button'
                       onClick={handleDeleteProfile}
                     >
                       Supprimer compte
@@ -127,7 +127,7 @@ const BurgerMenu: React.FC<Props> = ({
                   </li>
                   <li>
                     <button
-                      className='BurgerMenu__container__items__button'
+                      className='burgerMenu__container__items__button'
                       onClick={handleLogout}
                     >
                       Se déconnecter
@@ -150,7 +150,7 @@ const BurgerMenu: React.FC<Props> = ({
               <>
                 <Link to='/login' key='login'>
                   <button
-                    className='BurgerMenu__container__button'
+                    className='burgerMenu__container__button'
                     onClick={handleClick}
                   >
                     Se connecter
@@ -158,7 +158,7 @@ const BurgerMenu: React.FC<Props> = ({
                 </Link>
                 <Link to='/signup' key='signup'>
                   <button
-                    className='BurgerMenu__container__button'
+                    className='burgerMenu__container__button'
                     onClick={handleClick}
                   >
                     Créer un compte
@@ -169,7 +169,7 @@ const BurgerMenu: React.FC<Props> = ({
           </div>
         </nav>
       </div>
-      <footer className='BurgerMenu-footer'>
+      <footer className='burgerMenu-footer'>
         <Footer />
       </footer>
     </>

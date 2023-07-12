@@ -28,7 +28,7 @@ const Connected: React.FC = () => {
   // ================ JSX ================
 
   return (
-    <main className='Connected-container'>
+    <main className='connected-container'>
       <h1>Vous êtes connecté avec l'adresse {userData.email}</h1>
     </main>
   );

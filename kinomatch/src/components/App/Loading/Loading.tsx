@@ -11,14 +11,14 @@ const Loading: React.FC = () => {
   // ================ JSX ================
 
   return (
-    <main className='Loading-container'>
-      <div className='Loading-container__image'>
+    <main className='loading-container'>
+      <div className='loading-container__image'>
         <img
-          className='Loading-container__image__name'
+          className='loading-container__image__name'
           src='images/KinoMatchLogo-without-roll.png'
         ></img>
         <img
-          className='Loading-container__image__name__roll'
+          className='loading-container__image__name__roll'
           src='images/KinoMatchLogo-roll.png'
         ></img>
       </div>

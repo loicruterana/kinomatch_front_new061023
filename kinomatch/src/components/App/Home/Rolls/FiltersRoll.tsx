@@ -92,7 +92,7 @@ export const RollGenre = ({
     <>
       {/* pour la version mobile, on affiche le bouton de validation en bas de la modale */}
       <div
-        className={`Home-container__roll-modale-${
+        className={`home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'
         }__validation`}
       >
@@ -101,7 +101,7 @@ export const RollGenre = ({
 
       {/* affichage des rolls, ceux-ci ont un affichage différent (padding-bottom) si un filtre est sélectionné */}
       <div
-        className={`Home-container__roll-modale-${
+        className={`home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'
         }__filterRoll`}
         style={
@@ -116,23 +116,23 @@ export const RollGenre = ({
       >
         {/* // ================ JSX : ROLL GENRE ================ */}
         <div
-          className={`Home-container__roll-modale-${
+          className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${
+            className={`home-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
             }__roll-background`}
           >
             {((showRollGenre && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${
+                className={`home-container__roll-modale-${
                   mobileVersion ? 'mobile-version' : 'desktop-version'
                 }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${
+                  className={`home-container__roll-modale-${
                     mobileVersion ? 'mobile-version' : 'desktop-version'
                   }__roll-container__item-category`}
                 >
@@ -142,7 +142,7 @@ export const RollGenre = ({
                   ? 'Chargement en cours'
                   : preselectedGenres.map((preselectedGenre) => (
                       <button
-                        className={`Home-container__roll-modale-${
+                        className={`home-container__roll-modale-${
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-genre${
                           selectedGenreFilters.some(
@@ -158,7 +158,7 @@ export const RollGenre = ({
                         data-id={preselectedGenre.id}
                       >
                         <img
-                          className={`Home-container__roll-modale-${
+                          className={`home-container__roll-modale-${
                             mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-genre--image${
                             selectedGenreFilters.some(
@@ -188,23 +188,23 @@ export const RollGenre = ({
         </div>
         {/* // ================ JSX : ROLL PROVIDERS ================ */}
         <div
-          className={`Home-container__roll-modale-${
+          className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${
+            className={`home-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
             }__roll-background`}
           >
             {((showRollProvider && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${
+                className={`home-container__roll-modale-${
                   mobileVersion ? 'mobile-version' : 'desktop-version'
                 }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${
+                  className={`home-container__roll-modale-${
                     mobileVersion ? 'mobile-version' : 'desktop-version'
                   }__roll-container__item-category`}
                 >
@@ -214,7 +214,7 @@ export const RollGenre = ({
                   ? 'Chargement en cours'
                   : preselectedProviders.map((preselectedProvider) => (
                       <button
-                        className={`Home-container__roll-modale-${
+                        className={`home-container__roll-modale-${
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-provider${
                           selectedProviderFilters.some(
@@ -238,24 +238,24 @@ export const RollGenre = ({
         </div>
         {/* // ================ JSX : ROLL DECENNIES ================ */}
         <div
-          className={`Home-container__roll-modale-${
+          className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
           }__roll-backgroundContainer`}
         >
           <div
-            className={`Home-container__roll-modale-${
+            className={`home-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
             }__roll-background`}
             onClick={handleClickOut}
           >
             {((showRollDecade && mobileVersion) || !mobileVersion) && (
               <div
-                className={`Home-container__roll-modale-${
+                className={`home-container__roll-modale-${
                   mobileVersion ? 'mobile-version' : 'desktop-version'
                 }__roll-container`}
               >
                 <div
-                  className={`Home-container__roll-modale-${
+                  className={`home-container__roll-modale-${
                     mobileVersion ? 'mobile-version' : 'desktop-version'
                   }__roll-container__item-category`}
                 >
@@ -265,7 +265,7 @@ export const RollGenre = ({
                 {decades.map((decade, index) => (
                   <button
                     key={index}
-                    className={`Home-container__roll-modale-${
+                    className={`home-container__roll-modale-${
                       mobileVersion ? 'mobile-version' : 'desktop-version'
                     }__roll-container__item-decade${
                       selectedDecadeFilters.some(

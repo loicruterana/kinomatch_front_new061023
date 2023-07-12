@@ -22,27 +22,7 @@ interface MovieCardProps {
 }
 //* ================ COMPOSANT ================
 
-const MovieCard: React.FC<MovieCardProps> = ({
-  movie,
-  circle,
-  // , movies, setMovies, page, setPage
-}) => {
-  // const [hasMore, setHasMore] = useState(true);
-
-  // const loadMoreData = async () => {
-  //   try {
-  //     console.log("loadMoreData")
-  //     const response = await fetch(
-  //       `https://deploy-back-kinomatch.herokuapp.com/search?typedName=${query}&page=${page + 1}`
-  //     );
-  //     const newMovies = await response.json();
-  //     setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
-  //     setPage((prevPage) => prevPage + 1);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
+const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
   // ================ UTILS ================
 
   // CONVERSION DATE

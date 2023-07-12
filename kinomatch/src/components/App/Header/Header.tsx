@@ -87,39 +87,26 @@ function Header() {
   // ================ JSX ================
   return (
     <>
-      <div className='Header'>
+      <div className='header'>
         <Link
           key='home'
           to='/'
-          className='Header-logo'
+          className='header-logo'
           onClick={handleCloseClick}
         >
           <img
-            className='Header-logo__image'
+            className='header-logo__image'
             src='./images/kino_match_logo.png'
             alt='logo'
           />
         </Link>
-        {/* Logo du Header, logo différent on est en version mobile */}
-        {location.pathname === '/films' &&
-        !window.location.search.includes('filmID') &&
-        !desktopVersion ? (
-          <Link
-            key='refresh'
-            to='#'
-            className='Header-logo--refresh'
-            onClick={movieArrayReload}
-          >
-            <i className='fa-solid fa-arrows-rotate'></i>
-          </Link>
-        ) : null}
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
         {location.pathname === '/films' &&
           desktopVersion &&
           !window.location.search.includes('filmID') && (
             <button
-              className='Header--OtherResultsBtn'
+              className='header--OtherResultsBtn'
               type='button'
               onClick={movieArrayReload}
             >
@@ -127,7 +114,7 @@ function Header() {
               Relancer une recherche{' '}
             </button>
           )}
-        <div className='Header-elements'>
+        <div className='header-elements'>
           {/* SearchBar, affiché dans le Header uniquement sur la version desktop */}
           {desktopVersion && (
             <SearchBar
@@ -140,8 +127,8 @@ function Header() {
           {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
           {/* Au clic sera affichée une modale BurgerMenu */}
           {!isLoggedIn && (
-            <div className='Header-elements-buttons'>
-              <button className='Header-elements-buttons-button'>
+            <div className='header-elements-buttons'>
+              <button className='header-elements-buttons-button'>
                 <Link key='login' to='/login'>
                   Se connecter
                 </Link>
@@ -151,16 +138,30 @@ function Header() {
 
           {/* Profil de l'utilisateur connecté */}
           {isLoggedIn && (
-            <div className='Header-elements-profile'>
+            <div className='header-elements-profile'>
               <img src='images/SamplePic.png' alt='profile' />
               <Link to='/profile'>
-                <div className='Header-elements-profile-username'>
+                <div className='header-elements-profile-username'>
                   {userData.email}
                 </div>
               </Link>
             </div>
           )}
         </div>
+
+        {/* Logo refresh, logo différent on est en version mobile */}
+        {location.pathname === '/films' &&
+        !window.location.search.includes('filmID') &&
+        !desktopVersion ? (
+          <Link
+            key='refresh'
+            to='#'
+            className='header-elements-logo--refresh'
+            onClick={movieArrayReload}
+          >
+            <i className='fa-solid fa-arrows-rotate'></i>
+          </Link>
+        ) : null}
 
         {/* Icône BurgerMenu, uniquement affiché en version mobile */}
         <div
