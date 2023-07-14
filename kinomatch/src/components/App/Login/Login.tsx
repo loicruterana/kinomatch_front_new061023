@@ -23,60 +23,6 @@ import './Login.scss';
 export const Login = () => {
   axios.defaults.withCredentials = true;
 
-  // function getCookie(name) {
-  //   const cookieString = document.cookie;
-  //   const cookies = cookieString.split(';');
-
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i].trim();
-
-  //     if (cookie.startsWith(name + '=')) {
-  //       return cookie.substring(name.length + 1);
-  //     }
-  //   }
-
-  //   return null;
-  // }
-
-  // useEffect(() => {
-  //   const monCookie = getCookie('userToken');
-
-  //   if (monCookie) {
-  //     console.log('Valeur du cookie :', monCookie);
-  //     // Faites quelque chose avec la valeur du cookie...
-
-  //     axios
-  //       .get(`${API_BASE_URL}/login/${monCookie}`)
-  //       .then((response) => {
-  //         const data = response.data;
-  //         console.log('Valeurs récupérées du backend :', data);
-
-  //         // Faites quelque chose avec les valeurs récupérées
-  //         // Par exemple, mettez à jour l'état du composant avec les données reçues
-  //         // addUserData(userEmail, userId);
-  //         // login();
-  //         // setGoToHomePage(true);
-  //       })
-  //       .catch((error) => {
-  //         console.log(`${API_BASE_URL}/login/${monCookie}`);
-  //         console.log(
-  //           'Erreur lors de la récupération des valeurs depuis le backend :',
-  //           error
-  //         );
-  //         // Gérez l'erreur de la requête si nécessaire
-  //       });
-  //   } else {
-  //     console.log("Le cookie n'existe pas");
-  //   }
-  // }, []);
-
-  // //test
-  // useEffect(() => {
-  //   axios.get(`${API_BASE_URL}/login`).then((response) => {
-  //     console.log(response);
-  //   });
-  // }, []);
-
   // ================ IMPORT PROPS CONTEXTS ================
 
   const { userData, addUserData, login } = useContext(AuthContext);
@@ -95,10 +41,6 @@ export const Login = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Vérifier si les données de connexion existent dans le localStorage
-    const userEmail = localStorage.getItem('userEmail');
-    const userId = localStorage.getItem('userId');
-
     if (userEmail && userId) {
       addUserData(userEmail, userId);
       login();
@@ -108,9 +50,6 @@ export const Login = () => {
   }, []);
 
   // ================ UTILS ================
-
-  // const email = useRef<HTMLInputElement>(null);
-  // const password = useRef<HTMLInputElement>(null);
 
   // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {
@@ -128,7 +67,7 @@ export const Login = () => {
     });
   };
 
-  //handleSubmit pour envoyer les données du formulaire pour se loger
+  //handleSubmit pour envoyer les données du formulaire pour se logger
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const userData = {

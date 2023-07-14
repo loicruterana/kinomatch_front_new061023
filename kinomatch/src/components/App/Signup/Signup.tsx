@@ -21,6 +21,8 @@ import './Signup.scss';
 //* ================ COMPOSANT ================
 
 const Signup = () => {
+  axios.defaults.withCredentials = true;
+
   // ================ USESTATE ================
 
   // state qui va recevoir les données du formulaire
@@ -39,53 +41,6 @@ const Signup = () => {
   const { userData, addUserData, login } = useContext(AuthContext);
 
   // ================ UTILS ================
-
-  // function getCookie(name) {
-  //   const cookieString = document.cookie;
-  //   const cookies = cookieString.split(';');
-
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i].trim();
-
-  //     if (cookie.startsWith(name + '=')) {
-  //       return cookie.substring(name.length + 1);
-  //     }
-  //   }
-
-  //   return null;
-  // }
-
-  // useEffect(() => {
-  //   const monCookie = getCookie('userToken');
-
-  //   if (monCookie) {
-  //     console.log('Valeur du cookie :', monCookie);
-
-  //     // Effectuer une requête asynchrone vers la base de données pour vérifier l'ID de l'utilisateur
-  //     axios
-  //       .get(`${API_BASE_URL}/login/${monCookie}`)
-  //       .then((response) => {
-  //         const loggedIn = response.data.loggedIn;
-
-  //         if (loggedIn) {
-  //           console.log('il est bien loggedIn');
-  //           // Faites la suite d'instructions ici
-  //         } else {
-  //           console.log("L'ID de l'utilisateur n'est pas valide");
-  //           // Faites une autre action si nécessaire
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log(
-  //           "Erreur lors de la vérification de l'ID de l'utilisateur :",
-  //           error
-  //         );
-  //         // Gérez l'erreur de la requête si nécessaire
-  //       });
-  //   } else {
-  //     console.log("Le cookie n'existe pas");
-  //   }
-  // }, []);
 
   // fonction qui va permettre de rediriger vers la page d'accueil
   if (goToHomePage) {

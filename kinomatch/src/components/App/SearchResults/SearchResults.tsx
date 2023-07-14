@@ -107,7 +107,6 @@ const SearchResults = () => {
         console.error(error);
       }
     };
-
     handleSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);

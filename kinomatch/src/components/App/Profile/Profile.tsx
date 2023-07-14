@@ -158,9 +158,6 @@ export const Profile: React.FC = () => {
       axios
         .get(`${API_BASE_URL}/logout?${searchParams.toString()}`)
         .then(() => {
-          localStorage.removeItem('userEmail');
-          localStorage.removeItem('userId');
-          // deleteCookie('monCookie');
           logout();
           clearUserData();
           navigate(`/`);
@@ -353,18 +350,6 @@ export const Profile: React.FC = () => {
     fetchMovieTitles();
   }, [toWatchList]);
   // s'exécute à chaque fois que toWatchList change
-
-  useEffect(() => {
-    // Vérifier si les données de connexion existent dans le localStorage
-    const userEmail = localStorage.getItem('userEmail');
-    const userId = localStorage.getItem('userId');
-
-    if (userEmail && userId) {
-      addUserData(userEmail, userId);
-      login();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   //========== JSX ==========
 

@@ -206,20 +206,6 @@ function MoviePage() {
 
   // ==================== USEEFFECT ===============================
 
-  // localstorage : récupération du localStorage id et email de l'utilisateur, afin qu'il reste connecté
-
-  // useEffect(() => {
-  //   // Vérifier si les données de connexion existent dans le localStorage
-  //   const userEmail = localStorage.getItem('userEmail');
-  //   const userId = localStorage.getItem('userId');
-
-  //   if (userEmail && userId) {
-  //     addUserData(userEmail, userId);
-  //     login();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
   useEffect(() => {
     function handleResize() {
