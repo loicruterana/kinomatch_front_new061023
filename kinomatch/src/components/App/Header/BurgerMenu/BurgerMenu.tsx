@@ -3,7 +3,9 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+import API_BASE_URL from '../../../../utils/config';
+import axios from 'axios';
+import { UserData } from '../../../../utils/interfaces';
 // ================ IMPORT CONTEXTS ================
 
 import { AuthContext } from '../../../../contexts/AuthContext';
@@ -37,6 +39,14 @@ const BurgerMenu: React.FC<Props> = ({
 }: Props): JSX.Element => {
   const authContext = useContext(AuthContext);
 
+  // ================ IMPORT PROPS CONTEXTS ================
+
+  const { userData, logout, clearUserData } = useContext(AuthContext) as {
+    userData: UserData;
+    logout: () => void;
+    clearUserData: () => void;
+  };
+
   // ================ UTILS ================
 
   // pour naviguer vers une autre page
@@ -64,9 +74,16 @@ const BurgerMenu: React.FC<Props> = ({
   const handleDeleteProfile = async (): Promise<void> => {
     try {
       const searchParams = new URLSearchParams();
-      searchParams.append('userID', authContext?.userData.id || '');
-      authContext?.logout();
-      navigate(`/`);
+      searchParams.append('userID', userData.id);
+      axios
+        .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
+        .then(() => {
+          logout();
+          navigate(`/`);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -75,12 +92,20 @@ const BurgerMenu: React.FC<Props> = ({
   // pour se déconnecter
   const handleLogout = async (): Promise<void> => {
     try {
-      const searchParams = new URLSearchParams();
-      searchParams.append('userID', authContext?.userData.id || '');
-      authContext?.logout();
-      setTimeout(function () {
-        navigate('/');
-      }, 1500);
+      const requestData = {
+        userID: userData.id,
+      };
+
+      axios
+        .post(`${API_BASE_URL}/logout`, requestData)
+        .then(() => {
+          logout();
+          clearUserData();
+          navigate(`/`);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error(error);
     }

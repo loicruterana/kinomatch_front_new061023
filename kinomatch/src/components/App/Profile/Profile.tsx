@@ -65,8 +65,6 @@ export const Profile: React.FC = () => {
     deleteBookmarkedAndWatched,
     // deleteWatched,
     addBookmarked,
-    addUserData,
-    login,
     clearUserData,
   } = useContext(AuthContext) as {
     userData: UserData;
