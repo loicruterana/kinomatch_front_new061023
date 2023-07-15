@@ -150,13 +150,15 @@ export const Profile: React.FC = () => {
     }
   }
 
-  //handler pour se déconnecter
+  // Handler pour se déconnecter
   function handleLogout(): void {
     try {
-      const searchParams = new URLSearchParams();
-      searchParams.append('userID', userData.id);
+      const requestData = {
+        userID: userData.id,
+      };
+
       axios
-        .get(`${API_BASE_URL}/logout?${searchParams.toString()}`)
+        .post(`${API_BASE_URL}/logout`, requestData)
         .then(() => {
           logout();
           clearUserData();

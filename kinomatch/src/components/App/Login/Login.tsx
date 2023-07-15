@@ -40,15 +40,6 @@ export const Login = () => {
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (userEmail && userId) {
-      addUserData(userEmail, userId);
-      login();
-      setGoToHomePage(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // ================ UTILS ================
 
   // fonction qui va permettre de rediriger vers la page d'accueil
