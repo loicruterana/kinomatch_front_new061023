@@ -25,10 +25,10 @@ function AddButton(movieId: { movie: string }) {
 
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
-  //Bookmarked
-  const [bookmarkIsClicked, setBookmarkIsClicked] = useState(false);
-  // Check
-  const [checkIsClicked, setCheckIsClicked] = useState(false);
+  // ToWatch
+  const [toWatchIsClicked, setToWatchIsClicked] = useState(false);
+  // Watched
+  const [watchedIsClicked, setWatchedIsClicked] = useState(false);
 
   // ============================ HANDLERS =============================
 
@@ -43,31 +43,31 @@ function AddButton(movieId: { movie: string }) {
     if (!heartIsClicked) {
       addFavorites(movieId);
       addWatched(movieId);
-      setCheckIsClicked(true);
+      setWatchedIsClicked(true);
     } else {
       deleteFavorites(movieId);
     }
   };
 
-  // ============= Bookmarked ==================
+  // ============= TOWATCH ==================
 
-  // Fonction handleBookMarkClick permettant de gérer le clic sur le marque page
-  const handleBookMarkClick = () => {
-    // Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle.
-    setBookmarkIsClicked(!bookmarkIsClicked);
+  // Fonction handleToWatchClick permettant de gérer le clic sur le marque page
+  const handleToWatchClick = () => {
+    // Met à jour l'état de "toWatchIsClicked" en inversant sa valeur actuelle.
+    setToWatchIsClicked(!toWatchIsClicked);
 
     // Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime
-    bookmarkIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
+    toWatchIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
-  // ============= CHECKED ===================
+  // ============= WATCHED ===================
 
-  // Fonction handleCheckClick permettant de gérer le clic sur le check
-  const handleCheckClick = () => {
-    setCheckIsClicked(!checkIsClicked);
+  // Fonction handleWatchedClick permettant de gérer le clic sur Watched
+  const handleWatchedClick = () => {
+    setWatchedIsClicked(!watchedIsClicked);
 
-    // Si le check n'est pas remplit/clické alors ajoute l'id du film "vu" sinon il le supprime de "vu", de "bookmarked" et passe "HeartIsClicked" à false
-    if (!checkIsClicked) {
+    // Si le Watched n'est pas remplit/clické alors ajoute l'id du film "vu" sinon il le supprime de "vu", de "toWatch" et passe "HeartIsClicked" à false
+    if (!watchedIsClicked) {
       addWatched(movieId);
     } else {
       deleteWatched(movieId);
@@ -116,11 +116,11 @@ function AddButton(movieId: { movie: string }) {
             (item: { film_id: string }) => item.film_id
           );
           if (filmIds.includes(movieId.movie.toString())) {
-            setBookmarkIsClicked(true);
+            setToWatchIsClicked(true);
           } else {
-            setBookmarkIsClicked(false);
+            setToWatchIsClicked(false);
           }
-          console.log(bookmarkIsClicked);
+          console.log(toWatchIsClicked);
         });
     };
     // Condition qui éxecute "getUserToWatch" uniquement si un user est connecté
@@ -132,7 +132,7 @@ function AddButton(movieId: { movie: string }) {
 
   // ======================================= WATCHED ======================================================
 
-  // Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton check en vert
+  // Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton Watched en vert
   useEffect(() => {
     const getUserWatched = () => {
       axios
@@ -144,9 +144,9 @@ function AddButton(movieId: { movie: string }) {
           );
 
           if (filmIds.includes(movieId.movie.toString())) {
-            setCheckIsClicked(true);
+            setWatchedIsClicked(true);
           } else {
-            setCheckIsClicked(false);
+            setWatchedIsClicked(false);
           }
         });
     };
@@ -178,37 +178,37 @@ function AddButton(movieId: { movie: string }) {
       </button>
 
       {/* A REVOIR */}
-      {/* Si le coeur est cliqué alors éxécute la fonction handleBookmarkedClick */}
+      {/* Si le coeur est cliqué alors éxécute la fonction handleToWatchClick */}
       <button
-        className='movieFound__essentiel-btn--addToFavorites'
+        className='movieFound__essentiel-btn--addToWatch'
         type='submit'
-        onClick={handleBookMarkClick}
+        onClick={handleToWatchClick}
         aria-label={`Ajouter aux favoris${
-          bookmarkIsClicked ? ' : Déjà ajouté aux favoris' : ''
+          toWatchIsClicked ? ' : Déjà ajouté aux favoris' : ''
         }`}
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
           className={`fa-sharp fa-${
-            bookmarkIsClicked ? 'solid' : 'regular'
-          } fa-bookmark ${bookmarkIsClicked ? 'bookMarkClicked' : ''}`}
-          style={{ color: bookmarkIsClicked ? '#FFF3B0' : '' }}
+            toWatchIsClicked ? 'solid' : 'regular'
+          } fa-bookmark ${toWatchIsClicked ? 'bookMarkClicked' : ''}`}
+          style={{ color: toWatchIsClicked ? '#FFF3B0' : '' }}
         ></i>
       </button>
 
-      {/* Si le coeur est cliqué alors éxécute la fonction handleCheckClick */}
+      {/* Si le coeur est cliqué alors éxécute la fonction handleWatchedClick */}
       <button
         className='movieFound__essentiel-btn--addToViewed'
         type='submit'
-        onClick={handleCheckClick}
-        aria-label={`Marquer comme vu${checkIsClicked ? ' : Déjà vu' : ''}`}
+        onClick={handleWatchedClick}
+        aria-label={`Marquer comme vu${watchedIsClicked ? ' : Déjà vu' : ''}`}
       >
-        {/* Si le check est cliqué alors affiche le check plein sinon affiche le check vide */}
+        {/* Si le Watched est cliqué alors affiche le Watched plein sinon affiche le Watched vide */}
         <i
           className={`fa-sharp fa-solid fa-check ${
-            checkIsClicked ? 'checkClicked' : ''
+            watchedIsClicked ? 'checkClicked' : ''
           }`}
-          style={{ color: checkIsClicked ? '#7deb00' : '' }}
+          style={{ color: watchedIsClicked ? '#7deb00' : '' }}
         ></i>
       </button>
     </div>

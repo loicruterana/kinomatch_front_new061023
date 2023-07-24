@@ -3,79 +3,75 @@
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
+  // Mixin pour les styles de base des boutons
+  @mixin button-styles-desktop {
+    all: unset;
+    scale: 1.6;
+    margin: 0.6rem 0.6rem;
+    transition: transform 0.2s ease-in-out;
 
-    // Mixin pour les styles de base des boutons
-    @mixin button-styles-desktop {
-        all: unset;
-        scale: 1.6;
-        margin: 0.6rem 0.6rem;
-        transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.3);
+      cursor: pointer;
+    }
+  }
 
-        &:hover {
-            transform: scale(1.3);
-            cursor: pointer;
-        }
+  .movieFound__essentiel {
+    // contenaire des boutons
+    &-btn--container {
+      display: flex;
+      width: fit-content;
+      margin: 0 0.7rem;
     }
 
-    .movieFound__essentiel {
-
-        // contenaire des boutons
-        &-btn--container {
-            display: flex;
-            width: fit-content;
-            margin: 0 0.7rem
-        }
-
-        // Bouton "ajouter aux likes"
-        &-btn--addToLike {
-            @include button-styles-desktop;
-        }
-
-        // Bouton "ajouter aux favoris"
-        &-btn--addToFavorites {
-            @include button-styles-desktop;
-        }
-
-        // Bouton "à voir"
-        &-btn--addToViewed {
-            @include button-styles-desktop;
-            scale: 1.8rem;
-        }
+    // Bouton "ajouter aux likes"
+    &-btn--addToLike {
+      @include button-styles-desktop;
     }
+
+    // Bouton "ajouter aux favoris"
+    &-btn--addToWatch {
+      @include button-styles-desktop;
+    }
+
+    // Bouton "à voir"
+    &-btn--addToViewed {
+      @include button-styles-desktop;
+      scale: 1.8rem;
+    }
+  }
 }
 
 //* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
+  // Mixin pour les styles de base des boutons
+  @mixin button-styles-mobile {
+    all: unset;
+    scale: 1.4;
+    margin: 0.6rem;
+  }
 
-    // Mixin pour les styles de base des boutons
-    @mixin button-styles-mobile {
-        all: unset;
-        scale: 1.4;
-        margin: 0.6rem;
+  .movieFound__essentiel {
+    &-btn--container {
+      display: flex;
+      width: fit-content;
+      margin: 0 0.7rem;
     }
 
-    .movieFound__essentiel {
-
-        &-btn--container {
-            display: flex;
-            width: fit-content;
-            margin: 0 0.7rem
-        }
-
-        // Bouton "ajouter aux likes"
-        &-btn--addToLike {
-            @include button-styles-mobile;
-        }
-
-        // Bouton "ajouter aux favoris"
-        &-btn--addToFavorites {
-            @include button-styles-mobile;
-        }
-
-        // Bouton "à voir"
-        &-btn--addToViewed {
-            @include button-styles-mobile;
-        }
+    // Bouton "ajouter aux likes"
+    &-btn--addToLike {
+      @include button-styles-mobile;
     }
+
+    // Bouton "ajouter aux favoris"
+    &-btn--addToWatch {
+      @include button-styles-mobile;
+    }
+
+    // Bouton "à voir"
+    &-btn--addToViewed {
+      @include button-styles-mobile;
+    }
+  }
 }
