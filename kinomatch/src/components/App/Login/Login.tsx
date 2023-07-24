@@ -74,7 +74,6 @@ export const Login = () => {
         if (response.status === 200) {
           setMessage(response.data.message);
           addUserData(response.data.user.email, response.data.user.id);
-          setGoToHomePage(true);
           login();
           setTimeout(() => {
             setGoToHomePage(true);
@@ -106,6 +105,7 @@ export const Login = () => {
     <main className='login-container'>
       {/* formulaire de connexion */}
       <form className='login-container-form' onSubmit={handleSubmit}>
+        {/* Champ pour l'email */}
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
@@ -113,9 +113,12 @@ export const Login = () => {
           type='email'
           id='email'
           name='email'
-          required
           placeholder='votre@email.com'
+          aria-label='Votre email'
+          required
         />
+
+        {/* Champ pour le mot de passe */}
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
@@ -123,18 +126,27 @@ export const Login = () => {
           type='password'
           id='password'
           name='password'
-          required
           placeholder='v0tr3MdP1c1'
+          aria-label='Votre mot de passe'
+          required
         />
 
+        {/* Lien vers la page d'inscription */}
         <Link key='signup' to='/signup'>
           <span className='new-account'>
             Vous n'avez pas encore de compte ?
           </span>
         </Link>
 
-        <button type='submit'>Connexion</button>
-        <p className='login-container__message'>{message}</p>
+        {/* Bouton de soumission */}
+        <button type='submit' aria-label='Connexion'>
+          Connexion
+        </button>
+
+        {/* Message */}
+        <p className='login-container__message' aria-live='polite'>
+          {message}
+        </p>
       </form>
       {userData.email && <Connected />}
     </main>

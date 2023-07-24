@@ -142,17 +142,6 @@ export const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   // Vérifier si les données de connexion existent dans le localStorage
-  //   const userEmail = localStorage.getItem('userEmail');
-  //   const userId = localStorage.getItem('userId');
-
-  //   if (userEmail && userId) {
-  //     addUserData(userEmail, userId);
-  //     login();
-  //   }
-  // }, []);
-
   //======== USEWINDOWSIZE
 
   // la taille de l'écran définit l'affichage des filtres
@@ -254,6 +243,7 @@ export const Home: React.FC = () => {
                     className='home__filters-selector__containers__filters-container__filter__cross'
                     onClick={handleRemoveGenre}
                     data-id={filter.name}
+                    aria-label='Supprimer le filtre'
                   >
                     <i
                       className='fa-solid fa-xmark'

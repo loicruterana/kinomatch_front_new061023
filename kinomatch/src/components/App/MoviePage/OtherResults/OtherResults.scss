@@ -3,8 +3,6 @@
 //* DESKTOP VERSION =================
 
 @media screen and (min-width: 900px) {
-
-
   .otherResults-container {
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +13,6 @@
     max-width: 16%;
     height: 100%;
     margin-top: 20px;
-
 
     &::-webkit-scrollbar {
       display: none;
@@ -74,8 +71,6 @@
         max-width: 220px;
         transition: transform 0.2s ease-in-out;
 
-
-
         &:hover {
           transform: scale(1.03);
           cursor: pointer;
@@ -93,7 +88,6 @@
         bottom: 0%;
         left: 50%;
         transform: translate(-50%, -50%);
-
       }
     }
   }
@@ -102,8 +96,6 @@
 //* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
-
-
   .otherResults-container {
     position: absolute;
     top: 0;
@@ -115,6 +107,7 @@
     width: 100%;
     height: auto;
     z-index: 5;
+    overflow: hidden;
 
     &--pellicule {
       // display: flex;

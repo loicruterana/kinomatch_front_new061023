@@ -181,7 +181,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Fonction permettant d'ajouter un film à voir
   const addToWatch = async (element: { movie: string }): Promise<void> => {
-    setUserDataToWatch({ ...userDataToWatch, toWatch: element.movie });
+    setUserDataToWatch({
+      ...userDataToWatch,
+      toWatch: element.movie || element.toString(),
+    });
     setIsToWatchModified(true);
   };
 
@@ -243,7 +246,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Fonction permettant d'ajouter un film déjà vu
   const addWatched = async (element: { movie: string }): Promise<void> => {
-    setUserDataWatched({ ...userDataWatched, watched: element.movie });
+    setUserDataWatched({
+      ...userDataWatched,
+      watched: element.movie || element.toString(),
+    });
     setIsWatchedModified(true);
   };
 

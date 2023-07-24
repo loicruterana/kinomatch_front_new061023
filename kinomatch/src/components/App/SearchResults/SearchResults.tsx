@@ -66,12 +66,18 @@ const SearchResults = () => {
         `${API_BASE_URL}/search?typedName=${query}&page=${page + 1}`
       );
       const newMovies = await response.json();
-      // mise à jour du state movies
-      setMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
-      // mise à jour du state page
-      setPage((prevPage) => prevPage + 1);
-      // mise à jour du state hasMore
-      setHasMore(newMovies.results.length > 0);
+
+      // Vérifie si la page est un nombre valide
+      if (!isNaN(page + 1)) {
+        // Si c'est un nombre valide, met à jour le state movies avec les nouvelles données
+        setMovies((movies) => [...movies, ...newMovies.results]);
+        // Mise à jour du state page
+        setPage((page) => page + 1);
+        // Mise à jour du state hasMore
+        setHasMore(newMovies.results.length > 0);
+      } else {
+        console.error("La page n'est pas un nombre valide.");
+      }
     } catch (error) {
       console.error(error);
     }

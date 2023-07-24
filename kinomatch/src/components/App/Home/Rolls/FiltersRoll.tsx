@@ -90,16 +90,18 @@ export const RollGenre = ({
   // ================ JSX ================
   return (
     <>
-      {/* pour la version mobile, on affiche le bouton de validation en bas de la modale */}
+      {/* Bouton de validation pour la version mobile */}
       <div
         className={`home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'
         }__validation`}
       >
-        <button onClick={handleClickOut}>Valider</button>
+        <button onClick={handleClickOut} aria-label='Valider'>
+          Valider
+        </button>
       </div>
 
-      {/* affichage des rolls, ceux-ci ont un affichage différent (padding-bottom) si un filtre est sélectionné */}
+      {/* Affichage des rolls, avec un affichage différent en fonction des filtres sélectionnés */}
       <div
         className={`home-container__roll-modale-${
           mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -114,7 +116,7 @@ export const RollGenre = ({
             : { paddingBottom: '0px' }
         }
       >
-        {/* // ================ JSX : ROLL GENRE ================ */}
+        {/* ROLL GENRE */}
         <div
           className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -156,6 +158,7 @@ export const RollGenre = ({
                         key={preselectedGenre.id}
                         onClick={handleGenreClick}
                         data-id={preselectedGenre.id}
+                        aria-label={preselectedGenre.name} // Ajout de l'aria-label
                       >
                         <img
                           className={`home-container__roll-modale-${
@@ -186,7 +189,8 @@ export const RollGenre = ({
             )}
           </div>
         </div>
-        {/* // ================ JSX : ROLL PROVIDERS ================ */}
+
+        {/* ROLL PROVIDERS */}
         <div
           className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -228,6 +232,7 @@ export const RollGenre = ({
                         onClick={handleProviderClick}
                         data-id={preselectedProvider.provider_id}
                         key={preselectedProvider.provider_id}
+                        aria-label={preselectedProvider.provider_name} // Ajout de l'aria-label
                       >
                         {preselectedProvider.provider_name}
                       </button>
@@ -236,7 +241,8 @@ export const RollGenre = ({
             )}
           </div>
         </div>
-        {/* // ================ JSX : ROLL DECENNIES ================ */}
+
+        {/* ROLL DECENNIES */}
         <div
           className={`home-container__roll-modale-${
             mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -275,6 +281,7 @@ export const RollGenre = ({
                         : ''
                     }`}
                     onClick={handleDecadeClick}
+                    aria-label={decade.toString()} // Ajout de l'aria-label
                   >
                     {decade}
                   </button>

@@ -135,6 +135,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                   key={movieElem.id}
                   data-id={movieElem.id}
                   onClick={handleClick}
+                  aria-label={`Afficher les détails du film : ${movieElem.title}`}
                 >
                   {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
                   <img

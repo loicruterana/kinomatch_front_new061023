@@ -49,6 +49,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
   return (
     <article className='searchresults-container-cardlist-card'>
       <div className='searchresults-container-cardlist-card__imagecontainer'>
+        {/* Lien vers la page du film */}
         <Link to={`/films?filmID=${movie.id}`}>
           <img
             className='searchresults-container-cardlist-card__imagecontainer__image'
@@ -65,10 +66,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
         <div className='searchresults-container-cardlist-card__infos__content'>
           <div className='searchresults-container-cardlist-card__infos__titlereleasecircle'>
             <div className='searchresults-container-cardlist-card__infos__titlereleasecircle__titlerelease'>
+              {/* Titre du film */}
               <h3 className='searchresults-container-cardlist-card__infos__title'>
                 <Link to={`/films?filmID=${movie.id}`}>{movie.title}</Link>
               </h3>
               <div className='searchresults-container-cardlist-card__infos__release'>
+                {/* Date de sortie */}
                 <span>
                   Date de sortie :{' '}
                   {movie.release_date
@@ -79,6 +82,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
             </div>
             <div className='circle-big'>
               <div className='text'>
+                {/* Note du film */}
                 {Math.floor(movie.vote_average * 10) === movie.vote_average * 10
                   ? movie.vote_average * 10
                   : (movie.vote_average * 10).toFixed(1)}
@@ -86,16 +90,19 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, circle }) => {
               </div>
               <svg>
                 <circle className='bg' cx='57' cy='57' r='52' />
+                {/* Cercle de progression de la note */}
                 <animated.circle
                   className='progress'
                   cx='57'
                   cy='57'
                   r='52'
                   style={circleAnimation}
+                  aria-label={`Note : ${movie.vote_average * 10}%`}
                 />
               </svg>
             </div>
           </div>
+          {/* Description du film */}
           <p className='searchresults-container-cardlist-card__infos__desc'>
             {movie.overview}
           </p>

@@ -107,6 +107,7 @@ const Signup = () => {
     <main className='Signup-container'>
       {/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
+        {/* Champ pour l'email */}
         <label htmlFor='email'>Votre email</label>
         <input
           onChange={handleChange}
@@ -116,9 +117,10 @@ const Signup = () => {
           name='email'
           required
           placeholder='votre@email.com'
-          // ref={email}
+          aria-label='Votre email'
         />
 
+        {/* Champ pour le mot de passe */}
         <label htmlFor='password'>Votre mot de passe</label>
         <input
           onChange={handleChange}
@@ -128,9 +130,10 @@ const Signup = () => {
           name='password'
           required
           placeholder='v0tr3MdP1c1'
-          // ref={password}
+          aria-label='Votre mot de passe'
         />
 
+        {/* Champ pour confirmer le mot de passe */}
         <label htmlFor='passwordConfirm'>Confirmez votre mot de passe</label>
         <input
           onChange={handleChange}
@@ -140,14 +143,23 @@ const Signup = () => {
           name='passwordConfirm'
           required
           placeholder='v0tr3MdP1c1'
+          aria-label='Confirmez votre mot de passe'
         />
 
+        {/* Lien vers la page de connexion */}
         <Link key='login' to='/login'>
           <span className='new-account'>Vous avez déjà un compte ?</span>
         </Link>
 
-        <button type='submit'>Créer compte</button>
-        <p className='Login-container__message'>{message}</p>
+        {/* Bouton de soumission */}
+        <button type='submit' aria-label='Créer compte'>
+          Créer compte
+        </button>
+
+        {/* Message */}
+        <p className='Login-container__message' aria-live='polite'>
+          {message}
+        </p>
       </form>
       {userData.email && <Connected />}
     </main>

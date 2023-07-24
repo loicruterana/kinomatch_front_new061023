@@ -166,6 +166,7 @@ function AddButton(movieId: { movie: string }) {
         className='movieFound__essentiel-btn--addToLike'
         type='submit'
         onClick={handleHeartClick}
+        aria-label={`J'aime le film${heartIsClicked ? ' : Déjà aimé' : ''}`}
       >
         {/* Si le coeur est cliqué alors affiche le coeur plein sinon affiche le coeur vide */}
         <i
@@ -180,6 +181,9 @@ function AddButton(movieId: { movie: string }) {
         className='movieFound__essentiel-btn--addToFavorites'
         type='submit'
         onClick={handleBookMarkClick}
+        aria-label={`Ajouter aux favoris${
+          bookmartIsClicked ? ' : Déjà ajouté aux favoris' : ''
+        }`}
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
@@ -194,6 +198,7 @@ function AddButton(movieId: { movie: string }) {
         className='movieFound__essentiel-btn--addToViewed'
         type='submit'
         onClick={handleCheckClick}
+        aria-label={`Marquer comme vu${checkIsClicked ? ' : Déjà vu' : ''}`}
       >
         {/* Si le check est cliqué alors affiche le check plein sinon affiche le check vide */}
         <i
