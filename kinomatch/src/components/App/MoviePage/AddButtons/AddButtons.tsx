@@ -11,8 +11,8 @@ function AddButton(movieId: { movie: string }) {
   const {
     userData,
     isLoggedIn,
-    addBookmarked,
-    deleteBookmarked,
+    addFavorites,
+    deleteFavorites,
     addToWatch,
     deleteToWatch,
     userDataToWatch,
@@ -26,7 +26,7 @@ function AddButton(movieId: { movie: string }) {
   // Coeur
   const [heartIsClicked, setHeartIsClicked] = useState(false);
   //Bookmarked
-  const [bookmartIsClicked, setBookmarkIsClicked] = useState(false);
+  const [bookmarkIsClicked, setBookmarkIsClicked] = useState(false);
   // Check
   const [checkIsClicked, setCheckIsClicked] = useState(false);
 
@@ -41,11 +41,11 @@ function AddButton(movieId: { movie: string }) {
 
     // Si le coeur n'est pas remplit/clické alors ajoute l'id du film au favoris sinon il le supprime
     if (!heartIsClicked) {
-      addBookmarked(movieId);
+      addFavorites(movieId);
       addWatched(movieId);
       setCheckIsClicked(true);
     } else {
-      deleteBookmarked(movieId);
+      deleteFavorites(movieId);
     }
   };
 
@@ -54,10 +54,10 @@ function AddButton(movieId: { movie: string }) {
   // Fonction handleBookMarkClick permettant de gérer le clic sur le marque page
   const handleBookMarkClick = () => {
     // Met à jour l'état de "BookmarkIsClicked" en inversant sa valeur actuelle.
-    setBookmarkIsClicked(!bookmartIsClicked);
+    setBookmarkIsClicked(!bookmarkIsClicked);
 
     // Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime
-    bookmartIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
+    bookmarkIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
   };
 
   // ============= CHECKED ===================
@@ -71,7 +71,7 @@ function AddButton(movieId: { movie: string }) {
       addWatched(movieId);
     } else {
       deleteWatched(movieId);
-      deleteBookmarked(movieId);
+      deleteFavorites(movieId);
       setHeartIsClicked(false);
     }
   };
@@ -80,9 +80,9 @@ function AddButton(movieId: { movie: string }) {
 
   // Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge
   useEffect(() => {
-    const getUserBookmarked = () => {
+    const getUserFavorites = () => {
       axios
-        .get(`${API_BASE_URL}/bookmarkedMovies?userID=${userData.id}`)
+        .get(`${API_BASE_URL}/favoritesMovies?userID=${userData.id}`)
         .then(function (response) {
           const responseData = response.data;
           const filmIds = responseData.map(
@@ -96,9 +96,9 @@ function AddButton(movieId: { movie: string }) {
           }
         });
     };
-    // Condition qui éxecute getUserBookmarked uniquement si un user est connecté
+    // Condition qui éxecute getUserFavorites uniquement si un user est connecté
     {
-      isLoggedIn && getUserBookmarked();
+      isLoggedIn && getUserFavorites();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -120,7 +120,7 @@ function AddButton(movieId: { movie: string }) {
           } else {
             setBookmarkIsClicked(false);
           }
-          console.log(bookmartIsClicked);
+          console.log(bookmarkIsClicked);
         });
     };
     // Condition qui éxecute "getUserToWatch" uniquement si un user est connecté
@@ -176,23 +176,26 @@ function AddButton(movieId: { movie: string }) {
           style={{ color: heartIsClicked ? '#D42121' : '' }}
         ></i>
       </button>
+
+      {/* A REVOIR */}
       {/* Si le coeur est cliqué alors éxécute la fonction handleBookmarkedClick */}
       <button
         className='movieFound__essentiel-btn--addToFavorites'
         type='submit'
         onClick={handleBookMarkClick}
         aria-label={`Ajouter aux favoris${
-          bookmartIsClicked ? ' : Déjà ajouté aux favoris' : ''
+          bookmarkIsClicked ? ' : Déjà ajouté aux favoris' : ''
         }`}
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
           className={`fa-sharp fa-${
-            bookmartIsClicked ? 'solid' : 'regular'
-          } fa-bookmark ${bookmartIsClicked ? 'bookMarkClicked' : ''}`}
-          style={{ color: bookmartIsClicked ? '#FFF3B0' : '' }}
+            bookmarkIsClicked ? 'solid' : 'regular'
+          } fa-bookmark ${bookmarkIsClicked ? 'bookMarkClicked' : ''}`}
+          style={{ color: bookmarkIsClicked ? '#FFF3B0' : '' }}
         ></i>
       </button>
+
       {/* Si le coeur est cliqué alors éxécute la fonction handleCheckClick */}
       <button
         className='movieFound__essentiel-btn--addToViewed'

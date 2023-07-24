@@ -8,7 +8,7 @@ import {
   WatchedMoviesObject,
   ToWatchListArray,
   toWatchMoviesObject,
-  BookmarkedListObject,
+  FavoritesListObject,
 } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
@@ -22,15 +22,15 @@ interface BookmarkedRollProps {
   watchedMovies: WatchedMoviesObject;
   toWatchList: ToWatchListArray;
   toWatchMovies: toWatchMoviesObject;
-  bookmarkedList: BookmarkedListObject;
+  favoritesList: FavoritesListObject;
   setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>;
   showToWatchRoll: boolean;
   // setShowToWatchRoll: React.Dispatch<React.SetStateAction<boolean>>;
   setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>;
   deleteToWatch: (element: { movie: string }) => void;
-  deleteBookmarkedAndWatched: (element: { movie: string }) => void;
-  handleAddBookmarked: (film_id: string) => void;
-  handleRemoveBookmarked: (film_id: string) => void;
+  deleteFavoritesAndWatched: (element: { movie: string }) => void;
+  handleAddFavorites: (film_id: string) => void;
+  handleRemoveFavorites: (film_id: string) => void;
 }
 
 //* ================ COMPOSANT ================
@@ -44,21 +44,21 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   watchedMovies,
   toWatchList,
   toWatchMovies,
-  bookmarkedList,
+  favoritesList,
   setWatchedList,
   showToWatchRoll,
   // setShowToWatchRoll,
   setToWatchList,
   deleteToWatch,
-  deleteBookmarkedAndWatched,
-  handleAddBookmarked,
-  handleRemoveBookmarked,
+  deleteFavoritesAndWatched,
+  handleAddFavorites,
+  handleRemoveFavorites,
 }) => {
   // =========================== HANDLERS ===========================
 
   // handler pour supprimer un film de la liste des films vus, et par conséquent des films préférés
   function handleRemoveWatched(film_id: string) {
-    deleteBookmarkedAndWatched({ movie: film_id });
+    deleteFavoritesAndWatched({ movie: film_id });
     setWatchedList((state) =>
       state.filter((element) => element.film_id !== film_id)
     );
@@ -118,26 +118,26 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       }__roll-container__item`}
                       key={watchedListItem.id}
                     >
-                      {/* Bouton de bookmark coeur */}
+                      {/* Bouton de coeur */}
                       <i
                         className={`profile-container__roll-modale-${
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-a fa-${
-                          bookmarkedList[Number(watchedListItem.film_id)]
+                          favoritesList[Number(watchedListItem.film_id)]
                             ? 'solid'
                             : 'regular'
                         } fa-heart`}
                         // pour vérifier si le film est dans la liste des films préférés
                         onClick={() => {
-                          if (bookmarkedList[Number(watchedListItem.film_id)]) {
-                            handleRemoveBookmarked(watchedListItem.film_id);
+                          if (favoritesList[Number(watchedListItem.film_id)]) {
+                            handleRemoveFavorites(watchedListItem.film_id);
                           } else {
-                            handleAddBookmarked(watchedListItem.film_id);
+                            handleAddFavorites(watchedListItem.film_id);
                           }
                         }}
                         // pour changer la couleur du coeur si le film est dans la liste des films préférés
                         style={{
-                          color: bookmarkedList[Number(watchedListItem.film_id)]
+                          color: favoritesList[Number(watchedListItem.film_id)]
                             ? '#D42121'
                             : '',
                         }}

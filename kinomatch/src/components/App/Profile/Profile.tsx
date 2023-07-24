@@ -8,7 +8,7 @@ import {
   WatchedMoviesObject,
   ToWatchListArray,
   toWatchMoviesObject,
-  BookmarkedListObject,
+  FavoritesListObject,
   UserData,
   toWatchMoviesEntry,
 } from '../../../utils/interfaces';
@@ -48,9 +48,7 @@ export const Profile: React.FC = () => {
   // pour stocker les noms concernant les films à voir
   const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
   // pour stocker les id issues du back concernant les films préférés
-  const [bookmarkedList, setBookmarkedList] = useState<BookmarkedListObject>(
-    {}
-  );
+  const [favoritesList, setFavoritesList] = useState<FavoritesListObject>({});
   // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState(false);
 
@@ -60,20 +58,19 @@ export const Profile: React.FC = () => {
   const {
     userData,
     logout,
-    deleteBookmarked,
+    deleteFavorites,
     deleteToWatch,
-    deleteBookmarkedAndWatched,
-    // deleteWatched,
-    addBookmarked,
+    deleteFavoritesAndWatched,
+    addFavorites,
     clearUserData,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
-    deleteBookmarked: (element: { movie: string }) => void;
+    deleteFavorites: (element: { movie: string }) => void;
     deleteToWatch: (element: { movie: string }) => void;
-    deleteBookmarkedAndWatched: (element: { movie: string }) => void;
+    deleteFavoritesAndWatched: (element: { movie: string }) => void;
     deleteWatched: (element: { movie: string }) => void;
-    addBookmarked: (element: { movie: string }) => void;
+    addFavorites: (element: { movie: string }) => void;
     addUserData: (email: string, id: string) => void;
     login: () => void;
     clearUserData: () => void;
@@ -84,14 +81,14 @@ export const Profile: React.FC = () => {
   const navigate: (path: string) => void = useNavigate();
   // fonction pour savoir si les listes sont en train de charger
   const listsAreLoading =
-    (watchedList || toWatchList || bookmarkedList) === undefined; // false
+    (watchedList || toWatchList || favoritesList) === undefined; // false
 
   // function deleteCookie(name) {
   //   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   // }
 
   // ================ INTERFACES ================
-  interface BookmarkedItem {
+  interface FavoritesItem {
     createdAt: string;
     film_id: string;
     id: number;
@@ -102,14 +99,14 @@ export const Profile: React.FC = () => {
   // ================ HANDLERS ================
 
   // handler pour supprimer un film ajouté en favoris (coeur)
-  function handleRemoveBookmarked(film_id: string) {
-    deleteBookmarked({ movie: film_id });
+  function handleRemoveFavorites(film_id: string) {
+    deleteFavorites({ movie: film_id });
     setUserEvent(true);
   }
 
   // handler pour ajouter un film ajouté en favoris (coeur)
-  function handleAddBookmarked(film_id: string) {
-    addBookmarked({ movie: film_id });
+  function handleAddFavorites(film_id: string) {
+    addFavorites({ movie: film_id });
     setUserEvent(true);
   }
 
@@ -258,25 +255,25 @@ export const Profile: React.FC = () => {
   }, [watchedList]);
   // on exécute le useEffect à chaque fois que watchedList (la liste des id) change
 
-  // =========================== BOOKMARKED (COEUR) ===========================
+  // =========================== FAVORITES (COEUR) ===========================
 
   //useEffect pour récupérer les id des films ajoutés en favoris
   useEffect(() => {
-    const fetchMoviesBookmarked = async () => {
+    const fetchMoviesFavorites = async () => {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
         await axios
-          .get(`${API_BASE_URL}/bookmarkedMovies?${searchParams.toString()}`)
+          .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
           .then(({ data }) => {
             // Utiliser un objet pour stocker les id des films favoris
-            const bookmarked: BookmarkedListObject = {};
+            const favorites: FavoritesListObject = {};
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.forEach((element: any) => {
               const key = element.film_id?.toString();
-              bookmarked[key] = element as BookmarkedItem;
+              favorites[key] = element as FavoritesItem;
             });
-            setBookmarkedList(bookmarked);
+            setFavoritesList(favorites);
           })
           .catch((error) => {
             console.error(error);
@@ -290,7 +287,7 @@ export const Profile: React.FC = () => {
     };
 
     // if (userEvent) {
-    fetchMoviesBookmarked();
+    fetchMoviesFavorites();
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEvent, userData]);
@@ -432,13 +429,13 @@ export const Profile: React.FC = () => {
             toWatchMovies={toWatchMovies}
             // setToWatchMovies={setToWatchMovies}
             deleteToWatch={deleteToWatch}
-            deleteBookmarkedAndWatched={deleteBookmarkedAndWatched}
-            bookmarkedList={bookmarkedList}
-            // deleteBookmarked={deleteBookmarked}
-            // addBookmarked={addBookmarked}
+            deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+            favoritesList={favoritesList}
+            // deleteFavorites={deleteFavorites}
+            // addFavorites={addFavorites}
 
-            handleRemoveBookmarked={handleRemoveBookmarked}
-            handleAddBookmarked={handleAddBookmarked}
+            handleRemoveFavorites={handleRemoveFavorites}
+            handleAddFavorites={handleAddFavorites}
           />
         </section>
       )}

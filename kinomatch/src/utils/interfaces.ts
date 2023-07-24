@@ -42,7 +42,7 @@ export type toWatchMoviesObject = Record<number , toWatchMoviesEntry | undefined
 
 //---
 
-export interface BookmarkedListEntry {
+export interface FavoritesListEntry {
   id: number;
   user_id: string;
   film_id: string | undefined;
@@ -50,8 +50,8 @@ export interface BookmarkedListEntry {
   updatedAt: string;
 }
 
-export type BookmarkedListObject = {
-  [key: number]: BookmarkedListEntry | undefined;
+export type FavoritesListObject = {
+  [key: number]: FavoritesListEntry | undefined;
 };
 
 
@@ -61,7 +61,7 @@ export type BookmarkedListObject = {
 export interface UserData {
   email: string;
   id: string;
-  bookmarked: string;
+  favorites: string;
 }
 
 //=========== HOME & FILTERSROLL

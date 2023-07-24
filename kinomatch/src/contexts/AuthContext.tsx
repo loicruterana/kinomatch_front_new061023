@@ -6,11 +6,11 @@ import API_BASE_URL from '../utils/config';
 
 // ================ INTERFACES ================
 
-// Interface définissant les propriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "bookmarked"
+// Interface définissant les propriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "favorites"
 export interface UserData {
   email: string;
   id: string;
-  bookmarked: string;
+  favorites: string;
 }
 
 // Interface définissant les proriétés du contexte. Elle contient l'email de l'utilisateur, sont id ainsi que son "toWatch"
@@ -33,13 +33,13 @@ export interface AuthContextProps {
   login: () => void;
   logout: () => void;
   addUserData: (email: string, userId: string) => void;
-  addBookmarked: (element: { movie: string }) => void;
-  deleteBookmarked: (element: { movie: string }) => void;
+  addFavorites: (element: { movie: string }) => void;
+  deleteFavorites: (element: { movie: string }) => void;
   addToWatch: (element: { movie: string }) => void;
   deleteToWatch: (element: { movie: string }) => void;
   addWatched: (element: { movie: string }) => void;
   deleteWatched: (element: { movie: string }) => void;
-  deleteBookmarkedAndWatched: (element: { movie: string }) => void;
+  deleteFavoritesAndWatched: (element: { movie: string }) => void;
   clearUserData: () => void;
   userData: UserData;
   userDataToWatch: UserDataToWatch;
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userData, setUserData] = useState<UserData>({
     email: '',
     id: '',
-    bookmarked: '',
+    favorites: '',
   });
 
   const [userDataToWatch, setUserDataToWatch] = useState<UserDataToWatch>({
@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [isBookmarkedModified, setIsBookmarkedModified] = useState(false);
+  const [isFavoritesModified, setIsFavoritesModified] = useState(false);
   const [isToWatchModified, setIsToWatchModified] = useState(false);
   const [isWatchedModified, setIsWatchedModified] = useState(false);
 
@@ -114,64 +114,64 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUserData({ ...userData, email: '', id: '' });
   };
 
-  // ================ FONCTIONS LIÉES AUX BOOKMARKS (COEUR) ================
+  // ================ FONCTIONS LIÉES AUX FAVORITES (COEUR) ================
 
   // Fonction permettant d'ajouter un film aux favoris
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const addBookmarked = async (element: { movie: any }): Promise<void> => {
-    setUserData({ ...userData, bookmarked: element.movie || element });
-    setIsBookmarkedModified(true); // Marquer le tableau comme modifié
+  const addFavorites = async (element: { movie: any }): Promise<void> => {
+    setUserData({ ...userData, favorites: element.movie || element });
+    setIsFavoritesModified(true); // Marquer le tableau comme modifié
   };
 
   // Fonction permettant de supprimer un film des favoris
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deleteBookmarked = async (element: { movie: any }): Promise<void> => {
-    setUserData({ ...userData, bookmarked: element.movie || element });
+  const deleteFavorites = async (element: { movie: any }): Promise<void> => {
+    setUserData({ ...userData, favorites: element.movie || element });
   };
 
   // ================================= USEEFFECT ==========================================
 
-  // UseEffect permettant de poster les données des "bookmarked" de l'utilisateur
+  // UseEffect permettant de poster les données des "favorites" de l'utilisateur
   useEffect(() => {
     const postData = async (): Promise<void> => {
       try {
-        await axios.post(`${API_BASE_URL}/bookmarkedMovies`, userData);
+        await axios.post(`${API_BASE_URL}/favoritesMovies`, userData);
       } catch (error) {
         console.log(error);
       }
     };
 
-    // Si "isBookmarkedModified" a été modifié et que userData.bookmarked n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
-    if (userData.bookmarked !== '' && isBookmarkedModified) {
+    // Si "isFavoritesModified" a été modifié et que userData.favorites n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
+    if (userData.favorites !== '' && isFavoritesModified) {
       postData();
-      setIsBookmarkedModified(false);
+      setIsFavoritesModified(false);
     } else {
-      setIsBookmarkedModified(false);
+      setIsFavoritesModified(false);
     }
 
-    // On écoute les changements de l'état "userData" et "isBookmarkedModified"
-  }, [userData, isBookmarkedModified]);
+    // On écoute les changements de l'état "userData" et "isFavoritesModified"
+  }, [userData, isFavoritesModified]);
 
-  // UseEffect permettant de supprimer les données des "bookmarked" de l'utilisateur
+  // UseEffect permettant de supprimer les données des "favorites" de l'utilisateur
   useEffect(() => {
     const deleteData = async (): Promise<void> => {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
-        searchParams.append('movieID', userData.bookmarked);
+        searchParams.append('movieID', userData.favorites);
 
         axios.delete(
-          `${API_BASE_URL}/deletebookmarked?${searchParams.toString()}`
+          `${API_BASE_URL}/deleteFavorites?${searchParams.toString()}`
         );
       } catch (error) {
         console.log(error);
       }
     };
 
-    // Si "isBookmarkedModified" n'a pas été modifié et que userData.bookmarked n'est pas vide, alors on supprime les données puis on met à jour les "useData"
-    if (userData.bookmarked !== '' && !isBookmarkedModified) {
+    // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "useData"
+    if (userData.favorites !== '' && !isFavoritesModified) {
       deleteData();
-      setUserData({ ...userData, bookmarked: '' });
+      setUserData({ ...userData, favorites: '' });
     }
     // On écoute les changements de l'état "userData"
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -262,12 +262,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   //! Fonction permettant de supprimer un film des favoris lorsqu'on le supprime des films déjà vus
-  const deleteBookmarkedAndWatched = async (element: {
+  const deleteFavoritesAndWatched = async (element: {
     movie: string;
   }): Promise<void> => {
     setUserData({
       ...userData,
-      bookmarked: element.movie || element.toString(),
+      favorites: element.movie || element.toString(),
     });
     setUserDataWatched({
       ...userDataWatched,
@@ -331,8 +331,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isLoggedIn,
         login,
         logout,
-        addBookmarked,
-        deleteBookmarked,
+        addFavorites,
+        deleteFavorites,
         addUserData,
         addToWatch,
         deleteToWatch,
@@ -341,7 +341,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         userData,
         userDataToWatch,
         userDataWatched,
-        deleteBookmarkedAndWatched,
+        deleteFavoritesAndWatched,
         clearUserData,
       }}
     >
