@@ -1,4 +1,4 @@
-import { Key, useContext, useEffect, useState } from 'react';
+import { Key, useContext, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 import React from 'react';
@@ -31,9 +31,11 @@ import './style.scss';
 
 // Fonction MoviePage permettant d'afficher la page d'un film
 function MoviePage() {
+  const effectRan = useRef(false);
+
   const navigate = useNavigate();
 
-  // ================= MODALE DETAILS ============================
+  //* ================= MODALE DETAILS ============================
 
   // Fonction permettant de manipuler la modale "showDetailsModal". Au click ==> passe de true à false et inversement
   const handleDetailsModal = () => {
@@ -50,7 +52,7 @@ function MoviePage() {
     setShowOtherResults(!showOtherResults);
   };
 
-  // ================ USESTATES =================================
+  //* ================ USESTATES =================================
 
   // UseState qu définit l'id et le "fillValue" du film
   const [circle, setCircle] = useState<{ id: number; fillValue: number }>({
@@ -138,7 +140,7 @@ function MoviePage() {
     },
   });
 
-  // ================ USECONTEXT =================================
+  //* ================ USECONTEXT =================================
 
   const { currentMovieId, setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { isLoggedIn } = useContext(AuthContext);
@@ -147,7 +149,7 @@ function MoviePage() {
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
-  // ==================== USESPRING ===============================
+  //* ==================== USESPRING ===============================
 
   // UseSpring permettant l'animation du cercle de chargement
   const circleAnimation = useSpring({
@@ -155,7 +157,7 @@ function MoviePage() {
     to: { strokeDashoffset: 326.56 - (326.56 * circle.fillValue) / 100 },
   });
 
-  // =================== FONCTIONS DE CONVERSIONS ET DE RÉCUPÉRATION ===========================
+  //* =================== FONCTIONS DE CONVERSIONS ET DE RÉCUPÉRATION ===========================
 
   // DURÉE DU FILM EN HEURE
 
@@ -199,7 +201,7 @@ function MoviePage() {
   const trailer = videos.find((video) => video.type.includes('Trailer'));
   const otherVideos = videos.filter((video) => !video.type.includes('Trailer'));
 
-  // ==================== USEEFFECT handleResize ===============================
+  //* ==================== USEEFFECT handleResize ===============================
 
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
   useEffect(() => {
@@ -222,273 +224,199 @@ function MoviePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  /* ============================ USEEFFECT SearchResults ============================ */
+
+  //? ============================ USEEFFECT SearchResults ============================ /
 
   // UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher
-  // useEffect(() => {
-
-  //   if (window.location.search.includes('filmID')) {
-  //     setIsLoading(true);
-
-  //     // Traiter le cas spécifique ici
-  //     const filmID = window.location.search.split('=')[1];
-
-  //     setCurrentMovieId(filmID);
-
-  //     const searchParams = new URLSearchParams();
-  //     searchParams.append('movieID', currentMovieId);
-  //     if (currentMovieId !== filmID) {
-  //       return; // Sortir du useEffect si currentMovieId n'est pas défini
-  //     }
-  //     // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
-  //     const requests = [
-  //       // Route pour récupérer les détails du film
-  //       axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
-  //       // Route pour récupérer les crédits du film
-  //       axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-  //       // Route pour récupérer les providers du film
-  //       axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
-  //       // Route pour récupérer les films recommandés
-  //       axios.get(`${API_BASE_URL}/recommendedMovies?${searchParams.toString()}`),
-  //       // Route pour récupérer les vidéos du film
-  //       axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
-  //     ];
-
-  //     Promise.all(requests)
-  //       .then((responses) => {
-  //         // On déstructure les réponses pour les récupérer dans l'ordre
-  //         const [
-  //           detailResponse,
-  //           creditsResponse,
-  //           providerResponse,
-  //           movieArrayResponse,
-  //           videosMovie,
-  //         ] = responses;
-
-  //         // On récupère les données des films pour les stocker dans des variables
-  //         const movieData = detailResponse.data;
-  //         const creditsData = creditsResponse.data;
-  //         const providersData = providerResponse.data;
-  //         const movieArrayData = movieArrayResponse.data;
-  //         const videosMovieData = videosMovie.data;
-
-  //         // On stocke les données dans le state
-  //         setMovie(movieData);
-  //         setCredits(creditsData);
-  //         setProviders(providersData);
-  //         setMovieArray(movieArrayData.results);
-  //         setVideos(videosMovieData.results);
-  //         setCircle({
-  //           id: movieData.id,
-  //           fillValue: movieData.vote_average * 10,
-  //         });
-  //       })
-
-  //       .catch((error) => {
-  //         // Gérer l'erreur ici
-  //         console.error(
-  //           "Une erreur s'est produite lors de la récupération des données :",
-  //           error
-  //         );
-  //       })
-  //       .finally(() => {
-  //         setIsLoading(false);
-  //       });
-
-  //     // Sortir du useEffect pour éviter l'exécution du reste du code
-  //     return;
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [currentMovieId]);
-
-  //? ============================ USEEFFECT FilteredMovie ============================ 
-
-  // useEffect(() => {
-  //   if (!window.location.search.includes('filmID')) {
-  //     axios
-  //       .get(`${API_BASE_URL}/films${window.location.search}`)
-  //       .then(({ data }) => {
-  //         setMovieArray(data.results);
-  //         const searchParams = new URLSearchParams();
-  //         searchParams.append('movieID', data.results[3].id);
-  //         const requests = [
-  //           axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
-  //           axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-  //           axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
-  //           axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
-  //         ];
-  //         return Promise.all(requests);
-  //       })
-  //       .then((responses) => {
-  //         const [
-  //           detailResponse,
-  //           creditsResponse,
-  //           providerResponse,
-  //           videosMovie,
-  //         ] = responses;
-  //         setMovie(detailResponse.data);
-  //         setCredits(creditsResponse.data);
-  //         setProviders(providerResponse.data);
-  //         setVideos(videosMovie.data.results);
-  //         setCircle({
-  //           id: detailResponse.data.id,
-  //           fillValue: detailResponse.data.vote_average * 10,
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.error(
-  //           "Une erreur s'est produite lors de la récupération des données :",
-  //           error
-  //         );
-  //       })
-  //   }
-  // }, []);
-
-
-  // useEffect(() => {
-  //   if (!window.location.search.includes('filmID')) {
-  //     const searchParams = new URLSearchParams();
-  //     searchParams.append('movieID', '2024');
-
-  //     const requests = [
-  //       axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
-  //       axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-  //       axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
-  //       axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
-  //     ];
-
-  //     Promise.all(requests)
-  //       .then((responses) => {
-  //         const [
-  //           detailResponse,
-  //           creditsResponse,
-  //           providerResponse,
-  //           videosMovie,
-  //         ] = responses;
-
-  //         setMovie(detailResponse.data);
-  //         setCredits(creditsResponse.data);
-  //         setProviders(providerResponse.data);
-  //         setVideos(videosMovie.data.results);
-  //         setCircle({
-  //           id: detailResponse.data.id,
-  //           fillValue: detailResponse.data.vote_average * 10,
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // }, []);
-
-
-
-
-
   useEffect(() => {
-    if (!window.location.search.includes('filmID')) {
+
+    if (window.location.search.includes('filmID')) {
       setIsLoading(true);
-      // Requête axios permettant de récupérer les données des films filtrés
 
-      //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
-      // On fait un console.log pour savoir combien de fois le useEffect est exécuté
-      axios
-        .get(`${API_BASE_URL}/films${window.location.search}`)
-        .then(({ data }) => {
-          // Renvoi la première page de résultats
-          console.log(data)
-          if (data.results.length === 0) {
-            handleNoResult();
-            navigate(`/`);
-            return;
-          }
+      // Traiter le cas spécifique ici
+      const filmID = window.location.search.split('=')[1];
 
-          // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
-          const numberOfPages = data.total_pages;
-          let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
-          if (chosenPage > 500) {
-            chosenPage = Math.floor(Math.random() * 500) + 1;
-          }
+      setCurrentMovieId(filmID);
 
-          //* ON RECUPERE LES DONNEES DE LA PAGE SELECTIONNEE ALEATOIREMENT !
+      const searchParams = new URLSearchParams();
+      searchParams.append('movieID', currentMovieId);
+      if (currentMovieId !== filmID) {
+        return; // Sortir du useEffect si currentMovieId n'est pas défini
+      }
+      // On récupère les données du film sélectionné sur les routes "detail", "credits" et "providers"
+      const requests = [
+        // Route pour récupérer les détails du film
+        axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
+        // Route pour récupérer les crédits du film
+        axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
+        // Route pour récupérer les providers du film
+        axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
+        // Route pour récupérer les films recommandés
+        axios.get(`${API_BASE_URL}/recommendedMovies?${searchParams.toString()}`),
+        // Route pour récupérer les vidéos du film
+        axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
+      ];
 
-          // On récupère les données de la page sélectionnée
-          const searchParams1 = new URLSearchParams();
-          searchParams1.append('randomPage', chosenPage.toString());
-          console.log(searchParams1.toString());
-
-          // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-          if (window.location.search === '') {
-            return axios.get(`${API_BASE_URL}/randomFilms`);
-          } else {
-            // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
-            return axios.get(
-              `${API_BASE_URL}/randomFilms${window.location.search
-              }&${searchParams1.toString()}`
-            );
-          }
-        })
-        //* ON SELECTIONNE UN FILM ALEATOIREMENT PARMI LES RESULTATS DE LA PAGE SELECTIONNEE, ON L'AFFICHE ET ON MET A JOUR LE STATE AVEC LES RESULTATS FILTRES !
-        .then((response) => {
-          // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
-          const data = response?.data;
-          console.log(data)
-          // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
-          if (data) {
-            const selectRandomID =
-              data.results[Math.floor(Math.random() * data.results.length)].id;
-            // On évite d'afficher le même film que celui qui est déjà affiché
-            const filteredResults = data.results.filter(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (result: { id: any }) => result.id !== selectRandomID
-            );
-            console.log(filteredResults)
-            // Met à jour le state avec les résultats filtrés
-            setMovieArray(filteredResults);
-            console.log(currentMovieId)
-            const searchParams = new URLSearchParams();
-            // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-            searchParams.append(
-              'movieID',
-              movieArray.length === 0 ? selectRandomID : currentMovieId
-            );
-
-            // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits", "providers" et "videos"
-            const requests = [
-              axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
-              axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-              axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
-              axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
-            ];
-            return Promise.all(requests);
-          }
-        })
-        // Ensuite on récupère les données des films recommandés et on les stocke dans les states
+      Promise.all(requests)
         .then((responses) => {
-          // Si les réponses sont un tableau, on les déstructure pour les récupérer dans l'ordre
-          if (Array.isArray(responses)) {
-            const [movieData, creditsData, providersData, videosMovie] = responses;
-            // Si les données sont présentes, on les stocke dans les states
-            if (movieData.data && creditsData.data && providersData.data) {
-              setMovie(movieData.data);
-              setCredits(creditsData.data);
-              setProviders(providersData.data);
-              setVideos(videosMovie.data.results);
-              setCircle({
-                id: movieData.data.id,
-                fillValue: movieData.data.vote_average * 10,
-              });
-            }
-          }
+          // On déstructure les réponses pour les récupérer dans l'ordre
+          const [
+            detailResponse,
+            creditsResponse,
+            providerResponse,
+            movieArrayResponse,
+            videosMovie,
+          ] = responses;
+
+          // On récupère les données des films pour les stocker dans des variables
+          const movieData = detailResponse.data;
+          const creditsData = creditsResponse.data;
+          const providersData = providerResponse.data;
+          const movieArrayData = movieArrayResponse.data;
+          const videosMovieData = videosMovie.data;
+
+          // On stocke les données dans le state
+          setMovie(movieData);
+          setCredits(creditsData);
+          setProviders(providersData);
+          setMovieArray(movieArrayData.results);
+          setVideos(videosMovieData.results);
+          setCircle({
+            id: movieData.id,
+            fillValue: movieData.vote_average * 10,
+          });
         })
+
         .catch((error) => {
-          console.error(error);
+          // Gérer l'erreur ici
+          console.error(
+            "Une erreur s'est produite lors de la récupération des données :",
+            error
+          );
         })
         .finally(() => {
           setIsLoading(false);
         });
+
+      // Sortir du useEffect pour éviter l'exécution du reste du code
+      return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentMovieId]);
+
+
+  //? ============================ USEEFFECT FilteredMovie ============================ 
+
+
+  useEffect(() => {
+    if (!window.location.search.includes('filmID')) {
+      if (effectRan.current === true) {
+        setIsLoading(true);
+        // Requête axios permettant de récupérer les données des films filtrés
+
+        //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
+        // On fait un console.log pour savoir combien de fois le useEffect est exécuté
+        axios
+          .get(`${API_BASE_URL}/films${window.location.search}`)
+          .then(({ data }) => {
+            // Renvoi la première page de résultats
+            console.log(data)
+            if (data.results.length === 0) {
+              handleNoResult();
+              navigate(`/`);
+              return;
+            }
+
+            // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
+            const numberOfPages = data.total_pages;
+            let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
+            if (chosenPage > 500) {
+              chosenPage = Math.floor(Math.random() * 500) + 1;
+            }
+
+            //* ON RECUPERE LES DONNEES DE LA PAGE SELECTIONNEE ALEATOIREMENT !
+
+            // On récupère les données de la page sélectionnée
+            const searchParams1 = new URLSearchParams();
+            searchParams1.append('randomPage', chosenPage.toString());
+            console.log(searchParams1.toString());
+
+            // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+            if (window.location.search === '') {
+              return axios.get(`${API_BASE_URL}/randomFilms`);
+            } else {
+              // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
+              return axios.get(
+                `${API_BASE_URL}/randomFilms${window.location.search
+                }&${searchParams1.toString()}`
+              );
+            }
+          })
+          //* ON SELECTIONNE UN FILM ALEATOIREMENT PARMI LES RESULTATS DE LA PAGE SELECTIONNEE, ON L'AFFICHE ET ON MET A JOUR LE STATE AVEC LES RESULTATS FILTRES !
+          .then((response) => {
+            // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
+            const data = response?.data;
+            console.log(data)
+            // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
+            if (data) {
+              const selectRandomID =
+                data.results[Math.floor(Math.random() * data.results.length)].id;
+              // On évite d'afficher le même film que celui qui est déjà affiché
+              const filteredResults = data.results.filter(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (result: { id: any }) => result.id !== selectRandomID
+              );
+              console.log(filteredResults)
+              // Met à jour le state avec les résultats filtrés
+              setMovieArray(filteredResults);
+              console.log(currentMovieId)
+              const searchParams = new URLSearchParams();
+              // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+              searchParams.append(
+                'movieID',
+                movieArray.length === 0 ? selectRandomID : currentMovieId
+              );
+
+              // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits", "providers" et "videos"
+              const requests = [
+                axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
+                axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
+                axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
+                axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
+              ];
+              return Promise.all(requests);
+            }
+          })
+          // Ensuite on récupère les données des films recommandés et on les stocke dans les states
+          .then((responses) => {
+            // Si les réponses sont un tableau, on les déstructure pour les récupérer dans l'ordre
+            if (Array.isArray(responses)) {
+              const [movieData, creditsData, providersData, videosMovie] = responses;
+              // Si les données sont présentes, on les stocke dans les states
+              if (movieData.data && creditsData.data && providersData.data) {
+                setMovie(movieData.data);
+                setCredits(creditsData.data);
+                setProviders(providersData.data);
+                setVideos(videosMovie.data.results);
+                setCircle({
+                  id: movieData.data.id,
+                  fillValue: movieData.data.vote_average * 10,
+                });
+              }
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      }
+      return () => {
+        effectRan.current = true;
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
   }, [currentMovieId]);
 
   // Si le chargement est en cours, on affiche le composant Loading
