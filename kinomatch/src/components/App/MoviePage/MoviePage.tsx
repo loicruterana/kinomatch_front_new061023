@@ -26,6 +26,11 @@ import Loading from '../Loading/Loading';
 import { Movie, Credits } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
 
+// ================ IMPORT JSON ================
+
+// ici j'importe l'objet "genres" qui contient les genres de films et leurs id et le renommee "genresList" pour pouvoir l'utiliser dans le code
+import { genres as genresListFile } from '../../../utils/genres';
+
 // ================ IMPORT SCSS ================
 import './style.scss';
 
@@ -140,6 +145,9 @@ function MoviePage() {
     },
   });
 
+  // UseState qui récupère les genres sélectionnés par l'utilisateur
+  const [ genresList, setGenresList] = useState(['']);
+
   //* ================ USECONTEXT =================================
 
   const { currentMovieId, setCurrentMovieId } = useContext(CurrentMovieIdContext);
@@ -201,6 +209,8 @@ function MoviePage() {
   const trailer = videos.find((video) => video.type.includes('Trailer'));
   const otherVideos = videos.filter((video) => !video.type.includes('Trailer'));
 
+
+
   //* ==================== USEEFFECT handleResize ===============================
 
   // UseEffect permettant l'affichage conditionnel suivant la largeur de fenêtre
@@ -233,7 +243,7 @@ function MoviePage() {
     if (window.location.search.includes('filmID')) {
       setIsLoading(true);
 
-      // Traiter le cas spécifique ici
+      // Ici on récupère l'ID du film sélectionné en le séparant de l'URI
       const filmID = window.location.search.split('=')[1];
 
       setCurrentMovieId(filmID);
@@ -312,7 +322,29 @@ function MoviePage() {
     if (!window.location.search.includes('filmID')) {
       if (effectRan.current === true) {
         setIsLoading(true);
-        // Requête axios permettant de récupérer les données des films filtrés
+
+        //*  ON RÉCUÈRE LES PARAMÈTRES DE L'URL POUR AFFICHER LES FILTRES SELECTIONNES PAR L'UTILISATEUR
+
+        const urlParams = new URLSearchParams(window.location.search);
+        // On crée un tableau vide pour stocker les paramètres
+        const paramsArray: { key: string; value: string; }[] = [];
+        // On boucle sur les paramètres de l'URL
+        urlParams.forEach((value, key) => {
+          paramsArray.push({ key, value });
+        });
+
+        // On créer un tableau avec les valeurs des paramètres
+        const ValueArray = paramsArray.map(obj => obj.value);
+
+        // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
+        const genreArray = ValueArray.map((value) => {
+          // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
+          const genre = genresListFile.find((param: { id: number; }) => param.id === Number(value));
+          // Si le genre existe on retourne son nom sinon on retourne null
+          return genre ? genre.name : null;
+        });
+
+        setGenresList(genreArray);
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
@@ -425,6 +457,8 @@ function MoviePage() {
     return <Loading />;
   }
 
+  console.log(genresList);
+
   return (
     <article className='moviePage'>
       {/* Modale Image*/}
@@ -512,13 +546,13 @@ function MoviePage() {
               <ul className='movieDetails__filters-desktop--filterElemList'>
                 {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
                 <li>
-                  {selectedGenreFilters.map(
-                    (genre: { id: Key | null | undefined; name: string }) => (
+                  {genresList.map(
+                    (genre) => (
                       <p
-                        key={genre.id}
+                        key={genre}
                         className='movieDetails__filters-desktop--filterElem'
                       >
-                        {genre.name}
+                        {genre}
                       </p>
                     )
                   )}
