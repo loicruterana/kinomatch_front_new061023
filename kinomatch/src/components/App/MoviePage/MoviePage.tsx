@@ -29,8 +29,8 @@ import API_BASE_URL from '../../../utils/config';
 // ================ IMPORT JSON ================
 
 // ici j'importe l'objet "genres" qui contient les genres de films et leurs id et le renommee "genresList" pour pouvoir l'utiliser dans le code
-import { genres as genresListFile } from '../../../utils/genres';
-
+import { genres as genresListFile } from '/home/student/Bureau/html/Quasar/PROJET-06-KINOMATCH-FRONT/kinomatch/public/genres.json';
+import { results as providersListFile } from '/home/student/Bureau/html/Quasar/PROJET-06-KINOMATCH-FRONT/kinomatch/public/providers.json';
 // ================ IMPORT SCSS ================
 import './style.scss';
 
@@ -146,7 +146,13 @@ function MoviePage() {
   });
 
   // UseState qui récupère les genres sélectionnés par l'utilisateur
-  const [ genresList, setGenresList] = useState(['']);
+  const [genresList, setGenresList] = useState(['']);
+
+  // UseState qui récupère les plateformes sélectionnées par l'utilisateur
+  const [providersList, setProvidersList] = useState(['']);
+
+  // UseState qui récupère les décennies sélectionnées par l'utilisateur
+  const [decadeList, setDecadeList] = useState(['']);
 
   //* ================ USECONTEXT =================================
 
@@ -333,18 +339,69 @@ function MoviePage() {
           paramsArray.push({ key, value });
         });
 
-        // On créer un tableau avec les valeurs des paramètres
-        const ValueArray = paramsArray.map(obj => obj.value);
+        // ==================== FILTRES GENRES ====================
 
+        // On filtre les paramètres pour récupérer les genres
+        const filteredGenres = paramsArray.filter((genre) =>
+          genre.key === 'genreID'
+        );
+
+        console.log(filteredGenres);
+
+        // On créer un tableau avec les valeurs des paramètres
+        const genreValueArray = filteredGenres.map(obj => obj.value);
+        console.log(genreValueArray);
         // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
-        const genreArray = ValueArray.map((value) => {
+        const genreArray = genreValueArray.map((value) => {
           // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
           const genre = genresListFile.find((param: { id: number; }) => param.id === Number(value));
-          // Si le genre existe on retourne son nom sinon on retourne null
-          return genre ? genre.name : null;
+          // Si le genre existe on retourne son nom sinon on retourne ''
+          return genre ? genre.name : '';
         });
 
+        // On stocke les genres dans le state
         setGenresList(genreArray);
+        console.log(paramsArray);
+
+        // ==================== FILTRES PROVIDERS ====================
+
+        // On filtre les paramètres pour récupérer les providers
+        const filterProviders = paramsArray.filter((provider) =>
+          provider.key === 'providerID'
+        );
+
+        // On créer un tableau avec les valeurs des paramètres
+        const filterProvidersArray = filterProviders.map(obj => obj.value);
+
+        // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers
+        const providerArray = filterProvidersArray.map((value) => {
+          // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers et on convertit la valeur en nombre
+          const provider = providersListFile.find((param: { provider_id: number; }) => param.provider_id === Number(value));
+          // Si le provider existe on retourne son nom sinon on retourne ''
+          return provider ? provider.provider_name : '';
+        });
+
+        setProvidersList(providerArray);
+
+        console.log(filterProviders);
+        console.log(filterProvidersArray);
+
+        // ============================ FILTRE DECADES ============================ 
+
+        // On filtre les paramètres pour récupérer la décennie
+        const filteredDecade = paramsArray.filter((decade) =>
+          decade.key === 'decade'
+        );
+
+        // On créer un tableau avec les valeurs des paramètres
+        const decadeValueArray = filteredDecade.map(obj => obj.value);
+        console.log(decadeValueArray);
+
+        // On stocke les décennies dans le state
+        setDecadeList(decadeValueArray);
+        console.log(filteredDecade);
+
+
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
@@ -447,8 +504,8 @@ function MoviePage() {
       return () => {
         effectRan.current = true;
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
 
   // Si le chargement est en cours, on affiche le composant Loading
@@ -456,8 +513,6 @@ function MoviePage() {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(genresList);
 
   return (
     <article className='moviePage'>
@@ -559,18 +614,18 @@ function MoviePage() {
                 </li>
                 {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
                 <li>
-                  {selectedProviderFilters.map((provider) => (
+                  {providersList.map((provider) => (
                     <p
-                      key={provider.id}
+                      key={provider}
                       className='movieDetails__filters-desktop--filterElem'
                     >
-                      {provider.provider_name}
+                      {provider}
                     </p>
                   ))}
                 </li>
                 {/* Pour chaque filtre de "décennie", on affiche les noms de décennies */}
                 <li>
-                  {selectedDecadeFilters.map((decade) => (
+                  {decadeList.map((decade) => (
                     <p
                       key={decade}
                       className='movieDetails__filters-desktop--filterElem'
@@ -716,34 +771,31 @@ function MoviePage() {
                   <ul className='movieDetails__filters-mobile--filterElemList'>
                     <li>
                       {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
-                      {selectedGenreFilters.map(
-                        (genre: {
-                          id: Key | null | undefined;
-                          name: string;
-                        }) => (
+                      {genresList.map(
+                        (genre) => (
                           <p
-                            key={genre.id}
+                            key={genre}
                             className='movieDetails__filters-mobile--filterElem'
                           >
-                            {genre.name}
+                            {genre}
                           </p>
                         )
                       )}
                     </li>
                     <li>
                       {/* Pour chaque filtre de "provider", on affiche les noms de providers */}
-                      {selectedProviderFilters.map((provider) => (
+                      {providersList.map((provider) => (
                         <p
-                          key={provider.id}
+                          key={provider}
                           className='movieDetails__filters-mobile--filterElem'
                         >
-                          {provider.provider_name}
+                          {provider}
                         </p>
                       ))}
                     </li>
                     <li>
                       {/* Pour chaque filtre de "decade", on affiche les noms de décennies */}
-                      {selectedDecadeFilters.map((decade) => (
+                      {decadeList.map((decade) => (
                         <p
                           key={decade}
                           className='movieDetails__filters-mobile--filterElem'
