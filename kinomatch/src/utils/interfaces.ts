@@ -61,6 +61,7 @@ export type FavoritesListObject = {
 export interface UserData {
   email: string;
   id: string;
+  picture: string;
   favorites: string;
 }
 

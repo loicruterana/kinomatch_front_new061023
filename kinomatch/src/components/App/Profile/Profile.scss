@@ -260,9 +260,26 @@
           display: flex;
           overflow: hidden;
           overflow-y: auto;
+          flex-direction: column;
 
           &::-webkit-scrollbar {
             display: none;
+          }
+          &__returnbuttonarea {
+            background-color: vars.$theme1-secondary;
+            display: flex;
+            justify-content: center;
+            padding: 8px;
+            &__return {
+              border-radius: 5px;
+              border: none;
+              background-color: vars.$theme1-primary;
+              color: vars.$theme1-secondary;
+              height: 30px;
+              width: 90%;
+              font-size: 20px;
+              font-family: 'Creato Display', 'sans serif';
+            }
           }
         }
 

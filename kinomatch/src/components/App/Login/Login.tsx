@@ -40,6 +40,12 @@ export const Login = () => {
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [countPassword, setCountPassword] = useState(0);
+
+  const [showPasswordConditions, setShowPasswordConditions] = useState(false);
+
   // ================ UTILS ================
 
   // fonction qui va permettre de rediriger vers la page d'accueil
@@ -56,15 +62,20 @@ export const Login = () => {
       ...postProfil,
       [event.target.name]: value,
     });
+    if (event.target.name === 'password') {
+      setCountPassword(value.length);
+    }
   };
 
   //handleSubmit pour envoyer les données du formulaire pour se logger
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
+    setShowPassword(false);
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
     };
+    console.log(userData);
 
     axios
       .post(`${API_BASE_URL}/login`, userData, {
@@ -73,7 +84,11 @@ export const Login = () => {
       .then((response) => {
         if (response.status === 200) {
           setMessage(response.data.message);
-          addUserData(response.data.user.email, response.data.user.id);
+          addUserData(
+            response.data.user.email,
+            response.data.user.id,
+            response.data.user.picture
+          );
           login();
           setTimeout(() => {
             setGoToHomePage(true);
@@ -100,6 +115,10 @@ export const Login = () => {
       });
   };
 
+  function handleShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
   // ================ JSX ================
   return (
     <main className='login-container'>
@@ -119,17 +138,37 @@ export const Login = () => {
         />
 
         {/* Champ pour le mot de passe */}
+
         <label htmlFor='password'>Votre mot de passe</label>
+        <i
+          className='fa-solid fa-info'
+          onMouseOver={() => setShowPasswordConditions(true)}
+          onMouseLeave={() => setShowPasswordConditions(false)}
+        ></i>
+
+        {showPasswordConditions && (
+          <div className='login-container-form-input-conditions'>
+            voici les conditions
+          </div>
+        )}
+        <i
+          className={
+            !showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+          }
+          onClick={handleShowPassword}
+        ></i>
+
         <input
           onChange={handleChange}
           className='login-container-form-input'
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           id='password'
           name='password'
           placeholder='v0tr3MdP1c1'
           aria-label='Votre mot de passe'
           required
         />
+        <span>{countPassword > 1 && countPassword}</span>
 
         {/* Lien vers la page d'inscription */}
         <Link key='signup' to='/signup'>

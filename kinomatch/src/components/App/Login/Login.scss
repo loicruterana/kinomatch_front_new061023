@@ -36,6 +36,12 @@
           background: vars.$theme1-secondary;
           border: black 2px solid;
         }
+        &-conditions {
+          // position: absolute;
+          height: 200px;
+          width: 200px;
+          background-color: red;
+        }
       }
       button {
         margin-top: 10px;

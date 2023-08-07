@@ -10,6 +10,7 @@ import API_BASE_URL from '../utils/config';
 export interface UserData {
   email: string;
   id: string;
+  picture: string;
   favorites: string;
 }
 
@@ -32,18 +33,19 @@ export interface AuthContextProps {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
-  addUserData: (email: string, userId: string) => void;
+  addUserData: (email: string, userId: string, picture: string) => void;
   addFavorites: (element: { movie: string }) => void;
   deleteFavorites: (element: { movie: string }) => void;
   addToWatch: (element: { movie: string }) => void;
   deleteToWatch: (element: { movie: string }) => void;
-  addWatched: (element: { movie: string }) => void;
+  addWatched: (element: { film_id: string }) => void;
   deleteWatched: (element: { movie: string }) => void;
   deleteFavoritesAndWatched: (element: { movie: string }) => void;
   clearUserData: () => void;
   userData: UserData;
   userDataToWatch: UserDataToWatch;
   userDataWatched: UserDataWatched;
+  updateUserDataPicture: (picture: string) => void;
 }
 
 // Interface définissant les propriétés du composant. Elle contient les enfants du composant.
@@ -67,6 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userData, setUserData] = useState<UserData>({
     email: '',
     id: '',
+    picture: '',
     favorites: '',
   });
 
@@ -103,9 +106,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   //  ================ FONCTIONS LIÉES AUX UTILISATEURS ================
 
+  const updateUserDataPicture = (pictureName) => {
+    setUserData({ ...userData, picture: pictureName });
+  };
+
   // Fonction permettant d'ajouter les données de l'utilisateur
-  const addUserData = (email: string, userId: string): void => {
-    setUserData({ ...userData, email, id: userId });
+  const addUserData = (
+    email: string,
+    userId: string,
+    picture: string
+  ): void => {
+    setUserData({ ...userData, email, id: userId, picture });
     setUserDataToWatch({ ...userDataToWatch, email, id: userId });
     setUserDataWatched({ ...userDataWatched, email, id: userId });
   };
@@ -245,10 +256,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ================ FONCTIONS LIÉES AUX FILMS DÉJÀ VUS ================
 
   // Fonction permettant d'ajouter un film déjà vu
-  const addWatched = async (element: { movie: string }): Promise<void> => {
+  const addWatched = async (element: { film_id: string }): Promise<void> => {
     setUserDataWatched({
       ...userDataWatched,
-      watched: element.movie || element.toString(),
+      watched: element.film_id || element.toString(),
     });
     setIsWatchedModified(true);
   };
@@ -343,6 +354,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         userDataWatched,
         deleteFavoritesAndWatched,
         clearUserData,
+        updateUserDataPicture,
       }}
     >
       {children}

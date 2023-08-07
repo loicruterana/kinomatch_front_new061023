@@ -36,6 +36,13 @@ const Signup = () => {
   // state pour afficher un message d'erreur
   const [message, setMessage] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [countPassword, setCountPassword] = useState(0);
+  const [countPasswordConfirm, setCountPasswordConfirm] = useState(0);
+
+  const [showPasswordConditions, setShowPasswordConditions] = useState(false);
+
   // ================ IMPORT PROPS CONTEXT ================
 
   const { userData, addUserData, login } = useContext(AuthContext);
@@ -56,11 +63,19 @@ const Signup = () => {
       ...postProfil,
       [event.target.name]: value,
     });
+    if (event.target.name === 'password') {
+      setCountPassword(value.length);
+    } else if (event.target.name === 'passwordConfirm') {
+      setCountPasswordConfirm(value.length);
+    }
   };
 
   //handleSubmit pour envoyer les données du formulaire au back
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setShowPasswordConfirm(false);
+    setShowPassword(false);
+
     const userData = {
       email: postProfil.email,
       password: postProfil.password,
@@ -75,7 +90,11 @@ const Signup = () => {
       // setMessage pour afficher le message d'erreur
       setMessage(response.data.message);
       // addUserData pour stocker dans AuthContext les données de l'utilisateur
-      addUserData(response.data.user.email, response.data.user.id);
+      addUserData(
+        response.data.user.email,
+        response.data.user.id,
+        response.data.user.picture
+      );
 
       setTimeout(() => {
         setGoToHomePage(true);
@@ -101,6 +120,14 @@ const Signup = () => {
     }
   };
 
+  function handleShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
+  function handleShowPasswordConfirm() {
+    setShowPasswordConfirm(!showPasswordConfirm);
+  }
+
   // ============ JSX ============
 
   return (
@@ -119,43 +146,62 @@ const Signup = () => {
           placeholder='votre@email.com'
           aria-label='Votre email'
         />
-
         {/* Champ pour le mot de passe */}
         <label htmlFor='password'>Votre mot de passe</label>
+        <i
+          className='fa-solid fa-info'
+          onMouseOver={() => setShowPasswordConditions(true)}
+          onMouseLeave={() => setShowPasswordConditions(false)}
+        ></i>
+        {showPasswordConditions && (
+          <div className='Signup-container-form-input-conditions'>
+            voici les conditions
+          </div>
+        )}
+        <i
+          className={
+            !showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+          }
+          onClick={handleShowPassword}
+        ></i>{' '}
         <input
           onChange={handleChange}
           className='Signup-container-form-input'
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           id='password'
           name='password'
           required
           placeholder='v0tr3MdP1c1'
           aria-label='Votre mot de passe'
         />
-
+        <span>{countPassword > 1 && countPassword}</span>
         {/* Champ pour confirmer le mot de passe */}
         <label htmlFor='passwordConfirm'>Confirmez votre mot de passe</label>
+        <i
+          className={
+            !showPasswordConfirm ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+          }
+          onClick={handleShowPasswordConfirm}
+        ></i>{' '}
         <input
           onChange={handleChange}
           className='Signup-container-form-input'
-          type='password'
+          type={showPasswordConfirm ? 'text' : 'password'}
           id='passwordConfirm'
           name='passwordConfirm'
           required
           placeholder='v0tr3MdP1c1'
           aria-label='Confirmez votre mot de passe'
         />
-
+        <span>{countPasswordConfirm > 1 && countPasswordConfirm}</span>
         {/* Lien vers la page de connexion */}
         <Link key='login' to='/login'>
           <span className='new-account'>Vous avez déjà un compte ?</span>
         </Link>
-
         {/* Bouton de soumission */}
         <button type='submit' aria-label='Créer compte'>
           Créer compte
         </button>
-
         {/* Message */}
         <p className='Login-container__message' aria-live='polite'>
           {message}

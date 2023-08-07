@@ -23,6 +23,7 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
+import PictureProfileModale from './PictureProfileModale/PictureProfileModale';
 
 // ================ IMPORT SCSS ================
 
@@ -51,6 +52,9 @@ export const Profile: React.FC = () => {
   const [favoritesList, setFavoritesList] = useState<FavoritesListObject>({});
   // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState(false);
+  // un state pour indiquer si la modale de modification de photo de profil est ouverte
+  const [showPictureProfileModale, setShowPictureProfileModale] =
+    useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
 
@@ -63,6 +67,7 @@ export const Profile: React.FC = () => {
     deleteFavoritesAndWatched,
     addFavorites,
     clearUserData,
+    addWatched,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
@@ -74,6 +79,7 @@ export const Profile: React.FC = () => {
     addUserData: (email: string, id: string) => void;
     login: () => void;
     clearUserData: () => void;
+    addWatched: (element: { film_id: string }) => void;
   };
 
   // ================ UTILS ================
@@ -114,6 +120,7 @@ export const Profile: React.FC = () => {
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
+    console.log('click out');
   }
 
   //handler pour afficher le roll Watched (films vus -> ✓)
@@ -167,6 +174,10 @@ export const Profile: React.FC = () => {
     }
   }
 
+  function handleOpenPictureProfileModale(): void {
+    setShowPictureProfileModale(true);
+  }
+
   // ================ USEWINDOWSIZE ================
   // pour afficher ou masquer les rolls en fonction de la taille de l'écran
   useEffect(() => {
@@ -203,57 +214,67 @@ export const Profile: React.FC = () => {
       .then(({ data }) => {
         // stocke les données dans le state watchedList
         setWatchedList(data);
+        console.log(watchedList);
       })
       .catch((error) => {
         console.error(error);
       });
+    setUserEvent(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [userData, userEvent]);
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
-  //useEffect pour récupérer les titres des films vus
-  useEffect(() => {
-    const fetchMovieTitles = async () => {
-      try {
-        const requests = watchedList.map((watchedListItem) => {
-          const searchParams = new URLSearchParams();
-          searchParams.append('movieID', watchedListItem?.film_id ?? '');
-          return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
-        });
+  // Définition de la fonction fetchMovieTitles en dehors des useEffect
+  const fetchMovieTitles = async () => {
+    try {
+      const requests = watchedList.map((watchedListItem) => {
+        const searchParams = new URLSearchParams();
+        searchParams.append('movieID', watchedListItem?.film_id ?? '');
+        return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
+      });
 
-        Promise.all(requests)
-          .then((responses) => {
-            const moviesToAdd = responses.map(({ data }) => ({
-              name: data.title,
-              movie_id: data.id,
-            }));
+      Promise.all(requests)
+        .then((responses) => {
+          const moviesToAdd = responses.map(({ data }) => ({
+            name: data.title,
+            movie_id: data.id,
+          }));
 
-            // Utilise un objet pour stocker les films uniques
-            const uniqueMovies: Record<
-              string,
-              { name: string; movie_id?: string }
-            > = {};
+          // Utilise un objet pour stocker les films uniques
+          const uniqueMovies: Record<
+            string,
+            { name: string; movie_id?: string }
+          > = {};
 
-            // Parcourir la liste des films à ajouter
-            moviesToAdd.forEach((movie) => {
-              // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
-              uniqueMovies[movie.movie_id?.toString()] = movie;
-            });
-            // on stocke les noms des films dans le state watchedMovies
-            setWatchedMovies(uniqueMovies as WatchedMoviesObject);
-          })
-          .catch((error) => {
-            console.error(error);
+          // Parcourir la liste des films à ajouter
+          moviesToAdd.forEach((movie) => {
+            // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
+            uniqueMovies[movie.movie_id?.toString()] = movie;
           });
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
+          // on stocke les noms des films dans le state watchedMovies
+          setWatchedMovies(uniqueMovies);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Premier useEffect pour mettre à jour les films regardés au chargement initial
+  useEffect(() => {
+    fetchMovieTitles();
+    setUserEvent(false);
+  }, []);
+
+  // Deuxième useEffect pour mettre à jour les films regardés chaque fois que watchedList change
+  useEffect(() => {
     fetchMovieTitles();
   }, [watchedList]);
-  // on exécute le useEffect à chaque fois que watchedList (la liste des id) change
 
   // =========================== FAVORITES (COEUR) ===========================
 
@@ -310,7 +331,7 @@ export const Profile: React.FC = () => {
         console.error(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [userData, userEvent]);
 
   // =========================== TOWATCHLISTMOVIES ===========================
 
@@ -358,9 +379,13 @@ export const Profile: React.FC = () => {
           <div className='profile-container__personnal__infos__pictureemailpassword'>
             <div className='profile-container__personnal__circle'>
               <img
-                src='images/SamplePicCircle.png'
-                alt='Image de profil par defaut'
+                src={`images/${userData.picture}.png`} // codePicture
+                alt={`Image de profil ${userData.picture}`}
               ></img>
+              <i
+                className='fa-solid fa-pen'
+                onClick={handleOpenPictureProfileModale}
+              ></i>
             </div>
             <div className='profile-container__personnal__pictureemailpassword__emailpassword'>
               <div className='profile-container__personnal__pictureemailpassword__emailpassword__email'>
@@ -431,11 +456,15 @@ export const Profile: React.FC = () => {
             deleteToWatch={deleteToWatch}
             deleteFavoritesAndWatched={deleteFavoritesAndWatched}
             favoritesList={favoritesList}
+            addWatched={addWatched}
             // deleteFavorites={deleteFavorites}
             // addFavorites={addFavorites}
 
             handleRemoveFavorites={handleRemoveFavorites}
             handleAddFavorites={handleAddFavorites}
+            userEvent={userEvent}
+            setUserEvent={setUserEvent}
+            handleClickOut={handleClickOut}
           />
         </section>
       )}
@@ -462,6 +491,12 @@ export const Profile: React.FC = () => {
       )}
       {/* affichage conditionnel du Footer en fonction du device */}
       {!mobileVersion && <Footer />}
+      {showPictureProfileModale && (
+        <PictureProfileModale
+          setShowPictureProfileModale={setShowPictureProfileModale}
+          showPictureProfileModale={showPictureProfileModale}
+        />
+      )}
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================

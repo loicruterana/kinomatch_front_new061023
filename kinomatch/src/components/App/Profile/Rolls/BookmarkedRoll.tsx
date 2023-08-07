@@ -31,6 +31,9 @@ interface BookmarkedRollProps {
   deleteFavoritesAndWatched: (element: { movie: string }) => void;
   handleAddFavorites: (film_id: string) => void;
   handleRemoveFavorites: (film_id: string) => void;
+  addWatched: (element: { film_id: string }) => void;
+  userEvent: boolean;
+  handleClickOut: () => void;
 }
 
 //* ================ COMPOSANT ================
@@ -53,7 +56,13 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   deleteFavoritesAndWatched,
   handleAddFavorites,
   handleRemoveFavorites,
+  addWatched,
+  userEvent,
+  setUserEvent,
+  handleClickOut,
 }) => {
+  // =========================== USESTATES ===========================
+
   // =========================== HANDLERS ===========================
 
   // handler pour supprimer un film de la liste des films vus, et par conséquent des films préférés
@@ -71,6 +80,20 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
     setToWatchList((state) =>
       state.filter((element) => element.film_id !== film_id)
     );
+  }
+
+  function handlefromToWatchToWatched(film_id: string) {
+    console.log('film_id', film_id);
+    setToWatchList((state) =>
+      state.filter((element) => element.film_id !== film_id)
+    );
+    deleteToWatch({ movie: film_id });
+
+    setWatchedList((state) => [...state, film_id]);
+    console.log('watchedList', watchedList);
+    console.log('onpasseici');
+    addWatched({ film_id: film_id });
+    setUserEvent(true);
   }
 
   // ================ JSX ================
@@ -162,6 +185,16 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
               )}
             </div>
           </div>
+          <div className='profile-container__roll-modale-mobile-version__column__returnbuttonarea'>
+            <button
+              className='profile-container__roll-modale-mobile-version__column__returnbuttonarea__return'
+              onClick={() => {
+                handleClickOut();
+              }}
+            >
+              Retour
+            </button>
+          </div>
         </div>
       )}
 
@@ -189,8 +222,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                   mobileVersion ? 'mobile-version' : 'desktop-version'
                 }__roll-container__item-category`}
               >
-                {/* <i className='fa-sharp fa-solid fa-check'></i> */}
-                <i className='fa-sharp fa-regular fa-bookmark'></i>À voir
+                <i className='fa-sharp fa-solid fa-check'></i>À voir
+                <i className='fa-sharp fa-regular fa-bookmark'></i>
                 {/* <i className='fa-rexgular fa-heart'></i> */}
                 <div></div>
               </div>
@@ -206,11 +239,15 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       }__roll-container__item`}
                       key={toWatchListItem.id}
                     >
-                      {/* <i
+                      <i
                         className={`profile-container__roll-modale-${
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-c fa-sharp fa-solid fa-check `}
-                      ></i> */}
+                        onClick={() =>
+                          handlefromToWatchToWatched(toWatchListItem.film_id)
+                        }
+                      ></i>
+
                       <Link to={`/films?filmID=${toWatchListItem.film_id}`}>
                         {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
                       </Link>
@@ -229,6 +266,16 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                 })
               )}
             </div>
+          </div>
+          <div className='profile-container__roll-modale-mobile-version__column__returnbuttonarea'>
+            <button
+              className='profile-container__roll-modale-mobile-version__column__returnbuttonarea__return'
+              onClick={() => {
+                handleClickOut();
+              }}
+            >
+              Retour
+            </button>
           </div>
         </div>
       )}
