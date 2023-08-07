@@ -48,6 +48,7 @@ const PictureProfileModale = ({
     //   picture: 'yodaprofile',
     // });
     console.log('onpasseici2');
+    handleClickOut();
   }
 
   return (
@@ -56,31 +57,35 @@ const PictureProfileModale = ({
         <img
           src='images/leonprofile.png'
           alt='leonprofile'
+          className='pictureProfileModale-pic'
           onClick={handleClick}
           data-profile='leonprofile'
         />{' '}
         <img
           src='images/yodaprofile.png'
           alt='yodaprofile'
+          className='pictureProfileModale-pic'
           onClick={handleClick}
           data-profile='yodaprofile'
         />{' '}
         <img
           src='images/leiaprofile.png'
           alt='leiaprofile'
+          className='pictureProfileModale-pic'
           onClick={handleClick}
           data-profile='leiaprofile'
         />{' '}
         <img
           src='images/ghostfaceprofile.png'
           alt='ghostfaceprofile'
+          className='pictureProfileModale-pic'
           onClick={handleClick}
           data-profile='ghostfaceprofile'
         />
       </div>
-      <div className='pictureProfileModale__bottompart'>
+      {/* <div className='pictureProfileModale__bottompart'>
         <button onClick={handleClickOut}>Retour</button>
-      </div>
+      </div> */}
     </div>
   );
 };
