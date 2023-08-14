@@ -139,20 +139,27 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       className={`profile-container__roll-modale-${
                         mobileVersion ? 'mobile-version' : 'desktop-version'
                       }__roll-container__item`}
-                      key={watchedListItem.id}
+                      key={watchedListItem.film_id}
                     >
                       {/* Bouton de coeur */}
                       <i
                         className={`profile-container__roll-modale-${
                           mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-a fa-${
-                          favoritesList[Number(watchedListItem.film_id)]
+                          favoritesList.some(
+                            (element) =>
+                              element.film_id === watchedListItem.film_id
+                          )
                             ? 'solid'
                             : 'regular'
                         } fa-heart`}
                         // pour vérifier si le film est dans la liste des films préférés
                         onClick={() => {
-                          if (favoritesList[Number(watchedListItem.film_id)]) {
+                          const isFavorite = favoritesList.some(
+                            (element) =>
+                              element.film_id === watchedListItem.film_id
+                          );
+                          if (isFavorite) {
                             handleRemoveFavorites(watchedListItem.film_id);
                           } else {
                             handleAddFavorites(watchedListItem.film_id);
@@ -160,13 +167,17 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                         }}
                         // pour changer la couleur du coeur si le film est dans la liste des films préférés
                         style={{
-                          color: favoritesList[Number(watchedListItem.film_id)]
+                          color: favoritesList.some(
+                            (element) =>
+                              element.film_id === watchedListItem.film_id
+                          )
                             ? '#D42121'
                             : '',
                         }}
                       ></i>
+
                       <Link to={`/films?filmID=${watchedListItem.film_id}`}>
-                        {watchedMovies[Number(watchedListItem.film_id)]?.name}
+                        {watchedListItem.film_title}
                       </Link>
 
                       {/* Bouton de suppression (croix) */}
@@ -185,9 +196,15 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
               )}
             </div>
           </div>
-          <div className='profile-container__roll-modale-mobile-version__column__returnbuttonarea'>
+          <div
+            className={`profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__column__returnbuttonarea`}
+          >
             <button
-              className='profile-container__roll-modale-mobile-version__column__returnbuttonarea__return'
+              className={`profile-container__roll-modale-${
+                mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__column__returnbuttonarea__return`}
               onClick={() => {
                 handleClickOut();
               }}
@@ -237,7 +254,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       className={`profile-container__roll-modale-${
                         mobileVersion ? 'mobile-version' : 'desktop-version'
                       }__roll-container__item`}
-                      key={toWatchListItem.id}
+                      key={toWatchListItem.film_id}
                     >
                       <i
                         className={`profile-container__roll-modale-${
@@ -249,7 +266,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       ></i>
 
                       <Link to={`/films?filmID=${toWatchListItem.film_id}`}>
-                        {toWatchMovies[Number(toWatchListItem.film_id)]?.name}
+                        {toWatchListItem.film_title}
                       </Link>
                       {/* bouton de bookmark croix */}
                       <i
@@ -267,9 +284,16 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
               )}
             </div>
           </div>
-          <div className='profile-container__roll-modale-mobile-version__column__returnbuttonarea'>
+
+          <div
+            className={`profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__column__returnbuttonarea`}
+          >
             <button
-              className='profile-container__roll-modale-mobile-version__column__returnbuttonarea__return'
+              className={`profile-container__roll-modale-${
+                mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__column__returnbuttonarea__return`}
               onClick={() => {
                 handleClickOut();
               }}

@@ -37,7 +37,12 @@
       flex-direction: row;
       z-index: 1;
       width: 55%;
-
+      // profile-container__roll-modale-mobile-version
+      &__column {
+        &__returnbuttonarea {
+          display: none;
+        }
+      }
       &-backdropfilter {
         display: none;
       }
@@ -209,6 +214,9 @@
     &__circle {
       margin-bottom: 50px;
       scale: 1.2;
+      &__pen:hover {
+        cursor: pointer;
+      }
     }
 
     &__infos {

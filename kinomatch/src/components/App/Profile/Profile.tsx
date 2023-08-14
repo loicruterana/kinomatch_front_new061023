@@ -49,7 +49,7 @@ export const Profile: React.FC = () => {
   // pour stocker les noms concernant les films à voir
   const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
   // pour stocker les id issues du back concernant les films préférés
-  const [favoritesList, setFavoritesList] = useState<FavoritesListObject>({});
+  const [favoritesList, setFavoritesList] = useState<FavoritesListObject>([]);
   // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState(false);
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
@@ -213,8 +213,8 @@ export const Profile: React.FC = () => {
       .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
       .then(({ data }) => {
         // stocke les données dans le state watchedList
-        setWatchedList(data);
-        console.log(watchedList);
+        setWatchedList(data.watchedListTitles);
+        console.log('ICI', data.watchedListTitles);
       })
       .catch((error) => {
         console.error(error);
@@ -222,59 +222,59 @@ export const Profile: React.FC = () => {
     setUserEvent(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData, userEvent]);
+  }, []);
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
   // Définition de la fonction fetchMovieTitles en dehors des useEffect
-  const fetchMovieTitles = async () => {
-    try {
-      const requests = watchedList.map((watchedListItem) => {
-        const searchParams = new URLSearchParams();
-        searchParams.append('movieID', watchedListItem?.film_id ?? '');
-        return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
-      });
+  // const fetchMovieTitles = async () => {
+  //   try {
+  //     const requests = watchedList.map((watchedListItem) => {
+  //       const searchParams = new URLSearchParams();
+  //       searchParams.append('movieID', watchedListItem?.film_id ?? '');
+  //       return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
+  //     });
 
-      Promise.all(requests)
-        .then((responses) => {
-          const moviesToAdd = responses.map(({ data }) => ({
-            name: data.title,
-            movie_id: data.id,
-          }));
+  //     Promise.all(requests)
+  //       .then((responses) => {
+  //         const moviesToAdd = responses.map(({ data }) => ({
+  //           name: data.title,
+  //           movie_id: data.id,
+  //         }));
 
-          // Utilise un objet pour stocker les films uniques
-          const uniqueMovies: Record<
-            string,
-            { name: string; movie_id?: string }
-          > = {};
+  //         // Utilise un objet pour stocker les films uniques
+  //         const uniqueMovies: Record<
+  //           string,
+  //           { name: string; movie_id?: string }
+  //         > = {};
 
-          // Parcourir la liste des films à ajouter
-          moviesToAdd.forEach((movie) => {
-            // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
-            uniqueMovies[movie.movie_id?.toString()] = movie;
-          });
+  //         // Parcourir la liste des films à ajouter
+  //         moviesToAdd.forEach((movie) => {
+  //           // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
+  //           uniqueMovies[movie.movie_id?.toString()] = movie;
+  //         });
 
-          // on stocke les noms des films dans le state watchedMovies
-          setWatchedMovies(uniqueMovies);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //         // on stocke les noms des films dans le state watchedMovies
+  //         setWatchedMovies(uniqueMovies);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  // Premier useEffect pour mettre à jour les films regardés au chargement initial
-  useEffect(() => {
-    fetchMovieTitles();
-    setUserEvent(false);
-  }, []);
+  // // Premier useEffect pour mettre à jour les films regardés au chargement initial
+  // useEffect(() => {
+  //   fetchMovieTitles();
+  //   setUserEvent(false);
+  // }, []);
 
-  // Deuxième useEffect pour mettre à jour les films regardés chaque fois que watchedList change
-  useEffect(() => {
-    fetchMovieTitles();
-  }, [watchedList]);
+  // // Deuxième useEffect pour mettre à jour les films regardés chaque fois que watchedList change
+  // useEffect(() => {
+  //   fetchMovieTitles();
+  // }, [watchedList]);
 
   // =========================== FAVORITES (COEUR) ===========================
 
@@ -288,13 +288,14 @@ export const Profile: React.FC = () => {
           .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
           .then(({ data }) => {
             // Utiliser un objet pour stocker les id des films favoris
-            const favorites: FavoritesListObject = {};
+            // const favorites: FavoritesListObject = {};
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data.forEach((element: any) => {
-              const key = element.film_id?.toString();
-              favorites[key] = element as FavoritesItem;
-            });
-            setFavoritesList(favorites);
+            // console.log(data);
+            // data.forEach((element: any) => {
+            //   const key = element.film_id?.toString();
+            //   favorites[key] = element as FavoritesItem;
+            // });
+            setFavoritesList(data.favoritesListTitles);
           })
           .catch((error) => {
             console.error(error);
@@ -325,49 +326,14 @@ export const Profile: React.FC = () => {
     axios
       .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
       .then(({ data }) => {
-        setToWatchList(data);
+        console.log(data);
+        setToWatchList(data.toWatchListTitles);
       })
       .catch((error) => {
         console.error(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData, userEvent]);
-
-  // =========================== TOWATCHLISTMOVIES ===========================
-
-  // récupère les titres des films à voir
-  useEffect(() => {
-    const fetchMovieTitles = async () => {
-      try {
-        const requests = toWatchList.map((toWatchListItem) => {
-          const searchParams = new URLSearchParams();
-          searchParams.append('movieID', toWatchListItem.film_id);
-          return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
-        });
-
-        Promise.all(requests)
-          .then((responses) => {
-            const moviesToAdd = responses.map(({ data }) => ({
-              name: data.title,
-              movie_id: data.id,
-            }));
-            const uniqueMovies: Record<string, toWatchMoviesEntry> = {};
-            moviesToAdd.forEach((movie) => {
-              uniqueMovies[movie.movie_id?.toString()] = movie;
-            });
-            setToWatchMovies(uniqueMovies);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchMovieTitles();
-  }, [toWatchList]);
-  // s'exécute à chaque fois que toWatchList change
 
   //========== JSX ==========
 
@@ -383,7 +349,7 @@ export const Profile: React.FC = () => {
                 alt={`Image de profil ${userData.picture}`}
               ></img>
               <i
-                className='fa-solid fa-pen'
+                className='profile-container__personnal__circle__pen fa-solid fa-pen'
                 onClick={handleOpenPictureProfileModale}
               ></i>
             </div>

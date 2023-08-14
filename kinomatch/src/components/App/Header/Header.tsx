@@ -160,17 +160,17 @@ function Header() {
 
           {/* Profil de l'utilisateur connecté */}
           {isLoggedIn && (
-            <div className='header-elements-profile'>
-              <img
-                src={`images/${userData.picture}.png`}
-                alt={`Image de profil ${userData.picture}`}
-              />
-              <Link to='/profile'>
+            <Link to='/profile'>
+              <div className='header-elements-profile'>
+                <img
+                  src={`images/${userData.picture}.png`}
+                  alt={`Image de profil ${userData.picture}`}
+                />
                 <div className='header-elements-profile-username'>
                   {userData.email}
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           )}
         </div>
 
