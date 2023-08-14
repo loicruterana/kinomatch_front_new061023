@@ -305,6 +305,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       watched: element.film_id || element.toString(),
     });
     setIsWatchedModified(true);
+    console.log('coucou');
   };
 
   // Fonction permettant de supprimer un film déjà vu

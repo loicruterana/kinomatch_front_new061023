@@ -10,7 +10,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    &-pic:hover {
+      cursor: pointer;
+    }
 
     // left: 100px;
     // top: 200px;
