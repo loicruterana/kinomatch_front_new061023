@@ -37,10 +37,47 @@
           border: black 2px solid;
         }
         &-conditions {
-          // position: absolute;
-          height: 200px;
-          width: 200px;
-          background-color: red;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: absolute;
+          height: 70px;
+          width: 160px;
+          background-color: vars.$theme1-secondary;
+          border: 5px solid vars.$theme1-secondary;
+          border-radius: 10px;
+          left: -240px;
+          color: vars.$theme1-primary;
+          font-size: 12px;
+          font-family: 'Creato Display', sans-serif;
+        }
+
+        &-inputgroup {
+          display: flex;
+          position: relative;
+          align-items: center;
+          &-i {
+            position: absolute;
+            font-size: 18px;
+            left: -15px;
+          }
+          &-eye {
+            position: absolute;
+            font-size: 18px;
+            right: -28px;
+            &-slash {
+              position: absolute;
+              font-size: 18px;
+              right: -29px;
+            }
+          }
+
+          &-count {
+            font-size: 12px;
+            position: absolute;
+            right: -8px;
+            bottom: 5px;
+          }
         }
       }
       button {
@@ -60,7 +97,11 @@
   }
 }
 
-// ici pas de version mobile spécifique
+//* ============ VERSION MOBILE ============
 
-// @media screen and (max-width: 1100px) {
-// }
+@media screen and (max-width: 1100px) {
+  .login-container-form-input-conditions {
+    left: 0;
+    top: 150px;
+  }
+}

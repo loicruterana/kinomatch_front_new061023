@@ -1,6 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -10,6 +11,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import { SearchBar } from './SearchBar/SearchBar';
+import API_BASE_URL from './../../../utils/config';
 
 // ================ IMPORT SCSS ================
 
@@ -24,7 +26,8 @@ function Header() {
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
 
-  const { isLoggedIn, userData } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, userData, login, checkUserData } =
+    useContext(AuthContext);
 
   // ================  UTILS ================
 
@@ -51,11 +54,30 @@ function Header() {
     // un removeEventListener pour éviter les fuites de mémoire
   }, []);
 
+  // useEffect(() => {
+  //   login();
+  // }, []);
+
+  useEffect(() => {
+    const storedLoginStatus = localStorage.getItem('isLoggedIn');
+    if (storedLoginStatus) {
+      axios.get(`${API_BASE_URL}/login`).then((res) => {
+        if (res.data.authentified === true) {
+          setIsLoggedIn(true);
+          checkUserData();
+        }
+      });
+      // setIsLoggedIn(true);
+      // checkUserData();
+    }
+  }, []);
+
   // Vérifier si le contexte est défini
   if (!AuthContext) {
     // Gérer le cas où le contexte est indéfini, par exemple afficher un message d'erreur ou rediriger vers une page d'erreur
     return <div>Erreur: Contexte non défini</div>;
   }
+
   /* ============================ HANDLERS ============================= */
 
   // Gestion de la soumission du formulaire de recherche
@@ -139,7 +161,10 @@ function Header() {
           {/* Profil de l'utilisateur connecté */}
           {isLoggedIn && (
             <div className='header-elements-profile'>
-              <img src='images/SamplePic.png' alt='profile' />
+              <img
+                src={`images/${userData.picture}.png`}
+                alt={`Image de profil ${userData.picture}`}
+              />
               <Link to='/profile'>
                 <div className='header-elements-profile-username'>
                   {userData.email}

@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -45,6 +45,30 @@ export const Login = () => {
   const [countPassword, setCountPassword] = useState(0);
 
   const [showPasswordConditions, setShowPasswordConditions] = useState(false);
+
+  // usestate pour afficher ou masquer la version mobile
+  const [mobileVersion, setMobileVersion] = useState(false);
+
+  //======== USEWINDOWSIZE
+
+  // la taille de l'écran définit l'affichage des filtres
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 900) {
+        setMobileVersion(false);
+      }
+      if (window.innerWidth < 900) {
+        setMobileVersion(true);
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+    // un removeEventListener pour éviter les fuites de mémoire
+    // on risque  d'enregistrer plusieurs écouteurs pour le même événement et créer des fuites mémoires
+  }, []);
 
   // ================ UTILS ================
 
@@ -140,36 +164,54 @@ export const Login = () => {
         {/* Champ pour le mot de passe */}
 
         <label htmlFor='password'>Votre mot de passe</label>
-        <i
-          className='fa-solid fa-info'
-          onMouseOver={() => setShowPasswordConditions(true)}
-          onMouseLeave={() => setShowPasswordConditions(false)}
-        ></i>
 
-        {showPasswordConditions && (
-          <div className='login-container-form-input-conditions'>
-            voici les conditions
-          </div>
-        )}
-        <i
-          className={
-            !showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
-          }
-          onClick={handleShowPassword}
-        ></i>
+        <div className='login-container-form-input-inputgroup'>
+          {!mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onMouseOver={() => setShowPasswordConditions(true)}
+              onMouseLeave={() => setShowPasswordConditions(false)}
+            ></i>
+          )}
+          {mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onClick={() => setShowPasswordConditions(!showPasswordConditions)}
+            ></i>
+          )}
 
-        <input
-          onChange={handleChange}
-          className='login-container-form-input'
-          type={showPassword ? 'text' : 'password'}
-          id='password'
-          name='password'
-          placeholder='v0tr3MdP1c1'
-          aria-label='Votre mot de passe'
-          required
-        />
-        <span>{countPassword > 1 && countPassword}</span>
+          {showPasswordConditions && (
+            <div className='login-container-form-input-conditions'>
+              <p>12 caractères minimum</p>
+              <p>1 caractère spécial</p>
+              <p>1 majuscule</p>
+              <p>1 chiffre</p>
+            </div>
+          )}
 
+          <i
+            className={
+              !showPassword
+                ? 'fa-solid fa-eye login-container-form-input-inputgroup-eye'
+                : 'fa-solid fa-eye-slash login-container-form-input-inputgroup-eye-slash'
+            }
+            onClick={handleShowPassword}
+          ></i>
+
+          <input
+            onChange={handleChange}
+            className='login-container-form-input'
+            type={showPassword ? 'text' : 'password'}
+            id='password'
+            name='password'
+            placeholder='v0tr3MdP1c1'
+            aria-label='Votre mot de passe'
+            required
+          />
+          <span className='login-container-form-input-inputgroup-count'>
+            {countPassword > 1 && countPassword}
+          </span>
+        </div>
         {/* Lien vers la page d'inscription */}
         <Link key='signup' to='/signup'>
           <span className='new-account'>

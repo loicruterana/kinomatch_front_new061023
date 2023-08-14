@@ -38,10 +38,47 @@
           border: black 2px solid;
         }
         &-conditions {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           position: absolute;
-          height: 200px;
-          width: 200px;
-          background-color: red;
+          height: 70px;
+          width: 160px;
+          background-color: vars.$theme1-secondary;
+          border: 5px solid vars.$theme1-secondary;
+          border-radius: 10px;
+          right: 270px;
+          bottom: 20px;
+          color: vars.$theme1-primary;
+          font-size: 12px;
+          font-family: 'Creato Display', sans-serif;
+        }
+        &-inputgroup {
+          display: flex;
+          position: relative;
+          align-items: center;
+          &-i {
+            position: absolute;
+            font-size: 18px;
+            left: -15px;
+          }
+          &-eye {
+            position: absolute;
+            font-size: 18px;
+            right: -28px;
+            &-slash {
+              position: absolute;
+              font-size: 18px;
+              right: -29px;
+            }
+          }
+
+          &-count {
+            font-size: 12px;
+            position: absolute;
+            right: -8px;
+            bottom: 5px;
+          }
         }
       }
 
@@ -66,4 +103,11 @@
   }
 }
 
-// ici pas de version mobile particulière
+//* ============ VERSION MOBILE ============
+
+@media screen and (max-width: 1100px) {
+  .Signup-container-form-input-conditions {
+    left: 0;
+    top: 350px;
+  }
+}

@@ -372,7 +372,6 @@ export const Profile: React.FC = () => {
   //========== JSX ==========
 
   return (
-    <>
     <main className='profile-container'>
       <section className='profile-container__personnal'>
         <div className='profile-container__personnal__infos'>
@@ -493,14 +492,12 @@ export const Profile: React.FC = () => {
       {/* affichage conditionnel du Footer en fonction du device */}
       {!mobileVersion && <Footer />}
       {showPictureProfileModale && (
-            <PictureProfileModale
-              setShowPictureProfileModale={setShowPictureProfileModale}
-              showPictureProfileModale={showPictureProfileModale}
-            />
-          )}
+        <PictureProfileModale
+          setShowPictureProfileModale={setShowPictureProfileModale}
+          showPictureProfileModale={showPictureProfileModale}
+        />
+      )}
     </main>
-
-          </>
   );
   //* ================ FERMETURE COMPOSANT ================
 };

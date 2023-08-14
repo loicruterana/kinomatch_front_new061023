@@ -31,6 +31,7 @@ export interface UserDataWatched {
 // Interface définissant les propriétés du contexte. Elle contient l'ensemble des propriétés du contexte.
 export interface AuthContextProps {
   isLoggedIn: boolean;
+  setIsLoggedIn: (value: boolean) => void;
   login: () => void;
   logout: () => void;
   addUserData: (email: string, userId: string, picture: string) => void;
@@ -46,6 +47,7 @@ export interface AuthContextProps {
   userDataToWatch: UserDataToWatch;
   userDataWatched: UserDataWatched;
   updateUserDataPicture: (picture: string) => void;
+  checkUserData: () => void;
 }
 
 // Interface définissant les propriétés du composant. Elle contient les enfants du composant.
@@ -96,15 +98,56 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Fonction permettant de se connecter
   const login = (): void => {
-    setIsLoggedIn(true);
+    axios
+      .get(`${API_BASE_URL}/login/${userData.id}`)
+      .then((response) => {
+        if (response.data.authorized === true) {
+          console.log(response.data);
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', 'true');
+        }
+      })
+      .catch((error) => {
+        // Gérer les erreurs si nécessaire
+      });
   };
 
   // Fonction permettant de se déconnecter
   const logout = (): void => {
-    setIsLoggedIn(false);
+    axios
+      .get(`${API_BASE_URL}/login/${userData.id}`)
+      .then((response) => {
+        if (response.data.authorized === false) {
+          setIsLoggedIn(false);
+          localStorage.setItem('isLoggedIn', 'false');
+        }
+      })
+      .catch((error) => {
+        // Gérer les erreurs si nécessaire
+      });
   };
 
   //  ================ FONCTIONS LIÉES AUX UTILISATEURS ================
+
+  function checkUserData() {
+    console.log('checkUserData');
+    axios
+      .get(`${API_BASE_URL}/login`)
+      .then((response) => {
+        console.log(response.data);
+
+        if (response.data.authorized === true) {
+          console.log(response.data);
+          localStorage.setItem('isLoggedIn', 'true');
+          response.data.user.email = userData.email;
+          response.data.user.email = userData.id;
+          response.data.user.email = userData.picture;
+        }
+      })
+      .catch((error) => {
+        console.log('erreur');
+      });
+  }
 
   const updateUserDataPicture = (pictureName) => {
     setUserData({ ...userData, picture: pictureName });
@@ -339,6 +382,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // On exporte les fonctions et les états dans le context
     <AuthContext.Provider
       value={{
+        setIsLoggedIn,
         isLoggedIn,
         login,
         logout,
@@ -355,6 +399,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         deleteFavoritesAndWatched,
         clearUserData,
         updateUserDataPicture,
+        checkUserData,
       }}
     >
       {children}
