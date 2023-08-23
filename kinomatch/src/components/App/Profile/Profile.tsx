@@ -222,7 +222,7 @@ export const Profile: React.FC = () => {
     setUserEvent(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userEvent]);
 
   // =========================== WATCHEDLISTMOVIES ===========================
 
@@ -333,7 +333,7 @@ export const Profile: React.FC = () => {
         console.error(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData, userEvent]);
+  }, []);
 
   //========== JSX ==========
 

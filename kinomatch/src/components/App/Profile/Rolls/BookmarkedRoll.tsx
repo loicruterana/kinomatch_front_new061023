@@ -83,15 +83,13 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   }
 
   function handlefromToWatchToWatched(film_id: string) {
-    console.log('film_id', film_id);
     setToWatchList((state) =>
       state.filter((element) => element.film_id !== film_id)
     );
     deleteToWatch({ movie: film_id });
 
-    setWatchedList((state) => [...state, film_id]);
-    console.log('watchedList', watchedList);
-    console.log('onpasseici');
+    // setWatchedList((state) => [...state, film_id]);
+
     addWatched({ film_id: film_id });
     setUserEvent(true);
   }
