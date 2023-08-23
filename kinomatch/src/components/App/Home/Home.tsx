@@ -350,10 +350,12 @@ export const Home: React.FC = () => {
           >
             <div className='home-container__buttons__button__image-container'>
               <img
-                src='/images/tetepellochegenre.png'
+                src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
+              <div className='home-container__buttons__button__text'>GENRE</div>
             </div>
+
             {/* Genre */}
           </button>
 
@@ -363,11 +365,15 @@ export const Home: React.FC = () => {
           >
             <div className='home-container__buttons__button__image-container'>
               <img
-                src='/images/tetepellocheplateform.png'
+                src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
+              <div className='home-container__buttons__button__text'>
+                PLATEFORME
+              </div>
             </div>
-            {/* Genre */}
+
+            {/* Plateforme */}
           </button>
 
           <button
@@ -377,10 +383,15 @@ export const Home: React.FC = () => {
             {/* Année */}
             <div className='home-container__buttons__button__image-container'>
               <img
-                src='/images/tetepellochedecade.png'
+                src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
+              <div className='home-container__buttons__button__text'>
+                DÉCENNIE
+              </div>
             </div>
+
+            {/* Décennie */}
           </button>
         </div>
       )}
