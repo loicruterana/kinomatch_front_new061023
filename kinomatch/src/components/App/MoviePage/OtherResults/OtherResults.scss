@@ -90,6 +90,20 @@
         transform: translate(-50%, -50%);
       }
     }
+    &--rate {
+      position: absolute;
+      background-color: vars.$theme1-primary;
+      border: 2px solid vars.$theme1-secondary;
+      color: vars.$theme1-secondary;
+      height: 40px;
+      width: 40px;
+      border-radius: 25px;
+      left: 12%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
   }
 }
 
