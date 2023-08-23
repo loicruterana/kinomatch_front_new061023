@@ -97,7 +97,7 @@
         &-button {
           height: 25px;
           width: 200px;
-          border-radius: 15px;
+          border-radius: 11px;
           background-color: vars.$theme1-secondary;
           border: vars.$theme1-secondary;
           color: vars.$theme1-primary;
@@ -118,9 +118,9 @@
 
         &-button {
           // margin
-          height: 25px;
+          height: 32px;
           width: 200px;
-          border-radius: 15px;
+          border-radius: 11px;
           background-color: vars.$theme1-secondary;
           border: vars.$theme1-secondary;
           color: vars.$theme1-primary;
@@ -128,7 +128,7 @@
           border: none;
           font-size: 20px;
           padding: 0 1%;
-          margin: 10px 10px 0 10px;
+          margin: 6px 10px 0 10px;
 
           i {
             padding-right: 5px;

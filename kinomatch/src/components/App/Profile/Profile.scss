@@ -157,6 +157,30 @@
       }
     }
   }
+  &-modale-notconnected {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    width: 70vw;
+    height: 70vh;
+    background-color: vars.$theme1-primary;
+    border: 5px solid vars.$theme1-secondary;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: vars.$theme1-secondary;
+    opacity: 0;
+
+    &.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1); /* Retourner à l'échelle normale */
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+  }
 
   &__personnal {
     width: 45vw;

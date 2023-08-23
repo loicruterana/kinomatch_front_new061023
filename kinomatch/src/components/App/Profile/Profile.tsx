@@ -24,6 +24,7 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
 import PictureProfileModale from './PictureProfileModale/PictureProfileModale';
+import NotConnected from '../NotConnected/NotConnected';
 
 // ================ IMPORT SCSS ================
 
@@ -55,6 +56,7 @@ export const Profile: React.FC = () => {
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
   const [showPictureProfileModale, setShowPictureProfileModale] =
     useState(false);
+  const [showNotConnected, setShowNotConnected] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
 
@@ -331,6 +333,10 @@ export const Profile: React.FC = () => {
       })
       .catch((error) => {
         console.error(error);
+        setShowNotConnected(true);
+        setTimeout(() => {
+          navigate(`/`);
+        }, 1000);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -463,6 +469,7 @@ export const Profile: React.FC = () => {
           showPictureProfileModale={showPictureProfileModale}
         />
       )}
+      <NotConnected />
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================
