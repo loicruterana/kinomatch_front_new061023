@@ -90,6 +90,7 @@
         transform: translate(-50%, -50%);
       }
     }
+
     &--rate {
       position: absolute;
       background-color: vars.$theme1-primary;
@@ -176,6 +177,8 @@
         transform: translate(-50%, -50%);
       }
     }
+
+    // note sur les affiches
     &--rate {
       position: absolute;
       background-color: vars.$theme1-primary;
