@@ -25,6 +25,7 @@ interface PrevMovies {
   genre_ids: [];
   id: number;
   original_language: string;
+  vote_average: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [Symbol.iterator](): IterableIterator<[string, any]>;
 }
@@ -138,6 +139,10 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                   aria-label={`Afficher les détails du film : ${movieElem.title}`}
                 >
                   {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
+                  <div className='otherResults-container--rate'>
+                    {' '}
+                    {movieElem.vote_average * 10}%
+                  </div>
                   <img
                     className='otherResults-container--scrollList---images'
                     src={
