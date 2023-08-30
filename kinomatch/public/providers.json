@@ -1,0 +1,154 @@
+{
+    "results": [
+        {
+            "display_priority": 4,
+            "logo_path": "/riPZYc1ILIbubFaxYSdVfc7K6bm.jpg",
+            "provider_name": "OCS Go",
+            "provider_id": 56
+        },
+        {
+            "display_priority": 18,
+            "logo_path": "/knpqBvBQjyHnFrYPJ9bbtUCv6uo.jpg",
+            "provider_name": "Canal VOD",
+            "provider_id": 58
+        },
+        {
+            "display_priority": 20,
+            "logo_path": "/ulTa4e9ysKwMwNpg7EfhYnvAj8q.jpg",
+            "provider_name": "Bbox VOD",
+            "provider_id": 59
+        },
+        {
+            "display_priority": 10,
+            "logo_path": "/ddWcbe8fYAfcQMjighzWGLjjyip.jpg",
+            "provider_name": "Orange VOD",
+            "provider_id": 61
+        },
+        {
+            "display_priority": 17,
+            "logo_path": "/b6hJjWPa7h8VCpaCVJCSu8EPlqT.jpg",
+            "provider_name": "FILMO",
+            "provider_id": 138
+        },
+        {
+            "display_priority": 9,
+            "logo_path": "/ppycrWdkR3pefMYYK79e481PULm.jpg",
+            "provider_name": "Sixplay",
+            "provider_id": 147
+        },
+        {
+            "display_priority": 86,
+            "logo_path": "/bSYqkSyDkMbHLLb9UxvAPYUKiUN.jpg",
+            "provider_name": "Universal Pictures",
+            "provider_id": 184
+        },
+        {
+            "display_priority": 11,
+            "logo_path": "/tSayx1KHEaZG9iyFLMnDpXAFBzh.jpg",
+            "provider_name": "France TV",
+            "provider_id": 236
+        },
+        {
+            "display_priority": 41,
+            "logo_path": "/lwefE4yPpCQGhH2LotPuhGA8gCV.jpg",
+            "provider_name": "Universcine",
+            "provider_id": 239
+        },
+        {
+            "display_priority": 25,
+            "logo_path": "/3BxFGDZ1q8CxbUv5tSvMT28AC0X.jpg",
+            "provider_name": "Cinemas a la Demande",
+            "provider_id": 324
+        },
+        {
+            "display_priority": 27,
+            "logo_path": "/x8m1Cv6iy4n0Fi9tBa9TAXEuoO4.jpg",
+            "provider_name": "Anime Digital Networks",
+            "provider_id": 415
+        },
+        {
+            "display_priority": 31,
+            "logo_path": "/pICdAIrQp0JRR4polBXhlVg8bO.jpg",
+            "provider_name": "Shadowz",
+            "provider_id": 513
+        },
+        {
+            "display_priority": 49,
+            "logo_path": "/42Cj5KNEteBRpfWnGWQbTJpJDGV.jpg",
+            "provider_name": "OCS Amazon Channel ",
+            "provider_id": 685
+        },
+        {
+            "display_priority": 60,
+            "logo_path": "/yUjwJAMDmkTmPrQAlR3Kw0jlnVm.jpg",
+            "provider_name": "Universcine Amazon Channel",
+            "provider_id": 1732
+        },
+        {
+            "display_priority": 62,
+            "logo_path": "/9FH7tewU23chp628XZcY66UOovi.jpg",
+            "provider_name": "Action Max Amazon Channel",
+            "provider_id": 1733
+        },
+        {
+            "display_priority": 61,
+            "logo_path": "/xO3KmmiYYol5jNsRZNJ7Sow7eUy.jpg",
+            "provider_name": "Filmo Amazon Channel",
+            "provider_id": 1734
+        },
+        {
+            "display_priority": 63,
+            "logo_path": "/ptn8fYXxAQrlMQAoESOo1dJ2TPV.jpg",
+            "provider_name": "Insomnia Amazon Channel",
+            "provider_id": 1735
+        },
+        {
+            "display_priority": 64,
+            "logo_path": "/k8RBvbxANThdziMeuAH22Z26NPX.jpg",
+            "provider_name": "Shadowz Amazon Channel",
+            "provider_id": 1736
+        },
+        {
+            "display_priority": 65,
+            "logo_path": "/3QaRTn9zLUT3vVLTIomvk3XBFaP.jpg",
+            "provider_name": "INA  madelen Amazon Channel",
+            "provider_id": 1737
+        },
+        {
+            "display_priority": 66,
+            "logo_path": "/bO7nSuzaFq3qRTHHQfvNuDCSOCc.jpg",
+            "provider_name": "Benshi Amazon Channel",
+            "provider_id": 1738
+        },
+        {
+            "display_priority": 95,
+            "logo_path": "/loOaayvNiLnD0zKl70TO2L5vlAL.jpg",
+            "provider_name": "Pass Warner Amazon Channel",
+            "provider_id": 1870
+        },
+        {
+            "display_priority": 99,
+            "logo_path": "/fFXwNCPKBwX8hi5EwnPBQKsJtBc.jpg",
+            "provider_name": "BrutX Amazon Channel",
+            "provider_id": 1887
+        },
+        {
+            "display_priority": 100,
+            "logo_path": "/3WYKTSwdEPMZKRmJ49Oqx6mxpa2.jpg",
+            "provider_name": "Animation Digital Network Amazon Channel",
+            "provider_id": 1888
+        },
+        {
+            "display_priority": 101,
+            "logo_path": "/hCfry9LLjkiP1psMmUPnk3oGDG.jpg",
+            "provider_name": "Universal+ Amazon Channel",
+            "provider_id": 1889
+        },
+        {
+            "display_priority": 103,
+            "logo_path": "/xobCSCH4MPtIOn8ur4CNs7DgHu0.jpg",
+            "provider_name": "Apollo",
+            "provider_id": 1912
+        }
+    ]
+}
