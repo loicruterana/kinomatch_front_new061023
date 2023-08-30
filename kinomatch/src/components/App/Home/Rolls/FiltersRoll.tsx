@@ -63,6 +63,7 @@ export const RollGenre = ({
     if (name !== null && genreId !== undefined) {
       addGenreFilter(name, genreId);
     }
+    console.log(addGenreFilter)
   }
   // handleProviderClick pour envoyer les choix de filtres à la fonction addProviderFilter du contexte SelectedProviderFiltersContext et donc stocker les filtres provider dans le state
   function handleProviderClick(

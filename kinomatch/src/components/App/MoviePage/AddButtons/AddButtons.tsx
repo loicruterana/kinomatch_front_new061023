@@ -3,6 +3,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import axios from 'axios';
 import './AddButton.scss';
 import API_BASE_URL from '../../../../utils/config';
+import { to } from 'react-spring';
 
 /* Fonction AddButton permettant d'afficher les boutons d'ajout aux listes */
 function AddButton(movieId: { movie: string }) {
@@ -29,50 +30,75 @@ function AddButton(movieId: { movie: string }) {
   const [toWatchIsClicked, setToWatchIsClicked] = useState(false);
   // Watched
   const [watchedIsClicked, setWatchedIsClicked] = useState(false);
+  // Bulle Ajouter aux favoris
+  const [showHeartBubble, setShowHeartBubble] = useState(false);
+  // Bulle Ajouter à voir
+  const [showToWatchBubble, setShowToWatchBubble] = useState(false);
+  // Bulle Ajouter vu
+  const [showWatchedBubble, setShowWatchedBubble] = useState(false);
 
   // ============================ HANDLERS =============================
 
   // ============= COEUR ===================
 
-  // Fonction handleHeartClick permettant de gérer le clic sur le coeur
   const handleHeartClick = () => {
-    // Met à jour l'état de "HeartIsClicked" en inversant sa valeur actuelle.
     setHeartIsClicked(!heartIsClicked);
 
-    // Si le coeur n'est pas remplit/clické alors ajoute l'id du film au favoris sinon il le supprime
     if (!heartIsClicked) {
       addFavorites(movieId);
       addWatched(movieId);
       setWatchedIsClicked(true);
+      setShowHeartBubble(true);
+      setTimeout(() => {
+        setShowHeartBubble(false)
+      }, 2000);
     } else {
       deleteFavorites(movieId);
+      setShowHeartBubble(true);
+      setTimeout(() => {
+        setShowHeartBubble(false)
+      }, 2000);
     }
   };
 
-  // ============= TOWATCH ==================
 
-  // Fonction handleToWatchClick permettant de gérer le clic sur le marque page
   const handleToWatchClick = () => {
-    // Met à jour l'état de "toWatchIsClicked" en inversant sa valeur actuelle.
     setToWatchIsClicked(!toWatchIsClicked);
 
-    // Si le marque page n'est pas remplit/clické alors ajoute l'id du film "à voir" sinon il le supprime
-    toWatchIsClicked === false ? addToWatch(movieId) : deleteToWatch(movieId);
+    if(toWatchIsClicked === false) {
+      addToWatch(movieId);
+      setShowToWatchBubble(true);
+      setTimeout(() => {
+        setShowToWatchBubble(false)
+      }, 2000);
+    } else {
+      deleteToWatch(movieId);
+      setShowToWatchBubble(true);
+      setTimeout(() => {
+        setShowToWatchBubble(false)
+      }, 2000);
+    }    
   };
 
-  // ============= WATCHED ===================
 
-  // Fonction handleWatchedClick permettant de gérer le clic sur Watched
   const handleWatchedClick = () => {
     setWatchedIsClicked(!watchedIsClicked);
 
-    // Si le Watched n'est pas remplit/clické alors ajoute l'id du film "vu" sinon il le supprime de "vu", de "toWatch" et passe "HeartIsClicked" à false
     if (!watchedIsClicked) {
       addWatched(movieId);
+      setShowWatchedBubble(true);
+      setTimeout(() => {
+        setShowWatchedBubble(false)
+      }, 2000);
     } else {
       deleteWatched(movieId);
       deleteFavorites(movieId);
       setHeartIsClicked(false);
+      setShowWatchedBubble(true);
+      setTimeout(() => {
+        setShowWatchedBubble(false)
+      }
+      , 2000);
     }
   };
 
@@ -162,6 +188,28 @@ function AddButton(movieId: { movie: string }) {
 
   return (
     <div className='movieFound__essentiel-btn--container'>
+      {/* Condition qui affiche la bulle "film ajouté aux favoris"ou "Film supprimé des favoris"  si le coeur est cliqué */}
+      {showHeartBubble && (
+        <div className='movieFound__essentiel-btn--bubble'>
+          {heartIsClicked === true ? (
+            <p>Film ajouté aux favoris</p>) : (<p>Film supprimé des favoris</p>)}
+        </div>
+      )}
+      {/* Condition qui affiche la bulle "film ajouté aux "à voir" ou "Film supprimé des "à voir"  si le marque page est cliqué */}
+      {showToWatchBubble && (
+        <div className='movieFound__essentiel-btn--bubble'>
+          {toWatchIsClicked === true ? (
+            <p>Film ajouté aux films à voir ou à revoir</p>) : (<p>Film supprimé des films à voir ou revoir</p>)}
+        </div>
+      )}
+      {/* Condition qui affiche la bulle "film ajouté aux "vu" ou "Film supprimé des "vu"  si le bouton Watched est cliqué */}
+      {showWatchedBubble && (
+        <div className='movieFound__essentiel-btn--bubble'>
+          {watchedIsClicked === true ? (
+            <p>Film ajouté aux films vus</p>) : (<p>Film supprimé des films vus</p>)}
+        </div>
+      )}
+
       <button
         className='movieFound__essentiel-btn--addToLike'
         type='submit'
@@ -170,9 +218,8 @@ function AddButton(movieId: { movie: string }) {
       >
         {/* Si le coeur est cliqué alors affiche le coeur plein sinon affiche le coeur vide */}
         <i
-          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${
-            heartIsClicked ? 'heartClicked' : ''
-          }`}
+          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${heartIsClicked ? 'heartClicked' : ''
+            }`}
           style={{ color: heartIsClicked ? '#D42121' : '' }}
         ></i>
       </button>
@@ -183,15 +230,13 @@ function AddButton(movieId: { movie: string }) {
         className='movieFound__essentiel-btn--addToWatch'
         type='submit'
         onClick={handleToWatchClick}
-        aria-label={`Ajouter aux favoris${
-          toWatchIsClicked ? ' : Déjà ajouté aux favoris' : ''
-        }`}
+        aria-label={`Ajouter aux favoris${toWatchIsClicked ? ' : Déjà ajouté aux favoris' : ''
+          }`}
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
-          className={`fa-sharp fa-${
-            toWatchIsClicked ? 'solid' : 'regular'
-          } fa-bookmark ${toWatchIsClicked ? 'bookMarkClicked' : ''}`}
+          className={`fa-sharp fa-${toWatchIsClicked ? 'solid' : 'regular'
+            } fa-bookmark ${toWatchIsClicked ? 'bookMarkClicked' : ''}`}
           style={{ color: toWatchIsClicked ? '#FFF3B0' : '' }}
         ></i>
       </button>
@@ -205,9 +250,8 @@ function AddButton(movieId: { movie: string }) {
       >
         {/* Si le Watched est cliqué alors affiche le Watched plein sinon affiche le Watched vide */}
         <i
-          className={`fa-sharp fa-solid fa-check ${
-            watchedIsClicked ? 'checkClicked' : ''
-          }`}
+          className={`fa-sharp fa-solid fa-check ${watchedIsClicked ? 'checkClicked' : ''
+            }`}
           style={{ color: watchedIsClicked ? '#7deb00' : '' }}
         ></i>
       </button>
