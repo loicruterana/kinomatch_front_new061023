@@ -469,7 +469,8 @@ export const Profile: React.FC = () => {
           showPictureProfileModale={showPictureProfileModale}
         />
       )}
-      <NotConnected />
+      
+      {showNotConnected && <NotConnected />}
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================
