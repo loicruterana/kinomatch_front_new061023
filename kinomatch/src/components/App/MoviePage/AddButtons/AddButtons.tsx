@@ -65,7 +65,7 @@ function AddButton(movieId: { movie: string }) {
   const handleToWatchClick = () => {
     setToWatchIsClicked(!toWatchIsClicked);
 
-    if(toWatchIsClicked === false) {
+    if (toWatchIsClicked === false) {
       addToWatch(movieId);
       setShowToWatchBubble(true);
       setTimeout(() => {
@@ -77,7 +77,7 @@ function AddButton(movieId: { movie: string }) {
       setTimeout(() => {
         setShowToWatchBubble(false)
       }, 2000);
-    }    
+    }
   };
 
 
@@ -98,7 +98,7 @@ function AddButton(movieId: { movie: string }) {
       setTimeout(() => {
         setShowWatchedBubble(false)
       }
-      , 2000);
+        , 2000);
     }
   };
 
@@ -111,7 +111,8 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/favoritesMovies?userID=${userData.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map(
+          console.log(responseData);
+          const filmIds = responseData.favoritesListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
 
@@ -138,7 +139,8 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/toWatchMovies?userID=${userDataToWatch.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map(
+          console.log(responseData);
+          const filmIds = responseData.toWatchListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
           if (filmIds.includes(movieId.movie.toString())) {
@@ -165,7 +167,8 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/watchedMovies?userID=${userDataWatched.id}`)
         .then(function (response) {
           const responseData = response.data;
-          const filmIds = responseData.map(
+          console.log(responseData);
+          const filmIds = responseData.watchedListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
 

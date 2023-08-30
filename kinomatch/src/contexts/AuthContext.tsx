@@ -39,7 +39,7 @@ export interface AuthContextProps {
   deleteFavorites: (element: { movie: string }) => void;
   addToWatch: (element: { movie: string }) => void;
   deleteToWatch: (element: { movie: string }) => void;
-  addWatched: (element: { film_id: string }) => void;
+  addWatched: (element: { movie: string }) => void;
   deleteWatched: (element: { movie: string }) => void;
   deleteFavoritesAndWatched: (element: { movie: string }) => void;
   clearUserData: () => void;
@@ -299,10 +299,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ================ FONCTIONS LIÉES AUX FILMS DÉJÀ VUS ================
 
   // Fonction permettant d'ajouter un film déjà vu
-  const addWatched = async (element: { film_id: string }): Promise<void> => {
+  const addWatched = async (element: { movie: string }): Promise<void> => {
     setUserDataWatched({
       ...userDataWatched,
-      watched: element.film_id || element.toString(),
+      watched: element.movie || element.toString(),
     });
     setIsWatchedModified(true);
     console.log('coucou');
