@@ -225,6 +225,7 @@ export const Home: React.FC = () => {
     removeDecadeFilter();
   }
 
+  console.log(selectedGenreFilters);
   // ================ JSX ================
   return (
     <main className='home-container'>
