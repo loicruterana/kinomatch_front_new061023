@@ -10,15 +10,16 @@
       border-radius: 11px;
       height: 32px;
       // padding: 0 15px;
-      background-image: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png');
+      background-image: url('/images/loupe.svg');
       background-repeat: no-repeat;
-      background-position: left center;
-      background-size: 30px;
+      background-position: 3%;
+      background-size: 17px;
       width: 100%;
       font-size: 16px;
       padding: 12px 20px 12px 40px;
       margin-bottom: 12px;
       color: vars.$theme1-secondary;
+
       &::placeholder {
         color: vars.$theme1-secondary;
         opacity: 0.3;
