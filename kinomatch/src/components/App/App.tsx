@@ -1,6 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
 import { Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -31,6 +32,8 @@ import './App.scss';
 import NoResult from './NoResult/NoResult';
 
 //* ================ COMPOSANT ================
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

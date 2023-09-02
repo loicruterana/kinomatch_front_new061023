@@ -70,6 +70,14 @@ export const Login = () => {
     // on risque  d'enregistrer plusieurs écouteurs pour le même événement et créer des fuites mémoires
   }, []);
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('userData')) {
+  //     setTimeout(() => {
+  //       return <Navigate to='/' />;
+  //     }, 1000);
+  //   }
+  // }, []);
+
   // ================ UTILS ================
 
   // fonction qui va permettre de rediriger vers la page d'accueil
@@ -114,6 +122,15 @@ export const Login = () => {
             response.data.user.picture
           );
           login();
+          // localStorage.setItem(
+          //   'userData',
+          //   JSON.stringify({
+          //     email: response.data.user.email,
+          //     id: response.data.user.id,
+          //     picture: response.data.user.picture,
+          //   })
+          // );
+
           setTimeout(() => {
             setGoToHomePage(true);
           }, 1500);

@@ -26,8 +26,14 @@ function Header() {
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
 
-  const { isLoggedIn, setIsLoggedIn, userData, login, checkUserData } =
-    useContext(AuthContext);
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    userData,
+    login,
+    checkUserData,
+    addUserData,
+  } = useContext(AuthContext);
 
   // ================  UTILS ================
 
@@ -58,17 +64,27 @@ function Header() {
   //   login();
   // }, []);
 
+  // useEffect(() => {
+  //   const storedLoginStatus = localStorage.getItem('isLoggedIn');
+  //   if (storedLoginStatus) {
+  //     axios.get(`${API_BASE_URL}/login`).then((res) => {
+  //       if (res.data.authentified === true) {
+  //         setIsLoggedIn(true);
+  //         checkUserData();
+  //       }
+  //     });
+  //     // setIsLoggedIn(true);
+  //     // checkUserData();
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const storedLoginStatus = localStorage.getItem('isLoggedIn');
-    if (storedLoginStatus) {
-      axios.get(`${API_BASE_URL}/login`).then((res) => {
-        if (res.data.authentified === true) {
-          setIsLoggedIn(true);
-          checkUserData();
-        }
-      });
-      // setIsLoggedIn(true);
-      // checkUserData();
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      const user = JSON.parse(storedUserData);
+      addUserData(user.email, user.userId, user.picture);
+      // Utilisez les données utilisateur ici
+      // Par exemple : const { email, id } = user;
     }
   }, []);
 
@@ -106,6 +122,7 @@ function Header() {
   const movieArrayReload = () => {
     window.location.reload();
   };
+
   // ================ JSX ================
   return (
     <>

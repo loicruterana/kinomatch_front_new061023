@@ -141,7 +141,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                   {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
                   <div className='otherResults-container--rate'>
                     {' '}
-                    {movieElem.vote_average * 10}%
+                    {String(movieElem.vote_average * 10).substring(0, 2)}%
                   </div>
                   <img
                     className='otherResults-container--scrollList---images'

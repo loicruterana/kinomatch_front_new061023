@@ -13,6 +13,7 @@ import {
   toWatchMoviesEntry,
 } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
+import { useUser } from '../../../hooks/useUser';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -25,6 +26,7 @@ import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
 import PictureProfileModale from './PictureProfileModale/PictureProfileModale';
 import NotConnected from '../NotConnected/NotConnected';
+import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT SCSS ================
 
@@ -34,6 +36,7 @@ import './Profile.scss';
 
 export const Profile: React.FC = () => {
   // ================ USESTATE ================
+  const { data: user, loading } = useUser();
 
   // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
@@ -58,6 +61,8 @@ export const Profile: React.FC = () => {
     useState(false);
   const [showNotConnected, setShowNotConnected] = useState(false);
 
+  const [checkHasBeenDone, setCheckHasBeenDone] = useState(false);
+
   // ================ IMPORT PROPS CONTEXTS ================
 
   const { load } = useContext(LoadingContext);
@@ -70,6 +75,7 @@ export const Profile: React.FC = () => {
     addFavorites,
     clearUserData,
     addWatched,
+    addUserData,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
@@ -78,7 +84,7 @@ export const Profile: React.FC = () => {
     deleteFavoritesAndWatched: (element: { movie: string }) => void;
     deleteWatched: (element: { movie: string }) => void;
     addFavorites: (element: { movie: string }) => void;
-    addUserData: (email: string, id: string) => void;
+    addUserData: (email: string, id: string, picture: string) => void;
     login: () => void;
     clearUserData: () => void;
     addWatched: (element: { film_id: string }) => void;
@@ -321,156 +327,179 @@ export const Profile: React.FC = () => {
 
   // récupère les id des films à voir
   useEffect(() => {
-    load();
+    if (user.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', userData.id);
+      axios
+        .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
+        .then(({ data }) => {
+          setShowNotConnected(false);
+          console.log(data);
+          setToWatchList(data.toWatchListTitles);
+          console.log('coucou');
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log('onpassici');
+        });
+    }
+  }, [user.id]);
 
-    const searchParams = new URLSearchParams();
-    searchParams.append('userID', userData.id);
-    axios
-      .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
-      .then(({ data }) => {
-        console.log(data);
-        setToWatchList(data.toWatchListTitles);
-      })
-      .catch((error) => {
-        console.error(error);
-        setShowNotConnected(true);
-        setTimeout(() => {
-          navigate(`/`);
-        }, 1000);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
+  // addUserData(user.email, user.id, user.picture);
+
+  // useEffect(() => {
+  //   axios.get(`${API_BASE_URL}/login`).then(({ data }) => {
+  //     if (data.authorized) {
+  //       const { user } = data;
+  //       console.log(user);
+
+  //       addUserData(user.email, user.id, user.picture);
+  //     }
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem('userData');
+  //   if (storedUserData) {
+  //     const user = JSON.parse(storedUserData);
+  //     addUserData(user.email, user.userId, user.picture);
+  //     // Utilisez les données utilisateur ici
+  //     // Par exemple : const { email, id } = user;
+  //   }
+  // }, [checkHasBeenDone]);
 
   //========== JSX ==========
 
   return (
-    <main className='profile-container'>
-      <section className='profile-container__personnal'>
-        <div className='profile-container__personnal__infos'>
-          {/* <h2 className='profile-container__personnal__infos__title'>Profil</h2> */}
-          <div className='profile-container__personnal__infos__pictureemailpassword'>
-            <div className='profile-container__personnal__circle'>
-              <img
-                src={`images/${userData.picture}.png`} // codePicture
-                alt={`Image de profil ${userData.picture}`}
-              ></img>
-              <i
-                className='profile-container__personnal__circle__pen fa-solid fa-pen'
-                onClick={handleOpenPictureProfileModale}
-              ></i>
-            </div>
-            <div className='profile-container__personnal__pictureemailpassword__emailpassword'>
-              <div className='profile-container__personnal__pictureemailpassword__emailpassword__email'>
-                <span>Adresse email</span>
-                <div>{userData.email}</div>
+    <RequireAuth>
+      <main className='profile-container'>
+        <section className='profile-container__personnal'>
+          <div className='profile-container__personnal__infos'>
+            {/* <h2 className='profile-container__personnal__infos__title'>Profil</h2> */}
+            <div className='profile-container__personnal__infos__pictureemailpassword'>
+              <div className='profile-container__personnal__circle'>
+                <img
+                  src={`images/${userData.picture}.png`} // codePicture
+                  alt={`Image de profil ${userData.picture}`}
+                ></img>
+                <i
+                  className='profile-container__personnal__circle__pen fa-solid fa-pen'
+                  onClick={handleOpenPictureProfileModale}
+                ></i>
               </div>
-              <div className='profile-container__personnal__pictureemailpassword__emailpassword__password'>
-                <span>Mot de passe</span>
-                <div>∗∗∗∗∗∗∗</div>
+              <div className='profile-container__personnal__pictureemailpassword__emailpassword'>
+                <div className='profile-container__personnal__pictureemailpassword__emailpassword__email'>
+                  <span>Adresse email</span>
+                  <div>{userData.email}</div>
+                </div>
+                <div className='profile-container__personnal__pictureemailpassword__emailpassword__password'>
+                  <span>Mot de passe</span>
+                  <div>∗∗∗∗∗∗∗</div>
+                </div>
               </div>
             </div>
+            {/* affichage conditionnel des boutons en fonction du device*/}
+            {!mobileVersion && (
+              <div className='profile-container-buttons'>
+                <button
+                  className='profile-container-buttons-button'
+                  // va déconnecter l'utilisateur
+                  onClick={handleLogout}
+                >
+                  Se déconnecter
+                </button>
+                <button
+                  className='profile-container-buttons-button'
+                  // va supprimer le profil
+                  onClick={handleDeleteProfile}
+                >
+                  Supprimer profil
+                </button>
+              </div>
+            )}
           </div>
-          {/* affichage conditionnel des boutons en fonction du device*/}
-          {!mobileVersion && (
-            <div className='profile-container-buttons'>
-              <button
-                className='profile-container-buttons-button'
-                // va déconnecter l'utilisateur
-                onClick={handleLogout}
-              >
-                Se déconnecter
-              </button>
-              <button
-                className='profile-container-buttons-button'
-                // va supprimer le profil
-                onClick={handleDeleteProfile}
-              >
-                Supprimer profil
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-      {/* <div className="profile-container__favoritefilters">
+        </section>
+        {/* <div className="profile-container__favoritefilters">
           <h3 className="profile-container__favoritefilters__title">Filtres favoris </h3>
         </div> */}
-      {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
-      {((showWatchedRoll && mobileVersion) ||
-        (showToWatchRoll && mobileVersion) ||
-        !mobileVersion) && (
-        <section
-          className={`profile-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }`}
-        >
-          <div
+        {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
+        {((showWatchedRoll && mobileVersion) ||
+          (showToWatchRoll && mobileVersion) ||
+          !mobileVersion) && (
+          <section
             className={`profile-container__roll-modale-${
               mobileVersion ? 'mobile-version' : 'desktop-version'
-            }-backdropfilter`}
-            onClick={handleClickOut}
-          ></div>
-          <BookmarkedRoll
-            isLoading={listsAreLoading}
-            mobileVersion={mobileVersion}
-            showWatchedRoll={showWatchedRoll}
-            // setShowWatchedRoll={setShowWatchedRoll}
-            showToWatchRoll={showToWatchRoll}
-            // setShowToWatchRoll={setShowToWatchRoll}
-            watchedList={watchedList}
-            setWatchedList={setWatchedList}
-            watchedMovies={watchedMovies}
-            // setWatchedMovies={setWatchedMovies}
-            // deleteWatched={deleteWatched}
-            toWatchList={toWatchList}
-            setToWatchList={setToWatchList}
-            toWatchMovies={toWatchMovies}
-            // setToWatchMovies={setToWatchMovies}
-            deleteToWatch={deleteToWatch}
-            deleteFavoritesAndWatched={deleteFavoritesAndWatched}
-            favoritesList={favoritesList}
-            addWatched={addWatched}
-            // deleteFavorites={deleteFavorites}
-            // addFavorites={addFavorites}
+            }`}
+          >
+            <div
+              className={`profile-container__roll-modale-${
+                mobileVersion ? 'mobile-version' : 'desktop-version'
+              }-backdropfilter`}
+              onClick={handleClickOut}
+            ></div>
+            <BookmarkedRoll
+              isLoading={listsAreLoading}
+              mobileVersion={mobileVersion}
+              showWatchedRoll={showWatchedRoll}
+              // setShowWatchedRoll={setShowWatchedRoll}
+              showToWatchRoll={showToWatchRoll}
+              // setShowToWatchRoll={setShowToWatchRoll}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+              watchedMovies={watchedMovies}
+              // setWatchedMovies={setWatchedMovies}
+              // deleteWatched={deleteWatched}
+              toWatchList={toWatchList}
+              setToWatchList={setToWatchList}
+              toWatchMovies={toWatchMovies}
+              // setToWatchMovies={setToWatchMovies}
+              deleteToWatch={deleteToWatch}
+              deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+              favoritesList={favoritesList}
+              addWatched={addWatched}
+              // deleteFavorites={deleteFavorites}
+              // addFavorites={addFavorites}
 
-            handleRemoveFavorites={handleRemoveFavorites}
-            handleAddFavorites={handleAddFavorites}
-            userEvent={userEvent}
-            setUserEvent={setUserEvent}
-            handleClickOut={handleClickOut}
+              handleRemoveFavorites={handleRemoveFavorites}
+              handleAddFavorites={handleAddFavorites}
+              userEvent={userEvent}
+              setUserEvent={setUserEvent}
+              handleClickOut={handleClickOut}
+            />
+          </section>
+        )}
+        {/* BOUTONS */}
+        {mobileVersion && (
+          <div className='profile-container__rollbuttons'>
+            <div
+              className='profile-container__rollbuttons__button'
+              onClick={handleShowWatchedRoll}
+            >
+              <i className='fa-sharp fa-solid fa-check'></i>
+              Vus
+              <i className='fa-regular fa-heart'></i>
+            </div>
+
+            <div
+              className='profile-container__rollbuttons__button'
+              onClick={handleShowToWatchRoll}
+            >
+              <i className='fa-solid fa-xmark'></i>À voir
+              <div></div>
+            </div>
+          </div>
+        )}
+        {/* affichage conditionnel du Footer en fonction du device */}
+        {!mobileVersion && <Footer />}
+        {showPictureProfileModale && (
+          <PictureProfileModale
+            setShowPictureProfileModale={setShowPictureProfileModale}
+            showPictureProfileModale={showPictureProfileModale}
           />
-        </section>
-      )}
-      {/* BOUTONS */}
-      {mobileVersion && (
-        <div className='profile-container__rollbuttons'>
-          <div
-            className='profile-container__rollbuttons__button'
-            onClick={handleShowWatchedRoll}
-          >
-            <i className='fa-sharp fa-solid fa-check'></i>
-            Vus
-            <i className='fa-regular fa-heart'></i>
-          </div>
-
-          <div
-            className='profile-container__rollbuttons__button'
-            onClick={handleShowToWatchRoll}
-          >
-            <i className='fa-solid fa-xmark'></i>À voir
-            <div></div>
-          </div>
-        </div>
-      )}
-      {/* affichage conditionnel du Footer en fonction du device */}
-      {!mobileVersion && <Footer />}
-      {showPictureProfileModale && (
-        <PictureProfileModale
-          setShowPictureProfileModale={setShowPictureProfileModale}
-          showPictureProfileModale={showPictureProfileModale}
-        />
-      )}
-      <NotConnected />
-    </main>
+        )}
+      </main>
+    </RequireAuth>
   );
   //* ================ FERMETURE COMPOSANT ================
 };
