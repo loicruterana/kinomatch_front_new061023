@@ -210,27 +210,54 @@ export const Profile: React.FC = () => {
 
   // =========================== WATCHEDLIST ===========================
 
-  //useEffect pour récupérer les id des films vus
   useEffect(() => {
-    // pour activer le loader
-    load();
-    const searchParams = new URLSearchParams();
-    searchParams.append('userID', userData.id);
-    axios
-      // envoie la requête au back pour récupérer les films vus
-      .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
-      .then(({ data }) => {
-        // stocke les données dans le state watchedList
-        setWatchedList(data.watchedListTitles);
-        console.log('ICI', data.watchedListTitles);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    setUserEvent(false);
+    if (user.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', userData.id);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEvent]);
+      axios
+        .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
+        .then(({ data }) => {
+          setShowNotConnected(false);
+          console.log(data);
+          setWatchedList(data.watchedListTitles);
+          console.log('ICI', data.watchedListTitles);
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log('onpassici');
+        })
+        .finally(() => {
+          // Code to run regardless of whether the promise is resolved or rejected
+          // This is where you can put additional cleanup or logic
+          setUserEvent(false);
+        });
+    }
+  }, [user.id, userData.id, userEvent]);
+
+  //useEffect pour récupérer les id des films vus
+  // useEffect(() => {
+  //   if (user.id) {
+
+  //   // pour activer le loader
+  //   // load();
+  //   const searchParams = new URLSearchParams();
+  //   searchParams.append('userID', userData.id);
+  //   axios
+  //     // envoie la requête au back pour récupérer les films vus
+  //     .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
+  //     .then(({ data }) => {
+  //       // stocke les données dans le state watchedList
+  //       setWatchedList(data.watchedListTitles);
+  //       console.log('ICI', data.watchedListTitles);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   setUserEvent(false);
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [userEvent]);
 
   // =========================== WATCHEDLISTMOVIES ===========================
 

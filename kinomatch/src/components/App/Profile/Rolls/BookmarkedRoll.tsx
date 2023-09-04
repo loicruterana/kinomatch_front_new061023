@@ -90,7 +90,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 
     // setWatchedList((state) => [...state, film_id]);
 
-    addWatched({ movie: film_id });
+    addWatched({ film_id: film_id });
     setUserEvent(true);
   }
 
