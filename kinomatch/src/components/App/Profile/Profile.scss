@@ -37,12 +37,14 @@
       flex-direction: row;
       z-index: 1;
       width: 55%;
+
       // profile-container__roll-modale-mobile-version
       &__column {
         &__returnbuttonarea {
           display: none;
         }
       }
+
       &-backdropfilter {
         display: none;
       }
@@ -63,7 +65,7 @@
         width: 420px;
         height: fit-content;
         margin-bottom: 40px;
-        background-image: url('/images/pelloche.png');
+        // background-image: url('/images/pelloche.png');
         background-size: cover;
         background-position: center;
         margin-right: 100px;
@@ -74,25 +76,52 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        width: 320px;
+        width: 22vw;
         height: 100%;
         background-color: vars.$theme1-secondary;
         margin-top: 70px;
 
         &__item {
-          border: none;
-          font-size: 20px;
+          // border: none;
+          // font-size: 20px;
+          // border-radius: 10px;
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+          // color: vars.$theme1-secondary;
+          // background-color: vars.$theme1-primary;
+          // width: 100%;
+          // height: 10%;
+          // padding: 10px 5px;
+          // margin: 5px;
+          // flex-wrap: nowrap;
+          // position: relative;
+          // text-align: center;
+          // display: relative;
+          // background-image: url('/images/pellochebghome.svg');
+
+          font-size: 0.7vw;
+          font-weight: 700;
           border-radius: 10px;
+          padding: 10px 5px;
           display: flex;
           justify-content: center;
           align-items: center;
           color: vars.$theme1-secondary;
           background-color: vars.$theme1-primary;
-          width: 280px;
-          height: 110px;
-          padding: 20px 20px;
-          margin: 5px;
           flex-wrap: nowrap;
+          width: 100%;
+          height: 100%;
+          background-image: url('/images/pellochebghome.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%;
+          width: 100%;
+          height: 20px;
+          padding: 13%;
+          margin: 1%;
+          transition: transform 0.2s ease-in-out;
+          border: none;
           position: relative;
           text-align: center;
           display: relative;
@@ -100,7 +129,7 @@
           &-a {
             position: absolute;
             bottom: 5px;
-            left: 5px;
+            left: 18%;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -113,7 +142,7 @@
           &-b {
             position: absolute;
             top: 5px;
-            right: 5px;
+            right: 15%;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -126,7 +155,7 @@
           &-c {
             position: absolute;
             bottom: 5px;
-            left: 5px;
+            left: 16%;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -157,6 +186,7 @@
       }
     }
   }
+
   &-modale-notconnected {
     position: absolute;
     left: 50%;
@@ -177,7 +207,8 @@
 
     &.active {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1); /* Retourner à l'échelle normale */
+      transform: translate(-50%, -50%) scale(1);
+      /* Retourner à l'échelle normale */
       transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
   }
@@ -188,8 +219,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin-top: 70px;
     color: vars.$theme1-secondary;
+    &__circle {
+      img {
+        max-width: 50%;
+        max-height: auto;
+      }
+    }
 
     &__pictureemailpassword {
       display: flex;
@@ -202,8 +239,7 @@
           margin-bottom: 20px;
           font-size: 25px;
           display: flex;
-
-          span {
+          profile-container__personnal__circle span {
             font-style: italic;
           }
 
@@ -238,6 +274,7 @@
     &__circle {
       margin-bottom: 50px;
       scale: 1.2;
+
       &__pen:hover {
         cursor: pointer;
       }
@@ -256,85 +293,6 @@
     &__title {
       margin-bottom: 50px;
       margin-left: 50px;
-    }
-  }
-}
-
-//* ============ VERSION LAPTOP ============
-@media screen and (min-width: 1101px) and (max-width: 1800px) {
-  .profile-container {
-    &__personnal {
-      width: 45vw;
-      height: 90%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      margin-top: 130px;
-      color: vars.$theme1-secondary;
-
-      &__pictureemailpassword {
-        display: flex;
-        flex-direction: row;
-
-        &__emailpassword {
-          margin: 35px 0 0 20px;
-
-          &__email {
-            margin-bottom: 20px;
-            font-size: 25px;
-            display: flex;
-
-            span {
-              font-style: italic;
-            }
-
-            div {
-              margin-left: 5px;
-              font-weight: 700;
-            }
-          }
-
-          &__password {
-            margin-left: 17px;
-            margin-bottom: 20px;
-            font-size: 20px;
-            display: flex;
-
-            span {
-              font-style: italic;
-            }
-
-            div {
-              margin-left: 5px;
-              font-weight: 700;
-            }
-          }
-        }
-      }
-
-      h2 {
-        font-size: 46px;
-      }
-
-      &__circle {
-        margin-bottom: 50px;
-        scale: 1.2;
-      }
-
-      &__infos {
-        margin-bottom: 15%;
-
-        &__pictureemailpassword {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-
-      &__title {
-        margin-bottom: 50px;
-        margin-left: 50px;
-      }
     }
   }
 }
@@ -417,6 +375,7 @@
             height: 60px;
             background-color: vars.$theme1-primary;
             left: 0;
+
             &__return {
               font-weight: bold;
               width: 170px;
@@ -603,3 +562,21 @@
     }
   }
 }
+
+// @media screen and (max-height: 800px) {
+//   .profile-container__personnal__infos__pictureemailpassword {
+//     margin-top: 200px;
+//   }
+//   .profile-container__personnal__circle {
+//     max-height: 40vh;
+//     margin-bottom: 0px;
+//     scale: 0.8;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     img {
+//       // max-width: 100%;
+//       // height: 100%;
+//     }
+//   }
+// }

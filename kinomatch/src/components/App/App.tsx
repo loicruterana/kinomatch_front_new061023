@@ -1,6 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
 import { Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -31,7 +32,9 @@ import './App.scss';
 import NoResult from './NoResult/NoResult';
 
 //* ================ COMPOSANT ================
-// Ici la function App est le composant principal de l'application qui permet de gérer les routes et les différents composants
+
+axios.defaults.withCredentials = true;
+
 function App() {
   return (
     <NoResultProvider>

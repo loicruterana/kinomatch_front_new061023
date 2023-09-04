@@ -12,6 +12,7 @@ import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import Footer from '../Footer/Footer';
+import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
@@ -30,8 +31,8 @@ import API_BASE_URL from '../../../utils/config';
 // ================ IMPORT JSON ================
 
 // ici j'importe l'objet "genres" qui contient les genres de films et leurs id et le renommee "genresList" pour pouvoir l'utiliser dans le code
-import { genres as genresListFile } from '/home/student/Bureau/html/Quasar/PROJET-06-KINOMATCH-FRONT/kinomatch/public/genres.json';
-import { results as providersListFile } from '/home/student/Bureau/html/Quasar/PROJET-06-KINOMATCH-FRONT/kinomatch/public/providers.json';
+import { genres as genresListFile } from '../../../../public/genres.json';
+import { results as providersListFile } from '../../../../public/providers.json';
 // ================ IMPORT SCSS ================
 import './style.scss';
 
@@ -148,19 +149,18 @@ function MoviePage() {
 
   // UseState qui récupère les genres sélectionnés par l'utilisateur
   const [genresList, setGenresList] = useState(['']);
-
   // UseState qui récupère les plateformes sélectionnées par l'utilisateur
   const [providersList, setProvidersList] = useState(['']);
-
   // UseState qui récupère les décennies sélectionnées par l'utilisateur
   const [decadeList, setDecadeList] = useState(['']);
-
-  //* ================ USECONTEXT =================================
-
-  const { currentMovieId, setCurrentMovieId } = useContext(CurrentMovieIdContext);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { currentMovieId, setCurrentMovieId } = useContext(
+    CurrentMovieIdContext
+  );
+  const { userData } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters } = useContext(SelectedProviderFiltersContext);
+  const { selectedProviderFilters } = useContext(
+    SelectedProviderFiltersContext
+  );
   const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
@@ -193,8 +193,9 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
-      }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${
+      month < 10 ? '0' + month : month
+    }/${year}`;
   }
 
   // RECUPERATION DES RÉALISATEURS
@@ -215,8 +216,6 @@ function MoviePage() {
   // RÉCUPÉRATION DES TRAILERS
   const trailer = videos.find((video) => video.type.includes('Trailer'));
   const otherVideos = videos.filter((video) => !video.type.includes('Trailer'));
-
-
 
   //* ==================== USEEFFECT handleResize ===============================
 
@@ -241,12 +240,10 @@ function MoviePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   //? ============================ USEEFFECT SearchResults ============================ /
 
   // UseEffect récupérant l'URI permettant l'affichage des films trouvés via les filtres de la Home puis en sélectionne un aléatoirement pour l'afficher
   useEffect(() => {
-
     if (window.location.search.includes('filmID')) {
       setIsLoading(true);
 
@@ -269,7 +266,9 @@ function MoviePage() {
         // Route pour récupérer les providers du film
         axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
         // Route pour récupérer les films recommandés
-        axios.get(`${API_BASE_URL}/recommendedMovies?${searchParams.toString()}`),
+        axios.get(
+          `${API_BASE_URL}/recommendedMovies?${searchParams.toString()}`
+        ),
         // Route pour récupérer les vidéos du film
         axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
       ];
@@ -321,9 +320,7 @@ function MoviePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
 
-
-  //? ============================ USEEFFECT FilteredMovie ============================ 
-
+  //? ============================ USEEFFECT FilteredMovie ============================
 
   useEffect(() => {
     if (!window.location.search.includes('filmID')) {
@@ -334,7 +331,7 @@ function MoviePage() {
 
         const urlParams = new URLSearchParams(window.location.search);
         // On crée un tableau vide pour stocker les paramètres
-        const paramsArray: { key: string; value: string; }[] = [];
+        const paramsArray: { key: string; value: string }[] = [];
         // On boucle sur les paramètres de l'URL
         urlParams.forEach((value, key) => {
           paramsArray.push({ key, value });
@@ -343,19 +340,21 @@ function MoviePage() {
         // ==================== FILTRES GENRES ====================
 
         // On filtre les paramètres pour récupérer les genres
-        const filteredGenres = paramsArray.filter((genre) =>
-          genre.key === 'genreID'
+        const filteredGenres = paramsArray.filter(
+          (genre) => genre.key === 'genreID'
         );
 
         console.log(filteredGenres);
 
         // On créer un tableau avec les valeurs des paramètres
-        const genreValueArray = filteredGenres.map(obj => obj.value);
+        const genreValueArray = filteredGenres.map((obj) => obj.value);
         console.log(genreValueArray);
         // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
         const genreArray = genreValueArray.map((value) => {
           // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
-          const genre = genresListFile.find((param: { id: number; }) => param.id === Number(value));
+          const genre = genresListFile.find(
+            (param: { id: number }) => param.id === Number(value)
+          );
           // Si le genre existe on retourne son nom sinon on retourne ''
           return genre ? genre.name : '';
         });
@@ -367,17 +366,20 @@ function MoviePage() {
         // ==================== FILTRES PROVIDERS ====================
 
         // On filtre les paramètres pour récupérer les providers
-        const filterProviders = paramsArray.filter((provider) =>
-          provider.key === 'providerID'
+        const filterProviders = paramsArray.filter(
+          (provider) => provider.key === 'providerID'
         );
 
         // On créer un tableau avec les valeurs des paramètres
-        const filterProvidersArray = filterProviders.map(obj => obj.value);
+        const filterProvidersArray = filterProviders.map((obj) => obj.value);
 
         // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers
         const providerArray = filterProvidersArray.map((value) => {
           // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers et on convertit la valeur en nombre
-          const provider = providersListFile.find((param: { provider_id: number; }) => param.provider_id === Number(value));
+          const provider = providersListFile.find(
+            (param: { provider_id: number }) =>
+              param.provider_id === Number(value)
+          );
           // Si le provider existe on retourne son nom sinon on retourne ''
           return provider ? provider.provider_name : '';
         });
@@ -387,22 +389,20 @@ function MoviePage() {
         console.log(filterProviders);
         console.log(filterProvidersArray);
 
-        // ============================ FILTRE DECADES ============================ 
+        // ============================ FILTRE DECADES ============================
 
         // On filtre les paramètres pour récupérer la décennie
-        const filteredDecade = paramsArray.filter((decade) =>
-          decade.key === 'decade'
+        const filteredDecade = paramsArray.filter(
+          (decade) => decade.key === 'decade'
         );
 
         // On créer un tableau avec les valeurs des paramètres
-        const decadeValueArray = filteredDecade.map(obj => obj.value);
+        const decadeValueArray = filteredDecade.map((obj) => obj.value);
         console.log(decadeValueArray);
 
         // On stocke les décennies dans le state
         setDecadeList(decadeValueArray);
         console.log(filteredDecade);
-
-
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
@@ -410,7 +410,7 @@ function MoviePage() {
           .get(`${API_BASE_URL}/films${window.location.search}`)
           .then(({ data }) => {
             // Renvoi la première page de résultats
-            console.log(data)
+            console.log(data);
             if (data.results.length === 0) {
               handleNoResult();
               navigate(`/`);
@@ -437,7 +437,8 @@ function MoviePage() {
             } else {
               // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
               return axios.get(
-                `${API_BASE_URL}/randomFilms${window.location.search
+                `${API_BASE_URL}/randomFilms${
+                  window.location.search
                 }&${searchParams1.toString()}`
               );
             }
@@ -446,20 +447,21 @@ function MoviePage() {
           .then((response) => {
             // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
             const data = response?.data;
-            console.log(data)
+            console.log(data);
             // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
             if (data) {
               const selectRandomID =
-                data.results[Math.floor(Math.random() * data.results.length)].id;
+                data.results[Math.floor(Math.random() * data.results.length)]
+                  .id;
               // On évite d'afficher le même film que celui qui est déjà affiché
               const filteredResults = data.results.filter(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (result: { id: any }) => result.id !== selectRandomID
               );
-              console.log(filteredResults)
+              console.log(filteredResults);
               // Met à jour le state avec les résultats filtrés
               setMovieArray(filteredResults);
-              console.log(currentMovieId)
+              console.log(currentMovieId);
               const searchParams = new URLSearchParams();
               // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
               searchParams.append(
@@ -471,7 +473,9 @@ function MoviePage() {
               const requests = [
                 axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
                 axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-                axios.get(`${API_BASE_URL}/provider?${searchParams.toString()}`),
+                axios.get(
+                  `${API_BASE_URL}/provider?${searchParams.toString()}`
+                ),
                 axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
               ];
               return Promise.all(requests);
@@ -481,7 +485,8 @@ function MoviePage() {
           .then((responses) => {
             // Si les réponses sont un tableau, on les déstructure pour les récupérer dans l'ordre
             if (Array.isArray(responses)) {
-              const [movieData, creditsData, providersData, videosMovie] = responses;
+              const [movieData, creditsData, providersData, videosMovie] =
+                responses;
               // Si les données sont présentes, on les stocke dans les states
               if (movieData.data && creditsData.data && providersData.data) {
                 setMovie(movieData.data);
@@ -504,7 +509,7 @@ function MoviePage() {
       }
       return () => {
         effectRan.current = true;
-      }
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMovieId]);
@@ -571,7 +576,7 @@ function MoviePage() {
                 <div className='text'>
                   {/* Si la note est un nombre entier, on affiche le nombre sinon on affiche le nombre avec une décimale */}
                   {Math.floor(movie.vote_average * 10) ===
-                    movie.vote_average * 10
+                  movie.vote_average * 10
                     ? movie.vote_average * 10
                     : (movie.vote_average * 10).toFixed(1)}
                   %<div className='small'>{movie.vote_count} votes </div>
@@ -602,16 +607,14 @@ function MoviePage() {
               <ul className='movieDetails__filters-desktop--filterElemList'>
                 {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
                 <li>
-                  {genresList.map(
-                    (genre) => (
-                      <p
-                        key={genre}
-                        className='movieDetails__filters-desktop--filterElem'
-                      >
-                        {genre}
-                      </p>
-                    )
-                  )}
+                  {genresList.map((genre) => (
+                    <p
+                      key={genre}
+                      className='movieDetails__filters-desktop--filterElem'
+                    >
+                      {genre}
+                    </p>
+                  ))}
                 </li>
                 {/* Pour chaque filtre de "plateforme", on affiche les noms de plateformes */}
                 <li>
@@ -641,7 +644,7 @@ function MoviePage() {
 
           <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
           {/* Si l'utilisateur est connecté, on affiche les boutons d'ajouts aux "favoris", "a voir" et "vu" */}
-          {isLoggedIn && <AddButton movie={movie.id} />}
+          {userData && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
             {/* Affichage de la tag line */}
             <blockquote className='movieDetails__description-blockquote'>
@@ -772,16 +775,14 @@ function MoviePage() {
                   <ul className='movieDetails__filters-mobile--filterElemList'>
                     <li>
                       {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
-                      {genresList.map(
-                        (genre) => (
-                          <p
-                            key={genre}
-                            className='movieDetails__filters-mobile--filterElem'
-                          >
-                            {genre}
-                          </p>
-                        )
-                      )}
+                      {genresList.map((genre) => (
+                        <p
+                          key={genre}
+                          className='movieDetails__filters-mobile--filterElem'
+                        >
+                          {genre}
+                        </p>
+                      ))}
                     </li>
                     <li>
                       {/* Pour chaque filtre de "provider", on affiche les noms de providers */}

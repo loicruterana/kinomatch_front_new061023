@@ -2,6 +2,7 @@
 import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -26,8 +27,14 @@ function Header() {
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
 
-  const { isLoggedIn, setIsLoggedIn, userData, login, checkUserData } =
-    useContext(AuthContext);
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    userData,
+    login,
+    checkUserData,
+    addUserData,
+  } = useContext(AuthContext);
 
   // ================  UTILS ================
 
@@ -58,19 +65,29 @@ function Header() {
   //   login();
   // }, []);
 
-  useEffect(() => {
-    const storedLoginStatus = localStorage.getItem('isLoggedIn');
-    if (storedLoginStatus) {
-      axios.get(`${API_BASE_URL}/login`).then((res) => {
-        if (res.data.authentified === true) {
-          setIsLoggedIn(true);
-          checkUserData();
-        }
-      });
-      // setIsLoggedIn(true);
-      // checkUserData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedLoginStatus = localStorage.getItem('isLoggedIn');
+  //   if (storedLoginStatus) {
+  //     axios.get(`${API_BASE_URL}/login`).then((res) => {
+  //       if (res.data.authentified === true) {
+  //         setIsLoggedIn(true);
+  //         checkUserData();
+  //       }
+  //     });
+  //     // setIsLoggedIn(true);
+  //     // checkUserData();
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem('userData');
+  //   if (storedUserData) {
+  //     const user = JSON.parse(storedUserData);
+  //     addUserData(user.email, user.userId, user.picture);
+  //     // Utilisez les données utilisateur ici
+  //     // Par exemple : const { email, id } = user;
+  //   }
+  // }, []);
 
   // Vérifier si le contexte est défini
   if (!AuthContext) {
@@ -106,6 +123,7 @@ function Header() {
   const movieArrayReload = () => {
     window.location.reload();
   };
+
   // ================ JSX ================
   return (
     <>
@@ -148,7 +166,7 @@ function Header() {
 
           {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
           {/* Au clic sera affichée une modale BurgerMenu */}
-          {!isLoggedIn && (
+          {!userData && (
             <div className='header-elements-buttons'>
               <button className='header-elements-buttons-button'>
                 <Link key='login' to='/login'>
@@ -157,21 +175,22 @@ function Header() {
               </button>
             </div>
           )}
-
-          {/* Profil de l'utilisateur connecté */}
-          {isLoggedIn && (
-            <Link to='/profile'>
-              <div className='header-elements-profile'>
-                <img
-                  src={`images/${userData.picture}.png`}
-                  alt={`Image de profil ${userData.picture}`}
-                />
-                <div className='header-elements-profile-username'>
-                  {userData.email}
+          <RequireAuth>
+            {/* Profil de l'utilisateur connecté */}
+            {userData && (
+              <Link to='/profile'>
+                <div className='header-elements-profile'>
+                  <img
+                    src={`images/${userData.picture}.png`}
+                    alt={`Image de profil ${userData.picture}`}
+                  />
+                  <div className='header-elements-profile-username'>
+                    {userData.email}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          )}
+              </Link>
+            )}
+          </RequireAuth>
         </div>
 
         {/* Logo refresh, logo différent on est en version mobile */}

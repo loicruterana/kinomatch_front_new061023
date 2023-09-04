@@ -104,7 +104,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (response.data.authorized === true) {
           console.log(response.data);
           setIsLoggedIn(true);
-          localStorage.setItem('isLoggedIn', 'true');
+          // localStorage.setItem('isLoggedIn', 'true');
         }
       })
       .catch((error) => {
@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then((response) => {
         if (response.data.authorized === false) {
           setIsLoggedIn(false);
-          localStorage.setItem('isLoggedIn', 'false');
+          // localStorage.setItem('isLoggedIn', 'false');
         }
       })
       .catch((error) => {
@@ -138,7 +138,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (response.data.authorized === true) {
           console.log(response.data);
-          localStorage.setItem('isLoggedIn', 'true');
+          // localStorage.setItem('isLoggedIn', 'true');
           response.data.user.email = userData.email;
           response.data.user.email = userData.id;
           response.data.user.email = userData.picture;
