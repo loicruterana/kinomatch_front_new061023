@@ -2,6 +2,7 @@
 import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -165,7 +166,7 @@ function Header() {
 
           {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
           {/* Au clic sera affichée une modale BurgerMenu */}
-          {!isLoggedIn && (
+          {!userData && (
             <div className='header-elements-buttons'>
               <button className='header-elements-buttons-button'>
                 <Link key='login' to='/login'>
@@ -174,21 +175,22 @@ function Header() {
               </button>
             </div>
           )}
-
-          {/* Profil de l'utilisateur connecté */}
-          {isLoggedIn && (
-            <Link to='/profile'>
-              <div className='header-elements-profile'>
-                <img
-                  src={`images/${userData.picture}.png`}
-                  alt={`Image de profil ${userData.picture}`}
-                />
-                <div className='header-elements-profile-username'>
-                  {userData.email}
+          <RequireAuth>
+            {/* Profil de l'utilisateur connecté */}
+            {userData && (
+              <Link to='/profile'>
+                <div className='header-elements-profile'>
+                  <img
+                    src={`images/${userData.picture}.png`}
+                    alt={`Image de profil ${userData.picture}`}
+                  />
+                  <div className='header-elements-profile-username'>
+                    {userData.email}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          )}
+              </Link>
+            )}
+          </RequireAuth>
         </div>
 
         {/* Logo refresh, logo différent on est en version mobile */}

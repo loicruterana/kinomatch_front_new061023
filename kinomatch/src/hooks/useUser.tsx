@@ -29,6 +29,7 @@ export function useUser() {
         if (data.authorized) {
           const { user } = data;
           console.log(user);
+          console.log('pigeon');
           auth.addUserData(user.email, user.id, user.picture);
         }
       })
