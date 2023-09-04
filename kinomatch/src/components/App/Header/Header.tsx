@@ -78,15 +78,15 @@ function Header() {
   //   }
   // }, []);
 
-  useEffect(() => {
-    const storedUserData = localStorage.getItem('userData');
-    if (storedUserData) {
-      const user = JSON.parse(storedUserData);
-      addUserData(user.email, user.userId, user.picture);
-      // Utilisez les données utilisateur ici
-      // Par exemple : const { email, id } = user;
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem('userData');
+  //   if (storedUserData) {
+  //     const user = JSON.parse(storedUserData);
+  //     addUserData(user.email, user.userId, user.picture);
+  //     // Utilisez les données utilisateur ici
+  //     // Par exemple : const { email, id } = user;
+  //   }
+  // }, []);
 
   // Vérifier si le contexte est défini
   if (!AuthContext) {
