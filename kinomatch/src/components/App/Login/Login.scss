@@ -22,20 +22,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       &-input {
         border: black 1px solid;
         margin: 15px 0;
-        border-radius: 15px;
+        border-radius: 11px;
         height: 30px;
         padding: 0 10px;
+
         &::placeholder {
           color: grey;
           opacity: 0.4;
         }
+
         &:focus {
           background: vars.$theme1-secondary;
           border: black 2px solid;
         }
+
         &-conditions {
           display: flex;
           flex-direction: column;
@@ -56,15 +60,18 @@
           display: flex;
           position: relative;
           align-items: center;
+
           &-i {
             position: absolute;
             font-size: 18px;
             left: -15px;
           }
+
           &-eye {
             position: absolute;
             font-size: 18px;
             right: -28px;
+
             &-slash {
               position: absolute;
               font-size: 18px;
@@ -80,15 +87,17 @@
           }
         }
       }
+
       button {
         margin-top: 10px;
         color: vars.$theme1-primary;
         background-color: vars.$theme1-secondary;
-        border-radius: 15px;
+        border-radius: 11px;
         border: vars.$theme1-secondary;
         font-size: 32px;
         margin-bottom: 7px;
         padding: 0 6px;
+
         &:hover {
           cursor: pointer;
         }

@@ -15,9 +15,9 @@
 
     &-button {
       display: flex;
-      height: 25px;
-      width: 200px;
-      border-radius: 15px;
+      height: 2vh;
+      width: 15vw;
+      border-radius: 11px;
       background-color: vars.$theme1-secondary;
       border: vars.$theme1-secondary;
       color: vars.$theme1-primary;
@@ -76,40 +76,21 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        width: 22vw;
+        width: 320px;
         height: 100%;
         background-color: vars.$theme1-secondary;
         margin-top: 70px;
 
         &__item {
-          // border: none;
-          // font-size: 20px;
-          // border-radius: 10px;
-          // display: flex;
-          // justify-content: center;
-          // align-items: center;
-          // color: vars.$theme1-secondary;
-          // background-color: vars.$theme1-primary;
-          // width: 100%;
-          // height: 10%;
-          // padding: 10px 5px;
-          // margin: 5px;
-          // flex-wrap: nowrap;
-          // position: relative;
-          // text-align: center;
-          // display: relative;
-          // background-image: url('/images/pellochebghome.svg');
-
-          font-size: 0.7vw;
-          font-weight: 700;
+          font-size: 100%;
+          font-weight: 500;
+          text-align: center;
           border-radius: 10px;
-          padding: 10px 5px;
           display: flex;
           justify-content: center;
           align-items: center;
           color: vars.$theme1-secondary;
           background-color: vars.$theme1-primary;
-          flex-wrap: nowrap;
           width: 100%;
           height: 100%;
           background-image: url('/images/pellochebghome.svg');
@@ -123,13 +104,11 @@
           transition: transform 0.2s ease-in-out;
           border: none;
           position: relative;
-          text-align: center;
-          display: relative;
 
           &-a {
             position: absolute;
             bottom: 5px;
-            left: 18%;
+            left: 49px;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -142,7 +121,7 @@
           &-b {
             position: absolute;
             top: 5px;
-            right: 15%;
+            right: 45px;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -155,7 +134,7 @@
           &-c {
             position: absolute;
             bottom: 5px;
-            left: 16%;
+            left: 49px;
             margin: 0.6rem 0.6rem;
             transition: transform 0.2s ease-in-out;
 
@@ -215,31 +194,26 @@
 
   &__personnal {
     width: 45vw;
-    height: 90%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-top: 70px;
+    // margin-top: 10vh;
     color: vars.$theme1-secondary;
-    &__circle {
-      img {
-        max-width: 50%;
-        max-height: auto;
-      }
-    }
 
     &__pictureemailpassword {
       display: flex;
       flex-direction: row;
 
       &__emailpassword {
-        margin: 35px 0 0 20px;
+        margin: 1vh 0 0 0;
 
         &__email {
           margin-bottom: 20px;
           font-size: 25px;
           display: flex;
-          profile-container__personnal__circle span {
+
+          span {
             font-style: italic;
           }
 
@@ -272,8 +246,18 @@
     }
 
     &__circle {
-      margin-bottom: 50px;
-      scale: 1.2;
+      margin-bottom: 20px;
+      // scale: 1.2;
+
+      // j'accède aux propriétés de la balise img
+      & img {
+        width: 15vw;
+        height: 28vh;
+        border-radius: 50%;
+        // border: 0px solid vars.$theme1-secondary;
+        margin: 0 auto;
+        display: block;
+      }
 
       &__pen:hover {
         cursor: pointer;
@@ -481,7 +465,18 @@
       margin-left: 0;
 
       &__circle {
-        margin-bottom: 20px;
+        margin: 50px 0 20px 0;
+        // scale: 1.2;
+
+        // j'accède aux propriétés de la balise img
+        & img {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          // border: 0px solid vars.$theme1-secondary;
+          margin: 0 auto;
+          display: block;
+        }
       }
 
       &__infos {
@@ -562,21 +557,3 @@
     }
   }
 }
-
-// @media screen and (max-height: 800px) {
-//   .profile-container__personnal__infos__pictureemailpassword {
-//     margin-top: 200px;
-//   }
-//   .profile-container__personnal__circle {
-//     max-height: 40vh;
-//     margin-bottom: 0px;
-//     scale: 0.8;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     img {
-//       // max-width: 100%;
-//       // height: 100%;
-//     }
-//   }
-// }
