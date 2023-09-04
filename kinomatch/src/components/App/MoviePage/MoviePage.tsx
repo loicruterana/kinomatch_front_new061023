@@ -11,6 +11,7 @@ import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import Footer from '../Footer/Footer';
+import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
@@ -143,7 +144,7 @@ function MoviePage() {
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
-  const { isLoggedIn } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
   const { selectedProviderFilters } = useContext(
     SelectedProviderFiltersContext
@@ -527,7 +528,7 @@ function MoviePage() {
 
           <h1 className='movieFound__essentiel-title'>{movie.title}</h1>
           {/* Si l'utilisateur est connecté, on affiche les boutons d'ajouts aux "favoris", "a voir" et "vu" */}
-          {isLoggedIn && <AddButton movie={movie.id} />}
+          {userData && <AddButton movie={movie.id} />}
           <div className='movieDetails__description'>
             {/* Affichage de la tag line */}
             <blockquote className='movieDetails__description-blockquote'>

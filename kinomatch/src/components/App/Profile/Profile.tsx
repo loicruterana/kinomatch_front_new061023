@@ -315,39 +315,46 @@ export const Profile: React.FC = () => {
 
   //useEffect pour récupérer les id des films ajoutés en favoris
   useEffect(() => {
-    const fetchMoviesFavorites = async () => {
-      try {
-        const searchParams = new URLSearchParams();
-        searchParams.append('userID', userData.id);
-        await axios
-          .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
-          .then(({ data }) => {
-            // Utiliser un objet pour stocker les id des films favoris
-            // const favorites: FavoritesListObject = {};
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            // console.log(data);
-            // data.forEach((element: any) => {
-            //   const key = element.film_id?.toString();
-            //   favorites[key] = element as FavoritesItem;
-            // });
-            setFavoritesList(data.favoritesListTitles);
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            setUserEvent(false);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    if (user.id) {
+      const fetchMoviesFavorites = async () => {
+        try {
+          const searchParams = new URLSearchParams();
+          searchParams.append('userID', userData.id);
 
-    // if (userEvent) {
-    fetchMoviesFavorites();
-    // }
+          await axios
+            .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
+
+            .then(({ data }) => {
+              console.log('est-ce');
+
+              // Utiliser un objet pour stocker les id des films favoris
+              // const favorites: FavoritesListObject = {};
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              // console.log(data);
+              // data.forEach((element: any) => {
+              //   const key = element.film_id?.toString();
+              //   favorites[key] = element as FavoritesItem;
+              // });
+              console.log(data);
+              setFavoritesList(data.favoritesListTitles);
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+            .finally(() => {
+              setUserEvent(false);
+            });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      // if (userEvent) {
+      fetchMoviesFavorites();
+      // }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEvent, userData]);
+  }, [userEvent, userData, user.id]);
   // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================

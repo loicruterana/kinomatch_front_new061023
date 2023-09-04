@@ -30,12 +30,15 @@ export function useUser() {
           const { user } = data;
           console.log(user);
           console.log('pigeon');
+          console.log(auth.userData);
+
           auth.addUserData(user.email, user.id, user.picture);
         }
       })
       .finally(() => {
         setIsLoading(false);
         alreadyLoading = false;
+        console.log(auth.userData);
       });
   }, []);
 
