@@ -7,7 +7,7 @@
   @mixin button-styles-desktop {
     all: unset;
     scale: 1.6;
-    margin: 0.6rem 0.6rem;
+    margin: 1.5rem 1rem 0.6rem 0.2rem;
     transition: transform 0.2s ease-in-out;
 
     &:hover {
@@ -16,12 +16,46 @@
     }
   }
 
+  @mixin bubble-styles-buttons {
+    display: inline-block;
+    position: absolute;
+    font-size: 1rem;
+    transform: translate(80%, 20%);
+    border-radius: 6px;
+    padding: 6px;
+    color: vars.$theme1-primary;
+    background-color: vars.$theme1-secondary;
+    animation: appearAndDisappear 3s ease-in-out;
+  }
+
   .movieFound__essentiel {
+    &-btn--bubble {
+      @include bubble-styles-buttons;
+    }
+
+    @keyframes appearAndDisappear {
+      0% {
+        opacity: 1;
+      }
+
+      33% {
+        opacity: 1;
+      }
+
+      66% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
     // contenaire des boutons
     &-btn--container {
       display: flex;
       width: fit-content;
-      margin: 0 0.7rem;
+      // margin: 0 0
     }
 
     // Bouton "ajouter aux likes"
@@ -49,14 +83,14 @@
   @mixin button-styles-mobile {
     all: unset;
     scale: 1.4;
-    margin: 0.6rem;
+    margin: 1.5rem 1rem 0.6rem 0.1rem;
   }
 
   .movieFound__essentiel {
     &-btn--container {
       display: flex;
       width: fit-content;
-      margin: 0 0.7rem;
+      // margin: 0 0.7rem;
     }
 
     // Bouton "ajouter aux likes"
