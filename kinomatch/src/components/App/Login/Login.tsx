@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import API_BASE_URL from '../../../utils/config';
+import { useNavigate } from 'react-router-dom';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -48,6 +49,20 @@ export const Login = () => {
 
   // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData.email !== '') {
+      const timeoutId = setTimeout(() => {
+        // Utilisez l'objet d'historique pour rediriger l'utilisateur vers la page d'accueil après 1 seconde
+        navigate('/');
+      }, 1000);
+
+      // Assurez-vous d'annuler le timeout si le composant est démonté avant l'expiration du délai
+      return () => clearTimeout(timeoutId);
+    }
+  }, [userData.email, history]);
 
   //======== USEWINDOWSIZE
 
