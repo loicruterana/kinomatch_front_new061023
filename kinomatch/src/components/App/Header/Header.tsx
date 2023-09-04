@@ -166,7 +166,7 @@ function Header() {
 
           {/* Bouton, lorsque l'utilisateur n'est pas connecté, l'app affichera ce bouton 'SE CONNECTER' */}
           {/* Au clic sera affichée une modale BurgerMenu */}
-          {!userData && (
+          {userData.id === '' && (
             <div className='header-elements-buttons'>
               <button className='header-elements-buttons-button'>
                 <Link key='login' to='/login'>
@@ -175,9 +175,10 @@ function Header() {
               </button>
             </div>
           )}
+
+          {/* Profil de l'utilisateur connecté */}
           <RequireAuth>
-            {/* Profil de l'utilisateur connecté */}
-            {userData && (
+            {userData.id !== '' && (
               <Link to='/profile'>
                 <div className='header-elements-profile'>
                   <img

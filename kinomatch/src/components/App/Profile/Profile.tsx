@@ -170,8 +170,13 @@ export const Profile: React.FC = () => {
       axios
         .post(`${API_BASE_URL}/logout`, requestData)
         .then(() => {
+          // document.cookie =
+          //   'connect.sid=; expires=Mon, 05 Sep 2022 13:27:08 GMT; domain=localhost; path=/;';
           logout();
           clearUserData();
+
+          console.log('oh');
+
           navigate(`/`);
         })
         .catch((error) => {

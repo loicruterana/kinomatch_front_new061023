@@ -12,7 +12,6 @@ import AddButton from './AddButtons/AddButtons';
 import Providers from './Providers/Providers';
 import OtherResults from './OtherResults/OtherResults';
 import Footer from '../Footer/Footer';
-import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';

@@ -246,7 +246,7 @@ export const Login = () => {
           {message}
         </p>
       </form>
-      {/* {userData.email && <Connected />} */}
+      {userData.email && <Connected />}
     </main>
   );
   //* ================ FERMETURE COMPOSANT ================
