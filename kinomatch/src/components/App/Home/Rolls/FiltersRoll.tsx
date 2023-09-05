@@ -6,6 +6,7 @@ import { Genre, ProviderHome } from '../../../../utils/interfaces';
 import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecadeFiltersContext';
+import { SelectedNotationFiltersContext } from '../../../../contexts/SelectedNotationFiltersContext';
 
 // ================ INTERFACES ================
 interface RollGenreProps {
@@ -15,6 +16,7 @@ interface RollGenreProps {
   showRollGenre: boolean;
   showRollProvider: boolean;
   showRollDecade: boolean;
+  showRollNotation: boolean;
   isLoading: boolean;
   handleClickOut: () => void;
 }
@@ -28,6 +30,7 @@ export const RollGenre = ({
   showRollGenre,
   showRollProvider,
   showRollDecade,
+  showRollNotation,
   isLoading,
   handleClickOut,
 }: RollGenreProps) => {
@@ -37,6 +40,12 @@ export const RollGenre = ({
 
   for (let i = 2020; i >= 1890; i -= 10) {
     decades.push(i);
+  }
+
+  const notations = [];
+
+  for (let i = 90; i >= 0; i -= 10) {
+    notations.push(i);
   }
 
   // ================ IMPORT PROPS CONTEXTS ================
@@ -49,6 +58,10 @@ export const RollGenre = ({
   );
   const { addDecadeFilter, selectedDecadeFilters } = useContext(
     SelectedDecadeFiltersContext
+  );
+
+  const { addNotationFilter, selectedNotationFilters } = useContext(
+    SelectedNotationFiltersContext
   );
 
   // ================ HANDLERS ================
@@ -88,14 +101,24 @@ export const RollGenre = ({
     }
   }
 
+  // handleNotationClick pour envoyer les choix de filtres à la fonction addNotationFilter du contexte SelectedNotationFiltersContext et donc stocker le filtre notation dans le state
+  function handleNotationClick(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    const target = event.target as HTMLButtonElement;
+    const filter = target.textContent;
+    if (filter !== null) {
+      addNotationFilter(filter);
+    }
+  }
+
   // ================ JSX ================
   return (
     <>
       {/* Bouton de validation pour la version mobile */}
       <div
-        className={`home-container__roll-modale-${
-          mobileVersion ? 'mobile-version' : 'desktop-version'
-        }__validation`}
+        className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+          }__validation`}
       >
         <button onClick={handleClickOut} aria-label='Valider'>
           Valider
@@ -104,9 +127,8 @@ export const RollGenre = ({
 
       {/* Affichage des rolls, avec un affichage différent en fonction des filtres sélectionnés */}
       <div
-        className={`home-container__roll-modale-${
-          mobileVersion ? 'mobile-version' : 'desktop-version'
-        }__filterRoll`}
+        className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+          }__filterRoll`}
         style={
           !mobileVersion
             ? selectedGenreFilters.length > 0 ||
@@ -119,73 +141,65 @@ export const RollGenre = ({
       >
         {/* ROLL GENRE */}
         <div
-          className={`home-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }__roll-backgroundContainer`}
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
         >
           <div
-            className={`home-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll-background`}
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
           >
             {((showRollGenre && mobileVersion) || !mobileVersion) && (
               <div
-                className={`home-container__roll-modale-${
-                  mobileVersion ? 'mobile-version' : 'desktop-version'
-                }__roll-container`}
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
               >
                 <div
-                  className={`home-container__roll-modale-${
-                    mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container__item-category`}
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
                 >
                   GENRE
                 </div>
                 {isLoading
                   ? 'Chargement en cours'
                   : preselectedGenres.map((preselectedGenre) => (
-                      <button
-                        className={`home-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-genre${
-                          selectedGenreFilters.some(
+                    <button
+                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-genre${selectedGenreFilters.some(
+                          (item) =>
+                            item.id.toString() ===
+                            preselectedGenre.id.toString()
+                        )
+                          ? '-selected'
+                          : ''
+                        }`}
+                      key={preselectedGenre.id}
+                      onClick={handleGenreClick}
+                      data-id={preselectedGenre.id}
+                      aria-label={preselectedGenre.name} // Ajout de l'aria-label
+                    >
+                      <img
+                        className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-genre--image${selectedGenreFilters.some(
                             (item) =>
                               item.id.toString() ===
                               preselectedGenre.id.toString()
                           )
                             ? '-selected'
                             : ''
-                        }`}
-                        key={preselectedGenre.id}
-                        onClick={handleGenreClick}
-                        data-id={preselectedGenre.id}
-                        aria-label={preselectedGenre.name} // Ajout de l'aria-label
-                      >
-                        <img
-                          className={`home-container__roll-modale-${
-                            mobileVersion ? 'mobile-version' : 'desktop-version'
-                          }__roll-container__item-genre--image${
-                            selectedGenreFilters.some(
-                              (item) =>
-                                item.id.toString() ===
-                                preselectedGenre.id.toString()
-                            )
-                              ? '-selected'
-                              : ''
                           }`}
-                          src={
-                            selectedGenreFilters.find(
-                              (item) =>
-                                item.id.toString() ===
-                                preselectedGenre.id.toString()
-                            )
-                              ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png`
-                              : `images/moodlogosnopelloche/${preselectedGenre.id}.png`
-                          }
-                        ></img>
-                        {preselectedGenre.name}
-                      </button>
-                    ))}
+                        src={
+                          selectedGenreFilters.find(
+                            (item) =>
+                              item.id.toString() ===
+                              preselectedGenre.id.toString()
+                          )
+                            ? `images/moodlogosnopelloche/${preselectedGenre.id}b.png`
+                            : `images/moodlogosnopelloche/${preselectedGenre.id}.png`
+                        }
+                      ></img>
+                      {preselectedGenre.name}
+                    </button>
+                  ))}
               </div>
             )}
           </div>
@@ -193,51 +207,45 @@ export const RollGenre = ({
 
         {/* ROLL PROVIDERS */}
         <div
-          className={`home-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }__roll-backgroundContainer`}
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
         >
           <div
-            className={`home-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll-background`}
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
           >
             {((showRollProvider && mobileVersion) || !mobileVersion) && (
               <div
-                className={`home-container__roll-modale-${
-                  mobileVersion ? 'mobile-version' : 'desktop-version'
-                }__roll-container`}
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
               >
                 <div
-                  className={`home-container__roll-modale-${
-                    mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container__item-category`}
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
                 >
                   PLATEFORME
                 </div>
                 {isLoading
                   ? 'Chargement en cours'
                   : preselectedProviders.map((preselectedProvider) => (
-                      <button
-                        className={`home-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-provider${
-                          selectedProviderFilters.some(
-                            (item) =>
-                              item.provider_id.toString() ===
-                              preselectedProvider.provider_id.toString()
-                          )
-                            ? '-selected'
-                            : ''
+                    <button
+                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-provider${selectedProviderFilters.some(
+                          (item) =>
+                            item.provider_id.toString() ===
+                            preselectedProvider.provider_id.toString()
+                        )
+                          ? '-selected'
+                          : ''
                         }`}
-                        onClick={handleProviderClick}
-                        data-id={preselectedProvider.provider_id}
-                        key={preselectedProvider.provider_id}
-                        aria-label={preselectedProvider.provider_name} // Ajout de l'aria-label
-                      >
-                        {preselectedProvider.provider_name}
-                      </button>
-                    ))}
+                      onClick={handleProviderClick}
+                      data-id={preselectedProvider.provider_id}
+                      key={preselectedProvider.provider_id}
+                      aria-label={preselectedProvider.provider_name} // Ajout de l'aria-label
+                    >
+                      {preselectedProvider.provider_name}
+                    </button>
+                  ))}
               </div>
             )}
           </div>
@@ -245,26 +253,22 @@ export const RollGenre = ({
 
         {/* ROLL DECENNIES */}
         <div
-          className={`home-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }__roll-backgroundContainer`}
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
         >
           <div
-            className={`home-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll-background`}
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
             onClick={handleClickOut}
           >
             {((showRollDecade && mobileVersion) || !mobileVersion) && (
               <div
-                className={`home-container__roll-modale-${
-                  mobileVersion ? 'mobile-version' : 'desktop-version'
-                }__roll-container`}
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
               >
                 <div
-                  className={`home-container__roll-modale-${
-                    mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container__item-category`}
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
                 >
                   DÉCENNIE
                 </div>
@@ -272,19 +276,59 @@ export const RollGenre = ({
                 {decades.map((decade, index) => (
                   <button
                     key={index}
-                    className={`home-container__roll-modale-${
-                      mobileVersion ? 'mobile-version' : 'desktop-version'
-                    }__roll-container__item-decade${
-                      selectedDecadeFilters.some(
+                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                      }__roll-container__item-decade${selectedDecadeFilters.some(
                         (item) => item.toString() === decade.toString()
                       )
                         ? '-selected'
                         : ''
-                    }`}
+                      }`}
                     onClick={handleDecadeClick}
                     aria-label={decade.toString()} // Ajout de l'aria-label
                   >
                     {decade}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        {/* ROLL NOTES */}
+        <div
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
+        >
+          <div
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
+            onClick={handleClickOut}
+          >
+            {((showRollNotation && mobileVersion) || !mobileVersion) && (
+              <div
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
+              >
+                <div
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
+                >
+                  NOTE MINIMUM
+                </div>
+
+                {notations.map((notation, index) => (
+                  <button
+                    key={index}
+                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                      }__roll-container__item-decade${selectedDecadeFilters.some(
+                        (item) => item.toString() === notation.toString()
+                      )
+                        ? '-selected'
+                        : ''
+                      }`}
+                    onClick={handleDecadeClick}
+                    aria-label={notation.toString()} // Ajout de l'aria-label
+                  >
+                    {notation}
                   </button>
                 ))}
               </div>

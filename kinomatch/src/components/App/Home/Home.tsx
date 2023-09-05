@@ -21,6 +21,7 @@ import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFi
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
+import { SelectedNotationFiltersContext } from '../../../contexts/SelectedNotationFiltersContext';
 // import { AuthContext } from '../../../contexts/AuthContext';
 
 //* ================ COMPOSANT ================
@@ -55,6 +56,8 @@ export const Home: React.FC = () => {
   const [showRollDecade, setShowRollDecade] = useState(false);
   // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
+  // usestate pour afficher ou masquer RollNotation
+  const [showRollNotation, setShowRollNotation] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
   const { selectedGenreFilters, removeGenreFilter } = useContext(
@@ -66,6 +69,11 @@ export const Home: React.FC = () => {
   const { selectedDecadeFilters, removeDecadeFilter } = useContext(
     SelectedDecadeFiltersContext
   );
+
+  const { selectedNotationFilters, removeNotationFilter } = useContext(
+      SelectedNotationFiltersContext
+  );
+
   const { load, unload, isLoading } = useContext(LoadingContext);
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
   const { handleNoResult, noResult } = useContext(NoResultContext);
@@ -152,12 +160,14 @@ export const Home: React.FC = () => {
         setShowRollGenre(true);
         setShowRollProvider(true);
         setShowRollDecade(true);
+        setShowRollNotation(true);
       }
       if (window.innerWidth < 900) {
         setMobileVersion(true);
         setShowRollGenre(false);
         setShowRollProvider(false);
         setShowRollDecade(false);
+        setShowRollNotation(false);
       }
     }
 
@@ -187,6 +197,11 @@ export const Home: React.FC = () => {
     selectedDecadeFilters.map((filter: string) => {
       searchParams.append('decade', filter);
     });
+
+    selectedNotationFilters.map((filter: string) => {
+      searchParams.append('notation', filter);
+    });
+    
     // pour naviguer vers la page films avec les filtres sélectionnés
     navigate(`/films?${searchParams.toString()}`);
   };
@@ -225,7 +240,13 @@ export const Home: React.FC = () => {
     removeDecadeFilter();
   }
 
-  console.log(selectedGenreFilters);
+  // handler pour supprimer la note selectionnée
+  function handleRemoveNotation(): void {
+    removeNotationFilter();
+  }
+
+  console.log(selectedNotationFilters);
+  console.log(selectedDecadeFilters);
   // ================ JSX ================
   return (
     <main className='home-container'>
@@ -296,6 +317,7 @@ export const Home: React.FC = () => {
                 </div>
               </div>
             ))}
+            
           </div>
         </div>
         {/* // bouton validé */}
@@ -303,7 +325,7 @@ export const Home: React.FC = () => {
           <button type='submit'>
             {selectedGenreFilters.length +
               selectedProviderFilters.length +
-              selectedDecadeFilters.length ===
+              selectedDecadeFilters.length  ===
             0
               ? 'Films tendances'
               : 'Valider mon choix'}
@@ -315,6 +337,7 @@ export const Home: React.FC = () => {
       {/* // affichage condionnel des rolls en fonction de si on se trouve en version mobile ( si l'un des rolls est activé) ou en version desktop */}
       {((showRollGenre && mobileVersion) ||
         (showRollProvider && mobileVersion) ||
+        (showRollNotation && mobileVersion) ||
         (showRollDecade && mobileVersion) ||
         !mobileVersion) && (
         <section
@@ -336,6 +359,7 @@ export const Home: React.FC = () => {
             showRollGenre={showRollGenre}
             showRollProvider={showRollProvider}
             showRollDecade={showRollDecade}
+            showRollNotation={showRollNotation}
             mobileVersion={mobileVersion}
             handleClickOut={handleClickOut}
           />
