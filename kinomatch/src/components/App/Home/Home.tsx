@@ -18,10 +18,10 @@ import Footer from '../Footer/Footer';
 import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
+import { SelectedNotationFiltersContext } from '../../../contexts/SelectedNotationFiltersContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
-import { SelectedNotationFiltersContext } from '../../../contexts/SelectedNotationFiltersContext';
 // import { AuthContext } from '../../../contexts/AuthContext';
 
 //* ================ COMPOSANT ================
@@ -54,10 +54,10 @@ export const Home: React.FC = () => {
   const [showRollProvider, setShowRollProvider] = useState(false);
   // usestate pour afficher ou masquer les décennies
   const [showRollDecade, setShowRollDecade] = useState(false);
-  // usestate pour afficher ou masquer la version mobile
-  const [mobileVersion, setMobileVersion] = useState(false);
   // usestate pour afficher ou masquer RollNotation
   const [showRollNotation, setShowRollNotation] = useState(false);
+  // usestate pour afficher ou masquer la version mobile
+  const [mobileVersion, setMobileVersion] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
   const { selectedGenreFilters, removeGenreFilter } = useContext(
@@ -69,9 +69,8 @@ export const Home: React.FC = () => {
   const { selectedDecadeFilters, removeDecadeFilter } = useContext(
     SelectedDecadeFiltersContext
   );
-
   const { selectedNotationFilters, removeNotationFilter } = useContext(
-      SelectedNotationFiltersContext
+    SelectedNotationFiltersContext
   );
 
   const { load, unload, isLoading } = useContext(LoadingContext);
@@ -181,7 +180,7 @@ export const Home: React.FC = () => {
 
   // ================ HANDLERS ================
 
-  // handler pour enbvoyer les informations de filtres sélectionnés à la MoviePage
+  // handler pour envoyer les informations de filtres sélectionnés à la MoviePage
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -201,7 +200,7 @@ export const Home: React.FC = () => {
     selectedNotationFilters.map((filter: string) => {
       searchParams.append('notation', filter);
     });
-    
+
     // pour naviguer vers la page films avec les filtres sélectionnés
     navigate(`/films?${searchParams.toString()}`);
   };
@@ -211,6 +210,7 @@ export const Home: React.FC = () => {
     setShowRollGenre(false);
     setShowRollProvider(false);
     setShowRollDecade(false);
+    setShowRollNotation(false);
   }
 
   // handler pour toggler la modale de filtres genres
@@ -224,6 +224,10 @@ export const Home: React.FC = () => {
   // handler pour toggler la modale de filtres décennies
   function handleClickDecade() {
     setShowRollDecade(!showRollDecade);
+  }
+  // handler pour toggler la modale de filtres notations
+  function handleClickNotation() {
+    setShowRollNotation(!showRollNotation);
   }
   // handler pour supprimer un filtre parmis les filtres genre sélectionnés
   function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
@@ -317,7 +321,26 @@ export const Home: React.FC = () => {
                 </div>
               </div>
             ))}
-            
+            {selectedNotationFilters.map((filter: string) => (
+              <div
+                key={filter}
+                className='home__filters-selector__containers__filters-container__filter'
+              >
+                <span>{filter}</span>
+                <div
+                  className='home__filters-selector__containers__filters-container__filter__cross'
+                  onClick={handleRemoveNotation}
+                  data-id={filter}
+                >
+                  <i
+                    className='fa-solid fa-xmark'
+                    data-id={filter}
+                    onClick={handleRemoveNotation}
+                  ></i>
+                </div>
+              </div>
+            ))}
+
           </div>
         </div>
         {/* // bouton validé */}
@@ -325,8 +348,9 @@ export const Home: React.FC = () => {
           <button type='submit'>
             {selectedGenreFilters.length +
               selectedProviderFilters.length +
-              selectedDecadeFilters.length  ===
-            0
+              selectedDecadeFilters.length +
+              selectedNotationFilters.length ===
+              0
               ? 'Films tendances'
               : 'Valider mon choix'}
           </button>
@@ -340,31 +364,29 @@ export const Home: React.FC = () => {
         (showRollNotation && mobileVersion) ||
         (showRollDecade && mobileVersion) ||
         !mobileVersion) && (
-        <section
-          className={`home-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }`}
-        >
-          <div
-            className={`home-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }-backdropfilter`}
-            onClick={handleClickOut}
-          ></div>
-          {/* composant Filters Rolls */}
-          <FiltersRoll
-            isLoading={preseletedFiltersAreLoading}
-            preselectedGenres={preselectedGenres}
-            preselectedProviders={preselectedProviders}
-            showRollGenre={showRollGenre}
-            showRollProvider={showRollProvider}
-            showRollDecade={showRollDecade}
-            showRollNotation={showRollNotation}
-            mobileVersion={mobileVersion}
-            handleClickOut={handleClickOut}
-          />
-        </section>
-      )}
+          <section
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }`}
+          >
+            <div
+              className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }-backdropfilter`}
+              onClick={handleClickOut}
+            ></div>
+            {/* composant Filters Rolls */}
+            <FiltersRoll
+              isLoading={preseletedFiltersAreLoading}
+              preselectedGenres={preselectedGenres}
+              preselectedProviders={preselectedProviders}
+              showRollGenre={showRollGenre}
+              showRollProvider={showRollProvider}
+              showRollDecade={showRollDecade}
+              showRollNotation={showRollNotation}
+              mobileVersion={mobileVersion}
+              handleClickOut={handleClickOut}
+            />
+          </section>
+        )}
 
       {/* affichage des boutons en version mobile */}
       {mobileVersion && (
@@ -417,6 +439,24 @@ export const Home: React.FC = () => {
             </div>
 
             {/* Décennie */}
+          </button>
+
+          <button
+            className='home-container__buttons__button'
+            onClick={handleClickNotation}
+          >
+            {/* Notation */}
+            <div className='home-container__buttons__button__image-container'>
+              <img
+                src='/images/tetepelloche.svg'
+                alt="Description de l'image"
+              />
+              <div className='home-container__buttons__button__text'>
+                NOTATION
+              </div>
+            </div>
+
+
           </button>
         </div>
       )}

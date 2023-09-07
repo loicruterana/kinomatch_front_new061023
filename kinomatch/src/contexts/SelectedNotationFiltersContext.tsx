@@ -14,7 +14,9 @@ interface SelectedNotationFiltersContextProps {
 // ================ CREATECONTEXT ================
 
 // Définition du contexte et de ses types.
+// Ici, on définit le contexte pour les filtres par note.
 export const SelectedNotationFiltersContext =
+// On utilise la fonction createContext() de React pour créer un contexte.
   createContext<SelectedNotationFiltersContextProps>(
     {} as SelectedNotationFiltersContextProps
   );

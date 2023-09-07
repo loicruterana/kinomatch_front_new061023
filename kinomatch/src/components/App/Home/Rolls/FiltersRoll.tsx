@@ -319,13 +319,13 @@ export const RollGenre = ({
                   <button
                     key={index}
                     className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item-decade${selectedDecadeFilters.some(
+                      }__roll-container__item-decade${selectedNotationFilters.some(
                         (item) => item.toString() === notation.toString()
                       )
                         ? '-selected'
                         : ''
                       }`}
-                    onClick={handleDecadeClick}
+                    onClick={handleNotationClick}
                     aria-label={notation.toString()} // Ajout de l'aria-label
                   >
                     {notation}

@@ -406,7 +406,7 @@ function MoviePage() {
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
         axios
-          .get(`${API_BASE_URL}/films${window.location.search}`)
+          .get(`${API_BASE_URL}/filmsAdvanced${window.location.search}`)
           .then(({ data }) => {
             // Renvoi la première page de résultats
             console.log(data);
@@ -432,11 +432,11 @@ function MoviePage() {
 
             // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
             if (window.location.search === '') {
-              return axios.get(`${API_BASE_URL}/randomFilms`);
+              return axios.get(`${API_BASE_URL}/randomFilmsAdvanced`);
             } else {
               // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
               return axios.get(
-                `${API_BASE_URL}/randomFilms${
+                `${API_BASE_URL}/randomFilmsAdvanced${
                   window.location.search
                 }&${searchParams1.toString()}`
               );

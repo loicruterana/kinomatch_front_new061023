@@ -23,6 +23,7 @@ import { LoadingProvider } from '../../contexts/LoadingContext';
 import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersProvider } from '../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFiltersContext';
+import { SelectedNotationFiltersProvider } from '../../contexts/SelectedNotationFiltersContext';
 import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 import { NoResultProvider } from '../../contexts/NoResultContext';
 
@@ -42,21 +43,23 @@ function App() {
         <SelectedDecadeFiltersProvider>
           <SelectedProviderFiltersProvider>
             <SelectedGenreFiltersProvider>
-              <AuthProvider>
-                <LoadingProvider>
-                  <Header />
-                  <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/films' element={<MoviePage />} />
-                    <Route path='/signup' element={<Signup />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/noresult' element={<NoResult />} />
-                    <Route path='*' element={<PageNotFound />} />
-                    <Route path='/searchresults' element={<SearchResults />} />
-                  </Routes>
-                </LoadingProvider>
-              </AuthProvider>
+              <SelectedNotationFiltersProvider>
+                <AuthProvider>
+                  <LoadingProvider>
+                    <Header />
+                    <Routes>
+                      <Route path='/' element={<Home />} />
+                      <Route path='/films' element={<MoviePage />} />
+                      <Route path='/signup' element={<Signup />} />
+                      <Route path='/login' element={<Login />} />
+                      <Route path='/profile' element={<Profile />} />
+                      <Route path='/noresult' element={<NoResult />} />
+                      <Route path='*' element={<PageNotFound />} />
+                      <Route path='/searchresults' element={<SearchResults />} />
+                    </Routes>
+                  </LoadingProvider>
+                </AuthProvider>
+              </SelectedNotationFiltersProvider>
             </SelectedGenreFiltersProvider>
           </SelectedProviderFiltersProvider>
         </SelectedDecadeFiltersProvider>
