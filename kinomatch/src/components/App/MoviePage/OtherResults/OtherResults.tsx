@@ -49,13 +49,14 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // Fonction loadMoreData permettant de charger plus de films
   const loadMoreData = async () => {
     try {
-      let url = `${API_BASE_URL}/randomFilms${window.location.search}&randomPage=${page}`;
+      let url = `${API_BASE_URL}/randomFilmsAdvanced${window.location.search}&randomPage=${page}`;
 
       // Si l'URL contient "filmID", on modifie l'URL pour la requête axios
       if (window.location.search.includes('filmID')) {
         url = `${API_BASE_URL}/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
       }
 
+      console.log(url);
       const response = await axios.get(url);
       const newMovies = response.data;
 
@@ -98,7 +99,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
       // encodeURIComponent permet de gérer les caractères spéciaux dans l'URL en convertissant le code en chaîne de caractères
       const encodedFilmID = encodeURIComponent(filmID);
-      window.location.href = `/films?filmID=${encodedFilmID}`;
+      window.location.href = `/filmsAdvanced?filmID=${encodedFilmID}`;
 
       // Si on se trouve sur la page des films filtrés alors on ajouter les données du film sélectionné dans le contexte et afficher la page du film
     } else {
@@ -114,6 +115,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   };
 
+  
   return (
     <aside className='otherResults-container'>
       <section className='otherResults-container--pellicule'>

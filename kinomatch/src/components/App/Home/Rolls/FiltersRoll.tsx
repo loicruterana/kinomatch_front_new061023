@@ -312,7 +312,7 @@ export const RollGenre = ({
                   className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                     }__roll-container__item-category`}
                 >
-                  NOTE MINIMUM
+                  NOTE
                 </div>
 
                 {notations.map((notation, index) => (
@@ -328,7 +328,7 @@ export const RollGenre = ({
                     onClick={handleNotationClick}
                     aria-label={notation.toString()} // Ajout de l'aria-label
                   >
-                    {notation}
+                    {`> ${notation} %`}
                   </button>
                 ))}
               </div>

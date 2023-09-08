@@ -152,6 +152,9 @@ function MoviePage() {
   const [providersList, setProvidersList] = useState(['']);
   // UseState qui récupère les décennies sélectionnées par l'utilisateur
   const [decadeList, setDecadeList] = useState(['']);
+  // UseState qui récupère les films par notation
+  const [notationList, setNotationList] = useState<string[]>([]);
+
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
   );
@@ -192,9 +195,8 @@ function MoviePage() {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' + day : day}/${
-      month < 10 ? '0' + month : month
-    }/${year}`;
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month
+      }/${year}`;
   }
 
   // RECUPERATION DES RÉALISATEURS
@@ -335,6 +337,7 @@ function MoviePage() {
         urlParams.forEach((value, key) => {
           paramsArray.push({ key, value });
         });
+        console.log(paramsArray);
 
         // ==================== FILTRES GENRES ====================
 
@@ -402,6 +405,23 @@ function MoviePage() {
         // On stocke les décennies dans le state
         setDecadeList(decadeValueArray);
         console.log(filteredDecade);
+        console.log(decadeList);
+
+        // ============================ FILTRE NOTATIONS ============================
+
+        // On filtre les paramètres pour récupérer la notation
+        const filterNotation = paramsArray.filter(
+          (notation) => notation.key === 'notation'
+        );
+
+        // On créer un tableau avec les valeurs des paramètres
+        const notationValueArray = filterNotation.map((obj) => obj.value);
+        console.log(notationValueArray);
+
+        // On stocke les décennies dans le state
+        setNotationList(notationValueArray);
+        console.log(notationValueArray);
+        console.log(filterNotation);
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
@@ -432,12 +452,11 @@ function MoviePage() {
 
             // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
             if (window.location.search === '') {
-              return axios.get(`${API_BASE_URL}/randomFilmsAdvanced`);
+              return axios.get(`${API_BASE_URL}/filmsAdvanced`);
             } else {
               // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
               return axios.get(
-                `${API_BASE_URL}/randomFilmsAdvanced${
-                  window.location.search
+                `${API_BASE_URL}/filmsAdvanced${window.location.search
                 }&${searchParams1.toString()}`
               );
             }
@@ -519,6 +538,9 @@ function MoviePage() {
     return <Loading />;
   }
 
+  console.log(notationList);
+
+  // Si le film n'a pas de titre, on affiche le composant Footer
   return (
     <article className='moviePage'>
       {/* Modale Image*/}
@@ -575,7 +597,7 @@ function MoviePage() {
                 <div className='text'>
                   {/* Si la note est un nombre entier, on affiche le nombre sinon on affiche le nombre avec une décimale */}
                   {Math.floor(movie.vote_average * 10) ===
-                  movie.vote_average * 10
+                    movie.vote_average * 10
                     ? movie.vote_average * 10
                     : (movie.vote_average * 10).toFixed(1)}
                   %<div className='small'>{movie.vote_count} votes </div>
@@ -634,6 +656,16 @@ function MoviePage() {
                       className='movieDetails__filters-desktop--filterElem'
                     >
                       {decade}
+                    </p>
+                  ))}
+                </li>
+                <li>
+                  {notationList.map((notation) => (
+                    <p
+                      key={notation}
+                      className='movieDetails__filters-desktop--filterElem'
+                    >
+                      {notation}
                     </p>
                   ))}
                 </li>
