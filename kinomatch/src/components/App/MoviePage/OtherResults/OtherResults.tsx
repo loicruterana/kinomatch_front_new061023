@@ -115,7 +115,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   };
 
-  
+
   return (
     <aside className='otherResults-container'>
       <section className='otherResults-container--pellicule'>
@@ -133,7 +133,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           <div className='otherResults-container--scrollList'>
             {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
             {movieArray?.map(
-              (movieElem: { title: string; poster_path: string; id: Key }) => (
+              (movieElem: { vote_average: number; title: string; poster_path: string; id: Key }) => (
                 <button
                   key={movieElem.id}
                   data-id={movieElem.id}

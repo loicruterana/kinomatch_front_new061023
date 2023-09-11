@@ -2,6 +2,16 @@
 
 //* ============ VERSION DESKTOP ============
 
+@mixin footer__buttons {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -24,15 +34,15 @@
 
     // Mentions légales
     &-legal {
-      background: none;
-      color: inherit;
-      border: none;
-      padding: 0;
-      font: inherit;
-      cursor: pointer;
-      outline: inherit;
+      @include footer__buttons;
+    }
+
+    // Feedback
+    &-feedback {
+      @include footer__buttons;
     }
   }
+
 }
 
 //* ============ MOBILE VERSION =================

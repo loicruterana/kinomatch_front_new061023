@@ -456,7 +456,7 @@ function MoviePage() {
             } else {
               // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
               return axios.get(
-                `${API_BASE_URL}/filmsAdvanced${window.location.search
+                `${API_BASE_URL}/randomFilmsAdvanced${window.location.search
                 }&${searchParams1.toString()}`
               );
             }
@@ -665,7 +665,7 @@ function MoviePage() {
                       key={notation}
                       className='movieDetails__filters-desktop--filterElem'
                     >
-                      {notation}
+                      {`> ${notation} %`}
                     </p>
                   ))}
                 </li>

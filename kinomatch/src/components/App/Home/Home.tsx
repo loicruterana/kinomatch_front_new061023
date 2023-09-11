@@ -205,6 +205,11 @@ export const Home: React.FC = () => {
     navigate(`/films?${searchParams.toString()}`);
   };
 
+  // handler pour gérer le slide de la page vers la gauche
+  function handleClickSlideLeft() {
+    console.log('click');
+  }
+
   // handler pour masquer les filtres
   function handleClickOut() {
     setShowRollGenre(false);
@@ -326,7 +331,7 @@ export const Home: React.FC = () => {
                 key={filter}
                 className='home__filters-selector__containers__filters-container__filter'
               >
-                <span>{filter}</span>
+                <span>{`> ${filter} %`}</span>
                 <div
                   className='home__filters-selector__containers__filters-container__filter__cross'
                   onClick={handleRemoveNotation}
@@ -368,6 +373,7 @@ export const Home: React.FC = () => {
             className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
               }`}
           >
+
             <div
               className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                 }-backdropfilter`}
@@ -385,6 +391,15 @@ export const Home: React.FC = () => {
               mobileVersion={mobileVersion}
               handleClickOut={handleClickOut}
             />
+
+            {/*Bouton pour slider la page vers la gauche*/}
+            <div className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button`}>
+              <button className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button--slideLeft`} onClick={handleClickSlideLeft}
+              >
+                <i className='fa-solid fa-chevron-left'></i>
+
+              </button>
+            </div>
           </section>
         )}
 

@@ -108,7 +108,9 @@ export const RollGenre = ({
     const target = event.target as HTMLButtonElement;
     const filter = target.textContent;
     if (filter !== null) {
-      addNotationFilter(filter);
+    // ici on va filtrer la constante filter afin de ne récupérer que le nombre
+    const filterNumber = filter.replace(/\D/g, '');
+      addNotationFilter(filterNumber);
     }
   }
 

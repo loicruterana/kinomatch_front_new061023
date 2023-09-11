@@ -110,6 +110,21 @@
       width: 100%;
       height: 100vh;
 
+      &__button {
+        display: flex;
+        height: 100vh;
+        width: 70px;
+
+        &--slideLeft {
+          background-color: aqua;
+          height: 100px;
+          width: 60px;
+          margin: auto;
+
+
+        }
+      }
+
       &__validation {
         display: none;
       }
