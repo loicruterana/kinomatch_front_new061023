@@ -337,6 +337,91 @@ export const RollGenre = ({
             )}
           </div>
         </div>
+        {/* ROLL NOTES */}
+        <div
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
+        >
+          <div
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
+            onClick={handleClickOut}
+          >
+            {((showRollNotation && mobileVersion) || !mobileVersion) && (
+              <div
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
+              >
+                <div
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
+                >
+                  NOTE
+                </div>
+
+                {notations.map((notation, index) => (
+                  <button
+                    key={index}
+                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                      }__roll-container__item-decade${selectedNotationFilters.some(
+                        (item) => item.toString() === notation.toString()
+                      )
+                        ? '-selected'
+                        : ''
+                      }`}
+                    onClick={handleNotationClick}
+                    aria-label={notation.toString()} // Ajout de l'aria-label
+                  >
+                    {`> ${notation} %`}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        {/* ROLL NOTES */}
+        <div
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
+        >
+          <div
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
+            onClick={handleClickOut}
+          >
+            {((showRollNotation && mobileVersion) || !mobileVersion) && (
+              <div
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
+              >
+                <div
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
+                >
+                  NOTE
+                </div>
+
+                {notations.map((notation, index) => (
+                  <button
+                    key={index}
+                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                      }__roll-container__item-decade${selectedNotationFilters.some(
+                        (item) => item.toString() === notation.toString()
+                      )
+                        ? '-selected'
+                        : ''
+                      }`}
+                    onClick={handleNotationClick}
+                    aria-label={notation.toString()} // Ajout de l'aria-label
+                  >
+                    {`> ${notation} %`}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        
       </div>
     </>
   );

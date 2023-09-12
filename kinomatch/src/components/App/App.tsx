@@ -6,6 +6,7 @@ import axios from 'axios';
 // ================ IMPORT COMPOSANTS ================
 
 import Header from './Header/Header';
+import Footer from './Footer/Footer';
 import MoviePage from './MoviePage/MoviePage';
 // import Home from './Home/Home';
 // import CreateProfile from './CreateProfile/CreateProfile';
@@ -47,6 +48,7 @@ function App() {
                 <AuthProvider>
                   <LoadingProvider>
                     <Header />
+                    {/* <Footer /> */}
                     <Routes>
                       <Route path='/' element={<Home />} />
                       <Route path='/films' element={<MoviePage />} />

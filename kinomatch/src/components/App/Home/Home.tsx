@@ -207,7 +207,19 @@ export const Home: React.FC = () => {
 
   // handler pour gérer le slide de la page vers la gauche
   function handleClickSlideLeft() {
-    console.log('click');
+    const content = document.querySelector('.home-container__roll-modale-desktop-version');
+    if (content) {
+      content.classList.toggle('home-container__roll-modale-desktop-version--slide');
+    } else {
+      console.log('content is null');
+    }
+
+    const arrowButton = document.querySelector('.home-container__arrowButton');
+    if (arrowButton) {
+      arrowButton.classList.toggle('home-container__arrowButton--return');
+    } else {
+      console.log('arrowButton is null');
+    }
   }
 
   // handler pour masquer les filtres
@@ -259,6 +271,14 @@ export const Home: React.FC = () => {
   // ================ JSX ================
   return (
     <main className='home-container'>
+      {/*Bouton pour slider la page vers la gauche*/}
+      <div className={`home-container__arrowButton`}>
+        <button className={`home-container__arrowButton--slideLeft`} onClick={handleClickSlideLeft}
+        >
+          <i className='fa-solid fa-chevron-right'></i>
+
+        </button>
+      </div>
       <div className='home__filters-selector'>
         <div className='home__filters-selector__containers'>
           <div className='home__filters-selector__containers__filters-container'>
@@ -391,15 +411,6 @@ export const Home: React.FC = () => {
               mobileVersion={mobileVersion}
               handleClickOut={handleClickOut}
             />
-
-            {/*Bouton pour slider la page vers la gauche*/}
-            <div className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button`}>
-              <button className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button--slideLeft`} onClick={handleClickSlideLeft}
-              >
-                <i className='fa-solid fa-chevron-right'></i>
-
-              </button>
-            </div>
           </section>
         )}
 
