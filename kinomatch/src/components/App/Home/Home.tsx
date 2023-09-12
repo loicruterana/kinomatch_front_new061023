@@ -396,7 +396,7 @@ export const Home: React.FC = () => {
             <div className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button`}>
               <button className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'}__button--slideLeft`} onClick={handleClickSlideLeft}
               >
-                <i className='fa-solid fa-chevron-left'></i>
+                <i className='fa-solid fa-chevron-right'></i>
 
               </button>
             </div>
