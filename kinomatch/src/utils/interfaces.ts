@@ -78,6 +78,11 @@ export interface ProviderHome {
   provider_name: string;
 }
 
+export interface Nationality {
+  iso_3166_1: string;
+  native_name: string;
+}
+
 //===========MOVIEPAGE
 
 

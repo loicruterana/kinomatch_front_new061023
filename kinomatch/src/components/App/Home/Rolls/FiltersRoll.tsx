@@ -1,22 +1,25 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import React, { useContext } from 'react';
-import { Genre, ProviderHome } from '../../../../utils/interfaces';
+import { Genre, ProviderHome, Nationality } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
 import { SelectedGenreFiltersContext } from '../../../../contexts/SelectedGenreFiltersContext';
 import { SelectedProviderFiltersContext } from '../../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../../contexts/SelectedDecadeFiltersContext';
 import { SelectedNotationFiltersContext } from '../../../../contexts/SelectedNotationFiltersContext';
+import { SelectedNationalityFiltersContext } from '../../../../contexts/SelectedNationalityFiltersContext';
 
 // ================ INTERFACES ================
 interface RollGenreProps {
   preselectedGenres: Genre[];
   preselectedProviders: ProviderHome[];
+  preselectedNationalities: Nationality[];
   mobileVersion: boolean;
   showRollGenre: boolean;
   showRollProvider: boolean;
   showRollDecade: boolean;
   showRollNotation: boolean;
+  showRollNationality: boolean;
   isLoading: boolean;
   handleClickOut: () => void;
 }
@@ -26,11 +29,13 @@ interface RollGenreProps {
 export const RollGenre = ({
   preselectedGenres,
   preselectedProviders,
+  preselectedNationalities,
   mobileVersion,
   showRollGenre,
   showRollProvider,
   showRollDecade,
   showRollNotation,
+  showRollNationality,
   isLoading,
   handleClickOut,
 }: RollGenreProps) => {
@@ -62,6 +67,10 @@ export const RollGenre = ({
 
   const { addNotationFilter, selectedNotationFilters } = useContext(
     SelectedNotationFiltersContext
+  );
+
+  const { addNationalityFilter, selectedNationalityFilters } = useContext(
+    SelectedNationalityFiltersContext
   );
 
   // ================ HANDLERS ================
@@ -108,11 +117,27 @@ export const RollGenre = ({
     const target = event.target as HTMLButtonElement;
     const filter = target.textContent;
     if (filter !== null) {
-    // ici on va filtrer la constante filter afin de ne récupérer que le nombre
-    const filterNumber = filter.replace(/\D/g, '');
+      // ici on va filtrer la constante filter afin de ne récupérer que le nombre
+      const filterNumber = filter.replace(/\D/g, '');
       addNotationFilter(filterNumber);
     }
   }
+
+  // handleNationalityClick pour envoyer les choix de filtres à la fonction addNationalityFilter du contexte SelectedNationalityFiltersContext et donc stocker le filtre nationalité dans le state
+  function handleNationalityClick(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    const target = event.target as HTMLButtonElement;
+    const name = target.textContent;
+    const nationalityId = target.dataset.id;
+    if (name !== null && nationalityId !== undefined) {
+      addNationalityFilter(name, nationalityId);
+    }
+    console.log(nationalityId);
+  }
+
+  console.log(preselectedNationalities);
+  console.log(preselectedGenres);
 
   // ================ JSX ================
   return (
@@ -135,7 +160,9 @@ export const RollGenre = ({
           !mobileVersion
             ? selectedGenreFilters.length > 0 ||
               selectedProviderFilters.length > 0 ||
-              selectedDecadeFilters.length > 0
+              selectedDecadeFilters.length > 0 ||
+              selectedNotationFilters.length > 0 
+              // || selectedNationalityFilters.length > 0
               ? { paddingBottom: '170px' }
               : { paddingBottom: '120px' }
             : { paddingBottom: '0px' }
@@ -188,7 +215,8 @@ export const RollGenre = ({
                           )
                             ? '-selected'
                             : ''
-                          }`}
+                          }`
+                        }
                         src={
                           selectedGenreFilters.find(
                             (item) =>
@@ -337,7 +365,7 @@ export const RollGenre = ({
             )}
           </div>
         </div>
-        {/* ROLL NOTES */}
+        ROLL NATIONALITY
         <div
           className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
             }__roll-backgroundContainer`}
@@ -345,9 +373,8 @@ export const RollGenre = ({
           <div
             className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
               }__roll-background`}
-            onClick={handleClickOut}
           >
-            {((showRollNotation && mobileVersion) || !mobileVersion) && (
+            {((showRollNationality && mobileVersion) || !mobileVersion) && (
               <div
                 className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                   }__roll-container`}
@@ -356,72 +383,28 @@ export const RollGenre = ({
                   className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                     }__roll-container__item-category`}
                 >
-                  NOTE
+                  NATIONALITÉ
                 </div>
-
-                {notations.map((notation, index) => (
-                  <button
-                    key={index}
-                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item-decade${selectedNotationFilters.some(
-                        (item) => item.toString() === notation.toString()
-                      )
-                        ? '-selected'
-                        : ''
-                      }`}
-                    onClick={handleNotationClick}
-                    aria-label={notation.toString()} // Ajout de l'aria-label
-                  >
-                    {`> ${notation} %`}
-                  </button>
-                ))}
+                {isLoading
+                  ? 'Chargement en cours'
+                  : preselectedNationalities.map((preselectedNationality) => (
+                    <button
+                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-provider`}
+                      onClick={handleNationalityClick}
+                      data-id={preselectedNationality.iso_3166_1}
+                      key={preselectedNationality.iso_3166_1}
+                      aria-label={preselectedNationality.native_name} // Ajout de l'aria-label
+                    >
+                      {preselectedNationality.native_name}
+                    </button>
+                  ))}
               </div>
             )}
           </div>
         </div>
-        {/* ROLL NOTES */}
-        <div
-          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll-backgroundContainer`}
-        >
-          <div
-            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__roll-background`}
-            onClick={handleClickOut}
-          >
-            {((showRollNotation && mobileVersion) || !mobileVersion) && (
-              <div
-                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container`}
-              >
-                <div
-                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                    }__roll-container__item-category`}
-                >
-                  NOTE
-                </div>
 
-                {notations.map((notation, index) => (
-                  <button
-                    key={index}
-                    className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item-decade${selectedNotationFilters.some(
-                        (item) => item.toString() === notation.toString()
-                      )
-                        ? '-selected'
-                        : ''
-                      }`}
-                    onClick={handleNotationClick}
-                    aria-label={notation.toString()} // Ajout de l'aria-label
-                  >
-                    {`> ${notation} %`}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-        
+
       </div>
     </>
   );

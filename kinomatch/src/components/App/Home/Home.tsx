@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Genre, ProviderHome } from '../../../utils/interfaces';
+import { Genre, Nationality, ProviderHome } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
 
 // ================ IMPORT SCSS ================
@@ -19,6 +19,7 @@ import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFilt
 import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
 import { SelectedNotationFiltersContext } from '../../../contexts/SelectedNotationFiltersContext';
+import { SelectedNationalityFiltersContext } from '../../../contexts/SelectedNationalityFiltersContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
@@ -48,6 +49,8 @@ export const Home: React.FC = () => {
   const [preselectedProviders, setPreselectedProviders] = useState<
     ProviderHome[]
   >([]);
+  // liste des nationalités préselectionnées lors du fetch
+  const [preselectedNationalities, setPreselectedNationalities] = useState<Nationality[]>([]);
   // usestate pour afficher ou masquer RollGenre
   const [showRollGenre, setShowRollGenre] = useState(false);
   // usestate pour afficher ou masquer RollProvider
@@ -58,6 +61,8 @@ export const Home: React.FC = () => {
   const [showRollNotation, setShowRollNotation] = useState(false);
   // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
+  // useState pour afficher ou masquer la nationalité
+  const [showRollNationality, setShowRollNationality] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
   const { selectedGenreFilters, removeGenreFilter } = useContext(
@@ -72,6 +77,9 @@ export const Home: React.FC = () => {
   const { selectedNotationFilters, removeNotationFilter } = useContext(
     SelectedNotationFiltersContext
   );
+  const { selectedNationalityFilters, removeNationalityFilter } = useContext(
+    SelectedNationalityFiltersContext
+  );
 
   const { load, unload, isLoading } = useContext(LoadingContext);
   const { setCurrentMovieId } = useContext(CurrentMovieIdContext);
@@ -82,7 +90,7 @@ export const Home: React.FC = () => {
 
   // fonction utilitaire qui permet de faire un affichage temporaire en attendant le chargement des données (chargement des genres et des providers via TMDB)
   const preseletedFiltersAreLoading =
-    (preselectedProviders || preselectedGenres) === undefined; // false
+    (preselectedProviders || preselectedGenres || preselectedNationalities) === undefined; // false
 
   // fonction qui renvoie vers la page NoResult si pas de de résultat
   if (noResult) {
@@ -146,354 +154,428 @@ export const Home: React.FC = () => {
       })
       .finally(() => unload());
 
+    axios
+      // pour récupérer les countries
+      .get(`${API_BASE_URL}/countries`)
+      // les countries sont stockés dans le state preselectedNationalities
+      .then(({ data }) => setPreselectedNationalities(data))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .catch((error: any) => console.error(error))
+      .finally(() => unload());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //======== USEWINDOWSIZE
+//======== USEWINDOWSIZE
 
-  // la taille de l'écran définit l'affichage des filtres
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth >= 900) {
-        setMobileVersion(false);
-        setShowRollGenre(true);
-        setShowRollProvider(true);
-        setShowRollDecade(true);
-        setShowRollNotation(true);
-      }
-      if (window.innerWidth < 900) {
-        setMobileVersion(true);
-        setShowRollGenre(false);
-        setShowRollProvider(false);
-        setShowRollDecade(false);
-        setShowRollNotation(false);
-      }
+// la taille de l'écran définit l'affichage des filtres
+useEffect(() => {
+  function handleResize() {
+    if (window.innerWidth >= 900) {
+      setMobileVersion(false);
+      setShowRollGenre(true);
+      setShowRollProvider(true);
+      setShowRollDecade(true);
+      setShowRollNotation(true);
     }
-
-    window.addEventListener('resize', handleResize);
-    // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-    // un removeEventListener pour éviter les fuites de mémoire
-    // on risque  d'enregistrer plusieurs écouteurs pour le même événement et créer des fuites mémoires
-  }, []);
-
-  // ================ HANDLERS ================
-
-  // handler pour envoyer les informations de filtres sélectionnés à la MoviePage
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const searchParams = new URLSearchParams();
-    selectedGenreFilters.forEach((filter: { id: string }) => {
-      searchParams.append('genreID', filter.id);
-    });
-
-    selectedProviderFilters.map((filter: { provider_id: string }) => {
-      searchParams.append('providerID', filter.provider_id);
-    });
-
-    selectedDecadeFilters.map((filter: string) => {
-      searchParams.append('decade', filter);
-    });
-
-    selectedNotationFilters.map((filter: string) => {
-      searchParams.append('notation', filter);
-    });
-
-    // pour naviguer vers la page films avec les filtres sélectionnés
-    navigate(`/films?${searchParams.toString()}`);
-  };
-
-  // handler pour gérer le slide de la page vers la gauche
-  function handleClickSlideLeft() {
-    const content = document.querySelector('.home-container__roll-modale-desktop-version');
-    if (content) {
-      content.classList.toggle('home-container__roll-modale-desktop-version--slide');
-    } else {
-      console.log('content is null');
-    }
-
-    const arrowButton = document.querySelector('.home-container__arrowButton');
-    if (arrowButton) {
-      arrowButton.classList.toggle('home-container__arrowButton--return');
-    } else {
-      console.log('arrowButton is null');
+    if (window.innerWidth < 900) {
+      setMobileVersion(true);
+      setShowRollGenre(false);
+      setShowRollProvider(false);
+      setShowRollDecade(false);
+      setShowRollNotation(false);
     }
   }
 
-  // handler pour masquer les filtres
-  function handleClickOut() {
-    setShowRollGenre(false);
-    setShowRollProvider(false);
-    setShowRollDecade(false);
-    setShowRollNotation(false);
+  window.addEventListener('resize', handleResize);
+  // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
+  handleResize();
+  return () => window.removeEventListener('resize', handleResize);
+  // un removeEventListener pour éviter les fuites de mémoire
+  // on risque  d'enregistrer plusieurs écouteurs pour le même événement et créer des fuites mémoires
+}, []);
+
+// ================ HANDLERS ================
+
+// handler pour envoyer les informations de filtres sélectionnés à la MoviePage
+const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+
+  const searchParams = new URLSearchParams();
+  selectedGenreFilters.forEach((filter: { id: string }) => {
+    searchParams.append('genreID', filter.id);
+  });
+
+  selectedProviderFilters.map((filter: { provider_id: string }) => {
+    searchParams.append('providerID', filter.provider_id);
+  });
+
+  selectedDecadeFilters.map((filter: string) => {
+    searchParams.append('decade', filter);
+  });
+
+  selectedNotationFilters.map((filter: string) => {
+    searchParams.append('notation', filter);
+  });
+
+  selectedNationalityFilters.map((filter: { iso_3166_1: string }) => {
+    searchParams.append('countryID', filter.iso_3166_1);
+  });
+
+  // pour naviguer vers la page films avec les filtres sélectionnés
+  navigate(`/films?${searchParams.toString()}`);
+};
+
+// handler pour gérer le slide de la page vers la gauche
+function handleClickSlideLeft() {
+  const content = document.querySelectorAll('.home-container__roll-modale-desktop-version__roll-backgroundContainer');
+  if (content) {
+    content.forEach(function (element) {
+      element.classList.toggle('home-container__roll-modale-desktop-version__roll-backgroundContainer--slide');
+    });
+  } else {
+    console.log('content is null');
   }
 
-  // handler pour toggler la modale de filtres genres
-  function handleClickGenre() {
-    setShowRollGenre(!showRollGenre);
+  const arrowButton = document.querySelector('.home-container__arrowButton');
+  if (arrowButton) {
+    arrowButton.classList.toggle('home-container__arrowButton--return');
+  } else {
+    console.log('arrowButton is null');
   }
-  // handler pour toggler la modale de filtres providers
-  function handleClickProvider() {
-    setShowRollProvider(!showRollProvider);
-  }
-  // handler pour toggler la modale de filtres décennies
-  function handleClickDecade() {
-    setShowRollDecade(!showRollDecade);
-  }
-  // handler pour toggler la modale de filtres notations
-  function handleClickNotation() {
-    setShowRollNotation(!showRollNotation);
-  }
-  // handler pour supprimer un filtre parmis les filtres genre sélectionnés
-  function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
-    removeGenreFilter(event.currentTarget.dataset.id || '');
-  }
+}
 
-  // handler pour supprimer un filtre parmis les filtres provider sélectionnés
-  function handleRemoveProvider(event: React.MouseEvent<HTMLDivElement>): void {
-    removeProviderFilter(event.currentTarget.dataset.id || '');
-  }
+// handler pour masquer les filtres
+function handleClickOut() {
+  setShowRollGenre(false);
+  setShowRollProvider(false);
+  setShowRollDecade(false);
+  setShowRollNotation(false);
+}
 
-  // handler pour supprimer la décennie selectionnée
-  function handleRemoveDecade(): void {
-    removeDecadeFilter();
-  }
+// handler pour toggler la modale de filtres genres
+function handleClickGenre() {
+  setShowRollGenre(!showRollGenre);
+}
+// handler pour toggler la modale de filtres providers
+function handleClickProvider() {
+  setShowRollProvider(!showRollProvider);
+}
+// handler pour toggler la modale de filtres décennies
+function handleClickDecade() {
+  setShowRollDecade(!showRollDecade);
+}
+// handler pour toggler la modale de filtres notations
+function handleClickNotation() {
+  setShowRollNotation(!showRollNotation);
+}
 
-  // handler pour supprimer la note selectionnée
-  function handleRemoveNotation(): void {
-    removeNotationFilter();
-  }
+// hander pour toggler la modale de filtres nationalités
+function handleClickNationality() {
+  setShowRollNationality(!showRollNationality);
+}
 
-  console.log(selectedNotationFilters);
-  console.log(selectedDecadeFilters);
-  // ================ JSX ================
-  return (
-    <main className='home-container'>
-      {/*Bouton pour slider la page vers la gauche*/}
-      <div className={`home-container__arrowButton`}>
+// handler pour supprimer un filtre parmis les filtres genre sélectionnés
+function handleRemoveGenre(event: React.MouseEvent<HTMLDivElement>): void {
+  removeGenreFilter(event.currentTarget.dataset.id || '');
+}
+
+// handler pour supprimer un filtre parmis les filtres provider sélectionnés
+function handleRemoveProvider(event: React.MouseEvent<HTMLDivElement>): void {
+  removeProviderFilter(event.currentTarget.dataset.id || '');
+}
+
+// handler pour supprimer la décennie selectionnée
+function handleRemoveDecade(): void {
+  removeDecadeFilter();
+}
+
+// handler pour supprimer la note selectionnée
+function handleRemoveNotation(): void {
+  removeNotationFilter();
+}
+
+// handler pour supprimer la nationalité selectionnée
+function handleRemoveNationality(event: React.MouseEvent<HTMLDivElement>): void {
+  removeNationalityFilter(event.currentTarget.dataset.id || '');
+}
+
+console.log(showRollNationality);
+console.log(preselectedNationalities);
+console.log(selectedNationalityFilters);
+// ================ JSX ================
+return (
+  <main className='home-container'>
+    {/*Bouton pour slider la page vers la gauche*/}
+    <div className={`home-container__arrowButton`}>
+      {!mobileVersion && (
         <button className={`home-container__arrowButton--slideLeft`} onClick={handleClickSlideLeft}
         >
           <i className='fa-solid fa-chevron-right'></i>
+        </button>
+      )}
+    </div>
+    <div className='home__filters-selector'>
+      <div className='home__filters-selector__containers'>
+        <div className='home__filters-selector__containers__filters-container'>
+          {/* // affichage des filtres sélectionnés */}
+          {selectedGenreFilters.map(
+            (filter: { id: string; name: string }) => (
+              <div
+                key={filter.id}
+                className='home__filters-selector__containers__filters-container__filter'
+              >
+                {filter.name}
+                <div
+                  className='home__filters-selector__containers__filters-container__filter__cross'
+                  onClick={handleRemoveGenre}
+                  data-id={filter.name}
+                  aria-label='Supprimer le filtre'
+                >
+                  <i
+                    className='fa-solid fa-xmark'
+                    data-id={filter.name}
+                    onClick={handleRemoveGenre}
+                  ></i>{' '}
+                </div>
+              </div>
+            )
+          )}
+          {selectedProviderFilters.map(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (filter: { provider_id: any; provider_name: any }) => (
+              <div
+                key={filter.provider_id}
+                className='home__filters-selector__containers__filters-container__filter'
+              >
+                {filter.provider_name}
+                <div
+                  className='home__filters-selector__containers__filters-container__filter__cross'
+                  onClick={handleRemoveProvider}
+                  data-id={filter.provider_name}
+                >
+                  <i
+                    className='fa-solid fa-xmark'
+                    data-id={filter.provider_name}
+                    onClick={handleRemoveProvider}
+                  ></i>
+                </div>
+              </div>
+            )
+          )}
+          {selectedDecadeFilters.map((filter: string) => (
+            <div
+              key={filter}
+              className='home__filters-selector__containers__filters-container__filter'
+            >
+              <span>{filter}</span>
+              <div
+                className='home__filters-selector__containers__filters-container__filter__cross'
+                onClick={handleRemoveDecade}
+                data-id={filter}
+              >
+                <i
+                  className='fa-solid fa-xmark'
+                  data-id={filter}
+                  onClick={handleRemoveDecade}
+                ></i>
+              </div>
+            </div>
+          ))}
+          {selectedNotationFilters.map((filter: string) => (
+            <div
+              key={filter}
+              className='home__filters-selector__containers__filters-container__filter'
+            >
+              <span>{`> ${filter} %`}</span>
+              <div
+                className='home__filters-selector__containers__filters-container__filter__cross'
+                onClick={handleRemoveNotation}
+                data-id={filter}
+              >
+                <i
+                  className='fa-solid fa-xmark'
+                  data-id={filter}
+                  onClick={handleRemoveNotation}
+                ></i>
+              </div>
+            </div>
+          ))}
+          {/* // affichage des nationalités sélectionnées */}
+          {/* {selectedNationalityFilters.map(
+            (filter: { iso_3166_1: string; native_name: string }) => (
+              <div
+                key={filter.iso_3166_1}
+                className='home__filters-selector__containers__filters-container__filter'
+              >
+                {filter.native_name}
+                <div
+                  className='home__filters-selector__containers__filters-container__filter__cross'
+                  onClick={handleRemoveNationality}
+                  data-id={filter.native_name}
+                  aria-label='Supprimer le filtre'
+                >
+                  <i
+                    className='fa-solid fa-xmark'
+                    data-id={filter.native_name}
+                    onClick={handleRemoveNationality}
+                  ></i>{' '}
+                </div>
+              </div>
+            )
+          )} */}
+
+        </div>
+      </div>
+      {/* // bouton validé */}
+      <form onSubmit={handleFormSubmit}>
+        <button type='submit'>
+          {selectedGenreFilters.length +
+            selectedProviderFilters.length +
+            selectedDecadeFilters.length +
+            selectedNotationFilters.length 
+            // + selectedNationalityFilters.length
+            ===
+            0
+            ? 'Films tendances'
+            : 'Valider mon choix'}
+        </button>
+      </form>
+    </div>
+
+    {/* // ================ JSX : VERSION MOBILE ================ */}
+    {/* // affichage condionnel des rolls en fonction de si on se trouve en version mobile ( si l'un des rolls est activé) ou en version desktop */}
+    {((showRollGenre && mobileVersion) ||
+      (showRollProvider && mobileVersion) ||
+      (showRollNotation && mobileVersion) ||
+      (showRollDecade && mobileVersion) ||
+      (showRollNationality && mobileVersion) ||
+      !mobileVersion) && (
+        <section
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }`}
+        >
+
+          <div
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }-backdropfilter`}
+            onClick={handleClickOut}
+          ></div>
+          {/* composant Filters Rolls */}
+          <FiltersRoll
+            isLoading={preseletedFiltersAreLoading}
+            preselectedGenres={preselectedGenres}
+            preselectedProviders={preselectedProviders}
+            preselectedNationalities={preselectedNationalities}
+            showRollGenre={showRollGenre}
+            showRollProvider={showRollProvider}
+            showRollDecade={showRollDecade}
+            showRollNotation={showRollNotation}
+            showRollNationality={showRollNationality}
+            mobileVersion={mobileVersion}
+            handleClickOut={handleClickOut}
+          />
+        </section>
+      )}
+
+    {/* affichage des boutons en version mobile */}
+    {mobileVersion && (
+      <div className='home-container__buttons'>
+        <button
+          className='home-container__buttons__button'
+          onClick={handleClickGenre}
+        >
+          <div className='home-container__buttons__button__image-container'>
+            <img
+              src='/images/tetepelloche.svg'
+              alt="Description de l'image"
+            />
+            <div className='home-container__buttons__button__text'>GENRE</div>
+          </div>
+
+          {/* Genre */}
+        </button>
+
+        <button
+          className='home-container__buttons__button'
+          onClick={handleClickProvider}
+        >
+          <div className='home-container__buttons__button__image-container'>
+            <img
+              src='/images/tetepelloche.svg'
+              alt="Description de l'image"
+            />
+            <div className='home-container__buttons__button__text'>
+              PLATEFORME
+            </div>
+          </div>
+
+          {/* Plateforme */}
+        </button>
+
+        <button
+          className='home-container__buttons__button'
+          onClick={handleClickDecade}
+        >
+          {/* Année */}
+          <div className='home-container__buttons__button__image-container'>
+            <img
+              src='/images/tetepelloche.svg'
+              alt="Description de l'image"
+            />
+            <div className='home-container__buttons__button__text'>
+              DÉCENNIE
+            </div>
+          </div>
+
+          {/* Décennie */}
+        </button>
+
+        <button
+          className='home-container__buttons__button'
+          onClick={handleClickNotation}
+        >
+          {/* Notation */}
+          <div className='home-container__buttons__button__image-container'>
+            <img
+              src='/images/tetepelloche.svg'
+              alt="Description de l'image"
+            />
+            <div className='home-container__buttons__button__text'>
+              NOTATION
+            </div>
+          </div>
+
+
+        </button>
+
+        <button
+          className='home-container__buttons__button'
+          onClick={handleClickNationality}
+        >
+          {/* Nationality */}
+          <div className='home-container__buttons__button__image-container'>
+            <img
+              src='/images/tetepelloche.svg'
+              alt="Description de l'image"
+            />
+            <div className='home-container__buttons__button__text'>
+              NATIONALITY
+            </div>
+          </div>
+
 
         </button>
       </div>
-      <div className='home__filters-selector'>
-        <div className='home__filters-selector__containers'>
-          <div className='home__filters-selector__containers__filters-container'>
-            {/* // affichage des filtres sélectionnés */}
-            {selectedGenreFilters.map(
-              (filter: { id: string; name: string }) => (
-                <div
-                  key={filter.id}
-                  className='home__filters-selector__containers__filters-container__filter'
-                >
-                  {filter.name}
-                  <div
-                    className='home__filters-selector__containers__filters-container__filter__cross'
-                    onClick={handleRemoveGenre}
-                    data-id={filter.name}
-                    aria-label='Supprimer le filtre'
-                  >
-                    <i
-                      className='fa-solid fa-xmark'
-                      data-id={filter.name}
-                      onClick={handleRemoveGenre}
-                    ></i>{' '}
-                  </div>
-                </div>
-              )
-            )}
-            {selectedProviderFilters.map(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (filter: { provider_id: any; provider_name: any }) => (
-                <div
-                  key={filter.provider_id}
-                  className='home__filters-selector__containers__filters-container__filter'
-                >
-                  {filter.provider_name}
-                  <div
-                    className='home__filters-selector__containers__filters-container__filter__cross'
-                    onClick={handleRemoveProvider}
-                    data-id={filter.provider_name}
-                  >
-                    <i
-                      className='fa-solid fa-xmark'
-                      data-id={filter.provider_name}
-                      onClick={handleRemoveProvider}
-                    ></i>
-                  </div>
-                </div>
-              )
-            )}
-            {selectedDecadeFilters.map((filter: string) => (
-              <div
-                key={filter}
-                className='home__filters-selector__containers__filters-container__filter'
-              >
-                <span>{filter}</span>
-                <div
-                  className='home__filters-selector__containers__filters-container__filter__cross'
-                  onClick={handleRemoveDecade}
-                  data-id={filter}
-                >
-                  <i
-                    className='fa-solid fa-xmark'
-                    data-id={filter}
-                    onClick={handleRemoveDecade}
-                  ></i>
-                </div>
-              </div>
-            ))}
-            {selectedNotationFilters.map((filter: string) => (
-              <div
-                key={filter}
-                className='home__filters-selector__containers__filters-container__filter'
-              >
-                <span>{`> ${filter} %`}</span>
-                <div
-                  className='home__filters-selector__containers__filters-container__filter__cross'
-                  onClick={handleRemoveNotation}
-                  data-id={filter}
-                >
-                  <i
-                    className='fa-solid fa-xmark'
-                    data-id={filter}
-                    onClick={handleRemoveNotation}
-                  ></i>
-                </div>
-              </div>
-            ))}
-
-          </div>
-        </div>
-        {/* // bouton validé */}
-        <form onSubmit={handleFormSubmit}>
-          <button type='submit'>
-            {selectedGenreFilters.length +
-              selectedProviderFilters.length +
-              selectedDecadeFilters.length +
-              selectedNotationFilters.length ===
-              0
-              ? 'Films tendances'
-              : 'Valider mon choix'}
-          </button>
-        </form>
-      </div>
-
-      {/* // ================ JSX : VERSION MOBILE ================ */}
-      {/* // affichage condionnel des rolls en fonction de si on se trouve en version mobile ( si l'un des rolls est activé) ou en version desktop */}
-      {((showRollGenre && mobileVersion) ||
-        (showRollProvider && mobileVersion) ||
-        (showRollNotation && mobileVersion) ||
-        (showRollDecade && mobileVersion) ||
-        !mobileVersion) && (
-          <section
-            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-              }`}
-          >
-
-            <div
-              className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                }-backdropfilter`}
-              onClick={handleClickOut}
-            ></div>
-            {/* composant Filters Rolls */}
-            <FiltersRoll
-              isLoading={preseletedFiltersAreLoading}
-              preselectedGenres={preselectedGenres}
-              preselectedProviders={preselectedProviders}
-              showRollGenre={showRollGenre}
-              showRollProvider={showRollProvider}
-              showRollDecade={showRollDecade}
-              showRollNotation={showRollNotation}
-              mobileVersion={mobileVersion}
-              handleClickOut={handleClickOut}
-            />
-          </section>
-        )}
-
-      {/* affichage des boutons en version mobile */}
-      {mobileVersion && (
-        <div className='home-container__buttons'>
-          <button
-            className='home-container__buttons__button'
-            onClick={handleClickGenre}
-          >
-            <div className='home-container__buttons__button__image-container'>
-              <img
-                src='/images/tetepelloche.svg'
-                alt="Description de l'image"
-              />
-              <div className='home-container__buttons__button__text'>GENRE</div>
-            </div>
-
-            {/* Genre */}
-          </button>
-
-          <button
-            className='home-container__buttons__button'
-            onClick={handleClickProvider}
-          >
-            <div className='home-container__buttons__button__image-container'>
-              <img
-                src='/images/tetepelloche.svg'
-                alt="Description de l'image"
-              />
-              <div className='home-container__buttons__button__text'>
-                PLATEFORME
-              </div>
-            </div>
-
-            {/* Plateforme */}
-          </button>
-
-          <button
-            className='home-container__buttons__button'
-            onClick={handleClickDecade}
-          >
-            {/* Année */}
-            <div className='home-container__buttons__button__image-container'>
-              <img
-                src='/images/tetepelloche.svg'
-                alt="Description de l'image"
-              />
-              <div className='home-container__buttons__button__text'>
-                DÉCENNIE
-              </div>
-            </div>
-
-            {/* Décennie */}
-          </button>
-
-          <button
-            className='home-container__buttons__button'
-            onClick={handleClickNotation}
-          >
-            {/* Notation */}
-            <div className='home-container__buttons__button__image-container'>
-              <img
-                src='/images/tetepelloche.svg'
-                alt="Description de l'image"
-              />
-              <div className='home-container__buttons__button__text'>
-                NOTATION
-              </div>
-            </div>
-
-
-          </button>
-        </div>
-      )}
-      {/* affichage du loader si la requête est en cours */}
-      {isLoading && <Loading />}
-      {/* affichage du composant NoResult */}
-      {noResult && <NoResult />}
-      {/* affichage du composant Footer selon la taille du device */}
-      {!mobileVersion && <Footer />}
-    </main>
-  );
+    )}
+    {/* affichage du loader si la requête est en cours */}
+    {isLoading && <Loading />}
+    {/* affichage du composant NoResult */}
+    {noResult && <NoResult />}
+    {/* affichage du composant Footer selon la taille du device */}
+    {!mobileVersion && <Footer />}
+  </main>
+);
 
   //* ================ FERMETURE DU COMPOSANT ================
 };
