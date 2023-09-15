@@ -429,7 +429,7 @@ export const Profile: React.FC = () => {
               </div>
               <div className='profile-container__personnal__pictureemailpassword__emailpassword'>
                 <div className='profile-container__personnal__pictureemailpassword__emailpassword__email'>
-                  <span>Adresse email</span>
+                  <span>Pseudo</span>
                   <div>{userData.email}</div>
                 </div>
                 <div className='profile-container__personnal__pictureemailpassword__emailpassword__password'>

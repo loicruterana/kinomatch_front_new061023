@@ -159,15 +159,15 @@ const Signup = () => {
       {/* formulaire d'inscription */}
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         {/* Champ pour l'email */}
-        <label htmlFor='email'>Votre email</label>
+        <label htmlFor='email'>Votre pseudo</label>
         <input
           onChange={handleChange}
           className='Signup-container-form-input'
-          type='email'
-          id='email'
+          // type='email'
+          // id='email'
           name='email'
           required
-          placeholder='votre@email.com'
+          placeholder='votrepseudo'
           aria-label='Votre email'
         />
         {/* Champ pour le mot de passe */}

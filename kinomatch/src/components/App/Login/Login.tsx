@@ -181,14 +181,14 @@ export const Login = () => {
       {/* formulaire de connexion */}
       <form className='login-container-form' onSubmit={handleSubmit}>
         {/* Champ pour l'email */}
-        <label htmlFor='email'>Votre email</label>
+        <label htmlFor='email'>Votre pseudo</label>
         <input
           onChange={handleChange}
           className='login-container-form-input'
-          type='email'
-          id='email'
+          // type='email'
+          // id='email'
           name='email'
-          placeholder='votre@email.com'
+          placeholder='votrepseudo'
           aria-label='Votre email'
           required
         />

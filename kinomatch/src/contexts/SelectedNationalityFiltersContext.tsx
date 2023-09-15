@@ -8,7 +8,6 @@ import React, { createContext, useState, ReactNode } from 'react';
 interface Nationality {
     native_name: string;
     iso_3166_1: string;
-
 }
 
 // Interface définissant les propriétés du contexte. Elle contient un tableau de Nationality, une fonction pour ajouter un filtre par Nationality et une fonction pour supprimer les filtres par Nationality.

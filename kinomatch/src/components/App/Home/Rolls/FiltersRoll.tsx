@@ -94,9 +94,12 @@ export const RollGenre = ({
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
     const providerId = target.dataset.id;
+    console.log(name, providerId);
     if (name !== null && providerId !== undefined) {
       addProviderFilter(name, providerId);
     }
+   
+    
   }
 
   // handleDecadeClick pour envoyer les choix de filtres à la fonction addDecadeFilter du contexte SelectedDecadeFiltersContext et donc stocker le filtre decade dans le state
@@ -130,14 +133,10 @@ export const RollGenre = ({
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
     const nationalityId = target.dataset.id;
-    if (name !== null && nationalityId !== undefined) {
-      addNationalityFilter(name, nationalityId);
-    }
-    console.log(nationalityId);
+    addNationalityFilter(name, nationalityId);
+    
+    console.log(name, nationalityId)
   }
-
-  console.log(preselectedNationalities);
-  console.log(preselectedGenres);
 
   // ================ JSX ================
   return (
@@ -161,7 +160,7 @@ export const RollGenre = ({
             ? selectedGenreFilters.length > 0 ||
               selectedProviderFilters.length > 0 ||
               selectedDecadeFilters.length > 0 ||
-              selectedNotationFilters.length > 0 
+              selectedNotationFilters.length > 0  
               // || selectedNationalityFilters.length > 0
               ? { paddingBottom: '170px' }
               : { paddingBottom: '120px' }
@@ -390,7 +389,7 @@ export const RollGenre = ({
                   : preselectedNationalities.map((preselectedNationality) => (
                     <button
                       className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-provider`}
+                        }__roll-container__item-nationality`}
                       onClick={handleNationalityClick}
                       data-id={preselectedNationality.iso_3166_1}
                       key={preselectedNationality.iso_3166_1}
