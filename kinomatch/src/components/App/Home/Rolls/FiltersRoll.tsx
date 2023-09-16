@@ -98,8 +98,8 @@ export const RollGenre = ({
     if (name !== null && providerId !== undefined) {
       addProviderFilter(name, providerId);
     }
-   
-    
+
+
   }
 
   // handleDecadeClick pour envoyer les choix de filtres à la fonction addDecadeFilter du contexte SelectedDecadeFiltersContext et donc stocker le filtre decade dans le state
@@ -130,14 +130,22 @@ export const RollGenre = ({
   function handleNationalityClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
+    // ici on récupère le nom et l'id de la nationalité
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
+    console.log(name);
     const nationalityId = target.dataset.id;
-    addNationalityFilter(name, nationalityId);
-    
-    console.log(name, nationalityId)
+    console.log(nationalityId);
+    // ici on vérifie que le nom et l'id ne sont pas null ou undefined
+    if (name !== null && nationalityId !== undefined) {
+      addNationalityFilter(name, nationalityId);
+    }
+    else {
+      return
+    }
   }
 
+  console.log(selectedNationalityFilters);
   // ================ JSX ================
   return (
     <>
@@ -160,9 +168,9 @@ export const RollGenre = ({
             ? selectedGenreFilters.length > 0 ||
               selectedProviderFilters.length > 0 ||
               selectedDecadeFilters.length > 0 ||
-              selectedNotationFilters.length > 0  
-              // || selectedNationalityFilters.length > 0
-              ? { paddingBottom: '170px' }
+              selectedNotationFilters.length > 0
+              || selectedNationalityFilters.length > 0
+              ? { paddingBottom: '120px' }
               : { paddingBottom: '120px' }
             : { paddingBottom: '0px' }
         }
@@ -389,7 +397,12 @@ export const RollGenre = ({
                   : preselectedNationalities.map((preselectedNationality) => (
                     <button
                       className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-nationality`}
+                        }__roll-container__item-nationality${selectedNationalityFilters.some(
+                          (item) => item.native_name.toString() === preselectedNationality.native_name.toString()
+                        )
+                          ? '-selected'
+                          : ''
+                        }`}
                       onClick={handleNationalityClick}
                       data-id={preselectedNationality.iso_3166_1}
                       key={preselectedNationality.iso_3166_1}

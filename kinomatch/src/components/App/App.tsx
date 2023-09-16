@@ -6,7 +6,6 @@ import axios from 'axios';
 // ================ IMPORT COMPOSANTS ================
 
 import Header from './Header/Header';
-import Footer from './Footer/Footer';
 import MoviePage from './MoviePage/MoviePage';
 // import Home from './Home/Home';
 // import CreateProfile from './CreateProfile/CreateProfile';
@@ -25,6 +24,7 @@ import { SelectedGenreFiltersProvider } from '../../contexts/SelectedGenreFilter
 import { SelectedProviderFiltersProvider } from '../../contexts/SelectedProviderFiltersContext';
 import { SelectedDecadeFiltersProvider } from '../../contexts/SelectedDecadeFiltersContext';
 import { SelectedNotationFiltersProvider } from '../../contexts/SelectedNotationFiltersContext';
+import { SelectedNationalityFiltersProvider } from '../../contexts/SelectedNationalityFiltersContext';
 import { CurrentMovieIdProvider } from '../../contexts/CurrentMovieIdContext';
 import { NoResultProvider } from '../../contexts/NoResultContext';
 
@@ -45,22 +45,23 @@ function App() {
           <SelectedProviderFiltersProvider>
             <SelectedGenreFiltersProvider>
               <SelectedNotationFiltersProvider>
-                <AuthProvider>
-                  <LoadingProvider>
-                    <Header />
-                    {/* <Footer /> */}
-                    <Routes>
-                      <Route path='/' element={<Home />} />
-                      <Route path='/films' element={<MoviePage />} />
-                      <Route path='/signup' element={<Signup />} />
-                      <Route path='/login' element={<Login />} />
-                      <Route path='/profile' element={<Profile />} />
-                      <Route path='/noresult' element={<NoResult />} />
-                      <Route path='*' element={<PageNotFound />} />
-                      <Route path='/searchresults' element={<SearchResults />} />
-                    </Routes>
-                  </LoadingProvider>
-                </AuthProvider>
+                <SelectedNationalityFiltersProvider>
+                  <AuthProvider>
+                    <LoadingProvider>
+                      <Header />
+                      <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/films' element={<MoviePage />} />
+                        <Route path='/signup' element={<Signup />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/profile' element={<Profile />} />
+                        <Route path='/noresult' element={<NoResult />} />
+                        <Route path='*' element={<PageNotFound />} />
+                        <Route path='/searchresults' element={<SearchResults />} />
+                      </Routes>
+                    </LoadingProvider>
+                  </AuthProvider>
+                </SelectedNationalityFiltersProvider>
               </SelectedNotationFiltersProvider>
             </SelectedGenreFiltersProvider>
           </SelectedProviderFiltersProvider>
