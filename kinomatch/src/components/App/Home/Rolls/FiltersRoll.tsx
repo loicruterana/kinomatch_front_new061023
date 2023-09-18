@@ -168,8 +168,8 @@ export const RollGenre = ({
             ? selectedGenreFilters.length > 0 ||
               selectedProviderFilters.length > 0 ||
               selectedDecadeFilters.length > 0 ||
-              selectedNotationFilters.length > 0
-              || selectedNationalityFilters.length > 0
+              selectedNotationFilters.length > 0 ||
+              selectedNationalityFilters.length > 0
               ? { paddingBottom: '120px' }
               : { paddingBottom: '120px' }
             : { paddingBottom: '0px' }
@@ -372,7 +372,7 @@ export const RollGenre = ({
             )}
           </div>
         </div>
-        ROLL NATIONALITY
+        {/*ROLL NATIONALITY*/}
         <div
           className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
             }__roll-backgroundContainer`}

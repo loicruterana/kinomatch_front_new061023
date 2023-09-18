@@ -251,6 +251,7 @@ export const Home: React.FC = () => {
     setShowRollProvider(false);
     setShowRollDecade(false);
     setShowRollNotation(false);
+    setShowRollNationality(false);
   }
 
   // handler pour toggler la modale de filtres genres

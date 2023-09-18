@@ -99,7 +99,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
 
       // encodeURIComponent permet de gérer les caractères spéciaux dans l'URL en convertissant le code en chaîne de caractères
       const encodedFilmID = encodeURIComponent(filmID);
-      window.location.href = `/filmsAdvanced?filmID=${encodedFilmID}`;
+      window.location.href = `/films?filmID=${encodedFilmID}`;
 
       // Si on se trouve sur la page des films filtrés alors on ajouter les données du film sélectionné dans le contexte et afficher la page du film
     } else {

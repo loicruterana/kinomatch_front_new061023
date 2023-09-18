@@ -32,6 +32,7 @@ import API_BASE_URL from '../../../utils/config';
 // ici j'importe l'objet "genres" qui contient les genres de films et leurs id et le renommee "genresList" pour pouvoir l'utiliser dans le code
 import { genres as genresListFile } from '../../../../public/genres.json';
 import { results as providersListFile } from '../../../../public/providers.json';
+import { Countries as countriesListFile } from '../../../../public/countries.json';
 // ================ IMPORT SCSS ================
 import './style.scss';
 
@@ -154,6 +155,8 @@ function MoviePage() {
   const [decadeList, setDecadeList] = useState(['']);
   // UseState qui récupère les films par notation
   const [notationList, setNotationList] = useState<string[]>([]);
+  // useState qui récupère les pays sélectionnés par l'utilisateur
+  const [countriesList, setCountriesList] = useState<string[]>([]);
 
   const { currentMovieId, setCurrentMovieId } = useContext(
     CurrentMovieIdContext
@@ -388,7 +391,7 @@ function MoviePage() {
 
         setProvidersList(providerArray);
 
-        console.log(filterProviders);
+        console.log(providersList);
         console.log(filterProvidersArray);
 
         // ============================ FILTRE DECADES ============================
@@ -422,6 +425,32 @@ function MoviePage() {
         setNotationList(notationValueArray);
         console.log(notationValueArray);
         console.log(filterNotation);
+
+        // ============================ FILTRE PAYS ============================
+
+        // On filtre les paramètres pour récupérer les pays
+        const filterCountries = paramsArray.filter(
+          (country) => country.key === 'countryID'
+        );
+
+        // On créer un tableau avec les valeurs des paramètres
+        const filterCountriesArray = filterCountries.map((obj) => obj.value);
+        console.log(filterCountriesArray);
+
+        // On recherche les id des pays dans le fichier json countries.json afin de récupérer les noms des pays
+        const countryArray = filterCountriesArray.map((value) => {
+          const country = countriesListFile.find(
+            (param: { iso_3166_1: string }) => param.iso_3166_1 === value
+          );
+          console.log(country);
+          // Si le pays existe on retourne son nom sinon on retourne ''
+          return country ? country.native_name : '';
+        })
+
+        setCountriesList(countryArray);
+        console.log(countryArray)
+        console.log(countriesList);
+
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
         // On fait un console.log pour savoir combien de fois le useEffect est exécuté
@@ -624,7 +653,7 @@ function MoviePage() {
         <section className='movieDetails'>
           {/* Si l'URL ne contient pas de paramètre "filmID", on affiche les filtres */}
           {!window.location.search.includes('filmID') ? (
-            <div className='movieDetails__filters-desktop'>
+            <div className={'movieDetails__filters-desktop'}>
               <ul className='movieDetails__filters-desktop--filterElemList'>
                 {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
                 <li>
@@ -668,6 +697,19 @@ function MoviePage() {
                       {`> ${notation} %`}
                     </p>
                   ))}
+                </li>
+                <li>
+                  {countriesList.map((country) => (
+                    <p
+                      key={country}
+                      className='movieDetails__filters-desktop--filterElem'
+                    >
+                      {country}
+                    </p>
+                  ))}
+                </li>
+                <li>
+
                 </li>
               </ul>
             </div>
@@ -837,10 +879,29 @@ function MoviePage() {
                         </p>
                       ))}
                     </li>
+                    <li>
+                  {notationList.map((notation) => (
+                    <p
+                      key={notation}
+                      className='movieDetails__filters-mobile--filterElem'
+                    >
+                      {`> ${notation} %`}
+                    </p>
+                  ))}
+                </li>
+                <li>
+                  {countriesList.map((country) => (
+                    <p
+                      key={country}
+                      className='movieDetails__filters-mobile--filterElem'
+                    >
+                      {country}
+                    </p>
+                  ))}
+                </li>
                   </ul>
                 </React.Fragment>
               )}
-              {/* <p className='movieDetails__filters-filterElem--modifier'>Modifier</p> */}
             </div>
           </div>
         </section>

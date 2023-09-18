@@ -706,6 +706,43 @@
                 border: none;
               }
             }
+            &-nationality {
+              font-size: 0.9rem;
+              font-weight: 700;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 240px;
+              height: 64px;
+              background-image: url('/images/pellochebghomeyellowmobile.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              padding: 0px;
+              margin: 0px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+
+              &-selected {
+                font-size: 0.9rem;
+                font-weight: 700;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-primary;
+                width: 240px;
+                height: 64px;
+                background-image: url('/images/pellochebghomebluemobile.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 0px;
+                margin: 0px;
+                transition: transform 0.2s ease-in-out;
+                border: none;
+              }
+            }
           }
         }
 
