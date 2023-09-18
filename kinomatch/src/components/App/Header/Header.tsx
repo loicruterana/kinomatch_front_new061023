@@ -136,10 +136,14 @@ function Header() {
         >
           <img
             className='header-logo__image'
-            src='./images/kino_match_logo.png'
+            src='./images/KinoMatchLogoVTest.png'
             alt='logo'
           />
+
+          
         </Link>
+
+       
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
         {location.pathname === '/films' &&

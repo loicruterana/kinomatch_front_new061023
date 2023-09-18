@@ -47,6 +47,7 @@ export const Login = () => {
 
   const [showPasswordConditions, setShowPasswordConditions] = useState(false);
 
+  const [showPseudoConditions, setShowPseudoConditions] = useState(false);
   // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
 
@@ -182,6 +183,23 @@ export const Login = () => {
       <form className='login-container-form' onSubmit={handleSubmit}>
         {/* Champ pour l'email */}
         <label htmlFor='email'>Votre pseudo</label>
+
+        <div className='login-container-form-input-inputgroup'>
+          {!mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onMouseOver={() => setShowPseudoConditions(true)}
+              onMouseLeave={() => setShowPseudoConditions(false)}
+            ></i>
+          )}
+          {mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onClick={() => setShowPseudoConditions(!showPasswordConditions)}
+            ></i>
+          )}
+
+          
         <input
           onChange={handleChange}
           className='login-container-form-input'
@@ -192,6 +210,7 @@ export const Login = () => {
           aria-label='Votre email'
           required
         />
+        </div>
 
         {/* Champ pour le mot de passe */}
 
@@ -218,6 +237,13 @@ export const Login = () => {
               <p>1 caractère spécial</p>
               <p>1 majuscule</p>
               <p>1 chiffre</p>
+            </div>
+          )}
+
+          {showPseudoConditions && (
+            <div className='login-container-form-input-conditions2'>
+              <p>Le site étant en cours de développement, nous vous demandons seulement un pseudo afin de ne pas recueillir vos données personnelles type email.
+              </p>
             </div>
           )}
 

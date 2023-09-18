@@ -42,6 +42,7 @@ const Signup = () => {
   const [countPasswordConfirm, setCountPasswordConfirm] = useState(0);
 
   const [showPasswordConditions, setShowPasswordConditions] = useState(false);
+  const [showPseudoConditions, setShowPseudoConditions] = useState(false);
 
   // usestate pour afficher ou masquer la version mobile
   const [mobileVersion, setMobileVersion] = useState(false);
@@ -160,6 +161,22 @@ const Signup = () => {
       <form className='Signup-container-form' onSubmit={handleSubmit}>
         {/* Champ pour l'email */}
         <label htmlFor='email'>Votre pseudo</label>
+
+        <div className='login-container-form-input-inputgroup'>
+          {!mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onMouseOver={() => setShowPseudoConditions(true)}
+              onMouseLeave={() => setShowPseudoConditions(false)}
+            ></i>
+          )}
+          {mobileVersion && (
+            <i
+              className='fa-solid fa-info login-container-form-input-inputgroup-i'
+              onClick={() => setShowPseudoConditions(!showPasswordConditions)}
+            ></i>
+          )}
+      
         <input
           onChange={handleChange}
           className='Signup-container-form-input'
@@ -170,6 +187,8 @@ const Signup = () => {
           placeholder='votrepseudo'
           aria-label='Votre email'
         />
+
+        </div>
         {/* Champ pour le mot de passe */}
         <label htmlFor='password'>Votre mot de passe</label>
         <div className='Signup-container-form-input-inputgroup'>
@@ -194,6 +213,14 @@ const Signup = () => {
               <p>1 chiffre</p>
             </div>
           )}
+
+          {showPseudoConditions && (
+            <div className='Signup-container-form-input-conditions2'>
+              <p>Le site étant en cours de développement, nous vous demandons seulement un pseudo afin de ne pas recueillir vos données personnelles type email.
+              </p>
+            </div>
+          )}
+
           <i
             className={
               !showPassword

@@ -57,6 +57,23 @@
           font-family: 'Creato Display', sans-serif;
         }
 
+        &-conditions2 {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: absolute;
+          height: 80px;
+          width: 200px;
+          background-color: vars.$theme1-secondary;
+          border: 5px solid vars.$theme1-secondary;
+          border-radius: 10px;
+          left: -270px;
+          top: -100px;
+          color: vars.$theme1-primary;
+          font-size: 12px;
+          font-family: 'Creato Display', sans-serif;
+        }
+
         &-inputgroup {
           display: flex;
           position: relative;

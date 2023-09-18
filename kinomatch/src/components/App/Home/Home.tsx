@@ -130,7 +130,7 @@ export const Home: React.FC = () => {
                 currentProvider.display_priorities,
                 'FR'
               ) &&
-              currentProvider.display_priorities['FR'] < 20 &&
+              currentProvider.display_priorities['FR'] < 30 &&
               !validProviders.includes(currentProvider)
               // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
             ) {
@@ -142,10 +142,17 @@ export const Home: React.FC = () => {
           []
         );
         // pour stocker les providers dans le state preselectedProviders
+        // On va trier les providers par ordre alphabétique
+        const sortedProviders = filteredProviders.sort((a: { provider_name: string; }, b: { provider_name: string; }) =>
+          a.provider_name.localeCompare(b.provider_name)
+        );
+        // On récupère les providers puis on les affiche tous sauf "Wakanim" car il n'a pas de films
+        const wakanimout = sortedProviders.filter((provider) => provider.provider_name !== 'WAKANIM');
+        // On ajoute les providers au state preselectedProviders
         setPreselectedProviders(
-          Array.isArray(filteredProviders)
-            ? filteredProviders
-            : [filteredProviders]
+          Array.isArray(wakanimout)
+            ? wakanimout
+            : [wakanimout]
         ); // array
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -157,12 +164,12 @@ export const Home: React.FC = () => {
     axios
       // pour récupérer les countries
       .get(`${API_BASE_URL}/countries`)
-      // les countries sont stockés dans le state preselectedNationalities
-      .then(({ data }) => setPreselectedNationalities(data))
+      // les countries sont stockés dans le state preselectedNationalities puis je les trie par ordre alphabétique
+      .then(({ data }) => setPreselectedNationalities(data.sort((a: { native_name: string; }, b: { native_name: string; }) =>
+        a.native_name.localeCompare(b.native_name))))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => console.error(error))
       .finally(() => unload());
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -540,7 +547,7 @@ export const Home: React.FC = () => {
                 alt="Description de l'image"
               />
               <div className='home-container__buttons__button__text'>
-                NOTATION
+                NOTE
               </div>
             </div>
 
@@ -558,7 +565,7 @@ export const Home: React.FC = () => {
                 alt="Description de l'image"
               />
               <div className='home-container__buttons__button__text'>
-                NATIONALITY
+                NATIONALITÉ
               </div>
             </div>
 

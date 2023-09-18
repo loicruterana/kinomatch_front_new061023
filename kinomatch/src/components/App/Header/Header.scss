@@ -41,7 +41,7 @@
     // }
 
     &-logo {
-      max-width: 400px;
+      max-width: 550px;
       transition: transform 0.2s ease-in-out;
 
       &:hover {
@@ -54,6 +54,11 @@
         width: 70%;
         // scale: 0.7;
       }
+    }
+
+    &-version {
+      font-size: 1.5rem;
+      margin-right: 200px;
     }
 
     &--OtherResultsBtn {
