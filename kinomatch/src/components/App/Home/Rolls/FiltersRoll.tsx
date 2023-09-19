@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Genre, ProviderHome, Nationality } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
@@ -39,6 +39,9 @@ export const RollGenre = ({
   isLoading,
   handleClickOut,
 }: RollGenreProps) => {
+  const effectRan = useRef(false);
+
+
   // ================ UTILS ================
 
   const decades = [];
@@ -72,6 +75,11 @@ export const RollGenre = ({
   const { addNationalityFilter, selectedNationalityFilters } = useContext(
     SelectedNationalityFiltersContext
   );
+
+  // ================ USESTATE ================
+
+  // useState permettant de stocker les nationalités trouvées
+  const [countriesFound, setCountriesFound] = useState(preselectedNationalities);
 
   // ================ HANDLERS ================
 
@@ -144,7 +152,39 @@ export const RollGenre = ({
       return
     }
   }
+  // ================ USEEFFECT ================
 
+  // On créer un useEffect afin de pouvoir utiliser la fonction de recherche de nationalité
+  useEffect(() => {
+    if (effectRan.current === true) {
+
+      // Fonction permettant de chercher les nationalités en fonction de la recherche de l'utilisateur
+      const searchNationality = document.getElementById('nationalitySearch');
+      // On place un écouteur d'évennements sur l'input de recherche
+      const handleInputChange = (event: any) => {
+        const searchValue = event.target.value.toLowerCase();
+        console.log(searchValue);
+        const matchedCountries = preselectedNationalities.filter((country) => {
+          return country.native_name.toLowerCase().startsWith(searchValue);
+        });
+        setCountriesFound(matchedCountries);
+      };
+      searchNationality?.addEventListener('input', handleInputChange);
+
+      return () => {
+        searchNationality?.removeEventListener('input', handleInputChange);
+      };
+    }
+    return () => {
+      effectRan.current = true;
+    };
+  }, [preselectedNationalities, countriesFound]);
+
+
+
+
+
+  console.log(countriesFound);
   console.log(selectedNationalityFilters);
   // ================ JSX ================
   return (
@@ -392,9 +432,13 @@ export const RollGenre = ({
                 >
                   NATIONALITÉ
                 </div>
+                {/* Ici, on va créer un formulaire de recherche pour la nationalité*/}
+
+                <input type="text" className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-nationality`} id='nationalitySearch' placeholder='Entrer un choix' />
                 {isLoading
                   ? 'Chargement en cours'
-                  : preselectedNationalities.map((preselectedNationality) => (
+                  : countriesFound.map((preselectedNationality) => (
                     <button
                       className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item-nationality${selectedNationalityFilters.some(

@@ -34,7 +34,7 @@ function Providers(providers: {
           {providers.providers.results.FR &&
             providers.providers.results.FR.flatrate && (
               <h3 className='movieFound__essentiel-flatrate--title'>
-                Plateforme
+                Streaming
               </h3>
             )}
           {/* Si le film est disponible sur une plateforme de streaming alors affiche la liste des plateformes et au click redirige vers justWatch */}

@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre, Nationality, ProviderHome } from '../../../utils/interfaces';
@@ -27,6 +27,8 @@ import { NoResultContext } from '../../../contexts/NoResultContext';
 
 //* ================ COMPOSANT ================
 export const Home: React.FC = () => {
+  const effectRan = useRef(false);
+
   const navigate = useNavigate();
 
   // ================ INTERFACES ================
@@ -101,76 +103,84 @@ export const Home: React.FC = () => {
 
   // ================ USE EFFECT API ================
   useEffect(() => {
-    // pour activer le loader
-    load();
-    // pour réinitialiser le film enregistré pour la MoviePage
-    setCurrentMovieId('');
-    axios
-      // pour récupérer les genres
-      .get(`${API_BASE_URL}/genres`)
-      // les genres sont stockés dans le state preselectedGenres
-      .then(({ data }) => setPreselectedGenres(data.genres))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((error: any) => console.error(error))
-      .finally(() => unload());
+    if (effectRan.current === true) {
 
-    axios
-      // pour récupérer les providers
-      .get(`${API_BASE_URL}/providers`)
-      .then(({ data }) => {
-        // pour filtrer les providers
-        const filteredProviders: ProviderHome[] = data.results.reduce(
-          (
-            validProviders: ProviderHome[],
-            currentProvider: ProviderFromAPI
-          ) => {
-            if (
-              //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
-              Object.prototype.hasOwnProperty.call(
-                currentProvider.display_priorities,
-                'FR'
-              ) &&
-              currentProvider.display_priorities['FR'] < 30 &&
-              !validProviders.includes(currentProvider)
-              // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
-            ) {
-              validProviders.push(currentProvider);
-            }
+      // pour activer le loader
+      load();
+      // pour réinitialiser le film enregistré pour la MoviePage
+      setCurrentMovieId('');
+      axios
+        // pour récupérer les genres
+        .get(`${API_BASE_URL}/genres`)
+        // les genres sont stockés dans le state preselectedGenres
+        .then(({ data }) => setPreselectedGenres(data.genres))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((error: any) => console.error(error))
+        .finally(() => unload());
 
-            return validProviders;
-          },
-          []
-        );
-        // pour stocker les providers dans le state preselectedProviders
-        // On va trier les providers par ordre alphabétique
-        const sortedProviders = filteredProviders.sort((a: { provider_name: string; }, b: { provider_name: string; }) =>
-          a.provider_name.localeCompare(b.provider_name)
-        );
-        // On récupère les providers puis on les affiche tous sauf "Wakanim" car il n'a pas de films
-        const wakanimout = sortedProviders.filter((provider) => provider.provider_name !== 'WAKANIM');
-        // On ajoute les providers au state preselectedProviders
-        setPreselectedProviders(
-          Array.isArray(wakanimout)
-            ? wakanimout
-            : [wakanimout]
-        ); // array
-      })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((error: any) => {
-        console.error(error);
-      })
-      .finally(() => unload());
+      axios
+        // pour récupérer les providers
+        .get(`${API_BASE_URL}/providers`)
+        .then(({ data }) => {
+          // pour filtrer les providers
+          const filteredProviders: ProviderHome[] = data.results.reduce(
+            (
+              validProviders: ProviderHome[],
+              currentProvider: ProviderFromAPI
+            ) => {
+              if (
+                //Cela garantit que la méthode est appelée de manière sûre, même si la propriété hasOwnProperty a été redéfinie sur l'objet obj.
+                Object.prototype.hasOwnProperty.call(
+                  currentProvider.display_priorities,
+                  'FR'
+                ) &&
+                currentProvider.display_priorities['FR'] < 30 &&
+                !validProviders.includes(currentProvider)
+                // !validProviders.find((provider) => provider.provider_name === currentProvider.provider_name)
+              ) {
+                validProviders.push(currentProvider);
+              }
 
-    axios
-      // pour récupérer les countries
-      .get(`${API_BASE_URL}/countries`)
-      // les countries sont stockés dans le state preselectedNationalities puis je les trie par ordre alphabétique
-      .then(({ data }) => setPreselectedNationalities(data.sort((a: { native_name: string; }, b: { native_name: string; }) =>
-        a.native_name.localeCompare(b.native_name))))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .catch((error: any) => console.error(error))
-      .finally(() => unload());
+              return validProviders;
+            },
+            []
+          );
+          // pour stocker les providers dans le state preselectedProviders
+          // On va trier les providers par ordre alphabétique
+          const sortedProviders = filteredProviders.sort((a: { provider_name: string; }, b: { provider_name: string; }) =>
+            a.provider_name.localeCompare(b.provider_name)
+          );
+          // On récupère les providers puis on les affiche tous sauf "Wakanim" car il n'a pas de films
+          // const wakanimout = sortedProviders.filter((provider) => provider.provider_name !== 'WAKANIM');
+          // On ajoute les providers au state preselectedProviders
+          setPreselectedProviders(
+            Array.isArray(sortedProviders)
+              ? sortedProviders
+              : [sortedProviders]
+          ); // array
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((error: any) => {
+          console.error(error);
+        })
+        .finally(() => unload());
+
+      axios
+        // pour récupérer les countries
+        .get(`${API_BASE_URL}/countries`)
+        // les countries sont stockés dans le state preselectedNationalities puis je les trie par ordre alphabétique
+        .then(({ data }) => setPreselectedNationalities(data.sort((a: { native_name: string; }, b: { native_name: string; }) =>
+          a.native_name.localeCompare(b.native_name))))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((error: any) => console.error(error))
+        .finally(() => unload());
+    }
+    return () => {
+      effectRan.current = true;
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   //======== USEWINDOWSIZE

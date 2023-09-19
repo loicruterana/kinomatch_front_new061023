@@ -124,7 +124,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           dataLength={movieArray.length}
           next={loadMoreData}
           hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
+          // loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
           height={2160}
           scrollableTarget='scrollableDiv'
@@ -143,7 +143,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                   {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
                   <div className='otherResults-container--rate'>
                     {' '}
-                    {String(movieElem.vote_average * 10).substring(0, 2)}%
+                    {String(movieElem.vote_average * 10).substring(0, 3)}%
                   </div>
                   <img
                     className='otherResults-container--scrollList---images'
