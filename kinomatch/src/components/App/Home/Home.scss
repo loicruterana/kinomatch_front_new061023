@@ -327,6 +327,36 @@
             }
           }
 
+          &-nationalitySearch {
+            font-size: 111%;
+            font-weight: 700;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: vars.$theme1-secondary;
+            background-color: vars.$theme1-primary;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/pellochebghome.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+            width: 100%;
+            height: 20px;
+            padding: 13% 20%;
+            margin: 1%;
+            transition: transform 0.2s ease-in-out;
+            border: none;
+            text-align: center;
+            
+            &::placeholder {
+              color: vars.$theme1-secondary;
+              opacity: 0.3;
+              font-weight: lighter;
+            }
+          }
+
           &-nationality {
             font-size: 111%;
             font-weight: 700;
@@ -706,6 +736,33 @@
                 border: none;
               }
             }
+
+            &-nationalitySearch {
+              font-size: 0.9rem;
+              font-weight: 700;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: vars.$theme1-secondary;
+              background-color: vars.$theme1-primary;
+              width: 240px;
+              height: 64px;
+              background-image: url('/images/pellochebghomeyellowmobile.png');
+              background-repeat: no-repeat;
+              background-position: center;
+              padding: 0px;
+              margin: 0px;
+              transition: transform 0.2s ease-in-out;
+              border: none;
+              text-align: center;
+              
+              &::placeholder {
+                color: vars.$theme1-secondary;
+                opacity: 0.3;
+                font-weight: lighter;
+              }
+            }
+
             &-nationality {
               font-size: 0.9rem;
               font-weight: 700;

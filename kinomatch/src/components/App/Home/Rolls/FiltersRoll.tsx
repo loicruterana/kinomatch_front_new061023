@@ -41,7 +41,6 @@ export const RollGenre = ({
 }: RollGenreProps) => {
   const effectRan = useRef(false);
 
-
   // ================ UTILS ================
 
   const decades = [];
@@ -80,6 +79,8 @@ export const RollGenre = ({
 
   // useState permettant de stocker les nationalités trouvées
   const [countriesFound, setCountriesFound] = useState(preselectedNationalities);
+  // useState permettant de stocker la valeur de searchValue
+  const [searchValue, setSearchValue] = useState('');
 
   // ================ HANDLERS ================
 
@@ -160,10 +161,10 @@ export const RollGenre = ({
 
       // Fonction permettant de chercher les nationalités en fonction de la recherche de l'utilisateur
       const searchNationality = document.getElementById('nationalitySearch');
-      // On place un écouteur d'évennements sur l'input de recherche
+      // On place un écouteur d'évenements sur l'input de recherche
       const handleInputChange = (event: any) => {
         const searchValue = event.target.value.toLowerCase();
-        console.log(searchValue);
+        setSearchValue(searchValue);
         const matchedCountries = preselectedNationalities.filter((country) => {
           return country.native_name.toLowerCase().startsWith(searchValue);
         });
@@ -183,7 +184,7 @@ export const RollGenre = ({
 
 
 
-
+  console.log(searchValue);
   console.log(countriesFound);
   console.log(selectedNationalityFilters);
   // ================ JSX ================
@@ -432,29 +433,56 @@ export const RollGenre = ({
                 >
                   NATIONALITÉ
                 </div>
-                {/* Ici, on va créer un formulaire de recherche pour la nationalité*/}
 
+                {/* ===================== SYNTHÉTISER LES DEUX MAPS CI-DESSOUS EN UNE SEULE MAP ========================== */}
+
+                {/* Ici, on va créer un formulaire de recherche pour la nationalité*/}
                 <input type="text" className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container__item-nationality`} id='nationalitySearch' placeholder='Entrer un choix' />
+                  }__roll-container__item-nationalitySearch`} id='nationalitySearch' placeholder='Entrer un choix' />
                 {isLoading
                   ? 'Chargement en cours'
-                  : countriesFound.map((preselectedNationality) => (
-                    <button
-                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-nationality${selectedNationalityFilters.some(
-                          (item) => item.native_name.toString() === preselectedNationality.native_name.toString()
-                        )
-                          ? '-selected'
-                          : ''
-                        }`}
-                      onClick={handleNationalityClick}
-                      data-id={preselectedNationality.iso_3166_1}
-                      key={preselectedNationality.iso_3166_1}
-                      aria-label={preselectedNationality.native_name} // Ajout de l'aria-label
-                    >
-                      {preselectedNationality.native_name}
-                    </button>
-                  ))}
+                  // ici, si coutriesFound est vide et que l'utilisateur n'a tapé aucun caractère dans l'input, on boucle sur preselectedNationalities, sinon on boucle sur countriesFound
+                  : countriesFound.length === 0 && searchValue === ''
+                    ? preselectedNationalities.map((preselectedNationality) => (
+                      <button
+                        className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-nationality${selectedNationalityFilters.some(
+                            (item) =>
+                              item.native_name.toString() ===
+                              preselectedNationality.native_name.toString()
+                          )
+                            ? '-selected'
+                            : ''
+                          }`}
+                        onClick={handleNationalityClick}
+                        data-id={preselectedNationality.iso_3166_1}
+                        key={preselectedNationality.iso_3166_1}
+                        aria-label={preselectedNationality.native_name} // Ajout de l'aria-label
+                      >
+                        {preselectedNationality.native_name}
+                      </button>
+                    ))
+                    : countriesFound.map((countryFound) => (
+                      <button
+                        className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-nationality${selectedNationalityFilters.some(
+                            (item) =>
+                              item.native_name.toString() ===
+                              countryFound.native_name.toString()
+                          )
+                            ? '-selected'
+                            : ''
+                          }`}
+                        onClick={handleNationalityClick}
+                        data-id={countryFound.iso_3166_1}
+                        key={countryFound.iso_3166_1}
+                        aria-label={countryFound.native_name} // Ajout de l'aria-label
+                      >
+                        {countryFound.native_name}
+                      </button>
+                    ))
+                }
+                {/* ===================================================================================================== */}
               </div>
             )}
           </div>
