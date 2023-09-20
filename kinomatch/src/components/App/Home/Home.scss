@@ -461,10 +461,14 @@
     &__filters-selector {
       display: flex;
       border: none;
-      height: 40%;
-      padding-bottom: 5%;
+      // height: 40%;
+      padding-bottom: 1%;
       left: 0px;
       width: 100vw;
+      background-color: vars.$theme1-primary;
+      z-index: 5;
+      filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+
 
       button {
         margin-bottom: 20px;
@@ -841,7 +845,8 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        margin: 130px 0;
+        margin: 105px 0;
+        overflow-y: auto;
 
         &__button {
           z-index: 4;
@@ -877,6 +882,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            
           }
 
           &__text {
