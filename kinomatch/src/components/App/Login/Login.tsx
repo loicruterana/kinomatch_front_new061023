@@ -63,6 +63,7 @@ export const Login = () => {
       // Assurez-vous d'annuler le timeout si le composant est démonté avant l'expiration du délai
       return () => clearTimeout(timeoutId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData.email, history]);
 
   //======== USEWINDOWSIZE

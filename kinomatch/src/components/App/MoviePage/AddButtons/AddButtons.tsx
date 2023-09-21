@@ -86,6 +86,12 @@ function AddButton(movieId: { movie: string }) {
       }, 2000);
     }
   };
+
+  // Ici on créer une fonction qui va renvoyer l'utilisateur sur la page de connexion lorsqu'il clique sur le coeur et qu'il n'est pas connecté
+  const handleHeartRedirect = () => {
+    window.location.href = '/login';
+  };
+
   // ======================================= COEUR ======================================================
   // Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge
   useEffect(() => {
@@ -162,6 +168,8 @@ function AddButton(movieId: { movie: string }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log('userData', userData);
   // ===================================================================
   return (
     <div className='movieFound__essentiel-btn--container'>
@@ -195,17 +203,18 @@ function AddButton(movieId: { movie: string }) {
           )}
         </div>
       )}
+      {/* Si le userData est une string vide, alors le bouton coeur ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion */}
       <button
         className='movieFound__essentiel-btn--addToLike'
         type='submit'
-        onClick={handleHeartClick}
+        // Si le userData est une string vide, alors le bouton coeur ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion
+        onClick={userData.id === '' ? handleHeartRedirect : handleHeartClick}
         aria-label={`J'aime le film${heartIsClicked ? ' : Déjà aimé' : ''}`}
       >
         {/* Si le coeur est cliqué alors affiche le coeur plein sinon affiche le coeur vide */}
         <i
-          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${
-            heartIsClicked ? 'heartClicked' : ''
-          }`}
+          className={`fa-${heartIsClicked ? 'solid' : 'regular'} fa-heart ${heartIsClicked ? 'heartClicked' : ''
+            }`}
           style={{ color: heartIsClicked ? '#D42121' : '' }}
         ></i>
       </button>
@@ -214,16 +223,15 @@ function AddButton(movieId: { movie: string }) {
       <button
         className='movieFound__essentiel-btn--addToWatch'
         type='submit'
-        onClick={handleToWatchClick}
-        aria-label={`Ajouter aux favoris${
-          toWatchIsClicked ? ' : Déjà ajouté aux favoris' : ''
-        }`}
+        // Si le userData est une string vide, alors le bouton marque page ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion
+        onClick={userData.id === '' ? handleHeartRedirect : handleToWatchClick}
+        aria-label={`Ajouter aux favoris${toWatchIsClicked ? ' : Déjà ajouté aux favoris' : ''
+          }`}
       >
         {/* Si le marque page est cliqué alors affiche le marque page plein sinon affiche le marque page vide */}
         <i
-          className={`fa-sharp fa-${
-            toWatchIsClicked ? 'solid' : 'regular'
-          } fa-bookmark ${toWatchIsClicked ? 'bookMarkClicked' : ''}`}
+          className={`fa-sharp fa-${toWatchIsClicked ? 'solid' : 'regular'
+            } fa-bookmark ${toWatchIsClicked ? 'bookMarkClicked' : ''}`}
           style={{ color: toWatchIsClicked ? '#FFF3B0' : '' }}
         ></i>
       </button>
@@ -231,14 +239,14 @@ function AddButton(movieId: { movie: string }) {
       <button
         className='movieFound__essentiel-btn--addToViewed'
         type='submit'
-        onClick={handleWatchedClick}
+        // Si le userData est une string vide, alors le bouton "coche" ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion
+        onClick={userData.id === '' ? handleHeartRedirect : handleWatchedClick}
         aria-label={`Marquer comme vu${watchedIsClicked ? ' : Déjà vu' : ''}`}
       >
         {/* Si le Watched est cliqué alors affiche le Watched plein sinon affiche le Watched vide */}
         <i
-          className={`fa-sharp fa-solid fa-check ${
-            watchedIsClicked ? 'checkClicked' : ''
-          }`}
+          className={`fa-sharp fa-solid fa-check ${watchedIsClicked ? 'checkClicked' : ''
+            }`}
           style={{ color: watchedIsClicked ? '#7DEB00' : '' }}
         ></i>
       </button>

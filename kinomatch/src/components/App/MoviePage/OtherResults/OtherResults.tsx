@@ -124,7 +124,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           dataLength={movieArray.length}
           next={loadMoreData}
           hasMore={hasMore}
-          // loader={<h4>Loading...</h4>}
+          loader={<h4>Loading...</h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
           height={2160}
           scrollableTarget='scrollableDiv'

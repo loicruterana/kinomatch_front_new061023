@@ -18,7 +18,7 @@ function FeedbackForm(props: FeedbackFormProps) {
     // Fonction permettant d'envoyer un email via EmailJS
     const form = useRef();
 
-    const sendEmail = (e) => {
+    const sendEmail = (e: { preventDefault: () => void; }) => {
       e.preventDefault();
 
       emailjs.sendForm('service_twmabe6', 'template_u67rdgj', form.current, 'I0havWHpVhlzwlI9_')
