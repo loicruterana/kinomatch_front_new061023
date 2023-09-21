@@ -108,6 +108,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         // Gérer les erreurs si nécessaire
       });
   };
@@ -123,6 +124,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         // Gérer les erreurs si nécessaire
       });
   };
@@ -145,11 +147,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       })
       .catch((error) => {
-        console.log('erreur');
+        console.log(error);
       });
   }
 
-  const updateUserDataPicture = (pictureName) => {
+  const updateUserDataPicture = (pictureName: any) => {
     setUserData({ ...userData, picture: pictureName });
   };
 

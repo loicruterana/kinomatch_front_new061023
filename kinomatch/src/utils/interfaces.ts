@@ -1,6 +1,9 @@
 //===========PROFILE PAGE 
 
+import { ReactNode } from "react";
+
 export interface WatchedListEntry {
+  film_title: ReactNode;
   id: number;
   user_id: string;
   film_id: string;
@@ -22,6 +25,7 @@ export type WatchedMoviesObject = Record<number, WatchedMoviesListEntry | undefi
 //---
 
 export interface ToWatchListEntry {
+  film_title: ReactNode;
   id: number;
   user_id: string;
   film_id: string;
@@ -38,7 +42,7 @@ export interface toWatchMoviesEntry {
   movie_id?: string;
 }
 
-export type toWatchMoviesObject = Record<number , toWatchMoviesEntry | undefined>;
+export type toWatchMoviesObject = Record<number, toWatchMoviesEntry | undefined>;
 
 //---
 
@@ -51,6 +55,7 @@ export interface FavoritesListEntry {
 }
 
 export type FavoritesListObject = {
+  some(arg0: (element: any) => boolean): unknown;
   [key: number]: FavoritesListEntry | undefined;
 };
 
@@ -121,4 +126,10 @@ export interface Provider {
       provider_name: string;
     };
   };
+}
+
+/* Interface PictureProfile permettant de typer les données de l'image de profil */
+export interface PictureProfile {
+  showPictureProfileModale: boolean;
+  setShowPictureProfileModale: (value: boolean) => void;
 }

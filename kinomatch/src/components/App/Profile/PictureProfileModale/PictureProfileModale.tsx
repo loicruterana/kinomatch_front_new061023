@@ -6,13 +6,11 @@ import API_BASE_URL from '../../../../utils/config';
 
 import axios from 'axios';
 
+import { PictureProfile } from '../../../../utils/interfaces';
 import { AuthContext } from '../../../../contexts/AuthContext';
 
-const PictureProfileModale = ({
-  setShowPictureProfileModale,
-  showPictureProfileModale,
-  // setUserData
-}) => {
+const PictureProfileModale = (
+  { showPictureProfileModale, setShowPictureProfileModale }: PictureProfile) => {
   const { userData, updateUserDataPicture } = useContext(AuthContext);
 
   function handleClickOut() {
@@ -20,7 +18,7 @@ const PictureProfileModale = ({
     setShowPictureProfileModale(!showPictureProfileModale);
   }
 
-  function handleClick(event) {
+  function handleClick(event: { target: any; }) {
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
 

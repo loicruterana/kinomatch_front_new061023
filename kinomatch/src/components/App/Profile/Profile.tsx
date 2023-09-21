@@ -55,10 +55,9 @@ export const Profile: React.FC = () => {
   // pour stocker les id issues du back concernant les films préférés
   const [favoritesList, setFavoritesList] = useState<FavoritesListObject>([]);
   // un state pour indiquer si une action a été faite par l'utilisateur
-  const [userEvent, setUserEvent] = useState(false);
+  const [userEvent, setUserEvent] = useState<boolean>(false);
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
-  const [showPictureProfileModale, setShowPictureProfileModale] =
-    useState(false);
+  const [showPictureProfileModale, setShowPictureProfileModale] = useState<boolean>(false);
   const [showNotConnected, setShowNotConnected] = useState(false);
 
   const [checkHasBeenDone, setCheckHasBeenDone] = useState(false);

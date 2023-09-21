@@ -33,6 +33,7 @@ interface BookmarkedRollProps {
   handleRemoveFavorites: (film_id: string) => void;
   addWatched: (element: { film_id: string }) => void;
   userEvent: boolean;
+  setUserEvent: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickOut: () => void;
 }
 
@@ -89,7 +90,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
     deleteToWatch({ movie: film_id });
 
     // setWatchedList((state) => [...state, film_id]);
-
+    
+    // ici on ajoute le film à la liste des films vus
     addWatched({ movie: film_id });
     setUserEvent(true);
   }
@@ -102,24 +104,20 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
       {/* affichage conditionnel du roll des films vus */}
       {((showWatchedRoll && mobileVersion) || !mobileVersion) && (
         <div
-          className={`profile-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }__column`}
+          className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__column`}
         >
           <div
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll`}
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll`}
           >
             <div
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__roll-container`}
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
             >
               <div
-                className={`profile-container__roll-modale-${
-                  mobileVersion ? 'mobile-version' : 'desktop-version'
-                }__roll-container__item-category`}
+                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
               >
                 {/* bouton coeur */}
                 <i className='fa-regular fa-heart'></i>
@@ -134,23 +132,20 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                 watchedList.map((watchedListItem: WatchedListEntry) => {
                   return (
                     <button
-                      className={`profile-container__roll-modale-${
-                        mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item`}
+                      className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item`}
                       key={watchedListItem.film_id}
                     >
                       {/* Bouton de coeur */}
                       <i
-                        className={`profile-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-a fa-${
-                          favoritesList.some(
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-a fa-${favoritesList.some(
                             (element) =>
                               element.film_id === watchedListItem.film_id
                           )
                             ? 'solid'
                             : 'regular'
-                        } fa-heart`}
+                          } fa-heart`}
                         // pour vérifier si le film est dans la liste des films préférés
                         onClick={() => {
                           const isFavorite = favoritesList.some(
@@ -184,9 +179,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                         onClick={() =>
                           handleRemoveWatched(watchedListItem.film_id)
                         }
-                        className={`profile-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-b fa-solid fa-xmark`}
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>
                     </button>
                   );
@@ -195,14 +189,12 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
             </div>
           </div>
           <div
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__column__returnbuttonarea`}
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__column__returnbuttonarea`}
           >
             <button
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__column__returnbuttonarea__return`}
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__column__returnbuttonarea__return`}
               onClick={() => {
                 handleClickOut();
               }}
@@ -218,24 +210,20 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
       {/* affichage conditionnel du roll des films à voir selon le device*/}
       {((showToWatchRoll && mobileVersion) || !mobileVersion) && (
         <div
-          className={`profile-container__roll-modale-${
-            mobileVersion ? 'mobile-version' : 'desktop-version'
-          }__column`}
+          className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__column`}
         >
           <div
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll`}
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll`}
           >
             <div
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__roll-container`}
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
             >
               <div
-                className={`profile-container__roll-modale-${
-                  mobileVersion ? 'mobile-version' : 'desktop-version'
-                }__roll-container__item-category`}
+                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
               >
                 <i className='fa-sharp fa-solid fa-check'></i>À voir
                 <i className='fa-sharp fa-regular fa-bookmark'></i>
@@ -249,15 +237,13 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                 toWatchList.map((toWatchListItem) => {
                   return (
                     <div
-                      className={`profile-container__roll-modale-${
-                        mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item`}
+                      className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item`}
                       key={toWatchListItem.film_id}
                     >
                       <i
-                        className={`profile-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-c fa-sharp fa-solid fa-check `}
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-c fa-sharp fa-solid fa-check `}
                         onClick={() =>
                           handlefromToWatchToWatched(toWatchListItem.film_id)
                         }
@@ -272,9 +258,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                         onClick={() =>
                           handleRemoveToWatch(toWatchListItem.film_id)
                         }
-                        className={`profile-container__roll-modale-${
-                          mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-b fa-solid fa-xmark`}
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>
                     </div>
                   );
@@ -284,14 +269,12 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
           </div>
 
           <div
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__column__returnbuttonarea`}
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__column__returnbuttonarea`}
           >
             <button
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__column__returnbuttonarea__return`}
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__column__returnbuttonarea__return`}
               onClick={() => {
                 handleClickOut();
               }}
