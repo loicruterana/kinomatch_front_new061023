@@ -56,7 +56,6 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
         url = `${API_BASE_URL}/recommendedMoviesSecondPage${window.location.search}&page=${page}`;
       }
 
-      console.log(url);
       const response = await axios.get(url);
       const newMovies = response.data;
 

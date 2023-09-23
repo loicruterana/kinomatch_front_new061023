@@ -250,15 +250,11 @@ export const Home: React.FC = () => {
       content.forEach(function (element) {
         element.classList.toggle('home-container__roll-modale-desktop-version__roll-backgroundContainer--slide');
       });
-    } else {
-      console.log('content is null');
     }
 
     const arrowButton = document.querySelector('.home-container__arrowButton');
     if (arrowButton) {
       arrowButton.classList.toggle('home-container__arrowButton--return');
-    } else {
-      console.log('arrowButton is null');
     }
   }
 
@@ -318,8 +314,6 @@ export const Home: React.FC = () => {
     removeNationalityFilter(event.currentTarget.dataset.id || '');
   }
 
-  console.log(preselectedNationalities);
-  console.log(selectedNationalityFilters);
   // ================ JSX ================
   return (
     <main className='home-container'>

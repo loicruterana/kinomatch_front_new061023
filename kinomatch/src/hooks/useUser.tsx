@@ -25,19 +25,19 @@ export function useUser() {
     axios
       .get(`${API_BASE_URL}/login`)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         if (data.authorized) {
           const { user } = data;
-          console.log(user);
-          console.log('pigeon');
-          console.log(auth.userData);
+          // console.log(user);
+          // console.log('pigeon');
+          // console.log(auth.userData);
           auth.addUserData(user.email, user.id, user.picture);
         }
       })
       .finally(() => {
         setIsLoading(false);
         alreadyLoading = false;
-        console.log(auth.userData);
+        // console.log(auth.userData);
       });
   }, []);
 

@@ -100,7 +100,6 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/favoritesMovies?userID=${userData.id}`)
         .then(function (response) {
           const responseData = response.data;
-          console.log(responseData);
           const filmIds = responseData.favoritesListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
@@ -125,7 +124,6 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/toWatchMovies?userID=${userDataToWatch.id}`)
         .then(function (response) {
           const responseData = response.data;
-          console.log(responseData);
           const filmIds = responseData.toWatchListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
@@ -134,7 +132,6 @@ function AddButton(movieId: { movie: string }) {
           } else {
             setToWatchIsClicked(false);
           }
-          console.log(toWatchIsClicked);
         });
     };
     // Condition qui éxecute "getUserToWatch" uniquement si un user est connecté
@@ -151,7 +148,6 @@ function AddButton(movieId: { movie: string }) {
         .get(`${API_BASE_URL}/watchedMovies?userID=${userDataWatched.id}`)
         .then(function (response) {
           const responseData = response.data;
-          console.log(responseData);
           const filmIds = responseData.watchedListTitles.map(
             (item: { film_id: string }) => item.film_id
           );
@@ -169,7 +165,6 @@ function AddButton(movieId: { movie: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('userData', userData);
   // ===================================================================
   return (
     <div className='movieFound__essentiel-btn--container'>

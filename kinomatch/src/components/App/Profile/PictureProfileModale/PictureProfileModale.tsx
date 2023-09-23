@@ -14,7 +14,7 @@ const PictureProfileModale = (
   const { userData, updateUserDataPicture } = useContext(AuthContext);
 
   function handleClickOut() {
-    console.log('onpasseici3');
+    // console.log('onpasseici3');
     setShowPictureProfileModale(!showPictureProfileModale);
   }
 
@@ -24,28 +24,28 @@ const PictureProfileModale = (
 
     const imageElement = event.target;
     const profileData = imageElement.getAttribute('data-profile');
-    console.log(profileData);
+    // console.log(profileData);
     const bodyData = {
       picture: profileData,
     };
-    console.log('onpassela');
+    // console.log('onpassela');
 
     axios
       .put(`${API_BASE_URL}/pictures?${searchParams}`, bodyData)
       .then((response) => {
-        console.log('onpasseici');
+        // console.log('onpasseici');
         console.log('reponse', response);
         updateUserDataPicture(profileData);
       })
       .catch((error) => {
-        console.log('onpasseerreur');
+        // console.log('onpasseerreur');
         console.log('error', error);
       });
     // setUserData({
     //   ...userData,
     //   picture: 'yodaprofile',
     // });
-    console.log('onpasseici2');
+    // console.log('onpasseici2');
     handleClickOut();
   }
 

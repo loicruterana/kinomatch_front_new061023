@@ -127,7 +127,7 @@ export const Profile: React.FC = () => {
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
-    console.log('click out');
+    // console.log('click out');
   }
 
   //handler pour afficher le roll Watched (films vus -> ✓)
@@ -174,7 +174,7 @@ export const Profile: React.FC = () => {
           logout();
           clearUserData();
 
-          console.log('oh');
+          // console.log('oh');
 
           navigate(`/`);
         })
@@ -223,13 +223,13 @@ export const Profile: React.FC = () => {
         .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
         .then(({ data }) => {
           setShowNotConnected(false);
-          console.log(data);
+          // console.log(data);
           setWatchedList(data.watchedListTitles);
-          console.log('ICI', data.watchedListTitles);
+          // console.log('ICI', data.watchedListTitles);
         })
         .catch((error) => {
           console.error(error);
-          console.log('onpassici');
+          // console.log('onpassici');
         })
         .finally(() => {
           // Code to run regardless of whether the promise is resolved or rejected
@@ -329,7 +329,7 @@ export const Profile: React.FC = () => {
             .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
 
             .then(({ data }) => {
-              console.log('est-ce');
+              // console.log('est-ce');
 
               // Utiliser un objet pour stocker les id des films favoris
               // const favorites: FavoritesListObject = {};
@@ -339,7 +339,7 @@ export const Profile: React.FC = () => {
               //   const key = element.film_id?.toString();
               //   favorites[key] = element as FavoritesItem;
               // });
-              console.log(data);
+              // console.log(data);
               setFavoritesList(data.favoritesListTitles);
             })
             .catch((error) => {
@@ -372,13 +372,13 @@ export const Profile: React.FC = () => {
         .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
         .then(({ data }) => {
           setShowNotConnected(false);
-          console.log(data);
+          // console.log(data);
           setToWatchList(data.toWatchListTitles);
-          console.log('coucou');
+          // console.log('coucou');
         })
         .catch((error) => {
           console.error(error);
-          console.log('onpassici');
+          // console.log('onpassici');
         });
     }
   }, [user.id]);

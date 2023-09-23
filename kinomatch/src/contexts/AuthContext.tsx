@@ -102,7 +102,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .get(`${API_BASE_URL}/login/${userData.id}`)
       .then((response) => {
         if (response.data.authorized === true) {
-          console.log(response.data);
           setIsLoggedIn(true);
           // localStorage.setItem('isLoggedIn', 'true');
         }
@@ -132,14 +131,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   //  ================ FONCTIONS LIÉES AUX UTILISATEURS ================
 
   function checkUserData() {
-    console.log('checkUserData');
     axios
       .get(`${API_BASE_URL}/login`)
       .then((response) => {
-        console.log(response.data);
-
         if (response.data.authorized === true) {
-          console.log(response.data);
           // localStorage.setItem('isLoggedIn', 'true');
           response.data.user.email = userData.email;
           response.data.user.email = userData.id;
@@ -307,7 +302,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       watched: element.movie || element.toString(),
     });
     setIsWatchedModified(true);
-    console.log('coucou');
   };
 
   // Fonction permettant de supprimer un film déjà vu

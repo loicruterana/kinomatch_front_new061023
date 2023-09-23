@@ -340,7 +340,6 @@ function MoviePage() {
         urlParams.forEach((value, key) => {
           paramsArray.push({ key, value });
         });
-        console.log(paramsArray);
 
         // ==================== FILTRES GENRES ====================
 
@@ -349,11 +348,8 @@ function MoviePage() {
           (genre) => genre.key === 'genreID'
         );
 
-        console.log(filteredGenres);
-
         // On créer un tableau avec les valeurs des paramètres
         const genreValueArray = filteredGenres.map((obj) => obj.value);
-        console.log(genreValueArray);
         // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
         const genreArray = genreValueArray.map((value) => {
           // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
@@ -366,7 +362,6 @@ function MoviePage() {
 
         // On stocke les genres dans le state
         setGenresList(genreArray);
-        console.log(paramsArray);
 
         // ==================== FILTRES PROVIDERS ====================
 
@@ -391,8 +386,6 @@ function MoviePage() {
 
         setProvidersList(providerArray);
 
-        console.log(providersList);
-        console.log(filterProvidersArray);
 
         // ============================ FILTRE DECADES ============================
 
@@ -403,12 +396,9 @@ function MoviePage() {
 
         // On créer un tableau avec les valeurs des paramètres
         const decadeValueArray = filteredDecade.map((obj) => obj.value);
-        console.log(decadeValueArray);
 
         // On stocke les décennies dans le state
         setDecadeList(decadeValueArray);
-        console.log(filteredDecade);
-        console.log(decadeList);
 
         // ============================ FILTRE NOTATIONS ============================
 
@@ -419,12 +409,9 @@ function MoviePage() {
 
         // On créer un tableau avec les valeurs des paramètres
         const notationValueArray = filterNotation.map((obj) => obj.value);
-        console.log(notationValueArray);
 
         // On stocke les décennies dans le state
         setNotationList(notationValueArray);
-        console.log(notationValueArray);
-        console.log(filterNotation);
 
         // ============================ FILTRE PAYS ============================
 
@@ -435,30 +422,24 @@ function MoviePage() {
 
         // On créer un tableau avec les valeurs des paramètres
         const filterCountriesArray = filterCountries.map((obj) => obj.value);
-        console.log(filterCountriesArray);
 
         // On recherche les id des pays dans le fichier json countries.json afin de récupérer les noms des pays
         const countryArray = filterCountriesArray.map((value) => {
           const country = countriesListFile.find(
             (param: { iso_3166_1: string }) => param.iso_3166_1 === value
           );
-          console.log(country);
           // Si le pays existe on retourne son nom sinon on retourne ''
           return country ? country.native_name : '';
         })
 
         setCountriesList(countryArray);
-        console.log(countryArray)
-        console.log(countriesList);
 
 
         //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
-        // On fait un console.log pour savoir combien de fois le useEffect est exécuté
         axios
           .get(`${API_BASE_URL}/filmsAdvanced${window.location.search}`)
           .then(({ data }) => {
             // Renvoi la première page de résultats
-            console.log(data);
             if (data.results.length === 0) {
               handleNoResult();
               navigate(`/`);
@@ -477,7 +458,6 @@ function MoviePage() {
             // On récupère les données de la page sélectionnée
             const searchParams1 = new URLSearchParams();
             searchParams1.append('randomPage', chosenPage.toString());
-            console.log(searchParams1.toString());
 
             // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
             if (window.location.search === '') {
@@ -494,7 +474,6 @@ function MoviePage() {
           .then((response) => {
             // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
             const data = response?.data;
-            console.log(data);
             // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
             if (data) {
               const selectRandomID =
@@ -505,10 +484,8 @@ function MoviePage() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (result: { id: any }) => result.id !== selectRandomID
               );
-              console.log(filteredResults);
               // Met à jour le state avec les résultats filtrés
               setMovieArray(filteredResults);
-              console.log(currentMovieId);
               const searchParams = new URLSearchParams();
               // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
               searchParams.append(
@@ -566,8 +543,6 @@ function MoviePage() {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(notationList);
 
   // Si le film n'a pas de titre, on affiche le composant Footer
   return (
@@ -880,25 +855,25 @@ function MoviePage() {
                       ))}
                     </li>
                     <li>
-                  {notationList.map((notation) => (
-                    <p
-                      key={notation}
-                      className='movieDetails__filters-mobile--filterElem'
-                    >
-                      {`> ${notation} %`}
-                    </p>
-                  ))}
-                </li>
-                <li>
-                  {countriesList.map((country) => (
-                    <p
-                      key={country}
-                      className='movieDetails__filters-mobile--filterElem'
-                    >
-                      {country}
-                    </p>
-                  ))}
-                </li>
+                      {notationList.map((notation) => (
+                        <p
+                          key={notation}
+                          className='movieDetails__filters-mobile--filterElem'
+                        >
+                          {`> ${notation} %`}
+                        </p>
+                      ))}
+                    </li>
+                    <li>
+                      {countriesList.map((country) => (
+                        <p
+                          key={country}
+                          className='movieDetails__filters-mobile--filterElem'
+                        >
+                          {country}
+                        </p>
+                      ))}
+                    </li>
                   </ul>
                 </React.Fragment>
               )}

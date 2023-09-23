@@ -94,7 +94,6 @@ export const RollGenre = ({
     if (name !== null && genreId !== undefined) {
       addGenreFilter(name, genreId);
     }
-    console.log(addGenreFilter)
   }
   // handleProviderClick pour envoyer les choix de filtres à la fonction addProviderFilter du contexte SelectedProviderFiltersContext et donc stocker les filtres provider dans le state
   function handleProviderClick(
@@ -103,7 +102,6 @@ export const RollGenre = ({
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
     const providerId = target.dataset.id;
-    console.log(name, providerId);
     if (name !== null && providerId !== undefined) {
       addProviderFilter(name, providerId);
     }
@@ -142,9 +140,7 @@ export const RollGenre = ({
     // ici on récupère le nom et l'id de la nationalité
     const target = event.target as HTMLButtonElement;
     const name = target.textContent;
-    console.log(name);
     const nationalityId = target.dataset.id;
-    console.log(nationalityId);
     // ici on vérifie que le nom et l'id ne sont pas null ou undefined
     if (name !== null && nationalityId !== undefined) {
       addNationalityFilter(name, nationalityId);
@@ -181,12 +177,6 @@ export const RollGenre = ({
     };
   }, [preselectedNationalities, countriesFound]);
 
-
-
-
-  console.log(searchValue);
-  console.log(countriesFound);
-  console.log(selectedNationalityFilters);
   // ================ JSX ================
   return (
     <>

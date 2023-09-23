@@ -124,7 +124,6 @@ export const Login = () => {
       email: postProfil.email,
       password: postProfil.password,
     };
-    console.log(userData);
 
     axios
       .post(`${API_BASE_URL}/login`, userData, {

@@ -196,8 +196,9 @@
     width: 45vw;
     height: 100vh;
     display: flex;
+    margin-top: 3vh;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     // margin-top: 10vh;
     color: vars.$theme1-secondary;
 
@@ -246,13 +247,14 @@
     }
 
     &__circle {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       // scale: 1.2;
 
       // j'accède aux propriétés de la balise img
       & img {
-        width: 15vw;
-        height: 28vh;
+        // width: 15vw;
+        // height: 28vh;
+        scale: 1.1;
         border-radius: 50%;
         // border: 0px solid vars.$theme1-secondary;
         margin: 0 auto;
@@ -265,7 +267,7 @@
     }
 
     &__infos {
-      margin-bottom: 15%;
+      // margin-bottom: 15%;
 
       &__pictureemailpassword {
         display: flex;
