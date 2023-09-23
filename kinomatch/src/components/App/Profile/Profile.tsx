@@ -10,7 +10,7 @@ import {
   toWatchMoviesObject,
   FavoritesListObject,
   UserData,
-  toWatchMoviesEntry,
+  // toWatchMoviesEntry,
 } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
 import { useUser } from '../../../hooks/useUser';
@@ -25,7 +25,7 @@ import { LoadingContext } from '../../../contexts/LoadingContext';
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
 import PictureProfileModale from './PictureProfileModale/PictureProfileModale';
-import NotConnected from '../NotConnected/NotConnected';
+// import NotConnected from '../NotConnected/NotConnected';
 import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT SCSS ================
@@ -86,7 +86,7 @@ export const Profile: React.FC = () => {
     addUserData: (email: string, id: string, picture: string) => void;
     login: () => void;
     clearUserData: () => void;
-    addWatched: (element: { film_id: string }) => void;
+    addWatched: (element: { movie: string }) => void;
   };
 
   // ================ UTILS ================

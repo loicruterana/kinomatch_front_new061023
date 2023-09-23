@@ -495,7 +495,19 @@ export const Home: React.FC = () => {
 
       {/* affichage des boutons en version mobile */}
       {mobileVersion && (
-        <div className='home-container__buttons'>
+        <div className='home-container__buttons'
+        style={
+          mobileVersion
+            ? selectedGenreFilters.length > 0 ||
+              selectedProviderFilters.length > 0 ||
+              selectedDecadeFilters.length > 0 ||
+              selectedNotationFilters.length > 0 ||
+              selectedNationalityFilters.length > 0
+              ? { paddingTop: '80px', paddingBottom: '250px' }
+              : { padding: '100px' }
+            : { paddingBottom: '0px' }
+        }
+        >
           <button
             className='home-container__buttons__button'
             onClick={handleClickGenre}

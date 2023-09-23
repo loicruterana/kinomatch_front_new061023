@@ -31,7 +31,7 @@ interface BookmarkedRollProps {
   deleteFavoritesAndWatched: (element: { movie: string }) => void;
   handleAddFavorites: (film_id: string) => void;
   handleRemoveFavorites: (film_id: string) => void;
-  addWatched: (element: { film_id: string }) => void;
+  addWatched: (element: { movie: string }) => void;
   userEvent: boolean;
   setUserEvent: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickOut: () => void;
@@ -45,9 +45,9 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   showWatchedRoll,
   // setShowWatchedRoll,
   watchedList,
-  watchedMovies,
+  // watchedMovies,
   toWatchList,
-  toWatchMovies,
+  // toWatchMovies,
   favoritesList,
   setWatchedList,
   showToWatchRoll,

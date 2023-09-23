@@ -211,7 +211,7 @@ export const RollGenre = ({
               selectedDecadeFilters.length > 0 ||
               selectedNotationFilters.length > 0 ||
               selectedNationalityFilters.length > 0
-              ? { paddingBottom: '120px' }
+              ? { paddingBottom: '170px' }
               : { paddingBottom: '120px' }
             : { paddingBottom: '0px' }
         }

@@ -147,9 +147,7 @@
 
       &__filterRoll {
         display: flex;
-        padding-bottom: 120px;
         width: 92%;
-        // overflow: visible;
       }
 
 
@@ -485,7 +483,7 @@
           scroll-behavior: smooth;
 
           &__filter {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             padding-right: 30px;
 
             &__cross {
@@ -845,7 +843,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        margin: 105px 0;
+        // margin: 105px 0;
         overflow-y: auto;
 
         &__button {
