@@ -146,6 +146,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateUserDataPicture = (pictureName: any) => {
     setUserData({ ...userData, picture: pictureName });
   };
@@ -219,8 +220,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Si userData.favorites est différent de '', que isFavoritesModified n'a pas été modifié et que userData.pictures est vide, alors on supprime les données puis on met à jour les "userData"
-    if (userData.favorites !== '' && !isFavoritesModified && userData.picture === '') {
+    // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "useData"
+    if (userData.favorites !== '' && !isFavoritesModified) {
       deleteData();
       setUserData({ ...userData, favorites: '' });
     }

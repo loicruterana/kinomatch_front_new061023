@@ -39,6 +39,7 @@ export function useUser() {
         alreadyLoading = false;
         // console.log(auth.userData);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { data: auth.userData, loading: isLoading };

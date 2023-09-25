@@ -18,7 +18,7 @@ import { useUser } from '../../../hooks/useUser';
 // ================ IMPORT CONTEXTS ================
 
 import { AuthContext } from '../../../contexts/AuthContext';
-import { LoadingContext } from '../../../contexts/LoadingContext';
+// import { LoadingContext } from '../../../contexts/LoadingContext';
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -36,7 +36,7 @@ import './Profile.scss';
 
 export const Profile: React.FC = () => {
   // ================ USESTATE ================
-  const { data: user, loading } = useUser();
+  const { data: user } = useUser();
 
   // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
@@ -47,24 +47,24 @@ export const Profile: React.FC = () => {
   // pour stocker les id issues du back concernant les films vus
   const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
   // pour stocker les noms concernant les films vus
-  const [watchedMovies, setWatchedMovies] = useState<WatchedMoviesObject>({});
+  const [watchedMovies] = useState<WatchedMoviesObject>({});
   // pour stocker les id issues du back concernant les films à voir
   const [toWatchList, setToWatchList] = useState<ToWatchListArray>([]);
   // pour stocker les noms concernant les films à voir
-  const [toWatchMovies, setToWatchMovies] = useState<toWatchMoviesObject>({});
+  const [toWatchMovies] = useState<toWatchMoviesObject>({});
   // pour stocker les id issues du back concernant les films préférés
   const [favoritesList, setFavoritesList] = useState<FavoritesListObject>([]);
   // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState<boolean>(false);
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
   const [showPictureProfileModale, setShowPictureProfileModale] = useState<boolean>(false);
-  const [showNotConnected, setShowNotConnected] = useState(false);
+  // const [showNotConnected, setShowNotConnected] = useState(false);
 
-  const [checkHasBeenDone, setCheckHasBeenDone] = useState(false);
+  // const [checkHasBeenDone, setCheckHasBeenDone] = useState(false);
 
   // ================ IMPORT PROPS CONTEXTS ================
 
-  const { load } = useContext(LoadingContext);
+  // const { load } = useContext(LoadingContext);
   const {
     userData,
     logout,
@@ -74,7 +74,7 @@ export const Profile: React.FC = () => {
     addFavorites,
     clearUserData,
     addWatched,
-    addUserData,
+    // addUserData,
   } = useContext(AuthContext) as {
     userData: UserData;
     logout: () => void;
@@ -101,13 +101,13 @@ export const Profile: React.FC = () => {
   // }
 
   // ================ INTERFACES ================
-  interface FavoritesItem {
-    createdAt: string;
-    film_id: string;
-    id: number;
-    updatedAt: string;
-    user_id: string;
-  }
+  // interface FavoritesItem {
+  //   createdAt: string;
+  //   film_id: string;
+  //   id: number;
+  //   updatedAt: string;
+  //   user_id: string;
+  // }
 
   // ================ HANDLERS ================
 
@@ -222,7 +222,7 @@ export const Profile: React.FC = () => {
       axios
         .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
         .then(({ data }) => {
-          setShowNotConnected(false);
+          // setShowNotConnected(false);
           // console.log(data);
           setWatchedList(data.watchedListTitles);
           // console.log('ICI', data.watchedListTitles);
@@ -358,9 +358,7 @@ export const Profile: React.FC = () => {
       // }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    userEvent, userData,
-    user.id]);
+  }, [userEvent, userData, user.id]);
   // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
@@ -373,7 +371,7 @@ export const Profile: React.FC = () => {
       axios
         .get(`${API_BASE_URL}/toWatchMovies?${searchParams.toString()}`)
         .then(({ data }) => {
-          setShowNotConnected(false);
+          // setShowNotConnected(false);
           // console.log(data);
           setToWatchList(data.toWatchListTitles);
           // console.log('coucou');
@@ -383,6 +381,7 @@ export const Profile: React.FC = () => {
           // console.log('onpassici');
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
   // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
@@ -467,46 +466,48 @@ export const Profile: React.FC = () => {
         {((showWatchedRoll && mobileVersion) ||
           (showToWatchRoll && mobileVersion) ||
           !mobileVersion) && (
-            <section
-              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                }`}
-            >
-              <div
-                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }-backdropfilter`}
-                onClick={handleClickOut}
-              ></div>
-              <BookmarkedRoll
-                isLoading={listsAreLoading}
-                mobileVersion={mobileVersion}
-                showWatchedRoll={showWatchedRoll}
-                // setShowWatchedRoll={setShowWatchedRoll}
-                showToWatchRoll={showToWatchRoll}
-                // setShowToWatchRoll={setShowToWatchRoll}
-                watchedList={watchedList}
-                setWatchedList={setWatchedList}
-                watchedMovies={watchedMovies}
-                // setWatchedMovies={setWatchedMovies}
-                // deleteWatched={deleteWatched}
-                toWatchList={toWatchList}
-                setToWatchList={setToWatchList}
-                toWatchMovies={toWatchMovies}
-                // setToWatchMovies={setToWatchMovies}
-                deleteToWatch={deleteToWatch}
-                deleteFavoritesAndWatched={deleteFavoritesAndWatched}
-                favoritesList={favoritesList}
-                addWatched={addWatched}
-                // deleteFavorites={deleteFavorites}
-                // addFavorites={addFavorites}
+          <section
+            className={`profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }`}
+          >
+            <div
+              className={`profile-container__roll-modale-${
+                mobileVersion ? 'mobile-version' : 'desktop-version'
+              }-backdropfilter`}
+              onClick={handleClickOut}
+            ></div>
+            <BookmarkedRoll
+              isLoading={listsAreLoading}
+              mobileVersion={mobileVersion}
+              showWatchedRoll={showWatchedRoll}
+              // setShowWatchedRoll={setShowWatchedRoll}
+              showToWatchRoll={showToWatchRoll}
+              // setShowToWatchRoll={setShowToWatchRoll}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+              watchedMovies={watchedMovies}
+              // setWatchedMovies={setWatchedMovies}
+              // deleteWatched={deleteWatched}
+              toWatchList={toWatchList}
+              setToWatchList={setToWatchList}
+              toWatchMovies={toWatchMovies}
+              // setToWatchMovies={setToWatchMovies}
+              deleteToWatch={deleteToWatch}
+              deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+              favoritesList={favoritesList}
+              addWatched={addWatched}
+              // deleteFavorites={deleteFavorites}
+              // addFavorites={addFavorites}
 
-                handleRemoveFavorites={handleRemoveFavorites}
-                handleAddFavorites={handleAddFavorites}
-                userEvent={userEvent}
-                setUserEvent={setUserEvent}
-                handleClickOut={handleClickOut}
-              />
-            </section>
-          )}
+              handleRemoveFavorites={handleRemoveFavorites}
+              handleAddFavorites={handleAddFavorites}
+              userEvent={userEvent}
+              setUserEvent={setUserEvent}
+              handleClickOut={handleClickOut}
+            />
+          </section>
+        )}
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>

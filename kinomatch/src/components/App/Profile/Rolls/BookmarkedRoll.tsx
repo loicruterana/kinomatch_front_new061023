@@ -58,7 +58,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   handleAddFavorites,
   handleRemoveFavorites,
   addWatched,
-  userEvent,
+  // userEvent,
   setUserEvent,
   handleClickOut,
 }) => {

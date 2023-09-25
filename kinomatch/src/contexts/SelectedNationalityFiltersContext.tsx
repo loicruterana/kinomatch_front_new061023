@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { createContext, useState, ReactNode, Key } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
 // ================ INTERFACES ================
 
