@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 import './PictureProfileModale.scss';
 
@@ -18,6 +18,7 @@ const PictureProfileModale = (
     setShowPictureProfileModale(!showPictureProfileModale);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleClick(event: { target: any; }) {
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);

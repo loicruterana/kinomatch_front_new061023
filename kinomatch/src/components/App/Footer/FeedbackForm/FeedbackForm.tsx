@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 // j'importe le fichier scss correspondant au composant
 import './FeedbackForm.scss';

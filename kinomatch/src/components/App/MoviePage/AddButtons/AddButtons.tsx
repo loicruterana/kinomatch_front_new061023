@@ -3,13 +3,13 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import axios from 'axios';
 import './AddButton.scss';
 import API_BASE_URL from '../../../../utils/config';
-import { to } from 'react-spring';
+// import { to } from 'react-spring';
 /* Fonction AddButton permettant d'afficher les boutons d'ajout aux listes */
 function AddButton(movieId: { movie: string }) {
   // ========================== USECONTEXT ===============================
   const {
     userData,
-    isLoggedIn,
+    // isLoggedIn,
     addFavorites,
     deleteFavorites,
     addToWatch,

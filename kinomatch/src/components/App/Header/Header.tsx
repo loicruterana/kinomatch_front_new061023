@@ -1,7 +1,7 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { RequireAuth } from './RequireAuth/RequireAuth';
 
 // ================ IMPORT CONTEXTS ================
@@ -12,7 +12,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import { SearchBar } from './SearchBar/SearchBar';
-import API_BASE_URL from './../../../utils/config';
+// import API_BASE_URL from './../../../utils/config';
 
 // ================ IMPORT SCSS ================
 
@@ -28,12 +28,12 @@ function Header() {
   const [query, setQuery] = useState('');
 
   const {
-    isLoggedIn,
-    setIsLoggedIn,
+    // isLoggedIn,
+    // setIsLoggedIn,
     userData,
-    login,
-    checkUserData,
-    addUserData,
+    // login,
+    // checkUserData,
+    // addUserData,
   } = useContext(AuthContext);
 
   // ================  UTILS ================

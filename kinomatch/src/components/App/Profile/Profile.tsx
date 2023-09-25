@@ -358,7 +358,9 @@ export const Profile: React.FC = () => {
       // }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEvent, userData, user.id]);
+  }, [
+    userEvent, userData,
+    user.id]);
   // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
@@ -465,48 +467,46 @@ export const Profile: React.FC = () => {
         {((showWatchedRoll && mobileVersion) ||
           (showToWatchRoll && mobileVersion) ||
           !mobileVersion) && (
-          <section
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }`}
-          >
-            <div
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }-backdropfilter`}
-              onClick={handleClickOut}
-            ></div>
-            <BookmarkedRoll
-              isLoading={listsAreLoading}
-              mobileVersion={mobileVersion}
-              showWatchedRoll={showWatchedRoll}
-              // setShowWatchedRoll={setShowWatchedRoll}
-              showToWatchRoll={showToWatchRoll}
-              // setShowToWatchRoll={setShowToWatchRoll}
-              watchedList={watchedList}
-              setWatchedList={setWatchedList}
-              watchedMovies={watchedMovies}
-              // setWatchedMovies={setWatchedMovies}
-              // deleteWatched={deleteWatched}
-              toWatchList={toWatchList}
-              setToWatchList={setToWatchList}
-              toWatchMovies={toWatchMovies}
-              // setToWatchMovies={setToWatchMovies}
-              deleteToWatch={deleteToWatch}
-              deleteFavoritesAndWatched={deleteFavoritesAndWatched}
-              favoritesList={favoritesList}
-              addWatched={addWatched}
-              // deleteFavorites={deleteFavorites}
-              // addFavorites={addFavorites}
+            <section
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }`}
+            >
+              <div
+                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }-backdropfilter`}
+                onClick={handleClickOut}
+              ></div>
+              <BookmarkedRoll
+                isLoading={listsAreLoading}
+                mobileVersion={mobileVersion}
+                showWatchedRoll={showWatchedRoll}
+                // setShowWatchedRoll={setShowWatchedRoll}
+                showToWatchRoll={showToWatchRoll}
+                // setShowToWatchRoll={setShowToWatchRoll}
+                watchedList={watchedList}
+                setWatchedList={setWatchedList}
+                watchedMovies={watchedMovies}
+                // setWatchedMovies={setWatchedMovies}
+                // deleteWatched={deleteWatched}
+                toWatchList={toWatchList}
+                setToWatchList={setToWatchList}
+                toWatchMovies={toWatchMovies}
+                // setToWatchMovies={setToWatchMovies}
+                deleteToWatch={deleteToWatch}
+                deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+                favoritesList={favoritesList}
+                addWatched={addWatched}
+                // deleteFavorites={deleteFavorites}
+                // addFavorites={addFavorites}
 
-              handleRemoveFavorites={handleRemoveFavorites}
-              handleAddFavorites={handleAddFavorites}
-              userEvent={userEvent}
-              setUserEvent={setUserEvent}
-              handleClickOut={handleClickOut}
-            />
-          </section>
-        )}
+                handleRemoveFavorites={handleRemoveFavorites}
+                handleAddFavorites={handleAddFavorites}
+                userEvent={userEvent}
+                setUserEvent={setUserEvent}
+                handleClickOut={handleClickOut}
+              />
+            </section>
+          )}
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>

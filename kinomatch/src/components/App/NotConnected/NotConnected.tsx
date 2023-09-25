@@ -4,7 +4,7 @@ import React from 'react';
 
 // ================ IMPORT CONTEXTS ================
 
-import { AuthContext } from '../../../contexts/AuthContext';
+// import { AuthContext } from '../../../contexts/AuthContext';
 
 // ================ IMPORT SCSS ================
 

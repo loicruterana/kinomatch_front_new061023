@@ -219,11 +219,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "useData"
-    if (userData.favorites !== '' && !isFavoritesModified) {
+    // Si userData.favorites est différent de '', que isFavoritesModified n'a pas été modifié et que userData.pictures est vide, alors on supprime les données puis on met à jour les "userData"
+    if (userData.favorites !== '' && !isFavoritesModified && userData.picture === '') {
       deleteData();
       setUserData({ ...userData, favorites: '' });
     }
+    console.log("le probleme vient d'ici")
+
     // On écoute les changements de l'état "userData"
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);

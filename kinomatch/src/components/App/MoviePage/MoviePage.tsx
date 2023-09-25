@@ -16,9 +16,9 @@ import Footer from '../Footer/Footer';
 // ================ IMPORT CONTEXTS ================
 import { CurrentMovieIdContext } from '../../../contexts/CurrentMovieIdContext';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
-import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
-import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
+// import { SelectedGenreFiltersContext } from '../../../contexts/SelectedGenreFiltersContext';
+// import { SelectedProviderFiltersContext } from '../../../contexts/SelectedProviderFiltersContext';
+// import { SelectedDecadeFiltersContext } from '../../../contexts/SelectedDecadeFiltersContext';
 import { NoResultContext } from '../../../contexts/NoResultContext';
 import Loading from '../Loading/Loading';
 
@@ -162,11 +162,11 @@ function MoviePage() {
     CurrentMovieIdContext
   );
   const { userData } = useContext(AuthContext);
-  const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
-  const { selectedProviderFilters } = useContext(
-    SelectedProviderFiltersContext
-  );
-  const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
+  // const { selectedGenreFilters } = useContext(SelectedGenreFiltersContext);
+  // const { selectedProviderFilters } = useContext(
+  //   SelectedProviderFiltersContext
+  // );
+  // const { selectedDecadeFilters } = useContext(SelectedDecadeFiltersContext);
   const { handleNoResult } = useContext(NoResultContext);
 
   //* ==================== USESPRING ===============================

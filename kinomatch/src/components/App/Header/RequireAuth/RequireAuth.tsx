@@ -1,15 +1,19 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../../../contexts/AuthContext';
-import NotConnected from '../../NotConnected/NotConnected';
+// import { useContext } from 'react';
+// import { AuthContext } from '../../../../contexts/AuthContext';
+// import NotConnected from '../../NotConnected/NotConnected';
 import { useUser } from '../../../../hooks/useUser';
 import Loading from '../../Loading/Loading';
-import { useNavigate } from 'react-router-dom';
-import { addUserData } from '../../../../contexts/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+// import { addUserData } from '../../../../contexts/AuthContext';
 // import { RequireAuth } from './RequireAuth/RequireAuth';
 
-export const RequireAuth = ({ children }) => {
-  const auth = useContext(AuthContext);
-  const navigate: (path: string) => void = useNavigate();
+import { ReactNode } from 'react';
+
+type RequireAuthProps = {
+  children: ReactNode;
+};
+
+export const RequireAuth = ({ children }: RequireAuthProps) => {
   const { data, loading } = useUser();
 
   if (loading) {

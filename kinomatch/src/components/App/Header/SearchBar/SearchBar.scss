@@ -27,3 +27,16 @@
     }
   }
 }
+
+//* ============ VERSION MOBILE ============
+
+@media screen and (max-width: 900px) {
+
+  .SearchBar {
+    form {
+      input {
+        width: 60vw;
+      }
+    }
+  }
+}
