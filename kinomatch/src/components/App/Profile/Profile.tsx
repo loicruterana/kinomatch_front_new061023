@@ -229,7 +229,7 @@ export const Profile: React.FC = () => {
             a.film_title.localeCompare(b.film_title)
           );
           setWatchedList(sortedFilmTitles);
-          console.log('ICI', sortedFilmTitles);
+          // console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {
           console.error(error);
@@ -381,7 +381,7 @@ export const Profile: React.FC = () => {
             a.film_title.localeCompare(b.film_title)
           );
           setToWatchList(data.toWatchListTitles);
-          console.log('ICI', sortedFilmTitles);
+          // console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {
           console.error(error);
