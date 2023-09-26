@@ -225,8 +225,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       deleteData();
       setUserData({ ...userData, favorites: '' });
     }
-    console.log("le probleme vient d'ici")
-
+    
     // On écoute les changements de l'état "userData"
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);

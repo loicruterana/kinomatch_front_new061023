@@ -96,19 +96,24 @@ function AddButton(movieId: { movie: string }) {
   // Fonction qui récupère le tableau d'ids des films favoris du user et qui recherche si le film est déjà dans les favoris afin de colorer le bouton coeur en rouge
   useEffect(() => {
     const getUserFavorites = () => {
-      axios
-        .get(`${API_BASE_URL}/favoritesMovies?userID=${userData.id}`)
-        .then(function (response) {
-          const responseData = response.data;
-          const filmIds = responseData.favoritesListTitles.map(
-            (item: { film_id: string }) => item.film_id
-          );
-          if (filmIds.includes(movieId.movie.toString())) {
-            setHeartIsClicked(true);
-          } else {
-            setHeartIsClicked(false);
-          }
-        });
+      // Si l'utilisateur n'est pas connecté, alors on ne fait rien
+      if (userData.id === '') {
+        return;
+      } else {
+        axios
+          .get(`${API_BASE_URL}/favoritesMovies?userID=${userData.id}`)
+          .then(function (response) {
+            const responseData = response.data;
+            const filmIds = responseData.favoritesListTitles.map(
+              (item: { film_id: string }) => item.film_id
+            );
+            if (filmIds.includes(movieId.movie.toString())) {
+              setHeartIsClicked(true);
+            } else {
+              setHeartIsClicked(false);
+            }
+          });
+      }
     };
     // Condition qui éxecute getUserFavorites uniquement si un user est connecté
     {
@@ -120,19 +125,23 @@ function AddButton(movieId: { movie: string }) {
   // Fonction qui récupère le tableau d'ids des films "à voir" du user et qui recherche si le film est déjà dans les "à voir" afin de colorer le bouton marque page en jaune
   useEffect(() => {
     const getUserToWatch = () => {
-      axios
-        .get(`${API_BASE_URL}/toWatchMovies?userID=${userDataToWatch.id}`)
-        .then(function (response) {
-          const responseData = response.data;
-          const filmIds = responseData.toWatchListTitles.map(
-            (item: { film_id: string }) => item.film_id
-          );
-          if (filmIds.includes(movieId.movie.toString())) {
-            setToWatchIsClicked(true);
-          } else {
-            setToWatchIsClicked(false);
-          }
-        });
+      if (userData.id === '') {
+        return;
+      } else {
+        axios
+          .get(`${API_BASE_URL}/toWatchMovies?userID=${userDataToWatch.id}`)
+          .then(function (response) {
+            const responseData = response.data;
+            const filmIds = responseData.toWatchListTitles.map(
+              (item: { film_id: string }) => item.film_id
+            );
+            if (filmIds.includes(movieId.movie.toString())) {
+              setToWatchIsClicked(true);
+            } else {
+              setToWatchIsClicked(false);
+            }
+          });
+      }
     };
     // Condition qui éxecute "getUserToWatch" uniquement si un user est connecté
     {
@@ -144,19 +153,23 @@ function AddButton(movieId: { movie: string }) {
   // Fonction qui récupère le tableau d'ids des films "vu" du user et qui recherche si le film est déjà dans les "vu" afin de colorer le bouton Watched en vert
   useEffect(() => {
     const getUserWatched = () => {
-      axios
-        .get(`${API_BASE_URL}/watchedMovies?userID=${userDataWatched.id}`)
-        .then(function (response) {
-          const responseData = response.data;
-          const filmIds = responseData.watchedListTitles.map(
-            (item: { film_id: string }) => item.film_id
-          );
-          if (filmIds.includes(movieId.movie.toString())) {
-            setWatchedIsClicked(true);
-          } else {
-            setWatchedIsClicked(false);
-          }
-        });
+      if (userData.id === '') {
+        return;
+      } else {
+        axios
+          .get(`${API_BASE_URL}/watchedMovies?userID=${userDataWatched.id}`)
+          .then(function (response) {
+            const responseData = response.data;
+            const filmIds = responseData.watchedListTitles.map(
+              (item: { film_id: string }) => item.film_id
+            );
+            if (filmIds.includes(movieId.movie.toString())) {
+              setWatchedIsClicked(true);
+            } else {
+              setWatchedIsClicked(false);
+            }
+          });
+      }
     };
     // Condition qui éxecute "getUserWatched" uniquement si un user est connecté
     {
