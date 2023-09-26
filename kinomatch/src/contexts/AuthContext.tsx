@@ -220,12 +220,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "useData"
-    if (userData.favorites !== '' && !isFavoritesModified) {
+    // Si on se trouve sur la page profile alors on n'exécute pas la fonction
+    if (window.location.pathname === '/profile') {
+      return;
+      // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "useData"
+    } else if (userData.favorites !== '' && !isFavoritesModified) {
       deleteData();
       setUserData({ ...userData, favorites: '' });
     }
-    
+
     // On écoute les changements de l'état "userData"
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);

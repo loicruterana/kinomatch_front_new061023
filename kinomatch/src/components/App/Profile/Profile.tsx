@@ -224,8 +224,12 @@ export const Profile: React.FC = () => {
         .then(({ data }) => {
           // setShowNotConnected(false);
           // console.log(data);
-          setWatchedList(data.watchedListTitles);
-          // console.log('ICI', data.watchedListTitles);
+          // On trie les films par ordre alphabétique
+          const sortedFilmTitles = data.watchedListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
+            a.film_title.localeCompare(b.film_title)
+          );
+          setWatchedList(sortedFilmTitles);
+          console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {
           console.error(error);
@@ -373,15 +377,18 @@ export const Profile: React.FC = () => {
         .then(({ data }) => {
           // setShowNotConnected(false);
           // console.log(data);
+          const sortedFilmTitles = data.toWatchListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
+            a.film_title.localeCompare(b.film_title)
+          );
           setToWatchList(data.toWatchListTitles);
-          // console.log('coucou');
+          console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {
           console.error(error);
           // console.log('onpassici');
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
   // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
@@ -466,48 +473,46 @@ export const Profile: React.FC = () => {
         {((showWatchedRoll && mobileVersion) ||
           (showToWatchRoll && mobileVersion) ||
           !mobileVersion) && (
-          <section
-            className={`profile-container__roll-modale-${
-              mobileVersion ? 'mobile-version' : 'desktop-version'
-            }`}
-          >
-            <div
-              className={`profile-container__roll-modale-${
-                mobileVersion ? 'mobile-version' : 'desktop-version'
-              }-backdropfilter`}
-              onClick={handleClickOut}
-            ></div>
-            <BookmarkedRoll
-              isLoading={listsAreLoading}
-              mobileVersion={mobileVersion}
-              showWatchedRoll={showWatchedRoll}
-              // setShowWatchedRoll={setShowWatchedRoll}
-              showToWatchRoll={showToWatchRoll}
-              // setShowToWatchRoll={setShowToWatchRoll}
-              watchedList={watchedList}
-              setWatchedList={setWatchedList}
-              watchedMovies={watchedMovies}
-              // setWatchedMovies={setWatchedMovies}
-              // deleteWatched={deleteWatched}
-              toWatchList={toWatchList}
-              setToWatchList={setToWatchList}
-              toWatchMovies={toWatchMovies}
-              // setToWatchMovies={setToWatchMovies}
-              deleteToWatch={deleteToWatch}
-              deleteFavoritesAndWatched={deleteFavoritesAndWatched}
-              favoritesList={favoritesList}
-              addWatched={addWatched}
-              // deleteFavorites={deleteFavorites}
-              // addFavorites={addFavorites}
+            <section
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }`}
+            >
+              <div
+                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }-backdropfilter`}
+                onClick={handleClickOut}
+              ></div>
+              <BookmarkedRoll
+                isLoading={listsAreLoading}
+                mobileVersion={mobileVersion}
+                showWatchedRoll={showWatchedRoll}
+                // setShowWatchedRoll={setShowWatchedRoll}
+                showToWatchRoll={showToWatchRoll}
+                // setShowToWatchRoll={setShowToWatchRoll}
+                watchedList={watchedList}
+                setWatchedList={setWatchedList}
+                watchedMovies={watchedMovies}
+                // setWatchedMovies={setWatchedMovies}
+                // deleteWatched={deleteWatched}
+                toWatchList={toWatchList}
+                setToWatchList={setToWatchList}
+                toWatchMovies={toWatchMovies}
+                // setToWatchMovies={setToWatchMovies}
+                deleteToWatch={deleteToWatch}
+                deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+                favoritesList={favoritesList}
+                addWatched={addWatched}
+                // deleteFavorites={deleteFavorites}
+                // addFavorites={addFavorites}
 
-              handleRemoveFavorites={handleRemoveFavorites}
-              handleAddFavorites={handleAddFavorites}
-              userEvent={userEvent}
-              setUserEvent={setUserEvent}
-              handleClickOut={handleClickOut}
-            />
-          </section>
-        )}
+                handleRemoveFavorites={handleRemoveFavorites}
+                handleAddFavorites={handleAddFavorites}
+                userEvent={userEvent}
+                setUserEvent={setUserEvent}
+                handleClickOut={handleClickOut}
+              />
+            </section>
+          )}
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>
