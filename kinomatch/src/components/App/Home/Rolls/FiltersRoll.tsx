@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Genre, ProviderHome, Nationality } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
@@ -39,7 +39,7 @@ export const RollGenre = ({
   isLoading,
   handleClickOut,
 }: RollGenreProps) => {
-  const effectRan = useRef(false);
+  // const effectRan = useRef(false);
 
   // ================ UTILS ================
 
@@ -153,7 +153,7 @@ export const RollGenre = ({
 
   // On créer un useEffect afin de pouvoir utiliser la fonction de recherche de nationalité
   useEffect(() => {
-    if (effectRan.current === true) {
+    // if (effectRan.current === true) {
 
       // Fonction permettant de chercher les nationalités en fonction de la recherche de l'utilisateur
       const searchNationality = document.getElementById('nationalitySearch');
@@ -171,10 +171,10 @@ export const RollGenre = ({
       return () => {
         searchNationality?.removeEventListener('input', handleInputChange);
       };
-    }
-    return () => {
-      effectRan.current = true;
-    };
+    // }
+    // return () => {
+    //   effectRan.current = true;
+    // };
   }, [preselectedNationalities, countriesFound]);
 
   // ================ JSX ================
