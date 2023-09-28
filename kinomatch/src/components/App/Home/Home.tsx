@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre, Nationality, ProviderHome } from '../../../utils/interfaces';
@@ -27,7 +27,7 @@ import { NoResultContext } from '../../../contexts/NoResultContext';
 
 //* ================ COMPOSANT ================
 export const Home: React.FC = () => {
-  const effectRan = useRef(false);
+  // const effectRan = useRef(false);
 
   const navigate = useNavigate();
 
@@ -103,7 +103,7 @@ export const Home: React.FC = () => {
 
   // ================ USE EFFECT API ================
   useEffect(() => {
-    if (effectRan.current === true) {
+    // if (effectRan.current === true) {
 
       // pour activer le loader
       load();
@@ -174,10 +174,10 @@ export const Home: React.FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((error: any) => console.error(error))
         .finally(() => unload());
-    }
-    return () => {
-      effectRan.current = true;
-    };
+    // }
+    // return () => {
+    //   effectRan.current = true;
+    // };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
 

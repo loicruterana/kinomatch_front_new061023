@@ -120,7 +120,7 @@ const BurgerMenu: React.FC<Props> = ({
                 </button>
               </Link>
             </li> */}
-            {authContext?.isLoggedIn && (
+            {authContext?.userData.id && (
               <>
                 {/* Nom de l'utilisateur */}
                 <div className='burgerMenu__container__items__text'>
@@ -166,7 +166,7 @@ const BurgerMenu: React.FC<Props> = ({
               setQuery={setQuery}
               handleSubmit={handleSubmit}
             />
-            {!authContext?.isLoggedIn && (
+            {!authContext?.userData.id && (
               <>
                 <Link to='/login' key='login'>
                   <button

@@ -17,7 +17,7 @@ export const RequireAuth = ({ children }: RequireAuthProps) => {
     if (loading) {
       return <Loading />;
     }
-    if (!data?.id) {
+    if (data?.id === null) {
       setTimeout(() => {
         navigate(`/`);
         // console.log('on est déconnecté');
@@ -25,5 +25,6 @@ export const RequireAuth = ({ children }: RequireAuthProps) => {
       return <NotConnected />;
     }
   }, 1000);
+
   return <>{children}</>;
 };

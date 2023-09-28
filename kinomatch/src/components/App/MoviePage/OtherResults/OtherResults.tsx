@@ -123,46 +123,50 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
           dataLength={movieArray.length}
           next={loadMoreData}
           hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
+          loader={<h4></h4>}
           endMessage={<p style={{ textAlign: 'center' }}>End of results</p>}
           height={2160}
           scrollableTarget='scrollableDiv'
           scrollThreshold={0.8}
         >
-          <div className='otherResults-container--scrollList'>
-            {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
-            {movieArray?.map(
-              (movieElem: { vote_average: number; title: string; poster_path: string; id: Key }) => (
-                <button
-                  key={movieElem.id}
-                  data-id={movieElem.id}
-                  onClick={handleClick}
-                  aria-label={`Afficher les détails du film : ${movieElem.title}`}
-                >
-                  {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
-                  <div className='otherResults-container--rate'>
-                    {' '}
-                    {String(movieElem.vote_average * 10).substring(0, 3)}%
-                  </div>
-                  <img
-                    className='otherResults-container--scrollList---images'
-                    src={
-                      movieElem.poster_path
-                        ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`
-                        : '/images/SamplePoster1.png'
-                    }
-                    alt={`Affiche du film ${movieElem.title}`}
-                  />
-                  {/* Afficher le titre du film s'il y en a une, sinon rien */}
-                  {movieElem.poster_path === null ? (
-                    <p className='otherResults-container--scrollList---movieTitle'>
-                      {movieElem.title}
-                    </p>
-                  ) : null}
-                </button>
-              )
-            )}
-          </div>
+          {movieArray.length > 0 ? (
+            <div className='otherResults-container--scrollList'>
+              {/* Pour chaque élément du tableau de films, afficher un bouton avec l'affiche et le titre */}
+              {movieArray?.map(
+                (movieElem: { vote_average: number; title: string; poster_path: string; id: Key }) => (
+                  <button
+                    key={movieElem.id}
+                    data-id={movieElem.id}
+                    onClick={handleClick}
+                    aria-label={`Afficher les détails du film : ${movieElem.title}`}
+                  >
+                    {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
+                    <div className='otherResults-container--rate'>
+                      {' '}
+                      {String(movieElem.vote_average * 10).substring(0, 3)}%
+                    </div>
+                    <img
+                      className='otherResults-container--scrollList---images'
+                      src={
+                        movieElem.poster_path
+                          ? `https://image.tmdb.org/t/p/w220_and_h330_face/${movieElem.poster_path}`
+                          : '/images/SamplePoster1.png'
+                      }
+                      alt={`Affiche du film ${movieElem.title}`}
+                    />
+                    {/* Afficher le titre du film s'il y en a une, sinon rien */}
+                    {movieElem.poster_path === null ? (
+                      <p className='otherResults-container--scrollList---movieTitle'>
+                        {movieElem.title}
+                      </p>
+                    ) : null}
+                  </button>
+                )
+              )}
+            </div>
+          ) : (
+            null
+          )}
         </InfiniteScroll>
       </section>
     </aside>

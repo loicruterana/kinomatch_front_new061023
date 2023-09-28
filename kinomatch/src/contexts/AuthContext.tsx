@@ -1,6 +1,6 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React, { createContext, useState, useEffect, ReactNode, useRef } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../utils/config';
 
@@ -67,7 +67,6 @@ export const AuthContext = createContext<AuthContextProps>(
 // export de la fonction AuthProvider qui prend en argument les enfants du composant.
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
-  const effectRan = useRef(false);
 
   // ================ USESTATE ================
 
@@ -121,6 +120,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .get(`${API_BASE_URL}/login/${userData.id}`)
       .then((response) => {
         if (response.data.authorized === false) {
+          // lorsque l'utilisateur se déconnecte, on supprime les données de l'utilisateur
+          clearUserData();
           setIsLoggedIn(false);
           // localStorage.setItem('isLoggedIn', 'false');
         }
@@ -188,26 +189,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // UseEffect permettant de poster les données des "favorites" de l'utilisateur
   useEffect(() => {
-    if (effectRan.current === true) {
 
-      const postData = async (): Promise<void> => {
-        try {
-          await axios.post(`${API_BASE_URL}/favoritesMovies`, userData);
-        } catch (error) {
-          console.log(error);
-        }
-      };
 
-      // Si "isFavoritesModified" a été modifié et que userData.favorites n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
-      if (userData.favorites !== '' && isFavoritesModified) {
-        postData();
-        setIsFavoritesModified(false);
-      } else {
-        setIsFavoritesModified(false);
+    const postData = async (): Promise<void> => {
+      try {
+        await axios.post(`${API_BASE_URL}/favoritesMovies`, userData);
+      } catch (error) {
+        console.log(error);
       }
-      return () => {
-        effectRan.current = true;
-      };
+    };
+
+    // Si "isFavoritesModified" a été modifié et que userData.favorites n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
+    if (userData.favorites !== '' && isFavoritesModified) {
+      postData();
+      setIsFavoritesModified(false);
+    } else {
+      setIsFavoritesModified(false);
     }
 
     // On écoute les changements de l'état "userData" et "isFavoritesModified"
@@ -229,7 +226,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Si on se trouve sur la page profile alors on n'exécute pas la fonction
+    // Si on se trouve sur la page profile et que userData.favorites n'est pas vide, alors on ne supprime pas les données
     if (userData.favorites !== '' && !isFavoritesModified) {
       deleteData();
       setUserData({ ...userData, favorites: '' });
@@ -261,26 +258,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // UseEffect permettant de poster les données des "toWatch" de l'utilisateur
   useEffect(() => {
-    if (effectRan.current === true) {
 
-      const postData = async (): Promise<void> => {
-        try {
-          await axios.post(`${API_BASE_URL}/toWatchMovies`, userDataToWatch);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      // Si "isToWatchModified" a été modifié et que userDataToWatch.toWatch n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
-      if (userDataToWatch.toWatch !== '' && isToWatchModified) {
-        postData();
-        setIsToWatchModified(false);
-      } else {
-        setIsToWatchModified(false);
+    const postData = async (): Promise<void> => {
+      try {
+        await axios.post(`${API_BASE_URL}/toWatchMovies`, userDataToWatch);
+      } catch (error) {
+        console.log(error);
       }
-      return () => {
-        effectRan.current = true;
-      };
+    };
+
+    // Si "isToWatchModified" a été modifié et que userDataToWatch.toWatch n'est pas vide, alors on poste les données puis on réinitialise l'état sinon on réinitialise l'état
+    if (userDataToWatch.toWatch !== '' && isToWatchModified) {
+      postData();
+      setIsToWatchModified(false);
+    } else {
+      setIsToWatchModified(false);
     }
     // On écoute les changements de l'état "userDataToWatch" et "isToWatchModified"
   }, [userDataToWatch, isToWatchModified]);

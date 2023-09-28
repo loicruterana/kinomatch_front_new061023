@@ -15,6 +15,7 @@ import Signup from './Signup/Signup';
 import Profile from './Profile/Profile';
 import SearchResults from './SearchResults/SearchResults';
 import PageNotFound from './PageNotFound/PageNotFound';
+import CookieConsentModal from './CookieConsentModal/CookieConsentModal';
 
 // ================ IMPORT CONTEXTS ================
 
@@ -32,6 +33,7 @@ import { NoResultProvider } from '../../contexts/NoResultContext';
 
 import './App.scss';
 import NoResult from './NoResult/NoResult';
+import { Cookies } from 'react-cookie';
 
 //* ================ COMPOSANT ================
 
@@ -39,35 +41,38 @@ axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <NoResultProvider>
-      <CurrentMovieIdProvider>
-        <SelectedDecadeFiltersProvider>
-          <SelectedProviderFiltersProvider>
-            <SelectedGenreFiltersProvider>
-              <SelectedNotationFiltersProvider>
-                <SelectedNationalityFiltersProvider>
-                  <AuthProvider>
-                    <LoadingProvider>
-                      <Header />
-                      <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/films' element={<MoviePage />} />
-                        <Route path='/signup' element={<Signup />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/profile' element={<Profile />} />
-                        <Route path='/noresult' element={<NoResult />} />
-                        <Route path='*' element={<PageNotFound />} />
-                        <Route path='/searchresults' element={<SearchResults />} />
-                      </Routes>
-                    </LoadingProvider>
-                  </AuthProvider>
-                </SelectedNationalityFiltersProvider>
-              </SelectedNotationFiltersProvider>
-            </SelectedGenreFiltersProvider>
-          </SelectedProviderFiltersProvider>
-        </SelectedDecadeFiltersProvider>
-      </CurrentMovieIdProvider>
-    </NoResultProvider>
+    <div className="App">
+      <CookieConsentModal />
+      <NoResultProvider>
+        <CurrentMovieIdProvider>
+          <SelectedDecadeFiltersProvider>
+            <SelectedProviderFiltersProvider>
+              <SelectedGenreFiltersProvider>
+                <SelectedNotationFiltersProvider>
+                  <SelectedNationalityFiltersProvider>
+                    <AuthProvider>
+                      <LoadingProvider>
+                        <Header />
+                        <Routes>
+                          <Route path='/' element={<Home />} />
+                          <Route path='/films' element={<MoviePage />} />
+                          <Route path='/signup' element={<Signup />} />
+                          <Route path='/login' element={<Login />} />
+                          <Route path='/profile' element={<Profile />} />
+                          <Route path='/noresult' element={<NoResult />} />
+                          <Route path='*' element={<PageNotFound />} />
+                          <Route path='/searchresults' element={<SearchResults />} />
+                        </Routes>
+                      </LoadingProvider>
+                    </AuthProvider>
+                  </SelectedNationalityFiltersProvider>
+                </SelectedNotationFiltersProvider>
+              </SelectedGenreFiltersProvider>
+            </SelectedProviderFiltersProvider>
+          </SelectedDecadeFiltersProvider>
+        </CurrentMovieIdProvider>
+      </NoResultProvider>
+    </div>
   );
   //* ================ FERMETURE COMPOSANT ================
 }
