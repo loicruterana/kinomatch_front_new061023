@@ -33,7 +33,6 @@ import { NoResultProvider } from '../../contexts/NoResultContext';
 
 import './App.scss';
 import NoResult from './NoResult/NoResult';
-import { Cookies } from 'react-cookie';
 
 //* ================ COMPOSANT ================
 

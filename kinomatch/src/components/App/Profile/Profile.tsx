@@ -380,7 +380,7 @@ export const Profile: React.FC = () => {
           const sortedFilmTitles = data.toWatchListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
             a.film_title.localeCompare(b.film_title)
           );
-          setToWatchList(data.toWatchListTitles);
+          setToWatchList(sortedFilmTitles);
           // console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {

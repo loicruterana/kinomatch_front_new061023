@@ -1,6 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
 
-import React from "react";
 import { useCookies } from "react-cookie";
 
 // ================ IMPORT SCSS ================

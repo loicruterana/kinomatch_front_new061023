@@ -586,7 +586,7 @@ function MoviePage() {
               className='movieFound__essentiel-image'
               src={
                 movie.poster_path
-                  ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2/${movie.poster_path}`
                   : '/images/testsample.jpg'
               }
               alt={`Image du film: ${movie.title}`}
