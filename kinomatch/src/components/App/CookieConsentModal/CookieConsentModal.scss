@@ -1,5 +1,8 @@
 @use '../../../styles/vars';
 
+
+//* ============ VERSION DESKTOP ============
+
 .cookie-consent-modal__background {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -28,7 +31,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     transition: transform 0.2s ease-in-out;
-    
+
 
     p {
         color: vars.$theme1-secondary;
@@ -68,8 +71,13 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
         }
     }
+}
 
+//* ============ VERSION MOBILE ============
 
-
-
+@media screen and (max-width: 1100px) {
+    .cookie-consent-modal {
+        width: 80vw;
+        height: 50vh;
+    }
 }

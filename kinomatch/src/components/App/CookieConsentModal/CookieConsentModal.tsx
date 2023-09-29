@@ -11,7 +11,7 @@ import "./CookieConsentModal.scss";
 function CookieConsentModal() {
   const [cookies, setCookie] = useCookies(['cookieConsent']);
 
-  // On créer la fonction permettant de mettre à jour le consentement
+  // On créer la fonction permettant de mettre à jour le consentement des cookies
   const giveCookieConsent = () => {
     setCookie('cookieConsent', true, { path: '/' });
   };
@@ -24,7 +24,7 @@ function CookieConsentModal() {
     <div className="cookie-consent-modal__background">
       <div className="cookie-consent-modal">
         <div>
-          <p>Nous utilisons des cookies pour améliorer votre expérience. <br /> En utilisant notre site, vous acceptez notre <a href="/privacy-policy" target="blank">politique de confidentialité</a> et l'utilisation de cookies.</p>
+          <p>Nous utilisons des cookies pour améliorer votre expérience. <br /> En utilisant notre site, vous acceptez notre <a href="https://sites.google.com/view/kinomatch-com/accueil" target="blank">politique de confidentialité</a> et l'utilisation de cookies.</p>
           <button onClick={giveCookieConsent}>J'accepte</button>
         </div>
       </div>
