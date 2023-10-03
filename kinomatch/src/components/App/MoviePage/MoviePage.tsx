@@ -329,207 +329,207 @@ function MoviePage() {
   useEffect(() => {
     if (!window.location.search.includes('filmID')) {
       // if (effectRan.current === true) {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        //*  ON RÉCUÈRE LES PARAMÈTRES DE L'URL POUR AFFICHER LES FILTRES SELECTIONNES PAR L'UTILISATEUR
+      //*  ON RÉCUÈRE LES PARAMÈTRES DE L'URL POUR AFFICHER LES FILTRES SELECTIONNES PAR L'UTILISATEUR
 
-        const urlParams = new URLSearchParams(window.location.search);
-        // On crée un tableau vide pour stocker les paramètres
-        const paramsArray: { key: string; value: string }[] = [];
-        // On boucle sur les paramètres de l'URL
-        urlParams.forEach((value, key) => {
-          paramsArray.push({ key, value });
-        });
+      const urlParams = new URLSearchParams(window.location.search);
+      // On crée un tableau vide pour stocker les paramètres
+      const paramsArray: { key: string; value: string }[] = [];
+      // On boucle sur les paramètres de l'URL
+      urlParams.forEach((value, key) => {
+        paramsArray.push({ key, value });
+      });
 
-        // ==================== FILTRES GENRES ====================
+      // ==================== FILTRES GENRES ====================
 
-        // On filtre les paramètres pour récupérer les genres
-        const filteredGenres = paramsArray.filter(
-          (genre) => genre.key === 'genreID'
+      // On filtre les paramètres pour récupérer les genres
+      const filteredGenres = paramsArray.filter(
+        (genre) => genre.key === 'genreID'
+      );
+
+      // On créer un tableau avec les valeurs des paramètres
+      const genreValueArray = filteredGenres.map((obj) => obj.value);
+      // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
+      const genreArray = genreValueArray.map((value) => {
+        // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
+        const genre = genresListFile.find(
+          (param: { id: number }) => param.id === Number(value)
         );
+        // Si le genre existe on retourne son nom sinon on retourne ''
+        return genre ? genre.name : '';
+      });
 
-        // On créer un tableau avec les valeurs des paramètres
-        const genreValueArray = filteredGenres.map((obj) => obj.value);
-        // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres
-        const genreArray = genreValueArray.map((value) => {
-          // On recherche les id des genres dans le fichier json genres.json afin de récupérer les noms des genres et on convertit la valeur en nombre
-          const genre = genresListFile.find(
-            (param: { id: number }) => param.id === Number(value)
-          );
-          // Si le genre existe on retourne son nom sinon on retourne ''
-          return genre ? genre.name : '';
-        });
+      // On stocke les genres dans le state
+      setGenresList(genreArray);
 
-        // On stocke les genres dans le state
-        setGenresList(genreArray);
+      // ==================== FILTRES PROVIDERS ====================
 
-        // ==================== FILTRES PROVIDERS ====================
+      // On filtre les paramètres pour récupérer les providers
+      const filterProviders = paramsArray.filter(
+        (provider) => provider.key === 'providerID'
+      );
 
-        // On filtre les paramètres pour récupérer les providers
-        const filterProviders = paramsArray.filter(
-          (provider) => provider.key === 'providerID'
+      // On créer un tableau avec les valeurs des paramètres
+      const filterProvidersArray = filterProviders.map((obj) => obj.value);
+
+      // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers
+      const providerArray = filterProvidersArray.map((value) => {
+        // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers et on convertit la valeur en nombre
+        const provider = providersListFile.find(
+          (param: { provider_id: number }) =>
+            param.provider_id === Number(value)
         );
+        // Si le provider existe on retourne son nom sinon on retourne ''
+        return provider ? provider.provider_name : '';
+      });
 
-        // On créer un tableau avec les valeurs des paramètres
-        const filterProvidersArray = filterProviders.map((obj) => obj.value);
-
-        // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers
-        const providerArray = filterProvidersArray.map((value) => {
-          // On recherche les id des providers dans le fichier json providers.json afin de récupérer les noms des providers et on convertit la valeur en nombre
-          const provider = providersListFile.find(
-            (param: { provider_id: number }) =>
-              param.provider_id === Number(value)
-          );
-          // Si le provider existe on retourne son nom sinon on retourne ''
-          return provider ? provider.provider_name : '';
-        });
-
-        setProvidersList(providerArray);
+      setProvidersList(providerArray);
 
 
-        // ============================ FILTRE DECADES ============================
+      // ============================ FILTRE DECADES ============================
 
-        // On filtre les paramètres pour récupérer la décennie
-        const filteredDecade = paramsArray.filter(
-          (decade) => decade.key === 'decade'
+      // On filtre les paramètres pour récupérer la décennie
+      const filteredDecade = paramsArray.filter(
+        (decade) => decade.key === 'decade'
+      );
+
+      // On créer un tableau avec les valeurs des paramètres
+      const decadeValueArray = filteredDecade.map((obj) => obj.value);
+
+      // On stocke les décennies dans le state
+      setDecadeList(decadeValueArray);
+
+      // ============================ FILTRE NOTATIONS ============================
+
+      // On filtre les paramètres pour récupérer la notation
+      const filterNotation = paramsArray.filter(
+        (notation) => notation.key === 'notation'
+      );
+
+      // On créer un tableau avec les valeurs des paramètres
+      const notationValueArray = filterNotation.map((obj) => obj.value);
+
+      // On stocke les décennies dans le state
+      setNotationList(notationValueArray);
+
+      // ============================ FILTRE PAYS ============================
+
+      // On filtre les paramètres pour récupérer les pays
+      const filterCountries = paramsArray.filter(
+        (country) => country.key === 'countryID'
+      );
+
+      // On créer un tableau avec les valeurs des paramètres
+      const filterCountriesArray = filterCountries.map((obj) => obj.value);
+
+      // On recherche les id des pays dans le fichier json countries.json afin de récupérer les noms des pays
+      const countryArray = filterCountriesArray.map((value) => {
+        const country = countriesListFile.find(
+          (param: { iso_3166_1: string }) => param.iso_3166_1 === value
         );
+        // Si le pays existe on retourne son nom sinon on retourne ''
+        return country ? country.native_name : '';
+      })
 
-        // On créer un tableau avec les valeurs des paramètres
-        const decadeValueArray = filteredDecade.map((obj) => obj.value);
+      setCountriesList(countryArray);
 
-        // On stocke les décennies dans le state
-        setDecadeList(decadeValueArray);
 
-        // ============================ FILTRE NOTATIONS ============================
+      //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
+      axios
+        .get(`${API_BASE_URL}/filmsAdvanced${window.location.search}`)
+        .then(({ data }) => {
+          // Renvoi la première page de résultats
+          if (data.results.length === 0) {
+            handleNoResult();
+            navigate(`/`);
+            return;
+          }
 
-        // On filtre les paramètres pour récupérer la notation
-        const filterNotation = paramsArray.filter(
-          (notation) => notation.key === 'notation'
-        );
+          // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
+          const numberOfPages = data.total_pages;
+          let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
+          if (chosenPage > 500) {
+            chosenPage = Math.floor(Math.random() * 500) + 1;
+          }
 
-        // On créer un tableau avec les valeurs des paramètres
-        const notationValueArray = filterNotation.map((obj) => obj.value);
+          //* ON RECUPERE LES DONNEES DE LA PAGE SELECTIONNEE ALEATOIREMENT !
 
-        // On stocke les décennies dans le state
-        setNotationList(notationValueArray);
+          // On récupère les données de la page sélectionnée
+          const searchParams1 = new URLSearchParams();
+          searchParams1.append('randomPage', chosenPage.toString());
 
-        // ============================ FILTRE PAYS ============================
-
-        // On filtre les paramètres pour récupérer les pays
-        const filterCountries = paramsArray.filter(
-          (country) => country.key === 'countryID'
-        );
-
-        // On créer un tableau avec les valeurs des paramètres
-        const filterCountriesArray = filterCountries.map((obj) => obj.value);
-
-        // On recherche les id des pays dans le fichier json countries.json afin de récupérer les noms des pays
-        const countryArray = filterCountriesArray.map((value) => {
-          const country = countriesListFile.find(
-            (param: { iso_3166_1: string }) => param.iso_3166_1 === value
-          );
-          // Si le pays existe on retourne son nom sinon on retourne ''
-          return country ? country.native_name : '';
+          // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
+          if (window.location.search === '') {
+            return axios.get(`${API_BASE_URL}/filmsAdvanced`);
+          } else {
+            // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
+            return axios.get(
+              `${API_BASE_URL}/randomFilmsAdvanced${window.location.search
+              }&${searchParams1.toString()}`
+            );
+          }
         })
-
-        setCountriesList(countryArray);
-
-
-        //* ON RECUPERE LES DONNEES DE LA PREMIERE PAGE DE RESULTATS AVEC LE NOMBRE DE PAGES !
-        axios
-          .get(`${API_BASE_URL}/filmsAdvanced${window.location.search}`)
-          .then(({ data }) => {
-            // Renvoi la première page de résultats
-            if (data.results.length === 0) {
-              handleNoResult();
-              navigate(`/`);
-              return;
-            }
-
-            // On récupère le nombre de pages de résultats puis on en sélectionne une aléatoirement
-            const numberOfPages = data.total_pages;
-            let chosenPage = Math.floor(Math.random() * numberOfPages) + 1;
-            if (chosenPage > 500) {
-              chosenPage = Math.floor(Math.random() * 500) + 1;
-            }
-
-            //* ON RECUPERE LES DONNEES DE LA PAGE SELECTIONNEE ALEATOIREMENT !
-
-            // On récupère les données de la page sélectionnée
-            const searchParams1 = new URLSearchParams();
-            searchParams1.append('randomPage', chosenPage.toString());
-
+        //* ON SELECTIONNE UN FILM ALEATOIREMENT PARMI LES RESULTATS DE LA PAGE SELECTIONNEE, ON L'AFFICHE ET ON MET A JOUR LE STATE AVEC LES RESULTATS FILTRES !
+        .then((response) => {
+          // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
+          const data = response?.data;
+          // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
+          if (data) {
+            const selectRandomID =
+              data.results[Math.floor(Math.random() * data.results.length)]
+                .id;
+            // On évite d'afficher le même film que celui qui est déjà affiché
+            const filteredResults = data.results.filter(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (result: { id: any }) => result.id !== selectRandomID
+            );
+            // Met à jour le state avec les résultats filtrés
+            setMovieArray(filteredResults);
+            const searchParams = new URLSearchParams();
             // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-            if (window.location.search === '') {
-              return axios.get(`${API_BASE_URL}/filmsAdvanced`);
-            } else {
-              // Sinon on affiche les films filtrés en ajoutant comme paramètre la page sélectionnée aléatoirement
-              return axios.get(
-                `${API_BASE_URL}/randomFilmsAdvanced${window.location.search
-                }&${searchParams1.toString()}`
-              );
-            }
-          })
-          //* ON SELECTIONNE UN FILM ALEATOIREMENT PARMI LES RESULTATS DE LA PAGE SELECTIONNEE, ON L'AFFICHE ET ON MET A JOUR LE STATE AVEC LES RESULTATS FILTRES !
-          .then((response) => {
-            // Renvoi les résultats de la page sélectionnée (entre 1 et 500)
-            const data = response?.data;
-            // Si la requête récupère des données, on sélectionne un film aléatoire parmi les résultats
-            if (data) {
-              const selectRandomID =
-                data.results[Math.floor(Math.random() * data.results.length)]
-                  .id;
-              // On évite d'afficher le même film que celui qui est déjà affiché
-              const filteredResults = data.results.filter(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (result: { id: any }) => result.id !== selectRandomID
-              );
-              // Met à jour le state avec les résultats filtrés
-              setMovieArray(filteredResults);
-              const searchParams = new URLSearchParams();
-              // Si aucun filtre n'est sélectionné, on affiche les films populaires sinon on affiche les films filtrés
-              searchParams.append(
-                'movieID',
-                movieArray.length === 0 ? selectRandomID : currentMovieId
-              );
+            searchParams.append(
+              'movieID',
+              movieArray.length === 0 ? selectRandomID : currentMovieId
+            );
 
-              // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits", "providers" et "videos"
-              const requests = [
-                axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
-                axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
-                axios.get(
-                  `${API_BASE_URL}/provider?${searchParams.toString()}`
-                ),
-                axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
-              ];
-              return Promise.all(requests);
+            // On récupère les données du film sélectionné aléatoirement sur les routes "detail", "credits", "providers" et "videos"
+            const requests = [
+              axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`),
+              axios.get(`${API_BASE_URL}/credits?${searchParams.toString()}`),
+              axios.get(
+                `${API_BASE_URL}/provider?${searchParams.toString()}`
+              ),
+              axios.get(`${API_BASE_URL}/videos?${searchParams.toString()}`),
+            ];
+            return Promise.all(requests);
+          }
+        })
+        // Ensuite on récupère les données des films recommandés et on les stocke dans les states
+        .then((responses) => {
+          // Si les réponses sont un tableau, on les déstructure pour les récupérer dans l'ordre
+          if (Array.isArray(responses)) {
+            const [movieData, creditsData, providersData, videosMovie] =
+              responses;
+            // Si les données sont présentes, on les stocke dans les states
+            if (movieData.data && creditsData.data && providersData.data) {
+              setMovie(movieData.data);
+              setCredits(creditsData.data);
+              setProviders(providersData.data);
+              setVideos(videosMovie.data.results);
+              setCircle({
+                id: movieData.data.id,
+                fillValue: movieData.data.vote_average * 10,
+              });
             }
-          })
-          // Ensuite on récupère les données des films recommandés et on les stocke dans les states
-          .then((responses) => {
-            // Si les réponses sont un tableau, on les déstructure pour les récupérer dans l'ordre
-            if (Array.isArray(responses)) {
-              const [movieData, creditsData, providersData, videosMovie] =
-                responses;
-              // Si les données sont présentes, on les stocke dans les states
-              if (movieData.data && creditsData.data && providersData.data) {
-                setMovie(movieData.data);
-                setCredits(creditsData.data);
-                setProviders(providersData.data);
-                setVideos(videosMovie.data.results);
-                setCircle({
-                  id: movieData.data.id,
-                  fillValue: movieData.data.vote_average * 10,
-                });
-              }
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
       // }
       // return () => {
       //   effectRan.current = true;
@@ -816,65 +816,70 @@ function MoviePage() {
                     className='movieDetails__filters-otherResultsBtn'
                     onClick={handleOtherResults}
                   >
-                    {/* Si showOtherResults est false, on affiche "Autres Résultats" sinon on affiche "Retour" */}
-                    {!showOtherResults ? 'Autres Résultats' : 'Retour'}
+                    {/* Si showOtherResults est false, on affiche "Autres Résultats" sinon on affiche "Retour" et si on se trouve sur la route contenant filmID alors on affiche 'Films similaires'*/}
+                    {window.location.search.includes('filmID') ? (!showOtherResults ? 'Films similaires' : 'Retour')
+                      :
+                      !showOtherResults ? 'Autres Résultats' : 'Retour'
+                    }
                   </button>
                   {/* Affichage des filtres concernant le film affiché */}
-                  <ul className='movieDetails__filters-mobile--filterElemList'>
-                    <li>
-                      {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
-                      {genresList.map((genre) => (
-                        <p
-                          key={genre}
-                          className='movieDetails__filters-mobile--filterElem'
-                        >
-                          {genre}
-                        </p>
-                      ))}
-                    </li>
-                    <li>
-                      {/* Pour chaque filtre de "provider", on affiche les noms de providers */}
-                      {providersList.map((provider) => (
-                        <p
-                          key={provider}
-                          className='movieDetails__filters-mobile--filterElem'
-                        >
-                          {provider}
-                        </p>
-                      ))}
-                    </li>
-                    <li>
-                      {/* Pour chaque filtre de "decade", on affiche les noms de décennies */}
-                      {decadeList.map((decade) => (
-                        <p
-                          key={decade}
-                          className='movieDetails__filters-mobile--filterElem'
-                        >
-                          {decade}
-                        </p>
-                      ))}
-                    </li>
-                    <li>
-                      {notationList.map((notation) => (
-                        <p
-                          key={notation}
-                          className='movieDetails__filters-mobile--filterElem'
-                        >
-                          {`> ${notation} %`}
-                        </p>
-                      ))}
-                    </li>
-                    <li>
-                      {countriesList.map((country) => (
-                        <p
-                          key={country}
-                          className='movieDetails__filters-mobile--filterElem'
-                        >
-                          {country}
-                        </p>
-                      ))}
-                    </li>
-                  </ul>
+                  {!window.location.search.includes('filmID') &&
+                    <ul className='movieDetails__filters-mobile--filterElemList'>
+                      <li>
+                        {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
+                        {genresList.map((genre) => (
+                          <p
+                            key={genre}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {genre}
+                          </p>
+                        ))}
+                      </li>
+                      <li>
+                        {/* Pour chaque filtre de "provider", on affiche les noms de providers */}
+                        {providersList.map((provider) => (
+                          <p
+                            key={provider}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {provider}
+                          </p>
+                        ))}
+                      </li>
+                      <li>
+                        {/* Pour chaque filtre de "decade", on affiche les noms de décennies */}
+                        {decadeList.map((decade) => (
+                          <p
+                            key={decade}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {decade}
+                          </p>
+                        ))}
+                      </li>
+                      <li>
+                        {notationList.map((notation) => (
+                          <p
+                            key={notation}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {`> ${notation} %`}
+                          </p>
+                        ))}
+                      </li>
+                      <li>
+                        {countriesList.map((country) => (
+                          <p
+                            key={country}
+                            className='movieDetails__filters-mobile--filterElem'
+                          >
+                            {country}
+                          </p>
+                        ))}
+                      </li>
+                    </ul>
+                  }
                 </React.Fragment>
               )}
             </div>
