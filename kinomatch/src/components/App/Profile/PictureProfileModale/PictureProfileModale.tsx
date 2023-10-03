@@ -81,6 +81,13 @@ const PictureProfileModale = (
           onClick={handleClick}
           data-profile='ghostfaceprofile'
         />
+        <img
+          src='images/sisteractprofile.png'
+          alt='sisteractprofile'
+          className='pictureProfileModale-pic'
+          onClick={handleClick}
+          data-profile='sisteractprofile'
+        />
       </div>
       {/* <div className='pictureProfileModale__bottompart'>
         <button onClick={handleClickOut}>Retour</button>
