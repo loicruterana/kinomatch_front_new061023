@@ -826,7 +826,7 @@ function MoviePage() {
                   {!window.location.search.includes('filmID') &&
                     <ul className='movieDetails__filters-mobile--filterElemList'>
                       <li>
-                        {/* Pour chaque filtre de "genre", on affiche les noms de genres */}
+                        {/* Pour chaque filtre de "genres", on affiche les noms de genres */}
                         {genresList.map((genre) => (
                           <p
                             key={genre}
