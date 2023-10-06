@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre, Nationality, ProviderHome } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
+// coucou
 
 // ================ IMPORT SCSS ================
 import './Home.scss';
