@@ -66,23 +66,23 @@ const BurgerMenu: React.FC<Props> = ({
   };
 
   // pour supprimer le profil
-  const handleDeleteProfile = async (): Promise<void> => {
-    try {
-      const searchParams = new URLSearchParams();
-      searchParams.append('userID', userData.id);
-      axios
-        .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
-        .then(() => {
-          logout();
-          navigate(`/`);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleDeleteProfile = async (): Promise<void> => {
+  //   try {
+  //     const searchParams = new URLSearchParams();
+  //     searchParams.append('userID', userData.id);
+  //     axios
+  //       .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
+  //       .then(() => {
+  //         logout();
+  //         navigate(`/`);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // pour se déconnecter
   const handleLogout = async (): Promise<void> => {
