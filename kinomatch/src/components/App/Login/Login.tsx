@@ -195,7 +195,7 @@ export const Login = () => {
           {mobileVersion && (
             <i
               className='fa-solid fa-info login-container-form-input-inputgroup-i'
-              onClick={() => setShowPseudoConditions(!showPasswordConditions)}
+              onClick={() => setShowPseudoConditions(!showPseudoConditions)}
             ></i>
           )}
 
@@ -262,7 +262,7 @@ export const Login = () => {
             type={showPassword ? 'text' : 'password'}
             id='password'
             name='password'
-            placeholder='v0tr3MdP1c1'
+            placeholder='~Abcdefghijklmn12'
             aria-label='Votre mot de passe'
             required
           />
