@@ -145,11 +145,14 @@ export const Profile: React.FC = () => {
     try {
       const searchParams = new URLSearchParams();
       searchParams.append('userID', userData.id);
+      console.log(userData.id);
       axios
         .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
         .then(() => {
           logout();
+          // on rafrachit la page pour que le cookie soit supprimé
           navigate(`/`);
+          window.location.reload();
         })
         .catch((error) => {
           console.error(error);
@@ -443,6 +446,15 @@ export const Profile: React.FC = () => {
                   <span>Mot de passe</span>
                   <div>∗∗∗∗∗∗∗</div>
                 </div>
+                <div>
+                  {/*Bouton de suppression de compte */}
+                  <button
+                    className='profile-container__personnal__pictureemailpassword__emailpassword__deleteButton'
+                    onClick={handleDeleteProfile}
+                  >
+                    Supprimer compte
+                  </button>
+                </div>
               </div>
             </div>
             {/* affichage conditionnel des boutons en fonction du device*/}
@@ -530,7 +542,7 @@ export const Profile: React.FC = () => {
               onClick={handleShowToWatchRoll}
             >
               <i className='fa-solid fa-xmark'></i>À voir
-              <div></div>
+
             </div>
           </div>
         )}
