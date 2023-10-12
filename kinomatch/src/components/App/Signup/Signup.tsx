@@ -173,7 +173,7 @@ const Signup = () => {
           {mobileVersion && (
             <i
               className='fa-solid fa-info login-container-form-input-inputgroup-i'
-              onClick={() => setShowPseudoConditions(!showPasswordConditions)}
+              onClick={() => setShowPseudoConditions(!showPseudoConditions)}
             ></i>
           )}
       
