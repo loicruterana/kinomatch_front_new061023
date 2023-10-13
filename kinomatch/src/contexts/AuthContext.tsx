@@ -217,7 +217,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
         searchParams.append('movieID', userData.favorites);
-
         axios.delete(
           `${API_BASE_URL}/deleteFavorites?${searchParams.toString()}`
         );
@@ -226,7 +225,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Si on se trouve sur la page profile et que userData.favorites n'est pas vide, alors on ne supprime pas les données
+    // Si "isFavoritesModified" n'a pas été modifié et que userData.favorites n'est pas vide, alors on supprime les données puis on met à jour les "userData"
     if (userData.favorites !== '' && !isFavoritesModified) {
       deleteData();
       setUserData({ ...userData, favorites: '' });
@@ -234,7 +233,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // On écoute les changements de l'état "userData"
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [userData, isFavoritesModified]);
 
   // ================ FONCTIONS LIÉES AUX FILMS À VOIR ================
 

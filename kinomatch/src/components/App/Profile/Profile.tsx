@@ -348,6 +348,7 @@ export const Profile: React.FC = () => {
               // });
               // console.log(data);
               setFavoritesList(data.favoritesListTitles);
+              console.log('ICI', data.favoritesListTitles);
             })
             .catch((error) => {
               console.error(error);
@@ -365,7 +366,7 @@ export const Profile: React.FC = () => {
       // }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEvent, userData, user.id]);
+  }, [user.id, userEvent, userData.id]);
   // à chaque fois que userEvent change (c'est à dire à chaque fois que l'utilisateur supprimer un favoris), on exécute le useEffect
 
   // =========================== TOWATCHLIST ===========================
@@ -419,6 +420,8 @@ export const Profile: React.FC = () => {
   // }, [checkHasBeenDone]);
 
   //========== JSX ==========
+
+  // console.log('user', userData.picture);
 
   return (
     <RequireAuth>
