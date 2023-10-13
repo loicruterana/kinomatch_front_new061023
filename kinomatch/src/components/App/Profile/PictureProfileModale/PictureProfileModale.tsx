@@ -38,6 +38,7 @@ const PictureProfileModale = (
         // console.log('onpasseici');
         console.log('reponse', response);
         updateUserDataPicture(profileData);
+        console.log(userData.picture);
       })
       .catch((error) => {
         // console.log('onpasseerreur');

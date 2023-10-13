@@ -22,6 +22,7 @@ import './Login.scss';
 //* ================ COMPOSANT ================
 
 export const Login = () => {
+  // ici withCredentials permet de passer les cookies au backend
   axios.defaults.withCredentials = true;
 
   // ================ IMPORT PROPS CONTEXTS ================

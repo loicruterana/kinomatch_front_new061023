@@ -35,8 +35,23 @@ import './Profile.scss';
 //* ================ COMPOSANT ================
 
 export const Profile: React.FC = () => {
+
   // ================ USESTATE ================
   const { data: user } = useUser();
+
+  // fonction pour naviguer entre les pages
+  const navigate: (path: string) => void = useNavigate();
+
+  //  useEffect pour vérifier si l'utilisateur est connecté, si ce n'est pas le cas on le redirige vers la page de connexion
+  useEffect(() => {
+    if (!user?.id) {
+      // on redirige vers la page de connexion
+      navigate('/login');
+    }
+  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [user]);
+
 
   // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
@@ -90,8 +105,7 @@ export const Profile: React.FC = () => {
   };
 
   // ================ UTILS ================
-  // fonction pour naviguer entre les pages
-  const navigate: (path: string) => void = useNavigate();
+
   // fonction pour savoir si les listes sont en train de charger
   const listsAreLoading =
     (watchedList || toWatchList || favoritesList) === undefined; // false
@@ -422,7 +436,6 @@ export const Profile: React.FC = () => {
   //========== JSX ==========
 
   // console.log('user', userData.picture);
-
   return (
     <RequireAuth>
       <main className='profile-container'>

@@ -113,7 +113,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // Gérer les erreurs si nécessaire
       });
   };
-
+  console.log(isLoggedIn);
   // Fonction permettant de se déconnecter
   const logout = (): void => {
     axios
