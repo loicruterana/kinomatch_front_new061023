@@ -83,6 +83,36 @@
         display: flex;
         flex-direction: column;
 
+        &__button--container {
+            z-index: 3;
+            display: flex;
+            width: 100vw;
+            height: 70px;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            background-color: #335c67;
+            filter: drop-shadow(0 -3mm 5mm rgba(66, 66, 66, 0.349));
+
+            &---btn {
+                font-size: 1.2rem;
+                width: 20%;
+                height: 2rem;
+                border: none;
+                background: none;
+                background-color: #fff3b0;
+                color: vars.$theme1-primary;
+                border-radius: 6px;
+                font-weight: bold;
+
+                &:hover {
+                    transform: scale(1.03);
+                    cursor: pointer;
+                }
+            }
+        }
+
         &_title {
             font-size: 2rem;
             color: vars.$theme1-secondary;

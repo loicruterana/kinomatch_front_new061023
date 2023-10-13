@@ -46,10 +46,10 @@ function FeedbackForm(props: FeedbackFormProps) {
             </form>
 
 
-            <div className='container__legalModal__button--container'>
+            <div className='container__button--container'>
               {/* Au clic ==> passe de true à false et inversement */}
               <button
-                className='container__legalModal__button--container---btn'
+                className='container__button--container---btn'
                 onClick={handleFeedbackModal}
               >
                 Retour
