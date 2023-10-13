@@ -25,6 +25,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import BookmarkedRoll from './Rolls/BookmarkedRoll';
 import Footer from '../Footer/Footer';
 import PictureProfileModale from './PictureProfileModale/PictureProfileModale';
+import DeleteProfileModale from './DeleteProfileModale/DeleteProfileModale';
 // import NotConnected from '../NotConnected/NotConnected';
 import { RequireAuth } from './RequireAuth/RequireAuth';
 
@@ -58,6 +59,9 @@ export const Profile: React.FC = () => {
   const [userEvent, setUserEvent] = useState<boolean>(false);
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
   const [showPictureProfileModale, setShowPictureProfileModale] = useState<boolean>(false);
+  // un state pour indiquer si la modale de suppression de profil est ouverte
+  const [showDeleteProfileModale, setShowDeleteProfileModale] = useState<boolean>(false);
+
   // const [showNotConnected, setShowNotConnected] = useState(false);
 
   // const [checkHasBeenDone, setCheckHasBeenDone] = useState(false);
@@ -140,27 +144,7 @@ export const Profile: React.FC = () => {
     setShowToWatchRoll(true);
   }
 
-  //handler pour supprimer profil
-  function handleDeleteProfile(): void {
-    try {
-      const searchParams = new URLSearchParams();
-      searchParams.append('userID', userData.id);
-      console.log(userData.id);
-      axios
-        .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
-        .then(() => {
-          logout();
-          // on rafrachit la page pour que le cookie soit supprimé
-          navigate(`/`);
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
 
   // Handler pour se déconnecter
   function handleLogout(): void {
@@ -192,6 +176,12 @@ export const Profile: React.FC = () => {
   function handleOpenPictureProfileModale(): void {
     setShowPictureProfileModale(true);
   }
+
+    // Fonction permettant de manipuler la modale du DeleteProfileModale. Au clic ==> passe de true à false et inversement
+  function handleOpenDeleteProfileModale(): void {
+    setShowDeleteProfileModale(true);
+  }
+
 
   // ================ USEWINDOWSIZE ================
   // pour afficher ou masquer les rolls en fonction de la taille de l'écran
@@ -448,12 +438,12 @@ export const Profile: React.FC = () => {
                 </div>
                 <div>
                   {/*Bouton de suppression de compte */}
-                  <button
+                  {/* <button
                     className='profile-container__personnal__pictureemailpassword__emailpassword__deleteButton'
-                    onClick={handleDeleteProfile}
+                    onClick={handleOpenDeleteProfileModale}
                   >
                     Supprimer compte
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -469,8 +459,10 @@ export const Profile: React.FC = () => {
                 </button>
                 <button
                   className='profile-container-buttons-button'
+                  // va ouvrir la modale de suppression de profil
+                  onClick={handleOpenDeleteProfileModale}
                   // va supprimer le profil
-                  onClick={handleDeleteProfile}
+                  // onClick={handleDeleteProfile}
                 >
                   Supprimer profil
                 </button>
@@ -554,6 +546,15 @@ export const Profile: React.FC = () => {
             showPictureProfileModale={showPictureProfileModale}
           />
         )}
+
+        {/* Lorsque "showDeleteProfileModale" est truthy, alors la modale "DeleteProfileModale" s'affiche */}
+        {showDeleteProfileModale && (
+           <DeleteProfileModale
+           setShowDeleteProfileModale={setShowDeleteProfileModale}
+           showDeleteProfileModale={showDeleteProfileModale}
+         />
+        )}
+
       </main>
     </RequireAuth>
   );
