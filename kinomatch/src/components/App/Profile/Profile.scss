@@ -288,7 +288,29 @@
   .profile-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 120vh;
+
+    &-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 50px auto;
+
+      &-button {
+        display: flex;
+        height: 2vh;
+        width: 60vw;
+        border-radius: 11px;
+        background-color: vars.$theme1-secondary;
+        border: vars.$theme1-secondary;
+        color: vars.$theme1-primary;
+        font-family: 'Creato Display';
+        border: none;
+        font-size: 20px;
+        padding: 15px 1%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
 
     &__roll-modale {
       &-mobile-version {

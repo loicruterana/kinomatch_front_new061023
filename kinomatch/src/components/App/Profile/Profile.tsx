@@ -457,6 +457,8 @@ export const Profile: React.FC = () => {
                 >
                   Se déconnecter
                 </button>
+
+              {/*Bouton de suppression de compte */}
                 <button
                   className='profile-container-buttons-button'
                   // va ouvrir la modale de suppression de profil
@@ -538,6 +540,23 @@ export const Profile: React.FC = () => {
             </div>
           </div>
         )}
+
+        {mobileVersion && (
+              <div className='profile-container-buttons'>
+               
+
+              {/*Bouton de suppression de compte */}
+                <button
+                  className='profile-container-buttons-button'
+                  // va ouvrir la modale de suppression de profil
+                  onClick={handleOpenDeleteProfileModale}
+                  // va supprimer le profil
+                  // onClick={handleDeleteProfile}
+                >
+                  Supprimer profil
+                </button>
+              </div>
+            )}
         {/* affichage conditionnel du Footer en fonction du device */}
         {!mobileVersion && <Footer />}
         {showPictureProfileModale && (
