@@ -22,7 +22,7 @@ const PictureProfileModale = (
   function handleClick(event: { target: any; }) {
     const searchParams = new URLSearchParams();
     searchParams.append('userID', userData.id);
-
+    
     const imageElement = event.target;
     const profileData = imageElement.getAttribute('data-profile');
     // console.log(profileData);
@@ -30,6 +30,7 @@ const PictureProfileModale = (
       picture: profileData,
     };
     // console.log('onpassela');
+    console.log(userData.picture);
 
     axios
       .put(`${API_BASE_URL}/pictures?${searchParams}`, bodyData)
@@ -37,6 +38,7 @@ const PictureProfileModale = (
         // console.log('onpasseici');
         console.log('reponse', response);
         updateUserDataPicture(profileData);
+        console.log(userData.picture);
       })
       .catch((error) => {
         // console.log('onpasseerreur');
@@ -49,7 +51,7 @@ const PictureProfileModale = (
     // console.log('onpasseici2');
     handleClickOut();
   }
-
+  console.log(userData.picture);
   return (
     <div className='pictureProfileModale'>
       <div>
