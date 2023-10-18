@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 
 // Création de l'interface Typescript pour "DeleteProfileModaleProps"
 interface DeleteProfileModaleProps {
-  show: boolean;
   showDeleteProfileModale: boolean;
   setShowDeleteProfileModale: (showDeleteProfileModale: boolean) => void;
 }
