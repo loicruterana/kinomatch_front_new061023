@@ -42,15 +42,15 @@ export const Profile: React.FC = () => {
   // fonction pour naviguer entre les pages
   const navigate: (path: string) => void = useNavigate();
 
-  //  useEffect pour vérifier si l'utilisateur est connecté, si ce n'est pas le cas on le redirige vers la page de connexion
-  useEffect(() => {
-    if (!user?.id) {
-      // on redirige vers la page de connexion
-      navigate('/login');
-    }
-  }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [user]);
+  // //  useEffect pour vérifier si l'utilisateur est connecté, si ce n'est pas le cas on le redirige vers la page de connexion
+  // useEffect(() => {
+  //   if (!user?.id) {
+  //     // on redirige vers la page de connexion
+  //     navigate('/login');
+  //   }
+  // }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   , [user]);
 
 
   // un état pour savoir si on est sur mobile ou pas
