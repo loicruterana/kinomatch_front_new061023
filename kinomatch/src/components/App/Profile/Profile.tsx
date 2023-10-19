@@ -38,12 +38,13 @@ import './Profile.scss';
 export const Profile: React.FC = () => {
   // ================ USESTATE ================
   const { data: user } = useUser();
-  
+
   // fonction pour naviguer entre les pages
   const navigate: (path: string) => void = useNavigate();
 
-  // //  useEffect pour vérifier si l'utilisateur est connecté, si ce n'est pas le cas on le redirige vers la page de connexion
-  // useEffect(() => {
+  // Si l'utilisateur n'a pas d'id et qu'il est sur l'url contenant /profile alors on le redirige vers la page de connexion
+  //   useEffect(() => {
+
   //   if (!user?.id) {
   //     // on redirige vers la page de connexion
   //     navigate('/login');
@@ -75,6 +76,8 @@ export const Profile: React.FC = () => {
   const [showPictureProfileModale, setShowPictureProfileModale] = useState<boolean>(false);
   // un state pour indiquer si la modale de suppression de profil est ouverte
   const [showDeleteProfileModale, setShowDeleteProfileModale] = useState<boolean>(false);
+  // un state pour stocker le code de la photo de profil
+  const [codePicture, setCodePicture] = useState<string>('');
 
   // const [showNotConnected, setShowNotConnected] = useState(false);
 
@@ -190,7 +193,7 @@ export const Profile: React.FC = () => {
     setShowPictureProfileModale(true);
   }
 
-    // Fonction permettant de manipuler la modale du DeleteProfileModale. Au clic ==> passe de true à false et inversement
+  // Fonction permettant de manipuler la modale du DeleteProfileModale. Au clic ==> passe de true à false et inversement
   function handleOpenDeleteProfileModale(): void {
     setShowDeleteProfileModale(true);
   }
@@ -396,6 +399,33 @@ export const Profile: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
+//!===================================================================================================
+  //! UseEffect récupérant le nom de la picture de l'utilisateur > A TESTER
+  
+  useEffect(() => {
+    if (user.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', 2); //? La route prend l'id de l'image de picturesList au lieu de l'id de l'utilisateur
+      axios
+        .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
+        .then(({ data }) => {
+          // console.log('est-ce');
+          console.log(data);
+          setCodePicture(data.picture.codePicture);
+          console.log(data.picture.codePicture);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+        console.log(searchParams.toString());
+
+    }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }
+    , [user.id]);
+
+//!===================================================================================================
 
   // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
   // addUserData(user.email, user.id, user.picture);
@@ -422,6 +452,8 @@ export const Profile: React.FC = () => {
   // }, [checkHasBeenDone]);
 
   //========== JSX ==========
+  
+  console.log(userData.picture);
 
   return (
     <RequireAuth>
@@ -432,8 +464,8 @@ export const Profile: React.FC = () => {
             <div className='profile-container__personnal__infos__pictureemailpassword'>
               <div className='profile-container__personnal__circle'>
                 <img
-                  src={`images/${userData.picture}.png`} // codePicture
-                  alt={`Image de profil ${userData.picture}`}
+                  src={`images/${codePicture}.png`} // codePicture
+                  alt={`Image de profil ${codePicture}`}
                 ></img>
                 <i
                   className='profile-container__personnal__circle__pen fa-solid fa-pen'
@@ -471,13 +503,13 @@ export const Profile: React.FC = () => {
                   Se déconnecter
                 </button>
 
-              {/*Bouton de suppression de compte */}
+                {/*Bouton de suppression de compte */}
                 <button
                   className='profile-container-buttons-button'
                   // va ouvrir la modale de suppression de profil
                   onClick={handleOpenDeleteProfileModale}
-                  // va supprimer le profil
-                  // onClick={handleDeleteProfile}
+                // va supprimer le profil
+                // onClick={handleDeleteProfile}
                 >
                   Supprimer profil
                 </button>
@@ -555,21 +587,21 @@ export const Profile: React.FC = () => {
         )}
 
         {mobileVersion && (
-              <div className='profile-container-buttons'>
-               
+          <div className='profile-container-buttons'>
 
-              {/*Bouton de suppression de compte */}
-                <button
-                  className='profile-container-buttons-button'
-                  // va ouvrir la modale de suppression de profil
-                  onClick={handleOpenDeleteProfileModale}
-                  // va supprimer le profil
-                  // onClick={handleDeleteProfile}
-                >
-                  Supprimer profil
-                </button>
-              </div>
-            )}
+
+            {/*Bouton de suppression de compte */}
+            <button
+              className='profile-container-buttons-button'
+              // va ouvrir la modale de suppression de profil
+              onClick={handleOpenDeleteProfileModale}
+            // va supprimer le profil
+            // onClick={handleDeleteProfile}
+            >
+              Supprimer profil
+            </button>
+          </div>
+        )}
         {/* affichage conditionnel du Footer en fonction du device */}
         {!mobileVersion && <Footer />}
         {showPictureProfileModale && (
@@ -581,10 +613,10 @@ export const Profile: React.FC = () => {
 
         {/* Lorsque "showDeleteProfileModale" est truthy, alors la modale "DeleteProfileModale" s'affiche */}
         {showDeleteProfileModale && (
-           <DeleteProfileModale
-           setShowDeleteProfileModale={setShowDeleteProfileModale}
-           showDeleteProfileModale={showDeleteProfileModale}
-         />
+          <DeleteProfileModale
+            setShowDeleteProfileModale={setShowDeleteProfileModale}
+            showDeleteProfileModale={showDeleteProfileModale}
+          />
         )}
 
       </main>
