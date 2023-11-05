@@ -1,5 +1,3 @@
-// import { useContext } from 'react';
-// import { AuthContext } from '../../../../contexts/AuthContext';
 import NotConnected from '../../NotConnected/NotConnected';
 import { useUser } from '../../../../hooks/useUser';
 import Loading from '../../Loading/Loading';
@@ -13,15 +11,17 @@ type RequireAuthProps = {
 export const RequireAuth = ({ children }: RequireAuthProps) => {
   const navigate: (path: string) => void = useNavigate();
   const { data, loading } = useUser();
+  console.log('data:', data);
+  console.log('data?.id:', data?.id);
   setTimeout(() => {
     if (loading) {
       return <Loading />;
     }
-    if (data?.id === null) {
+    if (data.id === '') {
       setTimeout(() => {
         navigate(`/`);
         // console.log('on est déconnecté');
-      }, 1000);
+      }, 500);
       return <NotConnected />;
     }
   }, 1000);

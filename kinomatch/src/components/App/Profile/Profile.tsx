@@ -38,7 +38,7 @@ import './Profile.scss';
 export const Profile: React.FC = () => {
   // ================ USESTATE ================
   const { data: user } = useUser();
-  
+
   // fonction pour naviguer entre les pages
   const navigate: (path: string) => void = useNavigate();
 
@@ -51,7 +51,6 @@ export const Profile: React.FC = () => {
   // }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   //   , [user]);
-
 
   // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
@@ -72,9 +71,11 @@ export const Profile: React.FC = () => {
   // un state pour indiquer si une action a été faite par l'utilisateur
   const [userEvent, setUserEvent] = useState<boolean>(false);
   // un state pour indiquer si la modale de modification de photo de profil est ouverte
-  const [showPictureProfileModale, setShowPictureProfileModale] = useState<boolean>(false);
+  const [showPictureProfileModale, setShowPictureProfileModale] =
+    useState<boolean>(false);
   // un state pour indiquer si la modale de suppression de profil est ouverte
-  const [showDeleteProfileModale, setShowDeleteProfileModale] = useState<boolean>(false);
+  const [showDeleteProfileModale, setShowDeleteProfileModale] =
+    useState<boolean>(false);
 
   // const [showNotConnected, setShowNotConnected] = useState(false);
 
@@ -157,8 +158,6 @@ export const Profile: React.FC = () => {
     setShowToWatchRoll(true);
   }
 
-
-
   // Handler pour se déconnecter
   function handleLogout(): void {
     try {
@@ -190,11 +189,10 @@ export const Profile: React.FC = () => {
     setShowPictureProfileModale(true);
   }
 
-    // Fonction permettant de manipuler la modale du DeleteProfileModale. Au clic ==> passe de true à false et inversement
+  // Fonction permettant de manipuler la modale du DeleteProfileModale. Au clic ==> passe de true à false et inversement
   function handleOpenDeleteProfileModale(): void {
     setShowDeleteProfileModale(true);
   }
-
 
   // ================ USEWINDOWSIZE ================
   // pour afficher ou masquer les rolls en fonction de la taille de l'écran
@@ -231,8 +229,9 @@ export const Profile: React.FC = () => {
           // setShowNotConnected(false);
           // console.log(data);
           // On trie les films par ordre alphabétique
-          const sortedFilmTitles = data.watchedListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
-            a.film_title.localeCompare(b.film_title)
+          const sortedFilmTitles = data.watchedListTitles.sort(
+            (a: { film_title: string }, b: { film_title: string }) =>
+              a.film_title.localeCompare(b.film_title)
           );
           setWatchedList(sortedFilmTitles);
           // console.log('ICI', sortedFilmTitles);
@@ -248,6 +247,18 @@ export const Profile: React.FC = () => {
         });
     }
   }, [user.id, userData.id, userEvent]);
+
+  // RENVOI VERS LA HOMEPAGE SI L'UTILISATEUR N'EST PAS CONNECTE
+
+  useEffect(() => {
+    const fetchIdData = () => {
+      // Code pour récupérer les données de l'utilisateur
+      if (userData.id === '') {
+        navigate(`/`);
+      }
+    };
+    fetchIdData();
+  }, []);
 
   //useEffect pour récupérer les id des films vus
   // useEffect(() => {
@@ -383,8 +394,9 @@ export const Profile: React.FC = () => {
         .then(({ data }) => {
           // setShowNotConnected(false);
           // console.log(data);
-          const sortedFilmTitles = data.toWatchListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
-            a.film_title.localeCompare(b.film_title)
+          const sortedFilmTitles = data.toWatchListTitles.sort(
+            (a: { film_title: string }, b: { film_title: string }) =>
+              a.film_title.localeCompare(b.film_title)
           );
           setToWatchList(sortedFilmTitles);
           // console.log('ICI', sortedFilmTitles);
@@ -471,7 +483,7 @@ export const Profile: React.FC = () => {
                   Se déconnecter
                 </button>
 
-              {/*Bouton de suppression de compte */}
+                {/*Bouton de suppression de compte */}
                 <button
                   className='profile-container-buttons-button'
                   // va ouvrir la modale de suppression de profil
@@ -492,46 +504,48 @@ export const Profile: React.FC = () => {
         {((showWatchedRoll && mobileVersion) ||
           (showToWatchRoll && mobileVersion) ||
           !mobileVersion) && (
-            <section
-              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                }`}
-            >
-              <div
-                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }-backdropfilter`}
-                onClick={handleClickOut}
-              ></div>
-              <BookmarkedRoll
-                isLoading={listsAreLoading}
-                mobileVersion={mobileVersion}
-                showWatchedRoll={showWatchedRoll}
-                // setShowWatchedRoll={setShowWatchedRoll}
-                showToWatchRoll={showToWatchRoll}
-                // setShowToWatchRoll={setShowToWatchRoll}
-                watchedList={watchedList}
-                setWatchedList={setWatchedList}
-                watchedMovies={watchedMovies}
-                // setWatchedMovies={setWatchedMovies}
-                // deleteWatched={deleteWatched}
-                toWatchList={toWatchList}
-                setToWatchList={setToWatchList}
-                toWatchMovies={toWatchMovies}
-                // setToWatchMovies={setToWatchMovies}
-                deleteToWatch={deleteToWatch}
-                deleteFavoritesAndWatched={deleteFavoritesAndWatched}
-                favoritesList={favoritesList}
-                addWatched={addWatched}
-                // deleteFavorites={deleteFavorites}
-                // addFavorites={addFavorites}
+          <section
+            className={`profile-container__roll-modale-${
+              mobileVersion ? 'mobile-version' : 'desktop-version'
+            }`}
+          >
+            <div
+              className={`profile-container__roll-modale-${
+                mobileVersion ? 'mobile-version' : 'desktop-version'
+              }-backdropfilter`}
+              onClick={handleClickOut}
+            ></div>
+            <BookmarkedRoll
+              isLoading={listsAreLoading}
+              mobileVersion={mobileVersion}
+              showWatchedRoll={showWatchedRoll}
+              // setShowWatchedRoll={setShowWatchedRoll}
+              showToWatchRoll={showToWatchRoll}
+              // setShowToWatchRoll={setShowToWatchRoll}
+              watchedList={watchedList}
+              setWatchedList={setWatchedList}
+              watchedMovies={watchedMovies}
+              // setWatchedMovies={setWatchedMovies}
+              // deleteWatched={deleteWatched}
+              toWatchList={toWatchList}
+              setToWatchList={setToWatchList}
+              toWatchMovies={toWatchMovies}
+              // setToWatchMovies={setToWatchMovies}
+              deleteToWatch={deleteToWatch}
+              deleteFavoritesAndWatched={deleteFavoritesAndWatched}
+              favoritesList={favoritesList}
+              addWatched={addWatched}
+              // deleteFavorites={deleteFavorites}
+              // addFavorites={addFavorites}
 
-                handleRemoveFavorites={handleRemoveFavorites}
-                handleAddFavorites={handleAddFavorites}
-                userEvent={userEvent}
-                setUserEvent={setUserEvent}
-                handleClickOut={handleClickOut}
-              />
-            </section>
-          )}
+              handleRemoveFavorites={handleRemoveFavorites}
+              handleAddFavorites={handleAddFavorites}
+              userEvent={userEvent}
+              setUserEvent={setUserEvent}
+              handleClickOut={handleClickOut}
+            />
+          </section>
+        )}
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>
@@ -549,27 +563,24 @@ export const Profile: React.FC = () => {
               onClick={handleShowToWatchRoll}
             >
               <i className='fa-solid fa-xmark'></i>À voir
-
             </div>
           </div>
         )}
 
         {mobileVersion && (
-              <div className='profile-container-buttons'>
-               
-
-              {/*Bouton de suppression de compte */}
-                <button
-                  className='profile-container-buttons-button'
-                  // va ouvrir la modale de suppression de profil
-                  onClick={handleOpenDeleteProfileModale}
-                  // va supprimer le profil
-                  // onClick={handleDeleteProfile}
-                >
-                  Supprimer profil
-                </button>
-              </div>
-            )}
+          <div className='profile-container-buttons'>
+            {/*Bouton de suppression de compte */}
+            <button
+              className='profile-container-buttons-button'
+              // va ouvrir la modale de suppression de profil
+              onClick={handleOpenDeleteProfileModale}
+              // va supprimer le profil
+              // onClick={handleDeleteProfile}
+            >
+              Supprimer profil
+            </button>
+          </div>
+        )}
         {/* affichage conditionnel du Footer en fonction du device */}
         {!mobileVersion && <Footer />}
         {showPictureProfileModale && (
@@ -581,12 +592,11 @@ export const Profile: React.FC = () => {
 
         {/* Lorsque "showDeleteProfileModale" est truthy, alors la modale "DeleteProfileModale" s'affiche */}
         {showDeleteProfileModale && (
-           <DeleteProfileModale
-           setShowDeleteProfileModale={setShowDeleteProfileModale}
-           showDeleteProfileModale={showDeleteProfileModale}
-         />
+          <DeleteProfileModale
+            setShowDeleteProfileModale={setShowDeleteProfileModale}
+            showDeleteProfileModale={showDeleteProfileModale}
+          />
         )}
-
       </main>
     </RequireAuth>
   );
