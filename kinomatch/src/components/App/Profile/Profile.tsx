@@ -252,6 +252,20 @@ export const Profile: React.FC = () => {
     }
   }, [user.id, userData.id, userEvent]);
 
+
+    // RENVOI VERS LA HOMEPAGE SI L'UTILISATEUR N'EST PAS CONNECTE
+
+    useEffect(() => {
+      const fetchIdData = () => {
+        // Code pour récupérer les données de l'utilisateur
+        
+        if (userData.id === '') {
+          navigate(`/`);
+        }
+      };
+      fetchIdData();
+    }, []);
+
   //useEffect pour récupérer les id des films vus
   // useEffect(() => {
   //   if (user.id) {
@@ -405,11 +419,10 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     if (user.id) {
       const searchParams = new URLSearchParams();
-      searchParams.append('userID', 2); //? La route prend l'id de l'image de picturesList au lieu de l'id de l'utilisateur
+      searchParams.append('userID', '2');
       axios
         .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
         .then(({ data }) => {
-          // console.log('est-ce');
           console.log(data);
           setCodePicture(data.picture.codePicture);
           console.log(data.picture.codePicture);
