@@ -3,6 +3,9 @@ import { useState, useContext, useEffect, FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import { RequireAuth } from './RequireAuth/RequireAuth';
+import axios from 'axios';
+import API_BASE_URL from '../../../utils/config';
+
 
 // ================ IMPORT CONTEXTS ================
 
@@ -26,6 +29,8 @@ function Header() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
   const [desktopVersion, setDesktopVersion] = useState(false);
   const [query, setQuery] = useState('');
+  // un state pour stocker le code de la photo de profil
+  const [codePicture, setCodePicture] = useState<string>('');
 
   const {
     // isLoggedIn,
@@ -61,6 +66,27 @@ function Header() {
     // un removeEventListener pour éviter les fuites de mémoire
   }, []);
 
+  useEffect(() => {
+    if (userData.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', userData.id);
+      axios
+        .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
+        .then(({ data }) => {
+          console.log(data);
+          setCodePicture(data.picture);
+          console.log(data.picture);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      console.log(searchParams.toString());
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }
+    , [userData.picture]);
+
   // useEffect(() => {
   //   login();
   // }, []);
@@ -95,6 +121,7 @@ function Header() {
     return <div>Erreur: Contexte non défini</div>;
   }
 
+
   /* ============================ HANDLERS ============================= */
 
   // Gestion de la soumission du formulaire de recherche
@@ -124,6 +151,7 @@ function Header() {
     window.location.reload();
   };
 
+
   // ================ JSX ================
   return (
     <>
@@ -139,11 +167,7 @@ function Header() {
             src='./images/KinoMatchLogoVTest.png'
             alt='logo'
           />
-
-          
         </Link>
-
-       
 
         {/* Bouton, lorsque l'utilisateur est sur la page films, l'app affichera ce bouton 'RELANCER UNE RECHERCHE' */}
         {location.pathname === '/films' &&
@@ -186,8 +210,8 @@ function Header() {
               <Link to='/profile'>
                 <div className='header-elements-profile'>
                   <img
-                    src={`images/${userData.picture}.png`}
-                    alt={`Image de profil ${userData.picture}`}
+                    src={`images/${codePicture}.png`}
+                    alt={`Image de profil ${codePicture}`}
                   />
                   <div className='header-elements-profile-username'>
                     {userData.email}
@@ -200,8 +224,8 @@ function Header() {
 
         {/* Logo refresh, logo différent on est en version mobile */}
         {location.pathname === '/films' &&
-        !window.location.search.includes('filmID') &&
-        !desktopVersion ? (
+          !window.location.search.includes('filmID') &&
+          !desktopVersion ? (
           <Link
             key='refresh'
             to='#'

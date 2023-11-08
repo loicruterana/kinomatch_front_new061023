@@ -253,18 +253,18 @@ export const Profile: React.FC = () => {
   }, [user.id, userData.id, userEvent]);
 
 
-    // RENVOI VERS LA HOMEPAGE SI L'UTILISATEUR N'EST PAS CONNECTE
+  // RENVOI VERS LA HOMEPAGE SI L'UTILISATEUR N'EST PAS CONNECTE
 
-    useEffect(() => {
-      const fetchIdData = () => {
-        // Code pour récupérer les données de l'utilisateur
-        
-        if (userData.id === '') {
-          navigate(`/`);
-        }
-      };
-      fetchIdData();
-    }, []);
+  useEffect(() => {
+    const fetchIdData = () => {
+      // Code pour récupérer les données de l'utilisateur
+
+      if (userData.id === '') {
+        navigate(`/`);
+      }
+    };
+    fetchIdData();
+  }, []);
 
   //useEffect pour récupérer les id des films vus
   // useEffect(() => {
@@ -413,32 +413,31 @@ export const Profile: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
-//!===================================================================================================
+  //!===================================================================================================
   //! UseEffect récupérant le nom de la picture de l'utilisateur > A TESTER
-  
+
   useEffect(() => {
     if (user.id) {
       const searchParams = new URLSearchParams();
-      searchParams.append('userID', '2');
+      searchParams.append('userID', userData.id);
       axios
         .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
         .then(({ data }) => {
           console.log(data);
-          setCodePicture(data.picture.codePicture);
-          console.log(data.picture.codePicture);
+          setCodePicture(data.picture);
+          console.log(data.picture);
         })
         .catch((error) => {
           console.error(error);
         });
-        console.log(searchParams.toString());
-
+      console.log(searchParams.toString());
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }
-    , [user.id]);
+    , [user.picture]);
 
-//!===================================================================================================
+  //!===================================================================================================
 
   // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
   // addUserData(user.email, user.id, user.picture);
@@ -465,7 +464,7 @@ export const Profile: React.FC = () => {
   // }, [checkHasBeenDone]);
 
   //========== JSX ==========
-  
+
   console.log(userData.picture);
 
   return (
