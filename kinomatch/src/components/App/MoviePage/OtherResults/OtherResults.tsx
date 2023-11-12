@@ -114,7 +114,6 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
     }
   };
 
-
   return (
     <aside className='otherResults-container'>
       <section className='otherResults-container--pellicule'>
@@ -143,7 +142,11 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
                     {/* Afficher l'affiche du film s'il y en a une, sinon une affiche par défaut */}
                     <div className='otherResults-container--rate'>
                       {' '}
-                      {String(movieElem.vote_average * 10).substring(0, 3)}%
+                      {String(movieElem.vote_average) === '10'
+                        ? '100'
+                        : (String(movieElem.vote_average * 10).substring(0, 2))}%
+
+                      {/* {String(movieElem.vote_average * 10).substring(0, 2)}% */}
                     </div>
                     <img
                       className='otherResults-container--scrollList---images'

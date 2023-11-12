@@ -413,8 +413,9 @@ export const Profile: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
-  //!===================================================================================================
-  //! UseEffect récupérant le nom de la picture de l'utilisateur > A TESTER
+
+  // =========================== UseEffect Profile Picture ===========================
+
 
   useEffect(() => {
     if (user.id) {
@@ -437,7 +438,6 @@ export const Profile: React.FC = () => {
   }
     , [user.picture]);
 
-  //!===================================================================================================
 
   // =========================== CHECKER LE STATUT POUR PERSISTANCE DE DONNEES ===========================
   // addUserData(user.email, user.id, user.picture);
