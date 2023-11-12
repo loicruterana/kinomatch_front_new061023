@@ -92,7 +92,6 @@ function AddButton(movieId: { movie: string }) {
     }
   };
   const handleSendMovie = () => {
-    console.log('sendMovie');
     setOpenSendMovieModale(!openSendMovieModale);
   };
 
@@ -186,7 +185,6 @@ function AddButton(movieId: { movie: string }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-console.log(movieId.movie);
   // ===================================================================
   return (
 

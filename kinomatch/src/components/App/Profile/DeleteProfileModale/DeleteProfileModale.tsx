@@ -42,7 +42,6 @@ function DeleteProfileModale(props: DeleteProfileModaleProps) {
       try {
         const searchParams = new URLSearchParams();
         searchParams.append('userID', userData.id);
-        console.log(userData.id);
         axios
           .delete(`${API_BASE_URL}/deleteAccount?${searchParams.toString()}`)
           .then(() => {

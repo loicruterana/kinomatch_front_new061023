@@ -147,7 +147,6 @@ export const Profile: React.FC = () => {
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
-    // console.log('click out');
   }
 
   //handler pour afficher le roll Watched (films vus -> ✓)
@@ -176,8 +175,6 @@ export const Profile: React.FC = () => {
           //   'connect.sid=; expires=Mon, 05 Sep 2022 13:27:08 GMT; domain=localhost; path=/;';
           logout();
           clearUserData();
-
-          // console.log('oh');
 
           navigate(`/`);
         })
@@ -232,17 +229,14 @@ export const Profile: React.FC = () => {
         .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
         .then(({ data }) => {
           // setShowNotConnected(false);
-          // console.log(data);
           // On trie les films par ordre alphabétique
           const sortedFilmTitles = data.watchedListTitles.sort((a: { film_title: string; }, b: { film_title: string; }) =>
             a.film_title.localeCompare(b.film_title)
           );
           setWatchedList(sortedFilmTitles);
-          // console.log('ICI', sortedFilmTitles);
         })
         .catch((error) => {
           console.error(error);
-          // console.log('onpassici');
         })
         .finally(() => {
           // Code to run regardless of whether the promise is resolved or rejected
@@ -424,14 +418,11 @@ export const Profile: React.FC = () => {
       axios
         .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
         .then(({ data }) => {
-          console.log(data);
           setCodePicture(data.picture);
-          console.log(data.picture);
         })
         .catch((error) => {
           console.error(error);
         });
-      console.log(searchParams.toString());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -465,7 +456,6 @@ export const Profile: React.FC = () => {
 
   //========== JSX ==========
 
-  console.log(userData.picture);
 
   return (
     <RequireAuth>

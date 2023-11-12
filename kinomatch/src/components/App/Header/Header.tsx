@@ -73,18 +73,15 @@ function Header() {
       axios
         .get(`${API_BASE_URL}/picture?${searchParams.toString()}`)
         .then(({ data }) => {
-          console.log(data);
           setCodePicture(data.picture);
-          console.log(data.picture);
         })
         .catch((error) => {
           console.error(error);
         });
-      console.log(searchParams.toString());
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     , [userData.picture]);
 
   // useEffect(() => {

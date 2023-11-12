@@ -20,7 +20,6 @@ export const RequireAuth = ({ children }: RequireAuthProps) => {
     if (data?.id === null) {
       setTimeout(() => {
         navigate(`/`);
-        // console.log('on est déconnecté');
       }, 1000);
       return <NotConnected />;
     }

@@ -61,9 +61,7 @@ function SendMovieModale(props: any) {
       senderUserID,
       receiverUserID,
     };
-    console.log(movieID);
-    console.log(senderUserID);
-    console.log(receiverUserID);
+
     // On envoie l'objet data dans la BDD
     axios.post(`${API_BASE_URL}/recommendedFilms`, data)
       .then((response) => {
@@ -133,14 +131,6 @@ function SendMovieModale(props: any) {
     //   effectRan.current = true;
     // };
   }, [userList, userListFiltered, searchValue, usersTable]);
-
-  console.log(userList); // récupère bien le tableau des utilisateurs
-  console.log(usersTable); // récupère bien le tableau des utilisateurs
-  console.log(userListFiltered); // récupère bien le tableau des utilisateurs dont le mail correspond à la recherche de l'utilisateur
-  console.log(searchValue); // récupère bien la recherche de l'utilisateur
-  console.log(selectedUserId); // récupère bien l'id de l'utilisateur sélectionné
-  console.log(userData.id); // récupère bien l'id de l'utilisateur connecté
-  console.log(typeof movie); // récupère bien l'id du film sélectionné
   
   return (
     <div className='sendMovieModale__container'>
