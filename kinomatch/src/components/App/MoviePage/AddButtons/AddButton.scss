@@ -73,6 +73,12 @@
       @include button-styles-desktop;
       scale: 1.8rem;
     }
+
+    // Bouton "envoyer film"
+    &-btn--sendMovie {
+      @include button-styles-desktop;
+      scale: 1.8rem;
+    }
   }
 }
 
@@ -104,6 +110,11 @@
     }
 
     // Bouton "à voir"
+    &-btn--addToViewed {
+      @include button-styles-mobile;
+    }
+
+    // Bouton "envoyer film"
     &-btn--addToViewed {
       @include button-styles-mobile;
     }

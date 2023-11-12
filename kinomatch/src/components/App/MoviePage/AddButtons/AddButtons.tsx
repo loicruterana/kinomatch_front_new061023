@@ -3,6 +3,8 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import axios from 'axios';
 import './AddButton.scss';
 import API_BASE_URL from '../../../../utils/config';
+import SendMovieModale from '../SendMovieModale/SendMovieModale';
+
 // import { to } from 'react-spring';
 /* Fonction AddButton permettant d'afficher les boutons d'ajout aux listes */
 function AddButton(movieId: { movie: string }) {
@@ -32,6 +34,9 @@ function AddButton(movieId: { movie: string }) {
   const [showToWatchBubble, setShowToWatchBubble] = useState(false);
   // Bulle Ajouter vu
   const [showWatchedBubble, setShowWatchedBubble] = useState(false);
+  // Send Movie
+  const [openSendMovieModale, setOpenSendMovieModale] = useState(false);
+
   // ============================ HANDLERS =============================
   // ============= COEUR ===================
   const handleHeartClick = () => {
@@ -85,6 +90,10 @@ function AddButton(movieId: { movie: string }) {
         setShowWatchedBubble(false);
       }, 2000);
     }
+  };
+  const handleSendMovie = () => {
+    console.log('sendMovie');
+    setOpenSendMovieModale(!openSendMovieModale);
   };
 
   // Ici on créer une fonction qui va renvoyer l'utilisateur sur la page de connexion lorsqu'il clique sur le coeur et qu'il n'est pas connecté
@@ -177,10 +186,22 @@ function AddButton(movieId: { movie: string }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+console.log(movieId.movie);
   // ===================================================================
   return (
+
     <div className='movieFound__essentiel-btn--container'>
+
+
+    {openSendMovieModale && (
+      <SendMovieModale
+        movie={movieId.movie}
+        closeModale={handleSendMovie}
+      />
+    )}
+    
+    {/*! ------------------------------------------------------------------------- */}
+
       {/* Condition qui affiche la bulle "film ajouté aux favoris"ou "Film supprimé des favoris"  si le coeur est cliqué */}
       {showHeartBubble && (
         <div className='movieFound__essentiel-btn--bubble'>
@@ -211,6 +232,10 @@ function AddButton(movieId: { movie: string }) {
           )}
         </div>
       )}
+
+      {/*! ------------------------------------------------------------------------- */}
+
+
       {/* Si le userData est une string vide, alors le bouton coeur ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion */}
       <button
         className='movieFound__essentiel-btn--addToLike'
@@ -226,6 +251,7 @@ function AddButton(movieId: { movie: string }) {
           style={{ color: heartIsClicked ? '#D42121' : '' }}
         ></i>
       </button>
+
       {/* A REVOIR */}
       {/* Si le coeur est cliqué alors éxécute la fonction handleToWatchClick */}
       <button
@@ -247,7 +273,7 @@ function AddButton(movieId: { movie: string }) {
       <button
         className='movieFound__essentiel-btn--addToViewed'
         type='submit'
-        // Si le userData est une string vide, alors le bouton "coche" ne se colorera pas en rouge et renverra l'untilisateur sur la page de connexion
+        // Si le userData est une string vide, alors le bouton "coche" ne se colorera pas en vert et renverra l'untilisateur sur la page de connexion
         onClick={userData.id === '' ? handleHeartRedirect : handleWatchedClick}
         aria-label={`Marquer comme vu${watchedIsClicked ? ' : Déjà vu' : ''}`}
       >
@@ -258,6 +284,21 @@ function AddButton(movieId: { movie: string }) {
           style={{ color: watchedIsClicked ? '#7DEB00' : '' }}
         ></i>
       </button>
+
+      {/*! ------------------------------------------------------------------------- */}
+      <button
+        className='movieFound__essentiel-btn--sendMovie'
+        type='submit'
+        onClick={userData.id === '' ? handleHeartRedirect : handleSendMovie}
+      // aria-label={`J'aime le film${heartIsClicked ? ' : Déjà aimé' : ''}`}
+      >
+        {/* Si l'avion est cliqué alors affiche l'avion plein sinon affiche l'avion vide */}
+        <i
+          className={`fa-${heartIsClicked ? 'sharp' : 'regular'} fa-regular fa-paper-plane ${heartIsClicked ? 'heartClicked' : ''}`}
+          style={{ color: heartIsClicked ? '#D42121' : '' }}
+        ></i>
+      </button>
+      {/*! ------------------------------------------------------------------------- */}
     </div>
   );
 }
