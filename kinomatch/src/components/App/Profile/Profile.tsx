@@ -258,6 +258,7 @@ export const Profile: React.FC = () => {
       }
     };
     fetchIdData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //useEffect pour récupérer les id des films vus
@@ -425,8 +426,8 @@ export const Profile: React.FC = () => {
         });
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     , [user.picture]);
 
 

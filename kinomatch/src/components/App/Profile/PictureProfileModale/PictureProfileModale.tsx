@@ -34,6 +34,7 @@ const PictureProfileModale = (
       .put(`${API_BASE_URL}/pictures?${searchParams}`, bodyData)
       .then((response) => {
         // console.log('onpasseici');
+        console.log('reponse', response);
         updateUserDataPicture(profileData);
       })
       .catch((error) => {
@@ -47,6 +48,7 @@ const PictureProfileModale = (
     // console.log('onpasseici2');
     handleClickOut();
   }
+  
   return (
     <div className='pictureProfileModale'>
       <div>
