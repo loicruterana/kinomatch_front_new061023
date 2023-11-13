@@ -437,6 +437,7 @@ export const Profile: React.FC = () => {
           console.error(error);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
   console.log(recommendedMovies);
@@ -604,31 +605,47 @@ export const Profile: React.FC = () => {
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>
-            <div
-              className='profile-container__rollbuttons__button'
+             <div
+              className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowWatchedRoll}
             >
+               <img
+                src='/images/tetepelloche.svg'
+                alt="Description de l'image"
+              />
               {/* <i className='fa-sharp fa-solid fa-check'></i> */}
-              Vus
+              <div className='profile-container__rollbuttons__button__text'>
+                Vus
+              </div>
               {/* <i className='fa-regular fa-heart'></i> */}
             </div>
 
             <div
-              className='profile-container__rollbuttons__button'
+              className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowToWatchRoll}
             >
+               <img
+                src='/images/tetepelloche.svg'
+                alt="Description de l'image"
+              />
               {/* <i className='fa-solid fa-xmark'></i> */}
+              <div className='profile-container__rollbuttons__button__text'>
               À voir
-
+              </div>
             </div>
 
             <div
-              className='profile-container__rollbuttons__button'
+              className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowRecommendedMoviesRoll}
             >
-              {/* <i className='fa-regular fa-paper-plane'></i> */}
+               <img
+                src='/images/tetepelloche.svg'
+                alt="Description de l'image"
+              />
+              {/* <i className='fa-solid fa-xmark'></i> */}
+              <div className='profile-container__rollbuttons__button__text'>
               Recommandés
-
+              </div>
             </div>
           </div>
         )}

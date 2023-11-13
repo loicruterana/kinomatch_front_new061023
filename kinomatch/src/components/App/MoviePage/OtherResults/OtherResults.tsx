@@ -90,6 +90,7 @@ function OtherResults(props: OtherResultsModalProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (event: {
     preventDefault: () => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     currentTarget: { getAttribute: (arg0: string) => any };
   }) => {
     // Si l'utilisateur est sur la page d'un film, le rediriger vers la page du film sélectionné

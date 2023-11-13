@@ -319,29 +319,29 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
               {isLoading ? (
                 <div>Chargement en cours...</div>
               ) : (
-                recommendedMovies.map((toWatchListItem) => {
+                recommendedMovies.map((recommendedMoviesItem) => {
                   return (
                     <div
                       className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item`}
-                      key={toWatchListItem.film_id}
+                      key={recommendedMoviesItem.film_id}
                     >
                       <i
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-c fa-sharp fa-solid fa-check `}
                         onClick={() =>
-                          handlefromToWatchToWatched(toWatchListItem.film_id)
+                          handlefromToWatchToWatched(recommendedMoviesItem.film_id)
                         }
                       ></i>
 
-                      <Link to={`/films?filmID=${toWatchListItem.film_id}`}>
-                        {toWatchListItem.film_title}
+                      <Link to={`/films?filmID=${recommendedMoviesItem.film_id}`}>
+                        {recommendedMoviesItem.film_title}
                       </Link>
                       {/* bouton de bookmark croix */}
                       <i
                         // pour supprimer le film de la liste des films à voir
                         onClick={() =>
-                          handleRemoveToWatch(toWatchListItem.film_id)
+                          handleRemoveToWatch(recommendedMoviesItem.film_id)
                         }
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-b fa-solid fa-xmark`}
