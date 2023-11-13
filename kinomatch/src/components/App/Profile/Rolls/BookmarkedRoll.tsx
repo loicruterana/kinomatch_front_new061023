@@ -25,6 +25,8 @@ interface BookmarkedRollProps {
   favoritesList: FavoritesListObject;
   setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>;
   showToWatchRoll: boolean;
+  showRecommendedMoviesRoll: boolean;
+  recommendedMovies: ToWatchListArray;
   // setShowToWatchRoll: React.Dispatch<React.SetStateAction<boolean>>;
   setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>;
   deleteToWatch: (element: { movie: string }) => void;
@@ -45,6 +47,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   showWatchedRoll,
   // setShowWatchedRoll,
   watchedList,
+  showRecommendedMoviesRoll,
+  recommendedMovies,
   // watchedMovies,
   toWatchList,
   // toWatchMovies,
@@ -235,6 +239,87 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                 <div>Chargement en cours...</div>
               ) : (
                 toWatchList.map((toWatchListItem) => {
+                  return (
+                    <div
+                      className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item`}
+                      key={toWatchListItem.film_id}
+                    >
+                      <i
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-c fa-sharp fa-solid fa-check `}
+                        onClick={() =>
+                          handlefromToWatchToWatched(toWatchListItem.film_id)
+                        }
+                      ></i>
+
+                      <Link to={`/films?filmID=${toWatchListItem.film_id}`}>
+                        {toWatchListItem.film_title}
+                      </Link>
+                      {/* bouton de bookmark croix */}
+                      <i
+                        // pour supprimer le film de la liste des films à voir
+                        onClick={() =>
+                          handleRemoveToWatch(toWatchListItem.film_id)
+                        }
+                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                          }__roll-container__item-b fa-solid fa-xmark`}
+                      ></i>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          <div
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__column__returnbuttonarea`}
+          >
+            <button
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__column__returnbuttonarea__return`}
+              onClick={() => {
+                handleClickOut();
+              }}
+            >
+              Retour
+            </button>
+          </div>
+        </div>
+      )}
+
+
+
+      {/* // ================ JSX : ROLL RECOMMENDED MOVIE ================ */}
+
+      {/* affichage conditionnel du roll des films recommandés par les utilisateurs */}
+      {((showRecommendedMoviesRoll && mobileVersion) || !mobileVersion) && (
+        <div
+          className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__column`}
+        >
+          <div
+            className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll`}
+          >
+            <div
+              className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                }__roll-container`}
+            >
+              <div
+                className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container__item-category`}
+              >
+                <i className='fa-regular fa-paper-plane'></i>Recommandés
+                {/* <i className='fa-rexgular fa-heart'></i> */}
+                <div></div>
+              </div>
+              {/* affichage conditionnel du loader ou de la liste des films recommandés */}
+              {isLoading ? (
+                <div>Chargement en cours...</div>
+              ) : (
+                recommendedMovies.map((toWatchListItem) => {
                   return (
                     <div
                       className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'

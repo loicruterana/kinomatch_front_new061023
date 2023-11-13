@@ -292,8 +292,8 @@ function AddButton(movieId: { movie: string }) {
       >
         {/* Si l'avion est cliqué alors affiche l'avion plein sinon affiche l'avion vide */}
         <i
-          className={`fa-${heartIsClicked ? 'sharp' : 'regular'} fa-regular fa-paper-plane ${heartIsClicked ? 'heartClicked' : ''}`}
-          style={{ color: heartIsClicked ? '#D42121' : '' }}
+          className={`fa-${openSendMovieModale ? 'sharp' : 'regular'} fa-regular fa-paper-plane ${openSendMovieModale ? 'heartClicked' : ''}`}
+          style={{ color: openSendMovieModale ? '#D42121' : '' }}
         ></i>
       </button>
       {/*! ------------------------------------------------------------------------- */}

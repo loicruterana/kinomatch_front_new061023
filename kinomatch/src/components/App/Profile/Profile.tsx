@@ -60,6 +60,10 @@ export const Profile: React.FC = () => {
   const [showWatchedRoll, setShowWatchedRoll] = useState<boolean>(true);
   // pour afficher ou masquer ToWatchRoll (films à voir)
   const [showToWatchRoll, setShowToWatchRoll] = useState<boolean>(true);
+  // pour afficher ou masquer recommendedMoviesRoll (films recommandés)
+  const [showRecommendedMoviesRoll, setShowRecommendedMoviesRoll] = useState<boolean>(true);
+  // pour stocker la liste de films recommandés par le back
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
   // pour stocker les id issues du back concernant les films vus
   const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
   // pour stocker les noms concernant les films vus
@@ -147,6 +151,7 @@ export const Profile: React.FC = () => {
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
+    setShowRecommendedMoviesRoll(false); 
   }
 
   //handler pour afficher le roll Watched (films vus -> ✓)
@@ -157,6 +162,11 @@ export const Profile: React.FC = () => {
   //handler pour afficher le roll ToWatch (films à voir)
   function handleShowToWatchRoll(): void {
     setShowToWatchRoll(true);
+  }
+
+  // handler pour afficher le roll RecommendedMovies (films recommandés)
+  function handleShowRecommendedMoviesRoll(): void {
+    setShowRecommendedMoviesRoll(true);
   }
 
 
@@ -204,11 +214,13 @@ export const Profile: React.FC = () => {
         setMobileVersion(false);
         setShowWatchedRoll(true);
         setShowToWatchRoll(true);
+        setShowRecommendedMoviesRoll(true);
       }
       if (window.innerWidth < 900) {
         setMobileVersion(true);
         setShowWatchedRoll(false);
         setShowToWatchRoll(false);
+        setShowRecommendedMoviesRoll(false);
       }
     }
     // ajout d'une écoute de l'événement de redimensionnement de la fenêtre, ce qui va lancer handleResize
@@ -409,6 +421,26 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
+  //! =========================== RECOMMENDED MOVIES ===========================
+
+  useEffect(() => {
+    if (user.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', userData.id);
+      axios
+        .get(`${API_BASE_URL}/recommendedFilms?${searchParams.toString()}`)
+        .then(({ data }) => {
+          // setShowNotConnected(false);
+          setRecommendedMovies(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [user.id]);
+
+  console.log(recommendedMovies);
+
   // =========================== UseEffect Profile Picture ===========================
 
 
@@ -526,6 +558,7 @@ export const Profile: React.FC = () => {
         {/* affichage conditionnel des boutons en fonction du device et si le roll est activé ou non */}
         {((showWatchedRoll && mobileVersion) ||
           (showToWatchRoll && mobileVersion) ||
+          (showRecommendedMoviesRoll && mobileVersion) ||
           !mobileVersion) && (
             <section
               className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -558,7 +591,8 @@ export const Profile: React.FC = () => {
                 addWatched={addWatched}
                 // deleteFavorites={deleteFavorites}
                 // addFavorites={addFavorites}
-
+                showRecommendedMoviesRoll={showRecommendedMoviesRoll}
+                recommendedMovies={recommendedMovies}
                 handleRemoveFavorites={handleRemoveFavorites}
                 handleAddFavorites={handleAddFavorites}
                 userEvent={userEvent}
@@ -574,16 +608,26 @@ export const Profile: React.FC = () => {
               className='profile-container__rollbuttons__button'
               onClick={handleShowWatchedRoll}
             >
-              <i className='fa-sharp fa-solid fa-check'></i>
+              {/* <i className='fa-sharp fa-solid fa-check'></i> */}
               Vus
-              <i className='fa-regular fa-heart'></i>
+              {/* <i className='fa-regular fa-heart'></i> */}
             </div>
 
             <div
               className='profile-container__rollbuttons__button'
               onClick={handleShowToWatchRoll}
             >
-              <i className='fa-solid fa-xmark'></i>À voir
+              {/* <i className='fa-solid fa-xmark'></i> */}
+              À voir
+
+            </div>
+
+            <div
+              className='profile-container__rollbuttons__button'
+              onClick={handleShowRecommendedMoviesRoll}
+            >
+              {/* <i className='fa-regular fa-paper-plane'></i> */}
+              Recommandés
 
             </div>
           </div>
