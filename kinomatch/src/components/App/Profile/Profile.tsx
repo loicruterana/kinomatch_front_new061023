@@ -431,7 +431,7 @@ export const Profile: React.FC = () => {
         .get(`${API_BASE_URL}/recommendedFilms?${searchParams.toString()}`)
         .then(({ data }) => {
           // setShowNotConnected(false);
-          setRecommendedMovies(data.recommendedList);
+          setRecommendedMovies(data.recommendedListTitles);
         })
         .catch((error) => {
           console.error(error);
