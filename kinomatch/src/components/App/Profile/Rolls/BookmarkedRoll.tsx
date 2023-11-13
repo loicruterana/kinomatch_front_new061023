@@ -335,7 +335,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       ></i>
 
                       <Link to={`/films?filmID=${recommendedMoviesItem.film_id}`}>
-                        {recommendedMoviesItem.film_id}
+                        {recommendedMoviesItem.film_title}
                       </Link>
                       {/* bouton de bookmark croix */}
                       <i
