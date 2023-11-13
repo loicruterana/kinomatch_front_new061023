@@ -136,7 +136,7 @@ function SendMovieModale(props: any) {
     <div className='sendMovieModale__container'>
       <div className='sendMovieModale__container-form'>
         <input className='sendMovieModale__container-form--input' id='searchUsers' type='text' placeholder='Rechercher un utilisateur' />
-        <ul>
+        <ul className='sendMovieModale__container-form--input---unorderedList'>
           {userListFiltered.map((user: any) => {
             return (
               <li 
