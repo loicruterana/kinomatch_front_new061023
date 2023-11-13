@@ -440,7 +440,6 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
-  console.log(recommendedMovies);
 
   // =========================== UseEffect Profile Picture ===========================
 
