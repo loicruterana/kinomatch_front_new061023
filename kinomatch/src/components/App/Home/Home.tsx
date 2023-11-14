@@ -180,7 +180,6 @@ export const Home: React.FC = () => {
     // };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, []);
 
   //======== USEWINDOWSIZE
@@ -300,8 +299,9 @@ export const Home: React.FC = () => {
   }
 
   // handler pour supprimer la décennie selectionnée
-  function handleRemoveDecade(): void {
-    removeDecadeFilter();
+  function handleRemoveDecade(event: React.MouseEvent<HTMLDivElement>): void {
+    // On récupère l'id de la décennie sélectionnée par l'utilisateur
+    removeDecadeFilter(event.currentTarget.dataset.id || '');
   }
 
   // handler pour supprimer la note selectionnée
