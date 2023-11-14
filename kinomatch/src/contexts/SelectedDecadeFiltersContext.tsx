@@ -8,7 +8,7 @@ import React, { createContext, useState, ReactNode } from 'react';
 interface SelectedDecadeFiltersContextProps {
   selectedDecadeFilters: string[];
   addDecadeFilter: (filter: string) => void;
-  removeDecadeFilter: () => void;
+  removeDecadeFilter: (filter: string) => void;
 }
 
 // ================ CREATECONTEXT ================
@@ -35,23 +35,49 @@ export const SelectedDecadeFiltersProvider: React.FC<{
   // ================ FONCTIONS ================
 
   // Fonction pour ajouter un filtre par décennie. Si le filtre est déjà présent, on le supprime.
+  // const addDecadeFilter = (filter: string) => {
+  //   if (selectedDecadeFilters.includes(filter)) {
+  //     removeDecadeFilter();
+  //     return;
+  //   }
+  //   // ajoute le filtre au state
+  //   setSelectedDecadeFilters([filter]);
+  // };
+
+  // Fonction pour ajouter plusieurs filtres par décennie. Si le filtre est déjà présent, on le supprime.
   const addDecadeFilter = (filter: string) => {
-    if (selectedDecadeFilters.includes(filter)) {
-      removeDecadeFilter();
+    // vérifie si le filtre est déjà présent dans le state
+    if (selectedDecadeFilters.some((f) => f === filter)) {
+      removeDecadeFilter(filter);
       return;
+    } 
+    // Si selectedDecadeFilters contient déja deux filtres, on supprime le filtre le plus proche de la decade sélectionnée.
+    if (selectedDecadeFilters.length === 2) {
+      // On récupère la décennie la plus proche de la décennie sélectionnée.
+      const closestDecade = selectedDecadeFilters.reduce((prev, curr) =>
+        Math.abs(parseInt(curr) - parseInt(filter)) <
+        Math.abs(parseInt(prev) - parseInt(filter))
+          ? curr
+          : prev
+      );
+      // On supprime la décennie la plus proche de la décennie sélectionnée.
+      removeDecadeFilter(closestDecade);
     }
-    // ajoute le filtre au state
-    setSelectedDecadeFilters([filter]);
+    
+    // On ajoute le filtre au tableau (state).
+    setSelectedDecadeFilters((state) => [...state, filter]);
   };
+
 
   // Fonction pour supprimer les filtres par décennie.
-  const removeDecadeFilter = () => {
-    setSelectedDecadeFilters([]);
+  const removeDecadeFilter = (filter: string) => {
+    // on supprime la décennie du state
+    setSelectedDecadeFilters((state) => state.filter((f) => f !== filter)
+    );
   };
 
-  //* ================ CONTEXT : EXPORT DES PROPS ================
 
-  // ================ CONTEXT : EXPORT DES PROPS ================
+  //* ================ CONTEXT : EXPORT DES PROPS ================
 
   // export des propriétés du contexte.
   const contextValue: SelectedDecadeFiltersContextProps = {

@@ -75,6 +75,8 @@ export const RollGenre = ({
     SelectedNationalityFiltersContext
   );
 
+  const [selectedDecade, setSelectedDecade] = useState<string>('');
+
   // ================ USESTATE ================
 
   // useState permettant de stocker les nationalités trouvées
@@ -117,7 +119,14 @@ export const RollGenre = ({
     const filter = target.textContent;
     if (filter !== null) {
       addDecadeFilter(filter);
+
+      // Je récupère uniquement la dernière valeur cliquée et supprime la précédente
+      const lastDecade = filter;
+      setSelectedDecade(lastDecade);
     }
+
+
+
   }
 
   // handleNotationClick pour envoyer les choix de filtres à la fonction addNotationFilter du contexte SelectedNotationFiltersContext et donc stocker le filtre notation dans le state
@@ -149,34 +158,39 @@ export const RollGenre = ({
       return
     }
   }
+
+
   // ================ USEEFFECT ================
 
   // On créer un useEffect afin de pouvoir utiliser la fonction de recherche de nationalité
   useEffect(() => {
     // if (effectRan.current === true) {
 
-      // Fonction permettant de chercher les nationalités en fonction de la recherche de l'utilisateur
-      const searchNationality = document.getElementById('nationalitySearch');
-      // On place un écouteur d'évenements sur l'input de recherche
-      const handleInputChange = (event: any) => {
-        const searchValue = event.target.value.toLowerCase();
-        setSearchValue(searchValue);
-        const matchedCountries = preselectedNationalities.filter((country) => {
-          return country.native_name.toLowerCase().startsWith(searchValue);
-        });
-        setCountriesFound(matchedCountries);
-      };
-      searchNationality?.addEventListener('input', handleInputChange);
+    // Fonction permettant de chercher les nationalités en fonction de la recherche de l'utilisateur
+    const searchNationality = document.getElementById('nationalitySearch');
+    // On place un écouteur d'évenements sur l'input de recherche
+    const handleInputChange = (event: any) => {
+      const searchValue = event.target.value.toLowerCase();
+      setSearchValue(searchValue);
+      const matchedCountries = preselectedNationalities.filter((country) => {
+        return country.native_name.toLowerCase().startsWith(searchValue);
+      });
+      setCountriesFound(matchedCountries);
+    };
+    searchNationality?.addEventListener('input', handleInputChange);
 
-      return () => {
-        searchNationality?.removeEventListener('input', handleInputChange);
-      };
+    return () => {
+      searchNationality?.removeEventListener('input', handleInputChange);
+    };
     // }
     // return () => {
     //   effectRan.current = true;
     // };
   }, [preselectedNationalities, countriesFound]);
 
+
+  console.log(selectedDecadeFilters);
+  console.log(selectedDecade);
   // ================ JSX ================
   return (
     <>
@@ -345,13 +359,17 @@ export const RollGenre = ({
                   <button
                     key={index}
                     className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                      }__roll-container__item-decade${selectedDecadeFilters.some(
-                        (item) => item.toString() === decade.toString()
-                      )
+                        }__roll-container__item-decade${selectedDecadeFilters.length === 1 && Number(selectedDecadeFilters[0]) === decade
+                        ? '-selected'
+                        : Array.from(
+                            { length: Math.abs(Number(selectedDecadeFilters[0]) - Number(selectedDecadeFilters[1])) + 1 },
+                            (_, i) => i + Math.min(Number(selectedDecadeFilters[0]), Number(selectedDecadeFilters[1]))
+                          ).some((item) => item === decade)
                         ? '-selected'
                         : ''
                       }`}
                     onClick={handleDecadeClick}
+                    data-id={decade}
                     aria-label={decade.toString()} // Ajout de l'aria-label
                   >
                     {decade}

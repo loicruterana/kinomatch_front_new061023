@@ -66,6 +66,7 @@ export const SelectedNationalityFiltersProvider: React.FC<
     setSelectedNationalityFilters((state) => state.filter((f) => f.native_name !== name));
   };
 
+  console.log(selectedNationalityFilters);
   // ================ CONTEXT : EXPORT DES PROPS ================
 
   // export des propriétés du contexte.
