@@ -107,8 +107,6 @@ export const RollGenre = ({
     if (name !== null && providerId !== undefined) {
       addProviderFilter(name, providerId);
     }
-
-
   }
 
   // handleDecadeClick pour envoyer les choix de filtres à la fonction addDecadeFilter du contexte SelectedDecadeFiltersContext et donc stocker le filtre decade dans le state
@@ -124,9 +122,6 @@ export const RollGenre = ({
       const lastDecade = filter;
       setSelectedDecade(lastDecade);
     }
-
-
-
   }
 
   // handleNotationClick pour envoyer les choix de filtres à la fonction addNotationFilter du contexte SelectedNotationFiltersContext et donc stocker le filtre notation dans le state
@@ -341,7 +336,6 @@ export const RollGenre = ({
           <div
             className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
               }__roll-background`}
-            onClick={handleClickOut}
           >
             {((showRollDecade && mobileVersion) || !mobileVersion) && (
               <div
@@ -359,14 +353,14 @@ export const RollGenre = ({
                   <button
                     key={index}
                     className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-decade${selectedDecadeFilters.length === 1 && Number(selectedDecadeFilters[0]) === decade
+                      }__roll-container__item-decade${selectedDecadeFilters.length === 1 && Number(selectedDecadeFilters[0]) === decade
                         ? '-selected'
                         : Array.from(
-                            { length: Math.abs(Number(selectedDecadeFilters[0]) - Number(selectedDecadeFilters[1])) + 1 },
-                            (_, i) => i + Math.min(Number(selectedDecadeFilters[0]), Number(selectedDecadeFilters[1]))
-                          ).some((item) => item === decade)
-                        ? '-selected'
-                        : ''
+                          { length: Math.abs(Number(selectedDecadeFilters[0]) - Number(selectedDecadeFilters[1])) + 1 },
+                          (_, i) => i + Math.min(Number(selectedDecadeFilters[0]), Number(selectedDecadeFilters[1]))
+                        ).some((item) => item === decade)
+                          ? '-selected'
+                          : ''
                       }`}
                     onClick={handleDecadeClick}
                     data-id={decade}
