@@ -92,6 +92,11 @@
                         color: vars.$theme1-primary;
                         cursor: pointer;
                     }
+
+                    &-selected {
+                        background-color: #fff3b0;
+                        color: vars.$theme1-primary;
+                    }
                 }
             }
 
@@ -105,7 +110,7 @@
                 &---sendButton,
                 &---cancelButton {
                     font-size: 1.2rem;
-                    width: 30%;
+                    // width: 30%;
                     height: 2rem;
                     border: none;
                     background: none;
@@ -123,6 +128,8 @@
         }
     }
 }
+
+//* MOBILE VERSION =================
 
 @media screen and (max-width: 900px) {
 
@@ -204,7 +211,13 @@
                     border-radius: 6px;
 
 
-                    &:hover {
+                    // &:hover {
+                    //     background-color: #fff3b0;
+                    //     color: vars.$theme1-primary;
+                    //     cursor: pointer;
+                    // }
+
+                    &-selected {
                         background-color: #fff3b0;
                         color: vars.$theme1-primary;
                         cursor: pointer;

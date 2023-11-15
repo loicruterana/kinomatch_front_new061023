@@ -183,9 +183,6 @@ export const RollGenre = ({
     // };
   }, [preselectedNationalities, countriesFound]);
 
-
-  console.log(selectedDecadeFilters);
-  console.log(selectedDecade);
   // ================ JSX ================
   return (
     <>

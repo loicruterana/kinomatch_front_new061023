@@ -15,7 +15,7 @@ function SendMovieModale(props: any) {
     closeModale,
   } = props;
 
-  const { userData } = useContext(AuthContext); 
+  const { userData } = useContext(AuthContext);
 
 
   // ================ USESTATE ================
@@ -45,6 +45,12 @@ function SendMovieModale(props: any) {
     const selectedUserId = event.target.dataset.id;
     // On met à jour le useState "selectedUserId" avec l'id de l'utilisateur sélectionné
     setSelectedUserId(selectedUserId);
+    // On modifie la classe de l'utilisateur sélectionné pour lui ajouter "-selected"
+    const selectedUser = document.querySelector('.sendMovieModale__container-form--input---list-selected');
+    if (selectedUser) {
+      selectedUser.classList.remove('sendMovieModale__container-form--input---list-selected');
+    }
+    event.target.classList.add('sendMovieModale__container-form--input---list-selected');
   };
 
   // fonction permettant, au click, d'envoyer les informations de l'utilisateur connecté, de l'utilisateur sélectionné et de l'id du film sélectionné dans la BDD
@@ -76,10 +82,11 @@ function SendMovieModale(props: any) {
 
   // ================ USEEFFECT ================
 
+
   // UseEffect pour récupérer les différents utilisateurs
 
   useEffect(() => {
-    
+
     axios.get(`${API_BASE_URL}/users`)
       .then((response) => {
         setUserList(response.data);
@@ -112,7 +119,7 @@ function SendMovieModale(props: any) {
       //   return user.email;
       // }
       // );
-      
+
       // On vient stocker l'objet correspondant à l'utilisateur dont le mail correspond à la recherche de l'utilisateur
       const machedUsers = usersTable.filter((user: any) => {
         return user.email.toLowerCase().includes(searchValue);
@@ -131,7 +138,7 @@ function SendMovieModale(props: any) {
     //   effectRan.current = true;
     // };
   }, [userList, userListFiltered, searchValue, usersTable]);
-  
+
   return (
     <div className='sendMovieModale__container'>
       <div className='sendMovieModale__container-form'>
@@ -139,12 +146,12 @@ function SendMovieModale(props: any) {
         <ul className='sendMovieModale__container-form--input---unorderedList'>
           {userListFiltered.map((user: any) => {
             return (
-              <li 
+              <li
                 className='sendMovieModale__container-form--input---list'
                 key={generateUniqueKey()}
                 onClick={handleSelectedUserClick}
                 data-id={user.id}
-                >
+              >
                 {user.email}
 
               </li>
