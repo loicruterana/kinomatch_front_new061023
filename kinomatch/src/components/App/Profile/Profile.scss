@@ -38,7 +38,6 @@
       z-index: 1;
       width: 55%;
 
-      // profile-container__roll-modale-mobile-version
       &__column {
         &__returnbuttonarea {
           display: none;
@@ -91,8 +90,6 @@
           align-items: center;
           color: vars.$theme1-secondary;
           background-color: vars.$theme1-primary;
-          width: 100%;
-          height: 100%;
           background-image: url('/images/pellochebghome.svg');
           background-repeat: no-repeat;
           background-position: center;
@@ -104,6 +101,20 @@
           transition: transform 0.2s ease-in-out;
           border: none;
           position: relative;
+
+          &-user-recommended {
+            position: absolute;
+            background-color: vars.$theme1-primary;
+            height: 50%;
+            width: 66%;
+            top: 20%;
+            font-weight: bold;
+
+            &_text {
+              font-size: 0.7rem;
+              color: vars.$theme1-secondary;
+            }
+          }
 
           &-a {
             position: absolute;
@@ -145,6 +156,22 @@
               cursor: pointer;
             }
           }
+
+          &-d {
+            position: absolute;
+            bottom: 5px;
+            right: 45px;
+            margin: 0.6rem 0.6rem;
+            transition: transform 0.2s ease-in-out;
+            z-index: 100;
+
+            &:hover {
+              transform: scale(1.3);
+              cursor: pointer;
+            }
+          }
+
+
 
           &-category {
             position: sticky;
@@ -444,6 +471,20 @@
             position: relative;
             text-align: center;
 
+            &-user-recommended {
+              position: absolute;
+              background-color: vars.$theme1-primary;
+              height: 50%;
+              width: 66%;
+              top: 20%;
+              font-weight: bold;
+  
+              &_text {
+                font-size: 0.7rem;
+                color: vars.$theme1-secondary;
+              }
+            }
+            
             &-a {
               position: absolute;
               bottom: 5px;
@@ -462,6 +503,20 @@
               position: absolute;
               bottom: 5px;
               left: 5px;
+              cursor: pointer;
+            }
+
+            &-c {
+              position: absolute;
+              bottom: 5px;
+              left: 5px;
+              cursor: pointer;
+            }
+
+            &-d {
+              position: absolute;
+              bottom: 6px;
+              right: 5px;
               cursor: pointer;
             }
 

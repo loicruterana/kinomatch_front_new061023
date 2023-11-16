@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import API_BASE_URL from '../../../../utils/config';
 import axios from 'axios';
@@ -14,6 +14,7 @@ import {
   FavoritesListObject,
   RecommendedMoviesArray,
 } from '../../../../utils/interfaces';
+
 
 // ================ IMPORT CONTEXTS ================
 
@@ -75,7 +76,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   // =========================== USESTATES ===========================
 
   // useState pour afficher qui a recommandé le film
-  const [userRecommanded, setUserRecommanded] = React.useState(false);
+  const [userRecommended, setuserRecommended] = React.useState(false);
 
   // useState pour afficher les infos du film
   const [hoveredMovieId, setHoveredMovieId] = useState<string | null>(null);
@@ -384,25 +385,27 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       onMouseLeave={handleMouseLeave}
                     >
                       {!mobileVersion && (
-                        <i className="fa-solid fa-info"></i>
+                        <i className="profile-container__roll-modale-desktop-version__roll-container__item-d fa-solid fa-info"></i>
                       )}
                       {mobileVersion && (
                         <i
-                          className="fa-solid fa-info"
-                          onClick={() => setUserRecommanded(!userRecommanded)}
+                          className="profile-container__roll-modale-mobile-version__roll-container__item-d fa-solid fa-info"
+                          onClick={() => setuserRecommended(!userRecommended)}
                         ></i>
                       )}
 
                       {hoveredMovieId === recommendedMoviesItem.film_id && (
-                        <div className="profile-container__roll-modale__user-recommanded">
-                          <p>Recommandé par :</p>
+                        <div className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
+                      }desktop-version__roll-container__item-user-recommended`}>
+                          <p className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
+                      }desktop-version__roll-container__item-user-recommended-text`}>Recommandé par :</p>
                           <p>{recommendedMoviesItem.senderUserName}</p>
                         </div>
                       )}
 
                       <i
                         className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                          }__roll-container__item-c fa-sharp fa-solid fa-check `}
+                      }__roll-container__item-c fa-sharp fa-solid fa-check `}
                         onClick={() =>
                           handlefromRecommendedToWatch({
                             movie: recommendedMoviesItem.film_id,
