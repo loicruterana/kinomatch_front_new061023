@@ -1,6 +1,9 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../../../../utils/config';
+import axios from 'axios';
+
 
 import {
   WatchedListEntry,
@@ -28,6 +31,7 @@ interface BookmarkedRollProps {
   showToWatchRoll: boolean;
   showRecommendedMoviesRoll: boolean;
   recommendedMovies: RecommendedMoviesArray;
+  setRecommendedMovies: React.Dispatch<React.SetStateAction<RecommendedMoviesArray>>;
   // setShowToWatchRoll: React.Dispatch<React.SetStateAction<boolean>>;
   setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>;
   deleteToWatch: (element: { movie: string }) => void;
@@ -50,6 +54,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   watchedList,
   showRecommendedMoviesRoll,
   recommendedMovies,
+  setRecommendedMovies,
   // watchedMovies,
   toWatchList,
   // toWatchMovies,
@@ -71,6 +76,23 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 
   // useState pour afficher qui a recommandé le film
   const [userRecommanded, setUserRecommanded] = React.useState(false);
+
+  // =========================== USEEFFECT ===========================
+
+  // Fonction permettant de supprimer un film de la liste des films recommandés avec axios en récupérant l'id de l'utilisateur connecté et l'id du film
+  function deleteRecommendedMovies(element: { movie: string, receiverUserID: string }) {
+    try {
+      const searchParams = new URLSearchParams();
+      searchParams.append('userID', element.receiverUserID);
+      searchParams.append('movieID', element.movie);
+
+      axios
+        .delete(`${API_BASE_URL}/deleteRecommendedFilms?${searchParams.toString()}`);
+    } catch (error) {
+      console.log(error);
+    }
+    setUserEvent(true);
+  }
 
   // =========================== HANDLERS ===========================
 
@@ -101,6 +123,22 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 
     // ici on ajoute le film à la liste des films vus
     addWatched({ movie: film_id });
+    setUserEvent(true);
+  }
+
+  // Fonction permettant de passer un film de la liste des films recommandés à la liste des films à voir
+  function handlefromRecommendedToWatch(element: { movie: string, receiverUserID: string }) {
+    // on supprime le film de la liste des films recommandés
+    setRecommendedMovies((state) =>
+      state.filter((element) => element.film_id !== element.film_id)
+    );
+    deleteRecommendedMovies({
+      movie: element.movie,
+      receiverUserID: element.receiverUserID
+    });
+
+    // on ajoute le film à la liste des films à voir
+    addWatched({ movie: element.movie });
     setUserEvent(true);
   }
 
@@ -328,34 +366,40 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                     <div
                       className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item`}
-                      key={recommendedMoviesItem.film_id}>
-                        {!mobileVersion && (
-                          <i
-                            className='fa-solid fa-info'
-                            onMouseOver={() => setUserRecommanded(true)}
-                            onMouseLeave={() => setUserRecommanded(false)}
-                          ></i>
-                        )}
-                        {mobileVersion && (
-                          <i
-                            className='fa-solid fa-info'
-                            onClick={() => setUserRecommanded(!userRecommanded)}
-                          ></i>
-                        )}
+                      key={recommendedMoviesItem.film_id}
+                    // data-id={recommendedMoviesItem.film_id + recommendedMoviesItem.receiverUserID}
 
-                        {userRecommanded && (
-                          <div className='profile-container__roll-modale__user-recommanded'>
-                            <p>Recommandé par :</p>
-                            <p>{recommendedMoviesItem.senderUserName}</p>
-                          </div>
-                        )}
-                        
- 
+                    >
+                      {!mobileVersion && (
+                        <i
+                          className='fa-solid fa-info'
+                          onMouseOver={() => setUserRecommanded(true)}
+                          onMouseLeave={() => setUserRecommanded(false)}
+                        ></i>
+                      )}
+                      {mobileVersion && (
+                        <i
+                          className='fa-solid fa-info'
+                          onClick={() => setUserRecommanded(!userRecommanded)}
+                        ></i>
+                      )}
+
+                      {userRecommanded && (
+                        <div className='profile-container__roll-modale__user-recommanded'>
+                          <p>Recommandé par :</p>
+                          <p>{recommendedMoviesItem.senderUserName}</p>
+                        </div>
+                      )}
+
+
                       <i
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-c fa-sharp fa-solid fa-check `}
                         onClick={() =>
-                          handlefromToWatchToWatched(recommendedMoviesItem.film_id)
+                          handlefromRecommendedToWatch({
+                            movie: recommendedMoviesItem.film_id,
+                            receiverUserID: recommendedMoviesItem.receiverUserID
+                          })
                         }
                       ></i>
 
@@ -366,9 +410,12 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       <i
                         // pour supprimer le film de la liste des films à voir
                         onClick={() =>
-                          handleRemoveToWatch(recommendedMoviesItem.film_id)
+                          deleteRecommendedMovies({
+                            movie: recommendedMoviesItem.film_id,
+                            receiverUserID: recommendedMoviesItem.receiverUserID
+                          })
                         }
-                        
+
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>

@@ -10,7 +10,7 @@ import {
   toWatchMoviesObject,
   FavoritesListObject,
   UserData,
-  // toWatchMoviesEntry,
+  RecommendedMoviesArray,
 } from '../../../utils/interfaces';
 import API_BASE_URL from '../../../utils/config';
 import { useUser } from '../../../hooks/useUser';
@@ -18,7 +18,6 @@ import { useUser } from '../../../hooks/useUser';
 // ================ IMPORT CONTEXTS ================
 
 import { AuthContext } from '../../../contexts/AuthContext';
-// import { LoadingContext } from '../../../contexts/LoadingContext';
 
 // ================ IMPORT COMPOSANTS ================
 
@@ -42,17 +41,6 @@ export const Profile: React.FC = () => {
   // fonction pour naviguer entre les pages
   const navigate: (path: string) => void = useNavigate();
 
-  // Si l'utilisateur n'a pas d'id et qu'il est sur l'url contenant /profile alors on le redirige vers la page de connexion
-  //   useEffect(() => {
-
-  //   if (!user?.id) {
-  //     // on redirige vers la page de connexion
-  //     navigate('/login');
-  //   }
-  // }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   , [user]);
-
 
   // un état pour savoir si on est sur mobile ou pas
   const [mobileVersion, setMobileVersion] = useState<boolean>(false);
@@ -63,7 +51,7 @@ export const Profile: React.FC = () => {
   // pour afficher ou masquer recommendedMoviesRoll (films recommandés)
   const [showRecommendedMoviesRoll, setShowRecommendedMoviesRoll] = useState<boolean>(true);
   // pour stocker la liste de films recommandés par le back
-  const [recommendedMovies, setRecommendedMovies] = useState([]);
+  const [recommendedMovies, setRecommendedMovies] = useState<RecommendedMoviesArray>([]);
   // pour stocker les id issues du back concernant les films vus
   const [watchedList, setWatchedList] = useState<WatchedListArray>([]);
   // pour stocker les noms concernant les films vus
@@ -331,7 +319,7 @@ export const Profile: React.FC = () => {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.id]);
+  }, [user.id, userEvent]);
 
   //! =========================== RECOMMENDED MOVIES ===========================
 
@@ -350,7 +338,7 @@ export const Profile: React.FC = () => {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.id]);
+  }, [user.id, userEvent]);
 
 
   // =========================== UseEffect Profile Picture ===========================
@@ -505,6 +493,7 @@ export const Profile: React.FC = () => {
                 // addFavorites={addFavorites}
                 showRecommendedMoviesRoll={showRecommendedMoviesRoll}
                 recommendedMovies={recommendedMovies}
+                setRecommendedMovies={setRecommendedMovies}
                 handleRemoveFavorites={handleRemoveFavorites}
                 handleAddFavorites={handleAddFavorites}
                 userEvent={userEvent}
