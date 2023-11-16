@@ -505,22 +505,7 @@ export const Home: React.FC = () => {
               : { paddingBottom: '0px' }
           }
         >
-          <button
-            className='home-container__buttons__button'
-            onClick={handleClickGenre}
-          >
-            <div className='home-container__buttons__button__image-container'>
-              <img
-                src='/images/tetepelloche.svg'
-                alt="Description de l'image"
-              />
-              <div className='home-container__buttons__button__text'>GENRE</div>
-            </div>
-
-            {/* Genre */}
-          </button>
-
-          <button
+         <button
             className='home-container__buttons__button'
             onClick={handleClickProvider}
           >
@@ -535,6 +520,21 @@ export const Home: React.FC = () => {
             </div>
 
             {/* Plateforme */}
+          </button>
+          
+          <button
+            className='home-container__buttons__button'
+            onClick={handleClickGenre}
+          >
+            <div className='home-container__buttons__button__image-container'>
+              <img
+                src='/images/tetepelloche.svg'
+                alt="Description de l'image"
+              />
+              <div className='home-container__buttons__button__text'>GENRE</div>
+            </div>
+
+            {/* Genre */}
           </button>
 
           <button

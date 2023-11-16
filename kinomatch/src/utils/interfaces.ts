@@ -37,6 +37,18 @@ export type ToWatchListArray = ToWatchListEntry[];
 
 //---
 
+export interface RecommendedMovies {
+  film_id: string;
+  film_title: string;
+  senderUserID: string;
+  senderUserName: string;
+  receiverUserID: string;
+}
+
+export type RecommendedMoviesArray = RecommendedMovies[];
+
+//---
+
 export interface toWatchMoviesEntry {
   name: string;
   movie_id?: string;

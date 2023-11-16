@@ -183,6 +183,9 @@ export const RollGenre = ({
     // };
   }, [preselectedNationalities, countriesFound]);
 
+
+  console.log(selectedDecadeFilters);
+  console.log(selectedDecade);
   // ================ JSX ================
   return (
     <>
@@ -212,6 +215,51 @@ export const RollGenre = ({
             : { paddingBottom: '0px' }
         }
       >
+        {/* ROLL PROVIDERS */}
+        <div
+          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+            }__roll-backgroundContainer`}
+        >
+          <div
+            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+              }__roll-background`}
+          >
+            {((showRollProvider && mobileVersion) || !mobileVersion) && (
+              <div
+                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                  }__roll-container`}
+              >
+                <div
+                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                    }__roll-container__item-category`}
+                >
+                  PLATEFORME
+                </div>
+                {isLoading
+                  ? 'Chargement en cours'
+                  : preselectedProviders.map((preselectedProvider) => (
+                    <button
+                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        }__roll-container__item-provider${selectedProviderFilters.some(
+                          (item) =>
+                            item.provider_id.toString() ===
+                            preselectedProvider.provider_id.toString()
+                        )
+                          ? '-selected'
+                          : ''
+                        }`}
+                      onClick={handleProviderClick}
+                      data-id={preselectedProvider.provider_id}
+                      key={preselectedProvider.provider_id}
+                      aria-label={preselectedProvider.provider_name} // Ajout de l'aria-label
+                    >
+                      {preselectedProvider.provider_name}
+                    </button>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
         {/* ROLL GENRE */}
         <div
           className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
@@ -272,52 +320,6 @@ export const RollGenre = ({
                         }
                       ></img>
                       {preselectedGenre.name}
-                    </button>
-                  ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ROLL PROVIDERS */}
-        <div
-          className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-            }__roll-backgroundContainer`}
-        >
-          <div
-            className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-              }__roll-background`}
-          >
-            {((showRollProvider && mobileVersion) || !mobileVersion) && (
-              <div
-                className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                  }__roll-container`}
-              >
-                <div
-                  className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                    }__roll-container__item-category`}
-                >
-                  PLATEFORME
-                </div>
-                {isLoading
-                  ? 'Chargement en cours'
-                  : preselectedProviders.map((preselectedProvider) => (
-                    <button
-                      className={`home-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item-provider${selectedProviderFilters.some(
-                          (item) =>
-                            item.provider_id.toString() ===
-                            preselectedProvider.provider_id.toString()
-                        )
-                          ? '-selected'
-                          : ''
-                        }`}
-                      onClick={handleProviderClick}
-                      data-id={preselectedProvider.provider_id}
-                      key={preselectedProvider.provider_id}
-                      aria-label={preselectedProvider.provider_name} // Ajout de l'aria-label
-                    >
-                      {preselectedProvider.provider_name}
                     </button>
                   ))}
               </div>

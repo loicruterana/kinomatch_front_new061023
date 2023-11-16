@@ -9,6 +9,7 @@ import {
   ToWatchListArray,
   toWatchMoviesObject,
   FavoritesListObject,
+  RecommendedMoviesArray,
 } from '../../../../utils/interfaces';
 
 // ================ IMPORT CONTEXTS ================
@@ -26,7 +27,7 @@ interface BookmarkedRollProps {
   setWatchedList: React.Dispatch<React.SetStateAction<WatchedListArray>>;
   showToWatchRoll: boolean;
   showRecommendedMoviesRoll: boolean;
-  recommendedMovies: ToWatchListArray;
+  recommendedMovies: RecommendedMoviesArray;
   // setShowToWatchRoll: React.Dispatch<React.SetStateAction<boolean>>;
   setToWatchList: React.Dispatch<React.SetStateAction<ToWatchListArray>>;
   deleteToWatch: (element: { movie: string }) => void;
@@ -68,6 +69,9 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 }) => {
   // =========================== USESTATES ===========================
 
+  // useState pour afficher qui a recommandé le film
+  const [userRecommanded, setUserRecommanded] = React.useState(false);
+
   // =========================== HANDLERS ===========================
 
   // handler pour supprimer un film de la liste des films vus, et par conséquent des films préférés
@@ -94,7 +98,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
     deleteToWatch({ movie: film_id });
 
     // setWatchedList((state) => [...state, film_id]);
-    
+
     // ici on ajoute le film à la liste des films vus
     addWatched({ movie: film_id });
     setUserEvent(true);
@@ -324,8 +328,29 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                     <div
                       className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                         }__roll-container__item`}
-                      key={recommendedMoviesItem.film_id}
-                    >
+                      key={recommendedMoviesItem.film_id}>
+                        {!mobileVersion && (
+                          <i
+                            className='fa-solid fa-info'
+                            onMouseOver={() => setUserRecommanded(true)}
+                            onMouseLeave={() => setUserRecommanded(false)}
+                          ></i>
+                        )}
+                        {mobileVersion && (
+                          <i
+                            className='fa-solid fa-info'
+                            onClick={() => setUserRecommanded(!userRecommanded)}
+                          ></i>
+                        )}
+
+                        {userRecommanded && (
+                          <div className='profile-container__roll-modale__user-recommanded'>
+                            <p>Recommandé par :</p>
+                            <p>{recommendedMoviesItem.senderUserName}</p>
+                          </div>
+                        )}
+                        
+ 
                       <i
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-c fa-sharp fa-solid fa-check `}
@@ -343,6 +368,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                         onClick={() =>
                           handleRemoveToWatch(recommendedMoviesItem.film_id)
                         }
+                        
                         className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
                           }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>

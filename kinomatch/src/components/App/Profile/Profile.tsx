@@ -151,7 +151,7 @@ export const Profile: React.FC = () => {
   function handleClickOut(): void {
     setShowWatchedRoll(false);
     setShowToWatchRoll(false);
-    setShowRecommendedMoviesRoll(false); 
+    setShowRecommendedMoviesRoll(false);
   }
 
   //handler pour afficher le roll Watched (films vus -> ✓)
@@ -251,8 +251,6 @@ export const Profile: React.FC = () => {
           console.error(error);
         })
         .finally(() => {
-          // Code to run regardless of whether the promise is resolved or rejected
-          // This is where you can put additional cleanup or logic
           setUserEvent(false);
         });
     }
@@ -273,81 +271,6 @@ export const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //useEffect pour récupérer les id des films vus
-  // useEffect(() => {
-  //   if (user.id) {
-
-  //   // pour activer le loader
-  //   // load();
-  //   const searchParams = new URLSearchParams();
-  //   searchParams.append('userID', userData.id);
-  //   axios
-  //     // envoie la requête au back pour récupérer les films vus
-  //     .get(`${API_BASE_URL}/watchedMovies?${searchParams.toString()}`)
-  //     .then(({ data }) => {
-  //       // stocke les données dans le state watchedList
-  //       setWatchedList(data.watchedListTitles);
-  //       console.log('ICI', data.watchedListTitles);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  //   setUserEvent(false);
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [userEvent]);
-
-  // =========================== WATCHEDLISTMOVIES ===========================
-
-  // Définition de la fonction fetchMovieTitles en dehors des useEffect
-  // const fetchMovieTitles = async () => {
-  //   try {
-  //     const requests = watchedList.map((watchedListItem) => {
-  //       const searchParams = new URLSearchParams();
-  //       searchParams.append('movieID', watchedListItem?.film_id ?? '');
-  //       return axios.get(`${API_BASE_URL}/detail?${searchParams.toString()}`);
-  //     });
-
-  //     Promise.all(requests)
-  //       .then((responses) => {
-  //         const moviesToAdd = responses.map(({ data }) => ({
-  //           name: data.title,
-  //           movie_id: data.id,
-  //         }));
-
-  //         // Utilise un objet pour stocker les films uniques
-  //         const uniqueMovies: Record<
-  //           string,
-  //           { name: string; movie_id?: string }
-  //         > = {};
-
-  //         // Parcourir la liste des films à ajouter
-  //         moviesToAdd.forEach((movie) => {
-  //           // S'il n'existe pas, l'ajouter à l'objet uniqueMovies
-  //           uniqueMovies[movie.movie_id?.toString()] = movie;
-  //         });
-
-  //         // on stocke les noms des films dans le state watchedMovies
-  //         setWatchedMovies(uniqueMovies);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // // Premier useEffect pour mettre à jour les films regardés au chargement initial
-  // useEffect(() => {
-  //   fetchMovieTitles();
-  //   setUserEvent(false);
-  // }, []);
-
-  // // Deuxième useEffect pour mettre à jour les films regardés chaque fois que watchedList change
-  // useEffect(() => {
-  //   fetchMovieTitles();
-  // }, [watchedList]);
 
   // =========================== FAVORITES (COEUR) ===========================
 
@@ -363,17 +286,6 @@ export const Profile: React.FC = () => {
             .get(`${API_BASE_URL}/favoritesMovies?${searchParams.toString()}`)
 
             .then(({ data }) => {
-              // console.log('est-ce');
-
-              // Utiliser un objet pour stocker les id des films favoris
-              // const favorites: FavoritesListObject = {};
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              // console.log(data);
-              // data.forEach((element: any) => {
-              //   const key = element.film_id?.toString();
-              //   favorites[key] = element as FavoritesItem;
-              // });
-              // console.log(data);
               setFavoritesList(data.favoritesListTitles);
             })
             .catch((error) => {
@@ -459,7 +371,7 @@ export const Profile: React.FC = () => {
     }
 
   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     , [user.picture]);
 
 
@@ -604,11 +516,11 @@ export const Profile: React.FC = () => {
         {/* BOUTONS */}
         {mobileVersion && (
           <div className='profile-container__rollbuttons'>
-             <div
+            <div
               className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowWatchedRoll}
             >
-               <img
+              <img
                 src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
@@ -623,13 +535,13 @@ export const Profile: React.FC = () => {
               className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowToWatchRoll}
             >
-               <img
+              <img
                 src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
               {/* <i className='fa-solid fa-xmark'></i> */}
               <div className='profile-container__rollbuttons__button__text'>
-              À voir
+                À voir
               </div>
             </div>
 
@@ -637,13 +549,13 @@ export const Profile: React.FC = () => {
               className='profile-container__rollbuttons__button__image-container'
               onClick={handleShowRecommendedMoviesRoll}
             >
-               <img
+              <img
                 src='/images/tetepelloche.svg'
                 alt="Description de l'image"
               />
               {/* <i className='fa-solid fa-xmark'></i> */}
               <div className='profile-container__rollbuttons__button__text'>
-              Recommandés
+                Recommandés
               </div>
             </div>
           </div>

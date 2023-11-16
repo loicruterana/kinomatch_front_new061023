@@ -7,6 +7,7 @@
   background-color: vars.$theme1-primary;
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 
   &-buttons {
     display: flex;
@@ -16,7 +17,6 @@
     &-button {
       display: flex;
       height: 2vh;
-      width: 15vw;
       border-radius: 11px;
       background-color: vars.$theme1-secondary;
       border: vars.$theme1-secondary;
@@ -24,7 +24,7 @@
       font-family: 'Creato Display';
       border: none;
       font-size: 20px;
-      padding: 15px 1%;
+      padding: 15px 3%;
       align-items: center;
       justify-content: center;
     }
@@ -193,7 +193,7 @@
   }
 
   &__personnal {
-    width: 45vw;
+    width: 30vw;
     height: 100vh;
     display: flex;
     margin-top: 3vh;
