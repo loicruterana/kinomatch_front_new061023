@@ -1,5 +1,5 @@
 // ================ IMPORT BIBLIOTHEQUES ================
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API_BASE_URL from '../../../../utils/config';
 import axios from 'axios';
@@ -76,6 +76,19 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 
   // useState pour afficher qui a recommandé le film
   const [userRecommanded, setUserRecommanded] = React.useState(false);
+
+  // useState pour afficher les infos du film
+  const [hoveredMovieId, setHoveredMovieId] = useState<string | null>(null);
+
+  // =========================== FONCTIONS ===========================
+
+  function handleMouseEnter(movieId: string | null) {
+    setHoveredMovieId(movieId);
+  }
+
+  function handleMouseLeave() {
+    setHoveredMovieId(null);
+  }
 
   // =========================== USEEFFECT ===========================
 
@@ -364,41 +377,36 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                 recommendedMovies.map((recommendedMoviesItem) => {
                   return (
                     <div
-                      className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
-                        }__roll-container__item`}
+                      className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
+                        }__roll-container__item `}
                       key={recommendedMoviesItem.film_id}
-                    // data-id={recommendedMoviesItem.film_id + recommendedMoviesItem.receiverUserID}
-
+                      onMouseEnter={() => handleMouseEnter(recommendedMoviesItem.film_id)}
+                      onMouseLeave={handleMouseLeave}
                     >
                       {!mobileVersion && (
-                        <i
-                          className='fa-solid fa-info'
-                          onMouseOver={() => setUserRecommanded(true)}
-                          onMouseLeave={() => setUserRecommanded(false)}
-                        ></i>
+                        <i className="fa-solid fa-info"></i>
                       )}
                       {mobileVersion && (
                         <i
-                          className='fa-solid fa-info'
+                          className="fa-solid fa-info"
                           onClick={() => setUserRecommanded(!userRecommanded)}
                         ></i>
                       )}
 
-                      {userRecommanded && (
-                        <div className='profile-container__roll-modale__user-recommanded'>
+                      {hoveredMovieId === recommendedMoviesItem.film_id && (
+                        <div className="profile-container__roll-modale__user-recommanded">
                           <p>Recommandé par :</p>
                           <p>{recommendedMoviesItem.senderUserName}</p>
                         </div>
                       )}
 
-
                       <i
-                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
                           }__roll-container__item-c fa-sharp fa-solid fa-check `}
                         onClick={() =>
                           handlefromRecommendedToWatch({
                             movie: recommendedMoviesItem.film_id,
-                            receiverUserID: recommendedMoviesItem.receiverUserID
+                            receiverUserID: recommendedMoviesItem.receiverUserID,
                           })
                         }
                       ></i>
@@ -412,17 +420,17 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                         onClick={() =>
                           deleteRecommendedMovies({
                             movie: recommendedMoviesItem.film_id,
-                            receiverUserID: recommendedMoviesItem.receiverUserID
+                            receiverUserID: recommendedMoviesItem.receiverUserID,
                           })
                         }
-
-                        className={`profile-container__roll-modale-${mobileVersion ? 'mobile-version' : 'desktop-version'
+                        className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
                           }__roll-container__item-b fa-solid fa-xmark`}
                       ></i>
                     </div>
                   );
                 })
               )}
+
             </div>
           </div>
 
