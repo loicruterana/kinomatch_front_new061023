@@ -78,8 +78,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
 }) => {
   // =========================== USESTATES ===========================
 
-  // useState pour afficher qui a recommandé le film
-  const [userRecommended, setuserRecommended] = React.useState(false);
+  // // useState pour afficher qui a recommandé le film
+  // const [userRecommended, setuserRecommended] = React.useState(false);
 
  
   const [isOpen, setIsOpen] = React.useState(false);
