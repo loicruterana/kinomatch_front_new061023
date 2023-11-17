@@ -41,8 +41,6 @@ interface BookmarkedRollProps {
   handleRemoveFavorites: (film_id: string) => void;
   addWatched: (element: { movie: string }) => void;
   userEvent: boolean;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUserEvent: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickOut: () => void;
 }
@@ -74,6 +72,7 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   // userEvent,
   setUserEvent,
   handleClickOut,
+ 
 
 }) => {
   // =========================== USESTATES ===========================
