@@ -106,13 +106,20 @@
             position: absolute;
             background-color: vars.$theme1-primary;
             height: 50%;
-            width: 66%;
+            width: 63%;
             top: 20%;
             font-weight: bold;
 
             &_text {
               font-size: 0.7rem;
               color: vars.$theme1-secondary;
+            }
+
+            &_name {
+              font-size: 1.2rem;
+              color: vars.$theme1-primary;
+              background-color: vars.$theme1-secondary;
+              border-radius: 6px;
             }
           }
 
@@ -471,20 +478,28 @@
             position: relative;
             text-align: center;
 
+
             &-user-recommended {
               position: absolute;
               background-color: vars.$theme1-primary;
               height: 50%;
-              width: 66%;
+              width: 90%;
               top: 20%;
               font-weight: bold;
-  
+
               &_text {
                 font-size: 0.7rem;
                 color: vars.$theme1-secondary;
               }
+
+              &_name {
+                font-size: 1.2rem;
+                color: vars.$theme1-primary;
+                background-color: vars.$theme1-secondary;
+                border-radius: 6px;
+              }
             }
-            
+
             &-a {
               position: absolute;
               bottom: 5px;
@@ -518,6 +533,7 @@
               bottom: 6px;
               right: 5px;
               cursor: pointer;
+              z-index: 1000;
             }
 
             &-category {

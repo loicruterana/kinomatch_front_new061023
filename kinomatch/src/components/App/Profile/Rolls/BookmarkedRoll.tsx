@@ -41,6 +41,8 @@ interface BookmarkedRollProps {
   handleRemoveFavorites: (film_id: string) => void;
   addWatched: (element: { movie: string }) => void;
   userEvent: boolean;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUserEvent: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickOut: () => void;
 }
@@ -72,11 +74,15 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
   // userEvent,
   setUserEvent,
   handleClickOut,
+
 }) => {
   // =========================== USESTATES ===========================
 
   // useState pour afficher qui a recommandé le film
   const [userRecommended, setuserRecommended] = React.useState(false);
+
+ 
+  const [isOpen, setIsOpen] = React.useState(false);
 
   // useState pour afficher les infos du film
   const [hoveredMovieId, setHoveredMovieId] = useState<string | null>(null);
@@ -381,25 +387,43 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                       className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
                         }__roll-container__item `}
                       key={recommendedMoviesItem.film_id}
-                      onMouseEnter={() => handleMouseEnter(recommendedMoviesItem.film_id)}
-                      onMouseLeave={handleMouseLeave}
+
                     >
                       {!mobileVersion && (
-                        <i className="profile-container__roll-modale-desktop-version__roll-container__item-d fa-solid fa-info"></i>
+                        <i className="profile-container__roll-modale-desktop-version__roll-container__item-d fa-solid fa-info"
+                        onMouseEnter={() => handleMouseEnter(recommendedMoviesItem.film_id)}
+                        onMouseLeave={handleMouseLeave}
+                        ></i>
+                        
                       )}
-                      {mobileVersion && (
+                      { mobileVersion && (
                         <i
                           className="profile-container__roll-modale-mobile-version__roll-container__item-d fa-solid fa-info"
-                          onClick={() => setuserRecommended(!userRecommended)}
-                        ></i>
+                          //au clic, vérifier si setIsOpen est false et si oui, executer la fonction handleMouseEnter. Sinon, executer la fonction handleMouseLeave
+                          onClick={() => {
+                            setIsOpen(!isOpen);
+                            if (!isOpen) {
+                              handleMouseEnter(recommendedMoviesItem.film_id);
+                              setIsOpen(true);
+                            } else {
+                              handleMouseLeave();
+                              setIsOpen(false);
+                            }
+                          }}
+                        ></i>                    
                       )}
+
+                      
+                      
+                      
 
                       {hoveredMovieId === recommendedMoviesItem.film_id && (
                         <div className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                      }desktop-version__roll-container__item-user-recommended`}>
+                      }__roll-container__item-user-recommended`}>
                           <p className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
-                      }desktop-version__roll-container__item-user-recommended-text`}>Recommandé par :</p>
-                          <p>{recommendedMoviesItem.senderUserName}</p>
+                      }__roll-container__item-user-recommended_text`}>Recommandé par</p>
+                          <p className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
+                      }__roll-container__item-user-recommended_name`}>{recommendedMoviesItem.senderUserName}</p>
                         </div>
                       )}
 
