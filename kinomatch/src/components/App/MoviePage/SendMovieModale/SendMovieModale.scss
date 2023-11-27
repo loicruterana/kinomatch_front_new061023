@@ -29,6 +29,14 @@
             border-radius: 15px;
             padding: 2rem 0 2rem 0;
 
+            &--message {
+                font-size: 1.2rem;
+                color: #fff3b0;
+                font-weight: 700;
+                margin-bottom: 2rem;
+            }
+
+
             &--input {
                 background-color: #335c67;
                 border: 2px solid #fff3b0;
@@ -71,7 +79,6 @@
                     &::-webkit-scrollbar {
                         display: none;
                     }
-
                 }
 
                 &---list {
@@ -106,6 +113,13 @@
                 align-items: center;
                 width: 40%;
                 // margin-top: 2rem;
+
+                &---errorMessage {
+                    font-size: 1.2rem;
+                    color: #fff3b0;
+                    font-weight: 700;
+                    margin-bottom: 2rem;
+                }
 
                 &---sendButton,
                 &---cancelButton {

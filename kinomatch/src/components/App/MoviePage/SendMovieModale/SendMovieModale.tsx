@@ -25,6 +25,8 @@ function SendMovieModale(props: any) {
   const [usersTable, setUsersTable] = useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
   const [selectedUserId, setSelectedUserId] = useState<any>([]);
+  const [isSelected, setIsSelected] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   // ================ FUNCTIONS ================
 
@@ -51,6 +53,9 @@ function SendMovieModale(props: any) {
       selectedUser.classList.remove('sendMovieModale__container-form--input---list-selected');
     }
     event.target.classList.add('sendMovieModale__container-form--input---list-selected');
+
+    // On modifie le useState "isSelected" pour le passer à true
+    setIsSelected(true);
   };
 
   // fonction permettant, au click, d'envoyer les informations de l'utilisateur connecté, de l'utilisateur sélectionné et de l'id du film sélectionné dans la BDD
@@ -76,8 +81,10 @@ function SendMovieModale(props: any) {
       .catch((error) => {
         console.log(error);
       });
-    // On ferme la modale
-    closeModale();
+    // On ferme la modale au bout de 3 secondes
+    setTimeout(() => {
+      closeModale();
+    }, 3000);
   };
 
   // ================ USEEFFECT ================
@@ -160,7 +167,33 @@ function SendMovieModale(props: any) {
           )}
         </ul>
         <div className='sendMovieModale__container-form--buttons'>
-          <button className='sendMovieModale__container-form--buttons---sendButton' onClick={handleSendMovieClick} >Envoyer
+          <button className='sendMovieModale__container-form--buttons---sendButton' 
+                        disabled={isDisabled}
+                        onClick={() => {
+                            if (isSelected) {
+                             handleSendMovieClick();
+                             // je veux faire un appendChild dans la modale qui disparait au bout de 3 secondes. 
+                            const p = document.createElement("p");                                               
+                            p.innerHTML = `Recommandation envoyée!`;
+                            const div = document.querySelector('.sendMovieModale__container-form--input---unorderedList');
+                            div?.appendChild(p);
+                            setTimeout(() => {
+                              div?.removeChild(p);
+                              setIsDisabled(false);
+                            }, 3000);
+                            } else {
+                            // je veux faire un appendChild dans la modale qui disparait au bout de 3 secondes. 
+                            const p = document.createElement("p");
+                            p.innerHTML = "Veuillez sélectionner un utilisateur";
+                            const div = document.querySelector('.sendMovieModale__container-form--input---unorderedList');
+                            div?.appendChild(p);
+                            setTimeout(() => {
+                              div?.removeChild(p);
+                              setIsDisabled(false);
+                            }, 3000)       
+                            }
+                            setIsDisabled(true);
+                          }} >Envoyer
           </button>
           <button className='sendMovieModale__container-form--buttons---cancelButton' onClick={handleModale}>Annuler</button>
         </div>

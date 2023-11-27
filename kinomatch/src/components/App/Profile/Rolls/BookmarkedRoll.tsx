@@ -410,12 +410,8 @@ export const BookmarkedRoll: React.FC<BookmarkedRollProps> = ({
                             }
                           }}
                         ></i>                    
-                      )}
-
+                      )}             
                       
-                      
-                      
-
                       {hoveredMovieId === recommendedMoviesItem.film_id && (
                         <div className={`profile-container__roll-modale-${mobileVersion ? "mobile-version" : "desktop-version"
                       }__roll-container__item-user-recommended`}>
